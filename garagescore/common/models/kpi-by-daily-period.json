@@ -1,0 +1,49 @@
+{
+  "name": "KpiByDailyPeriod",
+  "plural": "KpiByDailyPeriods",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "mongodb": {
+    "collection": "kpiByDailyPeriod"
+  },
+  "http": {
+    "path": "kpiByDailyPeriod"
+  },
+  "mixins": {
+    "Timestamp": false
+  },
+  "properties": {
+  },
+  "indexes": {
+    "garageId": { "0": -1 },
+    "userId": { "1": -1 },
+    "kpiType": { "2": -1 },
+    "garageType": { "3": -1 },
+    "period": { "4": -1 },
+    "sourceType": { "6": -1 },
+    "automationCampaignId": { "7": -1 },
+    "dontEraseZero": {
+      "keys": {
+        "0": -1,
+        "1": -1,
+        "2": -1,
+        "3": -1,
+        "4": -1,
+        "6": -1,
+        "7": -1
+      },
+      "options": {
+        "unique": true
+      }
+    }
+  },
+  "validations": [],
+  "relations": {
+  },
+  "acls": [
+  ],
+  "methods": {
+  }
+  }
+  

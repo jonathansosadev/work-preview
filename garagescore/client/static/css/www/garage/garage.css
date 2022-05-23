@@ -1,0 +1,1169 @@
+/*
+ * Global Bootstrap Overrides
+ */
+
+ html, body {
+  height: 100%;
+}
+
+body {
+  background-color: white;
+}
+.garagescore-garage-directory-page-container-fluid {
+  max-width: 1700px;
+}
+
+.garagescore-garage-directory-page-container {
+}
+
+.garagescore-garage-directory-page-container, 
+.garagescore-garage-directory-page-container-fluid .container {
+    font-size: 13px;
+}
+.garagescore-garage-directory-page-container-fluid .container {
+    margin-bottom: 0;
+}
+
+@media (max-width: 992px) {
+  #garagescore-garage-directory-reviews-container{
+    margin-bottom: 110px;
+  }
+}
+
+/*
+ * GarageScore styles
+ */
+
+ .garagescore-garage-directory-page-container,.garagescore-garage-directory-page-container-fluid {
+  font-family: 'Roboto', sans-serif;
+  vertical-align: bottom;
+}
+
+.garagescore-garage-directory-page-header-label {
+  color: #64b7cb;
+  font-size: 11px;
+  padding: 11px;
+  text-align: center;
+}
+
+.garagescore-garage-directory-page-banner {
+  margin-bottom: 0px;
+  margin-top: 0px;
+  /*height: 86px;  98px height of image, minus 6px top margin, minus 6px bottom margin */
+}
+
+
+.garagescore-garage-directory-page-trophy img {
+  margin-top: -6px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50px;
+}
+
+.garagescore-garage-directory-page-trophy {
+    left: -35px;
+    top: 5px;
+    position: absolute;;
+}
+.garagescore-garage-directory-page-3tabs-button-active .garagescore-garage-directory-page-trophy {
+    top: -3px;  
+}
+.garagescore-garage-directory-page-3tabs-button-active .garagescore-garage-directory-page-trophy img {
+   width: 65px;
+   height: 65px;
+}
+.garagescore-garage-directory-page-trophy-value {
+    color: white;
+    position: absolute;
+    line-height: 48px;
+    text-align: center;
+    width: 60px;
+    font-size: 18px;
+    z-index: 2;
+}
+.garagescore-garage-directory-page-3tabs-button-active .garagescore-garage-directory-page-trophy img {
+  filter: drop-shadow(-3px 3px 3px #333);
+  -webkit-filter: drop-shadow(-3px 3px 3px #333);  
+}
+
+
+.garagescore-garage-directory-page-banner {
+  background-color: rgb(89,89,89);
+  height: 65px;
+}
+
+.garagescore-garage-directory-page-banner-title {
+  text-align: center;
+  padding-top: 5px;
+  margin: auto;
+}
+.garagescore-garage-directory-page-banner-title img {
+  height: 53px;
+}
+.garagescore-garage-directory-page-banner-title span {
+ display: none;
+}
+
+.garagescore-garage-directory-page-banner-left, .garagescore-garage-directory-page-banner-right {
+  position: absolute;
+  top: 10px;
+  font-size: 15px;
+  color: rgba(255,255,255,0.75);
+}
+
+.garagescore-garage-directory-page-banner-left{  
+  left: 10px;
+}
+.garagescore-garage-directory-page-banner-right {
+  right: 10px;
+  
+  text-align: right;
+}
+
+@media (max-width: 992px) {
+  .garagescore-garage-directory-page-banner {
+    background: rgb(89,89,89);
+    height: 40px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 5;
+  }
+  .garagescore-garage-directory-page-banner-title span {
+    display: inline-block;
+    color: white;
+  }
+  .garagescore-garage-directory-page-banner-title img {
+    display: inline-block;
+    height: 20px;
+  }
+  .garagescore-garage-directory-page-banner-left, .garagescore-garage-directory-page-banner-right {
+    display: none;
+  }
+}
+
+@media (max-width: 360px) {
+  .garagescore-garage-directory-page-banner-title span {
+    font-size: 13px;
+  }
+  .garagescore-garage-directory-page-banner-title img {
+    width: 100px;
+  }
+}
+@media (max-width: 300px) {
+  .garagescore-garage-directory-page-banner-title span {
+    font-size: 12px;
+  }
+  .garagescore-garage-directory-page-banner-title img {
+    width: 80px;
+  }
+}
+
+.garagescore-garage-directory-page-banner-branding a {
+  width: 100%;
+}
+.garagescore-garage-directory-page-banner-branding img {
+  height: 30px;
+  margin-top: 12px;
+  margin-left: 5px;
+}
+@media (max-width: 1300px) and (min-width:992px) { 
+  .garagescore-garage-directory-page-banner-branding img {
+    height: 31px;
+  }
+  .garagescore-garage-directory-page-banner-title .garagescore-garage-name {
+  }
+}
+
+
+.garagescore-garage-directory-page-tabs {
+}
+
+.garagescore-garage-directory-page-tabs .garagescore-garage-directory-page-tab {
+  padding: 6px;
+  text-align: center;
+}
+
+.garagescore-garage-directory-page-tabs .garagescore-garage-directory-page-tab-selected {
+  font-size:19px;
+  color: #b8a778;
+  border-top: 10px solid #fff;
+  border-bottom: 5px solid #fff;
+}
+.garagescore-garage-directory-page-tabs .garagescore-garage-directory-page-tab-all-link {
+  font-size: 16px;
+  color: #64b7cb;
+  display: block;
+  text-decoration: none;
+  font-weight: bold;
+}
+.garagescore-garage-directory-page-tabs .garagescore-garage-directory-page-tab-all-link a {
+  font-size: 16px;
+  color: #64b7cb;
+  text-decoration: underline;
+  margin-left: 5px;
+}
+.garagescore-garage-directory-page-tabs .garagescore-garage-directory-page-tab-all-link a:hover {
+  color: #1491b1;
+}
+.garagescore-garage-directory-page-tabs .fa {
+  margin-right: 10px;
+  font-size:32px;
+}
+.garagescore-garage-directory-pilars {
+  font-size:15px;
+  margin-top: 4px;
+  margin-bottom: 26px;
+  margin-left:5%;
+  margin-right:5%;
+  color: #b8a778;
+}
+.garagescore-garage-directory-pilars i{
+  font-size:18px;
+  color: #b8a778;
+}
+.garagescore-garage-directory-pilar-2 {
+    padding-left: 6%;
+}
+.garagescore-garage-directory-pilar-3 {
+    padding-right: 6%;
+}
+.garagescore-garage-directory-page-scores-container {
+  height:380px;  
+  position: relative;
+  background-position: -5000px -5000px;
+  background-repeat: no-repeat;
+}
+@media (max-width: 992px){
+  .garagescore-garage-directory-page-scores-container {
+    height: 270px;
+  }
+}
+.garagescore-garage-directory-page-scores-container-cache {
+  position: absolute;
+  top:0;
+  height: 290px;
+  width: 100%;
+}
+.garagescore-garage-directory-page-scores-container-cache:after{
+  content: '\A';
+  position: absolute;
+  width: 100%; height:100%;
+  top:0; left:0;
+  background:rgba(255,255,255,0.9);
+  opacity: 0.9;
+}
+.garagescore-garage-directory-page-scores-background img{
+  width: 100%;
+  vertical-align: top;
+}
+
+.garagescore-garage-directory-page-scores {
+  z-index: 1;
+  height:250px;
+  padding-left: 0;
+  padding-right: 0;
+}
+.garagescore-garage-directory-page-global-recommendation {
+  background-color: white;
+  color: #64b7cb;
+  text-align: center;
+  position: absolute;
+  margin-bottom: 25px;
+  margin-left: -30px;
+  border:1px solid #b8a778;
+  width: 300px;
+  top: 30px;
+  box-shadow: 3px 6px 5px 0px rgba(0,0,0,0.23);
+  z-index: 1;
+}
+
+
+.garagescore-garage-recommendation-garage-name {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 5px;
+  color:#000;
+}
+.garagescore-garage-recommendation-garage-address {
+  margin-bottom: 5px;
+  font-size: 13px;
+  color:#000;
+}
+.garagescore-garage-recommendation-garage-address h2{
+  display: inline-block;
+  margin: 0px;
+  font-size: 13px;
+}
+.garagescore-garage-directory-page-global-recommendation .garagescore-garage-recommendation-ratio {
+  font-size: 40px;
+  font-weight: bold;
+  padding-top: 16px;
+  padding-bottom: 0px;
+}
+.garagescore-garage-recommendation-label {
+  color: #aaa;
+  font-size: 15px;
+  margin-bottom: 10px;
+  color:#000;
+}
+.garagescore-garage-recommendation-garage-logo {
+  height: 60px;
+  max-width: 200px;
+  transition: opacity .5s ease-in;
+  opacity: 0;
+  display: none;
+  margin: auto;
+}
+.garagescore-garage-recommendation-stars {
+  margin-top:0px;  
+  color:#777;
+}
+.garagescore-garage-recommendation-stars .star{
+  margin-right:5px;
+}
+.star:before{
+  font-family: FontAwesome;
+  content: "\f006";
+  font-size:20px;
+}
+.star-full:before{  
+  content: "\f005";
+}
+.star-half:before{  
+  content: "\f123";
+}
+
+.garagescore-garage-directory-page-global-recommendation .garagescore-garage-recommendation-count {
+  font-weight: bolder;
+  padding-top: 0px;
+  padding-bottom: 16px;
+  font-size:20px;
+}
+.garagescore-garage-directory-page-global-recommendation-certified .garagescore-garage-recommendation-count{
+  color:black;
+}
+
+.garagescore-garage-directory-page-scores-mobile-container {
+    padding-top: 60px;
+    color: white;
+}
+
+.garagescore-garage-directory-page-scores-mobile-recommendation-count {
+  font-size: 25px;
+  text-align: center;
+  text-decoration: underline;
+}
+.garagescore-garage-directory-page-scores-mobile-recommendation-pct {
+  margin-top: 20px;
+  font-size: 25px;
+  text-align: center;
+}
+.garagescore-garage-directory-page-scores-mobile-recommendation-pct-number {
+  font-size: 35px;
+  font-weight: bold;
+}
+.garagescore-garage-directory-page-mobile-infos-container {
+  padding: 10px;
+}
+
+.garagescore-garage-directory-page-mobile-infos-container .garagescore-garage-recommendation-garage-address {
+  color: #999;
+}
+.garagescore-garage-directory-page-mobile-infos-container .garagescore-garage-directory-page-mobile-logos {
+  float: right;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+.garagescore-garage-directory-page-mobile-infos-container .garagescore-garage-recommendation-garage-logo {
+  height: 60px;
+  margin-top: 15px;
+}
+.garagescore-garage-directory-page-review-score {
+}
+
+.garagescore-garage-directory-page-review-score-by-labels {
+  color: #b8a778;
+  font-size: 15px;
+  font-weight: normal;
+  margin-bottom: 13px;
+  margin-top: 20px;
+}
+.garagescore-garage-directory-page-review-score ul {
+  list-style: none;
+  padding: 0;
+}
+
+.garagescore-garage-directory-page-review-score-by-item-rating-label {
+  color: #ccc;
+  font-size: 16px;
+  cursor: help;
+  display: block;
+  text-align: center;
+  line-height: 22px;
+  height: 22px;
+  font-size: 16px;
+}
+
+.garagescore-garage-directory-page-review-score-by-item-rating-value {
+  color: #64b7cb;
+  background: #eee;
+  display: block;
+  width:100%;
+  text-align: center;
+  line-height: 32px;
+  height: 32px;
+}
+.garagescore-garage-directory-page-review-score-global-rating-label {
+  color: #64b7cb;
+}
+.garagescore-garage-directory-page-review-score-global-rating-value {
+  background: #64b7cb;
+  color:white;
+}
+@media(max-width:420px){
+  .garagescore-garage-directory-page-review-score-global-rating-label {
+    font-size:13px;
+  }
+}
+.garagescore-garage-directory-page-review-score-by-review-category-ratings-bar {
+  display: inline-block;
+  width: 100%;
+}
+ul.garagescore-garage-directory-page-review-score-by-review-category-ratings, ul.garagescore-garage-directory-page-review-score-by-vehicle-make-ratings {
+  padding:0;
+}
+.rating-progress-bar span{
+  height: 14px;
+  background: #eee;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  float: left;
+  margin-top: 2px;
+}
+span.rating-progress-bar-full {
+  background: #64b7cb;
+}
+span.rating-progress-scale-7, span.rating-progress-scale-8, span.rating-progress-scale-9, span.rating-progress-scale-10 {
+
+}
+span.rating-progress-scale-5, span.rating-progress-scale-6 {
+  background: #aaa;
+}
+span.rating-progress-scale-3, span.rating-progress-scale-4 {
+  background: #777;
+}
+span.rating-progress-scale-0, span.rating-progress-scale-1, span.rating-progress-scale-2 {
+  background: #777;
+}
+
+
+.garagescore-garage-directory-page-review-score-ratings-bar-count {
+  display: inline-block;
+  color: #64b7cb;
+  font-weight: bold;
+}
+.garagescore-garage-directory-page-review-score-ratings-bar-count-scale-7, .garagescore-garage-directory-page-review-score-ratings-bar-count-scale-8, .garagescore-garage-directory-page-review-score-ratings-bar-count-scale-9, .garagescore-garage-directory-page-review-score-ratings-bar-count-scale-10 {
+
+}
+.garagescore-garage-directory-page-review-score-ratings-bar-count-scale-5, .garagescore-garage-directory-page-review-score-ratings-bar-count-scale-6 {
+  color: #aaa;
+}
+.garagescore-garage-directory-page-review-score-ratings-bar-count-scale-3, .garagescore-garage-directory-page-review-score-ratings-bar-count-scale-4 {
+  color: #777;
+}
+.garagescore-garage-directory-page-review-score-ratings-bar-count-scale-0, .garagescore-garage-directory-page-review-score-ratings-bar-count-scale-1, .garagescore-garage-directory-page-review-score-ratings-bar-count-scale-2 {
+  color: #777;
+}
+.garagescore-garage-directory-page-container-absolute {
+  position: absolute;
+  left: 50%;
+  padding-top: 25px;
+}
+#garagescore-garage-directory-page-tooltip-trophy {
+    display: none;
+    background: white;
+    border: 1px solid #aaa;
+    height: 240px;
+    width: 691px;
+    position: relative;
+    left: -50%;
+    z-index: 2;
+    padding: 10px 30px;
+    box-shadow: 3px 6px 5px 0px rgba(0,0,0,0.23);
+}
+
+.garagescore-garage-directory-page-close-tooltip {
+  display: none;
+  text-align:right;
+  cursor: pointer;
+  margin-top: 15px;
+  margin-right: 5px;
+  text-decoration: underline;
+}
+@media (max-width: 992px) { 
+  .garagescore-garage-directory-page-close-tooltip {
+    display: block;
+  }
+}
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) {
+  .garagescore-garage-directory-page-close-tooltip {
+    display: block;
+  }
+}
+
+
+/*#garagescore-garage-directory-page-tooltip-trophy:before {
+    top: 34px;
+    border-color: transparent #aaa transparent transparent;
+    border-width: 36px;
+}
+
+#garagescore-garage-directory-page-tooltip-trophy:after {
+    top: 35px;
+    border-color: transparent white transparent transparent ;
+    border-width: 35px;
+}
+*/
+@media (max-width: 992px) { 
+  #garagescore-garage-directory-page-tooltip-trophy {
+    margin: 0!important;
+    width: 100%!important;    
+    height: auto!important;
+    position: relative!important;
+    top:-20px;
+    float: right!important;
+  }
+  /*#garagescore-garage-directory-page-tooltip-trophy:after, 
+  #garagescore-garage-directory-page-tooltip-trophy:before {
+     content:none!important;
+  }
+  */
+}
+/*
+#garagescore-garage-directory-page-tooltip-trophy:after,
+#garagescore-garage-directory-page-tooltip-trophy:before {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 100%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+*/
+#garagescore-garage-directory-page-tooltip-trophy img,
+#garagescore-garage-directory-page-tooltip-trophy .empty-img {
+  display: inline-block;
+  border-radius: 50px;
+    -webkit-box-shadow: -4px 5px 15px -4px rgba(117,117,117,0.7);
+    -moz-box-shadow: -4px 5px 15px -4px rgba(117,117,117,0.7);
+    box-shadow: -4px 5px 15px -4px rgba(117,117,117,0.7);
+}
+
+.garagescore-garage-directory-page-tooltip-trophy-title {
+  font-weight: bold;
+  font-size: 18px;
+  color:#777;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+
+.garagescore-garage-directory-page-tooltip-trophy-row {
+  position: relative;
+  margin-bottom: 15px;
+}
+.garagescore-garage-directory-page-tooltip-trophy-icon {
+  display: block;
+  float: left;
+}
+.garagescore-garage-directory-page-tooltip-trophy-desc {
+  padding-top: 5px;
+  margin-left: 72px;
+  display: block;  
+}
+.garagescore-garage-directory-page-tooltip-trophy-desc b{
+  display: block;  
+}
+.garagescore-garage-directory-outlink-panel-fixed {
+  position: fixed;
+  bottom: 0;
+  left:0;
+  right:0;
+  z-index: 5;
+  background: transparent;
+  width: 95%;
+  margin: auto;
+}
+.garagescore-garage-directory-outlink-panel-fixed-box {  
+  background: transparent;
+  height:85px;
+  border-bottom: 10px solid white;
+}
+.garagescore-garage-directory-outlink, .garagescore-garage-directory-outlink:visited, .garagescore-garage-directory-outlink:active, .garagescore-garage-directory-outlink:focus {    
+  cursor: pointer;
+  text-decoration: none;
+  background: rgb(115, 211, 89);
+  border: 1px solid #fff;
+  color: #fff;
+  font-weight: normal;
+  box-shadow: 2px 4px 5px 0px rgba(0,0,0,0.23);
+  padding: 10px 12px;
+  border-radius: 5px;
+}
+.garagescore-garage-directory-outlink:hover {
+  text-decoration: none;
+  color: #fff; 
+  background: #b8a778;
+  border-color: #fff;
+}
+
+.garagescore-garage-directory-outlink-panel-fixed .garagescore-garage-directory-outlink {
+  height:75px;
+  display: block;
+  text-align: center;
+  font-size: 25px;
+  line-height: 50px;
+  margin:auto;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+.garagescore-garage-directory-outlink-panel-fixed .garagescore-garage-directory-outlink i {
+  font-size: 43px;
+}
+
+@media (max-width: 992px) {
+  .garagescore-garage-directory-outlink-panel-fixed-box {
+    height: 65px;
+  }
+  .garagescore-garage-directory-outlink-panel-fixed .garagescore-garage-directory-outlink {
+     border-radius: 30px;
+     height:55px;
+     line-height: 30px;
+  }
+  .garagescore-garage-directory-outlink-panel-fixed .garagescore-garage-directory-outlink, 
+  .garagescore-garage-directory-outlink-panel-fixed .garagescore-garage-directory-outlink i{
+    font-size: 23px;
+  }
+}
+@media (max-width: 500px) {
+  .garagescore-garage-directory-outlink-panel-fixed-box {
+    height: 60px;
+  }
+  .garagescore-garage-directory-outlink-panel-fixed .garagescore-garage-directory-outlink {
+     height:50px;
+     line-height: 25px;
+  }
+  .garagescore-garage-directory-outlink-panel-fixed .garagescore-garage-directory-outlink, 
+  .garagescore-garage-directory-outlink-panel-fixed .garagescore-garage-directory-outlink i{
+    font-size: 19px;
+  }
+}
+@media (max-width: 350px) {
+  .garagescore-garage-directory-outlink-panel-fixed-box {
+    height: 50px;
+  }
+  .garagescore-garage-directory-outlink-panel-fixed .garagescore-garage-directory-outlink {
+     height:40px;
+     line-height: 15px;
+  }
+  .garagescore-garage-directory-outlink-panel-fixed .garagescore-garage-directory-outlink, 
+  .garagescore-garage-directory-outlink-panel-fixed .garagescore-garage-directory-outlink i{
+    font-size: 13px;
+  }
+}
+.garagescore-garage-directory-outlink-panel-top {  
+  padding-top:10px;
+}
+.garagescore-garage-directory-outlink-panel-top .garagescore-garage-directory-outlink {
+  font-size: 20px;
+  display: block;
+  margin-top: 70px;
+  margin-right: 12%;
+  width: 335px;
+  float:right;
+}
+.garagescore-garage-directory-outlink-panel-top .garagescore-garage-directory-outlink i {
+  display: inline-block;
+  font-size: 25px;
+  vertical-align: bottom;
+  text-align: center;
+}
+.garagescore-garage-directory-outlink-panel-top .garagescore-garage-directory-outlink i.fa-gbutton-left {  
+  width: 55px;
+}
+
+.garagescore-garage-directory-page-tooltip {
+  position: absolute;
+  background: white;
+  z-index: 2;
+  display: none;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  width: 100%;
+  border: 1px solid #aaa;
+  box-shadow: 3px 6px 5px 0px rgba(0,0,0,0.23);
+}
+.garagescore-garage-directory-page-tooltip b{
+  color: #64b7cb;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+  .garagescore-garage-directory-page-3tabs-container{
+    border-top: 1px solid #b8a778;
+    padding-left: 60px;
+    margin-top: -66px;
+  }
+  .garagescore-garage-directory-page-3tabs-tab {
+    margin-top: 20px;
+    display: none;
+  }
+  @media (max-width: 992px) {
+    .garagescore-garage-directory-page-3tabs-tab {
+    margin-top: 0px;
+    }
+  }
+  .garagescore-garage-directory-page-3tabs-tab-active{
+    display: block;
+  }
+  .garagescore-garage-directory-page-3tabs-button{
+    position: relative;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 15px;
+    text-align: right;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    margin-right: 45px;
+    line-height: 18px;
+  }
+
+
+@media (min-width: 1100px) { 
+  .garagescore-garage-directory-page-3tabs-button{
+    width: 195px;  
+  }
+}
+    
+@media (max-width: 1100px) and (min-width: 992px) { 
+  .garagescore-garage-directory-page-3tabs-container{
+    padding-left: 10px;
+  }
+  .garagescore-garage-directory-page-3tabs-button{
+    margin-right: 37px;
+    width: 185px;
+  }
+}
+
+
+@media (min-width: 992px) { 
+  .garagescore-garage-directory-page-3tabs-button-large{
+    width: 480px;
+    margin-left: 100px;
+    text-align: center;
+  }
+  .garagescore-garage-directory-page-3tabs-button-medium{
+    width: 300px;
+  }
+}
+
+  
+  .garagescore-garage-directory-page-3tabs-button-last {
+    margin-right: 0;
+  }
+  .garagescore-garage-directory-page-3tabs-button-active{
+    background: white;
+    color: black;
+    border-top: 5px solid #b09d68;
+  }
+  .garagescore-garage-directory-page-3tabs-button-active .garagescore-garage-directory-page-3tabs-button-title {
+    font-weight: bold;
+  }  
+  .garagescore-garage-tab-stars .star:before{
+    color: #e7711b;
+    font-size: 13px;
+  }
+  .garagescore-garage-tab-stars-count{
+
+  }
+
+@media (max-width: 992px) {
+  .garagescore-garage-directory-page-3tabs-container {    
+    background: rgb(89,89,89);
+    margin-top: 0px;
+    padding:0;
+    border-bottom: 1px solid #b09d68;
+    border-top: 1px solid #b09d68;
+  }
+  .garagescore-garage-directory-page-3tabs-button{
+    background: transparent;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    padding-top: 5px;
+    border-right: 1px solid white;
+    text-align: center;
+  }
+  .garagescore-garage-directory-page-3tabs-button-last {
+    border-right: 0;
+  }
+  .garagescore-garage-directory-page-3tabs-button-active {
+    border-top: 0px;
+    background: #fff;
+  }
+  .garagescore-garage-directory-page-trophy {
+    display: none;
+  }
+  .garagescore-garage-directory-page-trophy {
+    left:0;
+    top: 8px;
+    position: relative;
+    height: 60px;
+    width: 60px;
+    margin: auto;
+  }
+  .garagescore-garage-directory-page-3tabs-button-active  .garagescore-garage-directory-page-trophy{
+    height: 70px;
+    width: 70px;
+    top: 0px;
+  }
+  .garagescore-garage-directory-page-trophy img{
+    margin: 0;
+  }
+  .garagescore-garage-directory-page-trophy-value {
+    line-height: 60px;
+  }
+  .garagescore-garage-tab-stars-value {
+    display: inline-block;
+    margin-left: 5px;
+    font-weight: bold;
+  }
+  .garagescore-garage-directory-page-3tabs-button-active .garagescore-garage-directory-page-trophy-value {
+    line-height: 70px;
+  }
+
+  .garagescore-garage-directory-page-3tabs-container-fixed {
+    position: fixed;
+    top: 40px;
+    margin-top: 0;
+    z-index: 3;
+    width: 100%;
+  }
+}
+@media (max-width: 450px) {
+  .garagescore-garage-directory-page-3tabs-button {   
+    font-size: 12px;
+  }
+}
+.garagescore-garage-directory-page-review-score-more {
+  cursor: pointer;
+}
+.garagescore-garage-directory-page-review-score-and-volume{
+  margin-top: 20px;
+}
+
+.garagescore-garage-directory-page-review-score-by-value,
+.garagescore-garage-directory-page-review-score-by-review-category,
+.garagescore-garage-directory-page-review-score-by-vehicle-make {
+  display: inline-block;
+  vertical-align: top;
+}
+
+
+
+.garagescore-garage-directory-page-review-score-by-value h3,
+.garagescore-garage-directory-page-review-score-by-review-category h3,
+.garagescore-garage-directory-page-review-score-by-vehicle-make h3,
+ul.garagescore-garage-directory-page-review-score-by-value-ratings,
+ul.garagescore-garage-directory-page-review-score-by-review-category-ratings,
+ul.garagescore-garage-directory-page-review-score-by-vehicle-make-ratings {
+}
+
+ul.garagescore-garage-directory-page-review-score-by-value-ratings li,
+ul.garagescore-garage-directory-page-review-score-by-review-category-ratings li,
+ul.garagescore-garage-directory-page-review-score-by-vehicle-make-ratings li {
+  list-style-type: none;
+  padding-left: 20px;
+  margin-bottom: 5px;
+}
+
+@media (max-width: 992px) {
+  .garagescore-garage-directory-page-review-score-by-value,
+  .garagescore-garage-directory-page-review-score-by-review-category,
+  .garagescore-garage-directory-page-review-score-by-vehicle-make{
+    margin-bottom:10px;
+  }
+  ul.garagescore-garage-directory-page-review-score-by-value-ratings li,
+  ul.garagescore-garage-directory-page-review-score-by-review-category-ratings li,
+  ul.garagescore-garage-directory-page-review-score-by-vehicle-make-ratings li {
+    padding-left: 0px;
+  }
+}
+
+.garagescore-garage-directory-page-review-score-by-value-label,
+.garagescore-garage-directory-page-review-score-by-review-category-label,
+.garagescore-garage-directory-page-review-score-by-vehicle-make-label{
+  color:#000;
+  white-space: nowrap;
+}
+.garagescore-garage-directory-page-review-score-by-value-label-box,
+.garagescore-garage-directory-page-review-score-by-review-category-label-box,
+.garagescore-garage-directory-page-review-score-by-vehicle-make-label-box{
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.garagescore-garage-directory-page-review-score-by-value-volume,
+.garagescore-garage-directory-page-review-score-by-review-category-volume,
+.garagescore-garage-directory-page-review-score-by-vehicle-make-volume{
+  color:#ccc;
+  font-size:15px;
+}
+
+
+@media (max-width: 992px) { 
+  .garagescore-garage-directory-page-review-score-by-value-label,
+  .garagescore-garage-directory-page-review-score-by-review-category-label,
+  .garagescore-garage-directory-page-review-score-by-vehicle-make-label{
+    font-size:13px;
+  }
+}
+
+.garagescore-garage-directory-page-review-score-by-value-value,
+.garagescore-garage-directory-page-review-score-by-review-category-value,
+.garagescore-garage-directory-page-review-score-by-vehicle-make-value {
+  color: #64b7cb;
+  float: right;
+  font-weight: bold;
+  text-align: left;
+  width: 24px;
+}
+.garagescore-garage-directory-page-motto{
+  background: #64B7CB;
+  color:white;
+  font-size: 18px;
+  text-align: center;
+  padding: 10px 0;
+  font-weight: 600;
+}
+.garagescore-garage-directory-blue-hr {
+  width: 50%;
+  margin: auto;
+  color: #EEE;
+  background-color: #EEE;
+  border-color: #EEE;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+/** text reviews */
+#garagescore-garage-directory-reviews-container {
+  min-height: 115px;
+}
+.garagescore-garage-directory-noreviews-container {
+  display: none;
+  text-align: center;
+}
+.garagescore-garage-directory-review{
+  margin-bottom: 5px;
+  border-bottom: 0px solid #F2F2F0;
+  padding-top: 12px; 
+  padding-bottom: 0px;
+}
+.garagescore-garage-directory-review-thumb {
+  color:#64b7cb;
+  font-size: 32px;
+}
+.garagescore-garage-directory-review-author {
+  display: inline-block;
+  vertical-align: middle;
+  height: 32px;
+}
+.garagescore-garage-directory-review-author-name{
+  font-weight:bold;
+  color: #000;
+  display: inline-block;
+  margin-right: 2px;
+  vertical-align: middle;
+  height: 32px;
+}
+.garagescore-garage-directory-review-author-address {
+  font-weight: normal;
+  color:#555;
+  vertical-align: middle; 
+  display: inline-block; 
+  height: 32px;
+}
+.garagescore-garage-directory-review-date {
+  display: inline-block;
+  color:#555;
+  vertical-align: middle;
+  height: 32px;
+}
+.garagescore-garage-directory-review-score {
+  width: 115px;
+  padding-top: 8px;
+  line-height:32px; 
+  height:50px; 
+  text-align: center;
+  color: #fff;
+}
+@media (max-width: 992px) {
+  .garagescore-garage-directory-review-score {
+    float: right;
+  }
+}
+.garagescore-garage-directory-review-score-container {
+  display: block;
+  background: #64b7cb;
+  font-size: 17px;
+  color: white;
+}
+
+.garagescore-garage-directory-review-score-container-scale-7, .garagescore-garage-directory-review-score-container-scale-8, .garagescore-garage-directory-review-score-container-scale-9, .garagescore-garage-directory-review-score-container-scale-10 {
+
+}
+.garagescore-garage-directory-review-score-container-scale-5, .garagescore-garage-directory-review-score-container-scale-6 {
+  background: #aaa;
+}
+.garagescore-garage-directory-review-score-container-scale-3, .garagescore-garage-directory-review-score-container-scale-4 {
+  background: #777;
+}
+.garagescore-garage-directory-review-score-container-scale-0, .garagescore-garage-directory-review-score-container-scale-1, .garagescore-garage-directory-review-score-container-scale-2 {
+  background: #777;
+}
+
+.garagescore-garage-directory-review-thumb-scale-7, .garagescore-garage-directory-review-thumb-scale-8, .garagescore-garage-directory-review-thumb-scale-9, .garagescore-garage-directory-review-thumb-scale-10 {
+
+}
+.garagescore-garage-directory-review-thumb-scale-5, .garagescore-garage-directory-review-thumb-scale-6 {
+  color: #aaa;
+}
+.garagescore-garage-directory-review-thumb-scale-3, .garagescore-garage-directory-review-thumb-scale-4 {
+  color: #777;
+}
+.garagescore-garage-directory-review-thumb-scale-0, .garagescore-garage-directory-review-thumb-scale-1, .garagescore-garage-directory-review-thumb-scale-2 {
+  color: #777;
+}
+
+
+.garagescore-garage-directory-review-score-container-value {
+  font-weight: bold;
+}
+.garagescore-garage-directory-review-score-container-scale {
+}
+
+.garagescore-garage-directory-review-comment {
+  margin-top:2px;
+  font-style: italic;
+  color: #b8a778;
+  font-size: 17px;
+  margin-bottom: 5px;
+}
+
+.garagescore-garage-directory-review-vehicle {
+  font-size: 10px;
+  font-style: italic;
+}
+
+.garagescore-garage-directory-review-dataRecord {
+  font-size: 10px;
+  font-style: italic;
+}
+
+/** paginator*/
+#garagescore-garage-directory-reviews-showbefore{
+  display: none;  
+  margin-bottom: 30px;
+}
+#garagescore-garage-directory-reviews-showbefore a{
+  background: #64b7cb;
+  padding: 8px 15px;
+  color: white;
+  text-decoration: none;
+}
+.garagescore-garage-directory-paginator{
+  text-align: center;
+}
+.garagescore-garage-directory-paginator-currentpage{
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+/** about */
+#about-gs {
+  display: none;
+  position: absolute;
+  z-index: 5;
+  width: 100%;
+  margin-top: 35px;
+  padding: 5px;
+}
+
+.about-gs-container {
+    background: white;
+    border: 3px solid #64b7cb;
+    position: relative;
+    z-index: 2;
+    padding: 10px 30px;
+    box-shadow: 3px 6px 5px 0px rgba(0,0,0,0.23);
+}
+.about-gs-container .about-gs-h1 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+.about-gs-container .about-gs-h2 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-size: 26px;
+}
+.about-gs-container p {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+.about-gs-close {
+  cursor: pointer;
+  text-align: right;
+  margin-bottom:  10px;
+  font-size: 13px;
+}
+
+@media (max-width: 460px) {
+  .about-gs-container h1 {
+    font-size: 15px;
+  }
+  .about-gs-container h2 {
+    font-size: 13px;
+  }
+  .about-gs-container p {
+    font-size: 12px;
+  }
+}
+
+.garagescore-garage-directory-review-reply {
+  margin-top: 10px;
+  margin-left: 50px;
+  border-left: 1px solid #64b7cb;
+}
+
+.garagescore-garage-directory-review-reply {
+  color: #aaa;
+}

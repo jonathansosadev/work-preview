@@ -1,0 +1,126 @@
+{
+  "name": "Customer",
+  "base": "GarageScoreBaseModel",
+  "options": {
+    "strictObjectIDCoercion": true
+  },
+  "mongodb": {
+    "collection": "customers"
+  },
+  "http": {
+    "path": "customer"
+  },
+  "mixins": {
+    "EventEmitter": true,
+    "Status": true,
+    "SmartSort": true,
+    "Stream": true,
+    "MongoDirect": {
+      "whereBuildAddons": true
+    }
+  },
+  "properties": {
+    "garageId": {
+      "type": "String"
+    },
+    "email": {
+      "type": "String"
+    },
+    "phone": {
+      "type": "String"
+    },
+    "fullName": {
+      "type": "String"
+    },
+    "history": {
+      "type": "Object"
+    },
+    "dataIds": {
+      "type": "Object"
+    },
+    "index": {
+      "type": "Object"
+    }
+  },
+  "indexes": {
+    "email": {
+      "name": "email",
+      "keys": {
+        "email": -1
+      }
+    },
+    "phone": {
+      "name": "phone", "keys": { "phone": -1 }
+    },
+    "emailList": {
+      "name": "emailList", "keys": { "emailList": -1 }
+    },
+    "phoneList": {
+      "name": "phoneList", "keys": { "phoneList": -1 }
+    },
+    "fusedCustomerIds": {
+      "name": "fusedCustomerIds", "keys": { "fusedCustomerIds": -1 }
+    },
+    "garageId": {
+      "name": "garageId", "keys": { "garageId": -1 }
+    },
+    "dataIds": {
+      "name": "dataIds", "keys": { "dataIds": -1 }
+    },
+    "unsubscribed": {
+      "name": "unsubscribed", "keys": { "unsubscribed": -1 }
+    },
+    "automationCampaignsCampaignType": {
+      "name": "automationCampaignsCampaignType",
+      "keys": { "automationCampaigns.campaignType": -1 },
+      "help": "Used in the Crossed and Converted CRON (scripts/cron/automation/find-converted-leads-automation.js)"
+    },
+    "automationCampaignsCrossed": {
+      "name": "automationCampaignsCrossed",
+      "keys": { "automationCampaigns.crossed": -1 },
+      "help": "Used in the Crossed and Converted CRON (scripts/cron/automation/find-converted-leads-automation.js)"
+    },
+    "automationCampaignsOpenedDayToBillingDay": {
+      "name": "automationCampaignsOpenedDayToBillingDay",
+      "keys": { "automationCampaigns.openedDayToBillingDay": -1 },
+      "help": "Used in the Crossed and Converted CRON (scripts/cron/automation/find-converted-leads-automation.js)"
+    },
+    "automationCampaignsConverted": {
+      "name": "automationCampaignsConverted",
+      "keys": { "automationCampaigns.converted": -1 },
+      "help": "Used in the Crossed and Converted CRON (scripts/cron/automation/find-converted-leads-automation.js)"
+    },
+    "automationCampaignsEventsEventType": {
+      "name": "automationCampaignsEventsEventType",
+      "keys": { "automationCampaignsEvents.eventType": -1 },
+      "help": "Used in the Crossed and Converted CRON (scripts/cron/automation/find-converted-leads-automation.js)"
+    },
+    "customersIndex": {
+      "name": "customersIndex",
+      "keys": {
+        "index.k": 1,
+        "index.v": 1
+      }
+    },
+    "targetingIndex": {
+      "name": "targetingIndex",
+      "keys": {
+        "index.k": 1,
+        "index.v": 1,
+        "unsubscribed": 1
+      }
+    },
+    "DBO_automationGDPRExportIndex": {
+      "name": "DBO_automationGDPRExportIndex",
+      "keys": {
+        "garageId": 1,
+        "automationCampaignsEvents.type": 1,
+        "automationCampaignsEvents.time": 1
+      }
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

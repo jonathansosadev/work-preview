@@ -1,0 +1,38 @@
+{
+  "name": "garagescore",
+  "scripts": {
+     "postdeploy": "./bootstrap-review.sh"
+  },
+  "env": {
+    "HEROKU_APP_NAME": {
+      "required": true
+    },
+    "HEROKU_API_KEY": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "hobby"
+    }
+  },
+  "addons": [
+    "papertrail",
+    "newrelic"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "environments": {
+    "test": {
+      "formation": {
+        "test": {
+          "quantity": 4
+        }
+      }
+    }
+  }
+}

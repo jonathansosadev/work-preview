@@ -1,0 +1,22 @@
+{
+  "RECENT": {
+    "value": "recent",
+    "properties": {
+    }
+  },
+  "INTERMEDIATE": {
+    "value": "intermediate",
+    "properties": {
+    }
+  },
+  "LONG_TIME": {
+    "value": "longTime",
+    "properties": {
+    }
+  },
+  "NEVER": {
+    "value": "never",
+    "properties": {
+    }
+  }
+}

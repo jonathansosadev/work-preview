@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="fr">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="default">
+      <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+      <title>GarageScore</title>
+      <meta name="robots" content="noindex,nofollow">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="theme-color" content="#ffffff">
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Quicksand:400,700">
+      <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="{{ lib.client.wwwUrl() + '/certificate/fonts/Lato/latofonts.css' }}">
+      <link rel="stylesheet" type="text/css" href="{{ lib.client.wwwUrl() + '/yellow-pages/css/share.css' }}">
+      <link rel="stylesheet" type="text/css" href="{{ lib.client.wwwUrl() + '/yellow-pages/css/navbar.css' }}">
+      <link rel="stylesheet" type="text/css" href="{{ lib.client.wwwUrl() + '/yellow-pages/css/style.css' }}">
+      <link rel="stylesheet" type="text/css" href="{{ lib.client.wwwUrl() + '/yellow-pages/css/modal.css' }}">
+   </head>
+   <body>
+      <section class="gs-top-header" style="background-color:transparent;z-index:15;">
+         <div class="blue-tape">
+            <div class="blue-bubble"></div>
+            <div class="top-header-body">
+               <img class="logo" src="{{ lib.client.wwwUrl() + '/certificate/images/header/logo.png' }}" alt="logo">
+               <span class="comment">les meilleurs concessions et garages élus par leurs clients</span>
+            </div>
+         </div>
+      </section>
+      <div class="bloc-container">
+         <div class="bloc top">
+            <div class="top-container top-left-gap">
+               <div>
+                  <span class="text-top" id="gs-top">GarageScore</span>
+               </div>
+               <div>
+                  <div class="round" id="top"></div>
+               </div>
+               <div>
+                  <span class="text-top" id="top-friendship">En partenariat avec</span>
+               </div>
+               <div>
+                  <div id="pj-top">
+                     <div class="round" id="bottom"></div>
+                     <span class="text-top">PagesJaunes</span>
+                  </div>
+               </div>
+               <div>
+                  <img id="gs-top-logo" src="{{ lib.client.wwwUrl() + '/yellow-pages/images/gs-top-logo.png' }}">
+               </div>
+               <div>
+                  <img id="pj-bottom-logo" src="{{ lib.client.wwwUrl() + '/yellow-pages/images/pj-bottom-logo.png' }}">
+               </div>
+            </div>
+         </div>
+         <div class="separator"></div>
+         <div class="bloc middle">
+            <p class="middle-title middle-txt">
+               Nous avons bien pris en compte votre partage et nous vous en remercions
+            </p>
+            <div class="txt-separator"></div>
+            <p class="middle-txt middle-info">
+               Si votre avis répond aux conditions de la norme NF,
+               votre avis apparaîtra sur le site de nos partenaires dans les jours à venir
+            </p>
+            <div class="txt-separator"></div>
+            <p class="middle-txt middle-info">
+              {%- if error === false %}
+                Vous pouvez retrouver tous les avis des clients du garage {{ garageName }} <a target="_blank" class="garage-link" href="{{ garageUrl }}">ici</a>
+              {%- endif %}
+            </p>
+         </div>
+         <div class="separator" id="blue"></div>
+         <div class="bloc bottom">
+            <span id="bottom-txt">
+            <a id="legal-link" target ="_blank" href="{{ lib.client.wwwUrl() + '/legal/index.html' }}">Mentions légales</a> | Tous droits réservés - GarageScore © 2017
+            </span>
+         </div>
+      </div>
+      <script>
+         (function (i, s, o, g, r, a, m) {
+           i['GoogleAnalyticsObject'] = r;
+           i[r] = i[r] || function () {
+             (i[r].q = i[r].q || []).push(arguments)
+           }, i[r].l = 1 * new Date();
+           a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+           a.async = 1;
+           a.src = g;
+           m.parentNode.insertBefore(a, m)
+         })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+         ga('send', 'event', {
+             eventCategory: 'yellow-pages',
+             eventAction: 'shareReview',
+             eventLabel: '{{ garageSlug }}'
+           });
+
+      </script>
+
+   </body>
+</html>

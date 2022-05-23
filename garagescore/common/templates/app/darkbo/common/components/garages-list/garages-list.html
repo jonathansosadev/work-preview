@@ -1,0 +1,178 @@
+<div :class="'gs-garages-list-wrapper gs-garages-list-wrapper-' + (advancedMode ? 'advanced' : 'simple')">
+
+  <div :class="'gs-garages-list-simple gs-garages-list-' + (advancedMode ? 'visible' : 'hidden')">
+    <h4 class="gs-garages-list-title">Trouver un établissement
+      <div class="checkbox pull-right gs-garages-list-advanced-onoff gs-garages-list-checkbox">
+        <label class="gs-garages-list-checkbox-inner">
+          <input class="gs-garages-list-checkbox-input" type="checkbox" v-model="advancedMode">
+          <span class="gs-garages-list-advanced-onoff-text gs-garages-list-checkbox-text">Mode Avancé</span>
+        </label>
+      </div>
+    </h4>
+    <div class="gs-garages-list-form">
+
+      <fieldset>
+        <legend>Critères de recherche</legend>
+        <!-- Filters -->
+        <div class="gs-garages-list-form-group gs-garages-list-filters">
+          <!-- Title That Toggle The Filters -->
+          <div class="gs-garages-list-filters-title gs-garages-list-collapse-title"
+               @click="toggleCollapse('gs-garages-list-filters-content')">
+            <span class="gs-garages-list-collapse-text">Filtres :</span>
+            <span class="gs-garages-list-collapse-details" v-for="(detail,$index) in getDetails(filters)">
+          {{' {{ ($index > 0 ? ", " : "") + detail }} '}}
+        </span>
+            <span  class="gs-garages-list-collapse-caret">&nbsp;
+          <i :class="'fa fa-caret-' + (isCollapsed('gs-garages-list-filters-content') ? 'right' : 'down')" aria-hidden="true"></i>
+        </span>
+          </div>
+          <!-- Content Toggled By The Title Above -->
+          <div class="gs-garages-list-filters-content" id="gs-garages-list-filters-content" gs-collapsed="true" gs-working="false">
+            <div class="gs-garages-list-filters-content-inner" id="gs-garages-list-filters-content-inner">
+              <!-- Switch Mode : And / Or -->
+              <div class="gs-garages-list-filters-mode-wrapper">
+                <div class="radio gs-garages-list-checkbox">
+                  <label class="gs-garages-list-checkbox-inner">
+                    <input type="radio" class="gs-garages-list-checkbox-input"
+                           name="gs-filters-mode" value="gs-filters-mode-and" v-model="filtersMode" checked>
+                    <span class="gs-garages-list-checkbox-text">Filtres Cumulés ('Et' Logique)</span>
+                  </label>
+                </div>
+                <div class="radio gs-garages-list-checkbox">
+                  <label class="gs-garages-list-checkbox-inner">
+                    <input type="radio" class="gs-garages-list-checkbox-input"
+                           name="gs-filters-mode" value="gs-filters-mode-or" v-model="filtersMode">
+                    <span class="gs-garages-list-checkbox-text">Filtres Indépendants ('Ou' Logique)</span>
+                  </label>
+                </div>
+              </div>
+              <!-- Filters List -->
+              <div class="gs-garages-list-filters-filters">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" v-for="filter in filters">
+                    <div class="checkbox gs-garages-list-checkbox">
+                      <label class="gs-garages-list-checkbox-inner">
+                        <input type="checkbox" class="gs-garages-list-checkbox-input" v-model="filter.on">
+                        <span class="gs-garages-list-checkbox-text">{{ '{{ filter.name }}' }}</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Import Schemas -->
+        <div class="gs-garages-list-form-group gs-garages-list-schemas">
+          <!-- Title That Toggle The Schemas -->
+          <div class="gs-garages-list-schemas-title gs-garages-list-collapse-title"
+               @click="toggleCollapse('gs-garages-list-schemas-content')">
+            <span class="gs-garages-list-collapse-text">Schemas d'Import :</span>
+            <span class="gs-garages-list-collapse-details" v-for="(detail,$index) in getDetails(schemas)">
+          {{' {{ ($index > 0 ? ", " : "") + detail }} '}}
+        </span>
+            <span  class="gs-garages-list-collapse-caret">&nbsp;
+          <i :class="'fa fa-caret-' + (isCollapsed('gs-garages-list-schemas-content') ? 'right' : 'down')" aria-hidden="true"></i>
+        </span>
+          </div>
+          <!-- Content Toggled By The Title Above -->
+          <div class="gs-garages-list-schemas-content" id="gs-garages-list-schemas-content" gs-collapsed="true" gs-working="false">
+            <div class="gs-garages-list-schemas-content-inner" id="gs-garages-list-schemas-content-inner">
+              <!-- Schemas List -->
+              <div class="gs-garages-list-schemas-schemas">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" v-for="schema in schemas">
+                    <div class="checkbox col-xs-4 gs-garages-list-checkbox">
+                      <label class="gs-garages-list-checkbox-inner">
+                        <input type="checkbox" class="gs-garages-list-checkbox-input" v-model="schema.on">
+                        <span class="gs-garages-list-checkbox-text">{{ '{{ schema.name }}' }}</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Group AutoComplete -->
+        <div class="gs-garages-list-form-group gs-garages-list-groups">
+          <label :for="groupInputId" class="gs-garages-list-label-above-input">Nom du groupe</label>
+          <div class="">
+            <input type="text" class="form-control input-sm gs-garages-list-input" :id="groupInputId"
+                   placeholder="Saisissez le nom du groupe..."
+                   v-model="groupResearch" :disabled="loading">
+          </div>
+        </div>
+
+        <!-- Garage AutoComplete -->
+        <div class="form-group gs-garages-list-form-group gs-garages-list-garages">
+          <label :for="garageInputId" class="gs-garages-list-label-above-input">Nom, id ou slug de l'établissement</label>
+          <div class="">
+            <input type="text" class="form-control input-sm gs-garages-list-input" :id="garageInputId"
+                   placeholder="Saisissez le nom, l'id ou le slug de l'établissement..."
+                   v-model="garageResearch" :disabled="loading">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="gs-garages-list-last-fieldset">
+        <legend>Résultats, informations &amp; navigation</legend>
+        <!-- Information And Misc Actions -->
+        <div class="gs-garages-list-form-group gs-garages-list-actions">
+
+          <div class="gs-garages-list-actions-resume">
+            "Je recherche {{ '{{ getResearchDescription() }}' }}"
+          </div>
+          <div>
+            Nombre de résultats :
+            <span class="gs-garages-list-highlight">{{ '{{ currentGaragesSuggestions.length }}' }}</span>
+          </div>
+          <div>
+            Garage sélectionné :
+            <span class="gs-garages-list-highlight">{{ '{{ getGarageFromSelectedGarage() }}' }}</span>
+          </div>
+          <div>
+            Position dans la boucle de navigation :
+            <span class="gs-garages-list-highlight">{{ '{{ getCurrentGaragePosition() + " / " + currentGaragesSuggestions.length }}' }}</span>
+          </div>
+          <div>
+            <button type="button" class="btn btn-sm btn-primary gs-garages-btn-primary"
+                    @click="loopThrough()" :disabled="currentGaragesSuggestions.length === 0">
+              <i class="fa fa-arrow-left" aria-hidden="true"></i> Précédent
+            </button>
+            <button type="button" class="btn btn-sm btn-primary pull-right gs-garages-btn-primary"
+                    @click="loopThrough(true)" :disabled="currentGaragesSuggestions.length === 0">
+              Suivant <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </fieldset>
+
+
+    </div>
+  </div>
+  <div :class="'gs-garages-list-advanced gs-garages-list-' + (advancedMode ? 'hidden' : 'visible')">
+    <div class="gs-garages-list-form">
+      <!-- Garage AutoComplete -->
+      <div class="form-group gs-garages-list-form-group gs-garages-list-garages">
+        <div v-if="showAdvanced" class="checkbox pull-right gs-garages-list-advanced-onoff gs-garages-list-checkbox">
+          <label class="gs-garages-list-checkbox-inner">
+            <input class="gs-garages-list-checkbox-input" type="checkbox" v-model="advancedMode">
+            <span class="gs-garages-list-advanced-onoff-text gs-garages-list-checkbox-text">Mode Avancé</span>
+          </label>
+        </div>
+
+        <label :for="garageInputIdAdv" class="gs-garages-list-label-above-input">Nom, id ou slug de l'établissement</label>
+
+        <div class="">
+          <input type="text" class="form-control input-sm gs-garages-list-input" :id="garageInputIdAdv"
+                 placeholder="Saisissez le nom, l'id ou le slug de l'établissement..."
+                 v-model="garageResearchAdv" :disabled="loading">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

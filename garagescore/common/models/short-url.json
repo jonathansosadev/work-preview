@@ -1,0 +1,45 @@
+{
+  "name": "ShortUrl",
+  "plural": "ShortUrls",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "mongodb": {
+    "collection": "shortUrls"
+  },
+  "http": {
+    "path": "short-url"
+  },
+  "mixins": {
+    "EventEmitter": true
+  },
+  "properties": {
+    "key": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "redirectLocation": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "expirationDayNumber": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [
+  ],
+  "methods": {
+  },
+  "indexes": {
+    "status_idx": {"status": 1},
+    "expirationDayNumber_idx": {"expirationDayNumber": 1},
+    "key_idx": {"key": 1},
+    "redirectLocation_idx": {"redirectLocation": 1}
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "AUTOMATION_MAINTENANCE": {
+    "value": "AUTOMATION_MAINTENANCE",
+    "properties": {}
+  },
+  "AUTOMATION_VEHICLE_SALE": {
+    "value": "AUTOMATION_VEHICLE_SALE",
+    "properties": {}
+  },
+  "AUTOMATION_NEW_VEHICLE_SALE": {
+    "value": "AUTOMATION_NEW_VEHICLE_SALE",
+    "properties": {}
+  },
+  "AUTOMATION_USED_VEHICLE_SALE": {
+    "value": "AUTOMATION_USED_VEHICLE_SALE",
+    "properties": {}
+  },
+  "AUTOMATION_VEHICLE_INSPECTION": {
+    "value": "AUTOMATION_VEHICLE_INSPECTION",
+    "properties": {}
+  }
+}

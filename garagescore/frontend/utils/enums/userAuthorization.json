@@ -1,0 +1,58 @@
+{
+  "ACCESS_TO_COCKPIT": {
+    "value": "ACCESS_TO_COCKPIT",
+    "properties": {}
+  },
+  "ACCESS_TO_WELCOME": {
+    "value": "ACCESS_TO_WELCOME",
+    "properties": {}
+  },
+  "ACCESS_TO_SATISFACTION": {
+    "value": "ACCESS_TO_SATISFACTION",
+    "properties": {}
+  },
+  "ACCESS_TO_UNSATISFIED": {
+    "value": "ACCESS_TO_UNSATISFIED",
+    "properties": {}
+  },
+  "ACCESS_TO_LEADS": {
+    "value": "ACCESS_TO_LEADS",
+    "properties": {}
+  },
+  "ACCESS_TO_AUTOMATION": {
+    "value": "ACCESS_TO_AUTOMATION",
+    "properties": {}
+  },
+  "ACCESS_TO_CONTACTS": {
+    "value": "ACCESS_TO_CONTACTS",
+    "properties": {}
+  },
+  "ACCESS_TO_E_REPUTATION": {
+    "value": "ACCESS_TO_E_REPUTATION",
+    "properties": {}
+  },
+  "ACCESS_TO_ESTABLISHMENT": {
+    "value": "ACCESS_TO_ESTABLISHMENT",
+    "properties": {}
+  },
+  "ACCESS_TO_TEAM": {
+    "value": "ACCESS_TO_TEAM",
+    "properties": {}
+  },
+  "ACCESS_TO_ADMIN": {
+    "value": "ACCESS_TO_ADMIN",
+    "properties": {}
+  },
+  "WIDGET_MANAGEMENT": {
+    "value": "WIDGET_MANAGEMENT",
+    "properties": {}
+  },
+  "ACCESS_TO_DARKBO": {
+    "value": "ACCESS_TO_DARKBO",
+    "properties": {}
+  },
+  "ACCESS_TO_GREYBO": {
+    "value": "ACCESS_TO_GREYBO",
+    "properties": {}
+  }
+}

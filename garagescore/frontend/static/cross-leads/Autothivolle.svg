@@ -1,0 +1,20 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="21" height="21.2" viewBox="0 0 21 21.2">
+  <defs>
+    <filter id="Rectangle_1708" x="0" y="0" width="21" height="21.2" filterUnits="userSpaceOnUse">
+      <feOffset dy="0.2" input="SourceAlpha"/>
+      <feGaussianBlur result="blur"/>
+      <feFlood flood-opacity="0.51"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Autothivolle" transform="translate(-469 -826)">
+    <g transform="matrix(1, 0, 0, 1, 469, 826)" filter="url(#Rectangle_1708)">
+      <rect id="Rectangle_1708-2" data-name="Rectangle 1708" width="21" height="21" rx="2" fill="#5f767b"/>
+    </g>
+    <g id="Groupe_5831" data-name="Groupe 5831" transform="translate(159.324 206.675)">
+      <path id="Tracé_4165" data-name="Tracé 4165" d="M369.941,705.079H369.5a29.31,29.31,0,0,1-4.952-.547c-.073-.015-.146-.035-.218-.052,0-.084.049-.058.093-.041.992.069,1.985.146,2.984.2.694.041,1.392.062,2.085.088,1.041.039,2.082.026,3.121-.017,1.227-.05,2.449-.175,3.667-.33,1.752-.224,3.494-.509,5.223-.839.187-.035.373-.063.56-.1.047-.024.05,0,.045.037a27.182,27.182,0,0,1-4.072,1,42.173,42.173,0,0,1-5.915.593h-2.166Z" transform="translate(-52.652 -74.114)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

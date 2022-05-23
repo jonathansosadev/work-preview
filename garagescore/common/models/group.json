@@ -1,0 +1,41 @@
+{
+  "name": "Group",
+  "plural": "Groups",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "mongodb": {
+    "collection": "groups"
+  },
+  "http": {
+    "path": "group"
+  },
+  "mixins": {
+    "EventEmitter": true,
+    "SmartSort": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "type": {
+      "type": "boolean",
+      "required": true
+    },
+    "ownerId": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "garages": {
+      "type": "referencesMany",
+      "model": "Garage",
+      "foreignKey": "garageIds"
+    }
+  },
+  "methods": {
+  }
+}

@@ -1,0 +1,67 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+
+{% block css %}
+<style type="text/css">
+  .page-header {
+    margin-top: 20px;
+  }
+  .links-list {
+    margin-left: 50px;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .links-list div {
+    margin-bottom: 10px;
+  }
+</style>
+{% endblock %}
+
+{% block page %}
+  <div class="page-header">
+    <h1>Exports</h1><br/>
+  </div>
+
+  <div class="col-md-12 links-list" id="vue">
+    <div class="row">
+      <a href="{{ lib.client.url.getShortUrl('ADMIN_EXPORTS_GARAGES') }}">Garages</a>
+    </div>
+    <div class="row">
+      <a href="{{ lib.client.url.getShortUrl('ADMIN_USERS_LIST') }}" download>Users</a>
+    </div>
+    <div class="row">
+      <a target='_blank' href="{{ lib.client.url.getShortUrl('ADMIN_EXPORTS_SCENARIOS') }}">Scénarios</a>
+    </div>
+    <div class="row">
+      <a target='_blank' href="{{ lib.client.url.getShortUrl('ADMIN_EXPORTS_DEFAULT_MANAGERS') }}">Utilisateurs auto-affectés</a>
+    </div>
+    <div class="row">
+      <a target='_blank' href="{{ lib.client.url.getShortUrl('ADMIN_GARAGE_EXPORTS_BILLING_CSV') }}">Factu</a>
+    </div>
+    <div class="row">
+      <a href="{{ lib.client.url.getShortUrl('ADMIN_EXPORTS_AUTOMATION') }}">Automation export M-1 & (personalisable)</a>
+    </div>
+    <div class="row">
+      <a target='_blank' href="{{ lib.client.url.getShortUrl('ADMIN_EXPORTS_CROSS_LEADS_STATS') }}">XLeads stats</a>
+    </div>
+    <div class="row">
+      <a target='_blank' href="{{ lib.client.url.getShortUrl('ADMIN_EXPORTS_IDEASBOX') }}">Boite à idées</a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script type="text/javascript">
+    new Vue({
+      el: '#vue',
+      data: function () {
+        return {
+          loading: '',
+          error: ''
+        };
+      },
+      methods: {}
+    });
+  </script>
+
+
+{% endblock %}

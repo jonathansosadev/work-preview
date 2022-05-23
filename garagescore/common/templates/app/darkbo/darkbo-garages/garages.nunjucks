@@ -1,0 +1,1587 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+  <style type="text/css">
+    .form-group {
+      margin-bottom: 10px;
+    }
+    .form-group label {
+      text-align: left;
+      font-weight: bold;
+    }
+    .form-group input, .form-group textarea {
+      color: black;
+    }
+    .parse-error {
+      color:red;
+    }
+    #garage-link {
+      margin: auto;
+      font-size: 15px;
+      display: inline-block;
+      font-weight: bold;
+      text-decoration: underline;
+      text-align: left;
+    }
+    button,select {
+      color:black;
+    }
+    .save-button {
+      max-width: 250px;
+      font-size: 18px;
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+      float: right;
+    }
+    .btn-action {
+      margin-bottom: 20px;
+      display: inline-block;
+      line-height: 50px;
+      vertical-align: top;
+    }
+    ul,li {
+      list-style: none;
+    }
+    .toprow {
+      line-height: 32px;
+    }
+    #garages-add button{
+      width: 100%;
+      margin-top: 10px;
+    }
+    #garage-edit {
+      margin-top: 35px;
+    }
+    .tab-selector {
+      margin-bottom: 15px;
+    }
+    .tab-selector div {
+      line-height: 30px;
+      font-size: 15px;
+      border: 1px solid white;
+      text-align: center;
+      cursor: pointer;
+    }
+    .tab-selector div.active {
+      color: black;
+      background: white;
+    }
+    .reputation{
+      padding-bottom: 8px;
+    }
+    .white-card {
+      padding: 5px 20px;
+      background-color: whitesmoke;
+      color: black;
+    }
+    .red {
+      color: red;
+    }
+    .green {
+      color: #0d6eb2;
+    }
+  </style>
+{% endblock %}
+{% block page %}
+  {% raw %}
+    <div class="col-md-12 darkbo">
+      <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+          <div class="row">
+            <div id="garage-edit" class="col-md-12" >
+              <div class="row form-group toprow">
+                <div class="garages-list col-md-12" id="garagesListZone" style="">
+                  <gs-garages-list :updated="garageIdUpdated" show-advanced ></gs-garages-list>
+                </div>
+              </div>
+              <hr/>
+              <div  v-if="garage !== null">
+                <div class="row">
+                  <div class="col-md-8" style="">
+                    <img v-if="garage && garage.slug" :src="garageBadge" />
+                    &nbsp;&nbsp;<a v-if="garage && garage.slug" id="garage-link" target='_blank' :href="garageCertif">
+                      {{ garageCertif }}
+                    </a><br/>
+                    </a>
+                  </div>
+                  <div class="col-md-4 text-right">
+                    <button @click="save"  :class="{ 'disabled': saveInProgress}" class="btn btn-primary save-button">
+                      Sauvegarder
+                    </button>
+                  </div>
+                </div>
+
+                <!-- TAB SELECTOR -->
+                <div class="row tab-selector">
+                  <div class="col-md-2" :class="{ active: currentTab === 'info' }" @click="currentTab = 'info'">
+                    Informations
+                  </div>
+                  <div class="col-md-2" :class="{ active: currentTab === 'dms' }" @click="currentTab = 'dms'">
+                    Branchement
+                  </div>
+                  <div class="col-md-2" :class="{ active: currentTab === 'params' }" @click="currentTab = 'params'">
+                    Paramétrage
+                  </div>
+                  <div class="col-md-2" :class="{ active: currentTab === 'actions' }" @click="currentTab = 'actions'">
+                    Autre
+                  </div>
+                  <div class="col-md-2" :class="{ active: currentTab === 'exogenousReviewsConfigurations' }" @click="currentTab = 'exogenousReviewsConfigurations'">
+                    E-Reputation
+                  </div>
+                </div>
+                <!-- !TAB SELECTOR -->
+
+                <!-- TAB INFORMATIONS -->
+                <div v-show="currentTab === 'info'">
+                  <div class="row form-group">
+                    <label class="col-md-2">id&nbsp;</label>
+                    <input class="col-md-4" v-model="garage.id" disabled="disabled" />
+                  </div>
+
+                  <div class="row form-group">
+                    <label class="col-md-2">Dernière modification&nbsp;</label>
+                    <input class="col-md-4" v-model="garage.updatedAt" disabled="disabled" />
+                  </div>
+
+                  <div class="row form-group">
+                    <label class="col-md-2">Type</label>
+                    <select  class="col-md-3" v-model="garage.type">
+                      <option v-for="garageType in GarageTypes" :value="garageType.value">{{ garageType.name }}</option>
+                    </select>
+                  </div>
+
+                  <div class="row form-group">
+                    <label class="col-md-2">Pays (langue)</label>
+                    <select  class="col-md-3" v-model="garage.locale">
+                      <option value="fr_FR">France (fr)</option>
+                      <option value="fr_BE">Belgique (fr)</option>
+                      <option value="fr_MC">Monaco (fr)</option>
+                      <option value="nl_BE">Belgique (nl)</option>
+                      <option value="fr_NC">Nouvelle-Calédonie (fr)</option>
+                      <option value="es_ES">Espagne (es)</option>
+                      <option value="ca_ES">Espagne (ca)</option>
+                      <option value="en_US">USA (en)</option>
+                    </select>
+                  </div>
+
+                  <div class="row form-group"><label class="col-md-2">slug&nbsp;</label> <input class="col-md-4" v-model="garage.slug" placeholder="slug" /></div>
+
+                  <div class="row form-group">
+                    <label class="col-md-2">Groupe&nbsp;</label>
+                    <groups-list :groups="groups" gs-label="Exemple: Daumont/Renault" :updated="updateGarageGroup"></groups-list>
+                    <label class="col-md-4">Groupe actuel: {{ garage.group }}</label>
+                  </div>
+
+                  <div class="row form-group">
+                    <label class="col-md-2">SIRET&nbsp;</label>
+                    <input class="col-md-4" v-model="garage.businessId" placeholder="Non renseigné" />
+                  </div>
+
+                  <div class="row form-group">
+                    <label class="col-md-2">Noms&nbsp;</label>
+                    <input class="col-md-4" v-model="garage.publicDisplayName" placeholder="publicDisplayName" />
+                    <input class="col-md-offset-1 col-md-4" v-model="garage.securedDisplayName" placeholder="securedDisplayName (usually the same than publicDisplayName)" />
+                  </div>
+
+                  <div class="row form-group">
+                    <label class="col-md-2">brandNames&nbsp;</label>
+                    <select class="col-md-3" v-model="newBrandInput"  @change="addBrand">
+                      <option value="" disabled selected>Choisir une marque</option>
+                      <option v-for="brand in brands" >
+                        {{ brand }}
+                      </option>
+                    </select>
+                    <ul class="col-md-7" v-if="garage && garage.brandNames">
+                      <li v-for="(brand, brandIndex) in garage.brandNames" class="pull-left">
+                        <span >{{ brand }}</span>
+                        <button @click="removeBrand(brandIndex)" style="margin-right: 5px">X</button>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-md-2">Logos Email &nbsp;</label>
+                    <select class="col-md-3" v-model="selectedEmailLogo">
+                      <option value="" disabled selected>Choisir un logo à ajouter</option>
+                      <option v-for="logo in LogoEmails" :value="logo">
+                        {{ logo.substr(11) }}
+                      </option>
+                    </select>
+                    <ul v-if="garage.logoEmail" class="col-md-7" style="margin-top: 5px;">
+                      <li v-for="logo in garage.logoEmail" class="" style="display: inline-block">
+                        <a :href="getSurveyLogoUrl(logo)" target="_blank">
+                          <img :src="getSurveyLogoUrl(logo)" style="height: 26px;"/>
+                        </a>
+                        <a @click="removeEmailLogo(logo)" class="removeGarage">X</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-md-2">Logos Certificat&nbsp;</label>
+                    <select class="col-md-3" v-model="selectedDirectoryPageLogo">
+                      <option value="" disabled selected>Choisir un logo à ajouter</option>
+                      <option v-for="logo in LogoDirectoryPages"  :value="logo">
+                        {{ logo.substr(11) }}
+                      </option>
+                    </select>
+                    <ul v-if="garage.logoDirectoryPage" class="col-md-7" style="margin-top: 5px;">
+                      <li v-for="logo in garage.logoDirectoryPage" class="" style="display: inline-block">
+                        <a :href="getDirectoryPageLogoUrl(logo)" target="_blank">
+                          <img :src="getDirectoryPageLogoUrl(logo)" style="height: 26px;"/>
+                        </a>
+                        <a @click="removeDirectoryPageLogo(logo)" class="removeGarage">X</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-md-2">Timezone&nbsp;</label>
+                    <select class="col-md-3" v-model="garage.timezone">
+                      <option value="" disabled selected>Choisir une timezone</option>
+                      <option v-for="timezone in timezones" :value="timezone">{{ timezone }}</option>
+                    </select>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-md-2">Campagnes Google:</label>
+                    <label class="col-md-2">Verrou (les campagnes ne s'activeront ou ne se désactiveront jamais automatiquement)</label>
+                    <input class="col-md-1" type="checkbox" v-model="garage.googleCampaignLock">
+                    <label class="col-md-2">Campagne Activée (Sans le verrou, cet état pourra être modifié automatiquement par les variations de la note google)</label>
+                    <!-- #4251 Removed google campaign
+                    <input class="col-md-1" type="checkbox" v-model="garage.googleCampaignActivated">
+                    -->
+                  </div>
+                  <div style="background-color: dimgrey; padding-bottom: 10px">
+                    <div style="text-align: center; margin-bottom: 5px">Google Place (Mis à jour le {{ getDateFormatted(garage.googlePlace && garage.googlePlace.lastUpdate) || 'Jamais' }})</div>
+                    <div class="row form-group">
+                      <label class="col-md-2">&nbsp;Google Place Id&nbsp;</label>
+                      <input class="col-md-3" :placeholder="garage.googlePlaceId" disabled/>
+                      <a class="btn btn-success col-md-3 col-md-offset-3" @click="updateGooglePlace" v-if="!googlePlaceDisplaySuccessMessage && !googlePlaceUpdatePending">Synchroniser les données de google</a>
+                      <label v-if="googlePlaceDisplaySuccessMessage" class="bg-dark col-md-3 col-md-offset-3" style="text-align: center">Mis à jour avec succès <i class="fa fa-check"></i></label>
+                      <i class="fa fa-cog fa-spin col-md-3 col-md-offset-3" aria-hidden="true" v-if="googlePlaceUpdatePending"></i>
+                    </div>
+                    <div class="row form-group">
+                      <label class="col-md-2">&nbsp;Rating : &nbsp;</label>
+                      <span class="col-md-3"> {{ (garage.googlePlace && garage.googlePlace.rating) || 'Non défini' }} </span>
+                    </div>
+                    <div class="row"><span class="col-md-2"></span><label class="col-md-4">GarageScore</label><label class="col-md-4">Google</label><label class="col-md-2">Modifié</label></div>
+                    <div class="row form-group">
+                      <label class="col-md-2">&nbsp;Adresse :</label>
+                      <input class="col-md-4" v-model="garage.streetAddress" placeholder="streetAddress" />
+                      <label class="col-md-4">{{ (garage.googlePlace && garage.googlePlace.streetAddress) || 'Non défini' }}</label>
+                      <label class="col-md-2">{{ isModified('streetAddress') }}</label>
+                    </div>
+                    <div class="row form-group">
+                      <label class="col-md-2">&nbsp;Code postal :</label>
+                      <input class="col-md-4" v-model="garage.postalCode" placeholder="postalCode" />
+                      <label class="col-md-4">{{ (garage.googlePlace && garage.googlePlace.postalCode) || 'Non défini' }}</label>
+                      <label class="col-md-2">{{ isModified('postalCode') }}</label>
+                    </div>
+                    <div class="row form-group">
+                      <label class="col-md-2">&nbsp;Ville :</label>
+                      <input class="col-md-4" v-model="garage.city" placeholder="city" />
+                      <label class="col-md-4">{{ (garage.googlePlace && garage.googlePlace.city) || 'Non défini' }}</label>
+                      <label class="col-md-2">{{ isModified('city') }}</label>
+                    </div>
+                    <div class="row form-group">
+                      <label class="col-md-2">&nbsp;Région :</label>
+                      <input class="col-md-4" v-model="garage.region" placeholder="region" />
+                      <label class="col-md-4">{{ (garage.googlePlace && garage.googlePlace.region) || 'Non défini' }}</label>
+                      <label class="col-md-2">{{ isModified('region') }}</label>
+                    </div>
+                    <div class="row form-group">
+                      <label class="col-md-2">&nbsp;Département :</label>
+                      <input class="col-md-4" v-model="garage.subRegion" placeholder="subRegion" />
+                      <label class="col-md-4">{{ (garage.googlePlace && garage.googlePlace.subRegion) || 'Non défini' }}</label>
+                      <label class="col-md-2">{{ isModified('subRegion') }}</label>
+                    </div>
+                    <div class="row form-group">
+                      <label class="col-md-2">&nbsp;Téléphone :</label>
+                      <input class="col-md-4" v-model="garage.phone" placeholder="phone" />
+                      <label class="col-md-4">{{ (garage.googlePlace && garage.googlePlace.phone) || 'Non défini' }}</label>
+                      <label class="col-md-2">{{ isModified('phone') }}</label>
+                    </div>
+                  </div>
+                  <br/>
+
+                  <div class="row form-group">
+                    <h4 class="col-md-9">Système de tracking de campagne via pixel</h4>
+                    <p class="col-md-9">
+                      Info : il s'agit de renseigner une URL de la forme https://hello-world.com/pixel.png?cp={data_type}&tpe={email_md5}&utm_source={utm_source}<br>
+                      Dans cette URL les variables suivantes seront remplacées obligatoirement : "{data_type} et {email_md5}" qui correspondent respectivement<br>
+                      au type du Data (Maintenance, NewVehicleSale, etc.) et à l'email du destinataire hashé (RGPD safe).<br>
+                      De plus, le type d'email (source) pourra être ajouté si besoin, et sera remplacé comme dans cet exemple : "&utm_source=maintenance_email_3_car_repairer"
+                    </p>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-md-3">Url du pixel (désactivé si laissé vide) :&nbsp;</label>
+                    <input class="col-md-6" v-model="garage.campaignTrackingUrl" placeholder="Entrez l'url du pixel de tracking ici"/>
+                  </div>
+                </div>
+                <!-- !TAB INFORMATIONS -->
+
+                <!-- TAB BRANCHEMENT -->
+                <div v-show="currentTab === 'dms'">
+                  <div class="row form-group">
+                    <label class="col-md-2">Date du premier import &nbsp;</label>
+                    <input class="flatpickr col-md-4" v-model="garage.dataImportStartedAt"  type="text" placeholder="Choisir une date ...">
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-md-2">Etat du garage</label>
+                    <select  class="col-md-4" v-model="garage.status">
+                      <option value="Waiting">En attente - Lancement différé</option>
+                      <option value="DataMissing">DMS non automatisable</option>
+                      <option value="ToCreate">Abonnement à créer</option>
+                      <option value="ToPlug">A brancher</option>
+                      <option value="ToConfigure">A paramétrer</option>
+                      <option value="UsersMissing">Users à créer</option>
+                      <option value="Ready">Attente du GO de lancement</option>
+                      <option value="RunningAuto">Garage lancé en automatique</option>
+                      <option value="RunningManual">Garage lancé en manuel</option>
+                      <option value="Stopped">Garage arrêté</option>
+                      <option value="ErepOnly">Erep seulement - pas de branchement</option>
+                    </select>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-md-2">Cacher dans le rapport de synchro zoho</label>
+                    <input class="col-md-1" type="checkbox" v-model="garage.doNotShowInZohoReport">
+                  </div>
+                  <hr/>
+                  <div class="row form-group" style="margin-top: 50px;">
+                    <label class="col-md-3" style="color:#6195fd; margin-bottom: 30px;">Pré-remplir la configuration</label>
+                    <select class="col-md-3" v-model="dmsPrefill" @change="prefillDMSConfig()">
+                      <option value="custom">Personalisée</option>
+                      <option v-for="option in dmsPrefillOptions" :value="option.value">
+                        {{ option.text }}
+                      </option>
+                    </select>
+                  </div>
+                  <hr/>
+                  <div class="row form-group">
+                    <label class="col-md-2" :class="{ 'parse-error': rawDMSInvalid}">Fichiers de campagnes</label>
+                    <select class="col-md-3" v-model="newDMSInput"  @change="generateDMS">
+                      <option value="" disabled selected>Choisir un DMS</option>
+                      <option v-for="d in dms" >
+                        {{ d }}
+                      </option>
+                    </select>
+                    <textarea rows="3" class="col-md-10 col-md-offset-2" v-model="rawDMS" placeholder="exemple : {&quot;DCSnet&quot;:{}}"></textarea>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-md-2" :class="{ 'parse-error': importSchemaInvalid}">Parser</label>
+                    <select class="col-md-3" v-model="garage.importSchema.path">
+                      <option value="" disabled>Choisir un parser</option>
+                      <option v-for="i in importSchemas" >
+                        {{ i }}
+                      </option>
+                    </select>
+                    <div class="col-md-7">
+                      <div class="row">
+                        <div class="col-md-2">
+                          <import-options :json="garage.importSchema.options"></import-options>
+                        </div>
+                        <pre style="background:#ddd" id="importSchemaOptionsFilterToString" disabled="disabled" class="col-md-10">{{ importSchemaOptionsFilterToString }}</pre>
+
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row form-group" style="margin-bottom: 15px;">
+                    <label class="col-md-2">FTP</label>
+                    <div class="col-md-10">
+                      <pre class="row" v-if="ftp3s3log">{{ ftp3s3log }}</pre>
+                      <div class="row">
+                        <button :class="{'btn': true, 'btn-success': canAskRunFtp2S3, 'disabled': !canAskRunFtp2S3}" @click="askRunFtp2S3">Lancer un import FTP->S3</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-md-2">Imports FTP->S3</label>
+                    <select class="col-md-3" @change="importsAddDataFile($event)">
+                      <option value="" disabled selected>Ajouter une configuration</option>
+                      <option v-for="type in dataFileTypes" >
+                        {{ type }}
+                      </option>
+                    </select>
+                  </div>
+                  <div v-if="garage.imports" v-for="(dataFile, datafileIndex) in garage.imports" class="col-md-offset-1">
+                    <div class="panel panel-default">
+                      <div class="panel-heading dark">
+                        <h4 class="panel-title dark">
+                          <label>{{dataFile.type}}</label>
+                          <div class="pull-right">
+                            <select v-model="dataFile.method">
+                              <option value="FTP" >FTP</option>
+                              <option value="MecaPlanning">MecaPlanning</option>
+                            </select>
+                            <a style="cursor: pointer;" @click="importsRemoveDataFile(datafileIndex)">Supprimer</a>
+                          </div>
+                        </h4>
+                      </div>
+                    </div>
+                    <div v-if="dataFile.method == 'MecaPlanning'">
+                      TODO
+                    </div>
+                    <div v-if="dataFile.method == 'FTP'">
+                      <div class="row form-group">
+                        <label class="col-md-2">Format final</label>
+                        <select  class="col-md-3" v-model="dataFile.params.suffix">
+                          <option value="csv">csv</option>
+                          <option value="xls">xls</option>
+                          <option value="xlsx">xlsx</option>
+                          <option value="xml">xml</option>
+                        </select>
+                      </div>
+                      <div class="row form-group">
+                        <label class="col-md-2">Encodage final</label>
+                        <select  class="col-md-3" v-model="dataFile.params.charset">
+                          <option value="cp1252">cp1252</option>
+                          <option value="latin-1">latin-1</option>
+                          <option value="utf-8">utf-8</option>
+                          <option value="binary">binary</option>
+                        </select>
+                      </div>
+                      <div v-for="(file, fileindex) in dataFile.params.files" class="col-md-offset-2">
+                        <u>Fichier FTP {{ fileindex + 1 }}</u>&nbsp;&nbsp;&nbsp;<a style="cursor: pointer;" @click="importsRemoveFTPFile(dataFile, fileindex)">Supprimer</a>
+                        <div class="row form-group">
+                          <label class="col-md-2">Chemin</label>
+                          <input  class="col-md-4" v-model="file.path" placeholder="exemple: malbet/Vue_OR_Garagescore.txt" />
+                          <div  class="col-md-6">note: vous pouvez utiliser les variables $DD, $MM, $YYYY (date d'aujourd'hui), $DD-1$, $MM-1$ et $YYYY-1$ pour J-1 et $DD-2$, $MM-2$ et $YYYY-2$ pour J-2</div>
+                        </div>
+                        <div class="row form-group">
+                          <label class="col-md-2">Encodage</label>
+                          <select  class="col-md-3" v-model="file.charset">
+                            <option value="cp1252">cp1252</option>
+                            <option value="latin-1">latin-1</option>
+                            <option value="utf-8">utf-8</option>
+                            <option value="binary">binary</option>
+                          </select>
+                        </div>
+                        <div class="row form-group">
+                          <label class="col-md-2">Ignorer les fichiers de plus de 24h</label>
+                          <input type="checkbox" v-model="file.enableLastModifiedCheck" />
+                        </div>
+                        <div class="row form-group">
+                          <label class="col-md-2">Filtrer sur les colonnes (csv)</label>
+                          <input type="checkbox" v-model="file.columnFilter" />
+                        </div>
+                        <div class="row form-group" v-if="file.columnFilter">
+                          <label class="col-md-2">Séparateur</label>
+                          <select  class="col-md-1" v-model="file.columnFilterSeparator">
+                            <option value=";">;</option>
+                            <option value=",">,</option>
+                            <option value="tab">tab</option>
+                            <option value="pipe">|</option>
+                          </select>
+                        </div>
+                        <div class="row form-group" v-if="file.columnFilter">
+                          <label class="col-md-2">Numero de colonne</label>
+                          <select  class="col-md-1" v-model="file.columnFilterColumnNumber">
+                            <option value="0">1</option>
+                            <option v-for="n in 100" :value="n">{{n+1}}</option>
+                          </select>
+                        </div>
+                        <div class="row form-group" v-if="file.columnFilter">
+                          <label class="col-md-2">Valeur</label>
+                          <input type="text" class="col-md-4" v-model="file.columnFilterColumnValue">
+                          <div  class="col-md-6">note: vous pouvez utiliser les variables $DD, $MM, $YYYY (date d'hier)</div>
+                        </div>
+                      </div>
+                      <div class="row form-group">
+                        <button class="col-md-2 col-md-offset-2" @click="importsAddFTPFile(dataFile, datafileIndex)">Ajouter un fichier FTP</button>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <!-- !TAB BRANCHEMENT -->
+
+                <!-- TAB PARAMETRAGE -->
+                <div v-show="currentTab === 'params'">
+                  <div class="row form-group">
+                    <label class="col-md-2">Post Google</label>
+                    <select  class="col-md-3" v-model="garage.postOnGoogleMyBusiness">
+                      <option :value="true">Publication autorisée</option>
+                      <option :value="false">Publication désactivée</option>
+                    </select>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-md-2">Dérnière publication</label>
+                    <div class="col-md-3">
+                      {{garage.lastPost}}
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-md-2">Page certificat&nbsp;</label>
+                    <select  class="col-md-3" v-model="garage.hideDirectoryPage">
+                      <option :value="false">Indexée</option>
+                      <option :value="true">Cachée des moteurs de recherche</option>
+                    </select>
+                    <select  class="col-md-3" v-model="garage.disableAutoAllowCrawlers">
+                      <option :value="true">Bloquer la publication automatique</option>
+                      <option :value="false">Indexer automatiquement</option>
+                    </select>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-md-2">Enrichissement SEO (widget)</label>
+                    <select  class="col-md-3" v-model="garage.enrichScriptEnabled">
+                      <option :value="false">Ne pas enrichir</option>
+                      <option :value="true">Données enrichies</option>
+                    </select>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-md-2">Abonnements&nbsp;</label>
+                  </div>
+                    <div  v-if="garage.subscriptions.active">
+                        <div class="row form-group">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-9">
+                                <i class="fa" aria-hidden="true"
+                                   :class="garage.subscriptions.Maintenance && garage.subscriptions.Maintenance.enabled ? 'fa-check-circle' : 'fa-circle-o'"
+                                   @click="garage.subscriptions.Maintenance && garage.subscriptions.Maintenance.enabled ? removeSubscription.bind(null, 'Maintenance')() : addSubscription.bind(null, 'Maintenance')()">
+                                </i>
+                                <span>Atelier</span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-9">
+                                <i class="fa fa-check-circle" aria-hidden="true" v-if="hasSubscription('NewVehicleSale')" @click="removeSubscription.bind(null, 'NewVehicleSale')()"></i>
+                                <i class="fa fa-circle-o" aria-hidden="true" v-else @click="addSubscription.bind(null, 'NewVehicleSale')()"></i>
+                                <span>V.neuf</span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-9">
+                                <i class="fa fa-check-circle" aria-hidden="true" v-if="hasSubscription('UsedVehicleSale')" @click="removeSubscription.bind(null, 'UsedVehicleSale')()"></i>
+                                <i class="fa fa-circle-o" aria-hidden="true" v-else @click="addSubscription.bind(null, 'UsedVehicleSale')()"></i>
+                                <span>V.occasion</span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-9">
+                                <i class="fa fa-check-circle" aria-hidden="true" v-if="hasSubscription('Lead')" @click="removeSubscription.bind(null, 'Lead')()"></i>
+                                <i class="fa fa-circle-o" aria-hidden="true" v-else @click="addSubscription.bind(null, 'Lead')()"></i>
+                                <span>Lead</span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-9">
+                                <i class="fa fa-check-circle" aria-hidden="true" v-if="hasSubscription('EReputation')" @click="removeSubscription.bind(null, 'EReputation')()"></i>
+                                <i class="fa fa-circle-o" aria-hidden="true" v-else @click="addSubscription.bind(null, 'EReputation')()"></i>
+                                <span>E-reputation</span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-9">
+                                <i class="fa fa-check-circle" aria-hidden="true" v-if="hasSubscription('VehicleInspection')" @click="removeSubscription.bind(null, 'VehicleInspection')()"></i>
+                                <i class="fa fa-circle-o" aria-hidden="true" v-else @click="addSubscription.bind(null, 'VehicleInspection')()"></i>
+                                <span>Contrôle technique <b>(nouveau !)</b></span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-9">
+                                <i class="fa fa-check-circle" aria-hidden="true" v-if="hasSubscription('Automation')"></i>
+                                <i class="fa fa-circle-o" aria-hidden="true" v-else></i>
+                                <span>Automation</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-else>Le garage n'a pas d'abonnement.</div>
+                  <br>
+                  <div class="row form-group">
+                    <label class="col-md-2">Scenario Campagne</label>
+                    <select  class="col-md-3" v-model="garage.campaignScenarioId">
+                      <option v-for="campaignScenario in campaignScenarios" :value="campaignScenario.id">
+                        {{ garageTypesByValue[campaignScenario.type] }} - {{ campaignScenario.name }}
+                      </option>
+                    </select>
+                    <span class="col-md-7">
+                      <a v-if="garage && garage.campaignScenarioId" id="edit-campaign-scenario" target='_blank'
+                         :href="getScenarioUrl(garage)">
+                       >> Voir détails scénario
+                      </a>
+                    </span>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-md-2">Notes ou étoiles : </label>
+                    <select class="col-md-3" v-model="ratingType">
+                      <option value="rating">Note 0 à 10</option>
+                      <option value="rating-descendant">Note 10 à 0</option>
+                      <option value="stars">Étoiles</option>
+                    </select>
+                  </div>
+                  <div class="row form-group" style="margin-bottom: 30px; margin-top: 30px">
+                    <label class="col-md-2">Forcer le premier contact à :</label>
+                    <div class="col-md-3">
+                        <div class="row" v-if="hasSubscription('Maintenance') && garage.firstContactDelay && garage.firstContactDelay.Maintenance && (garage.firstContactDelay.Maintenance.value || garage.firstContactDelay.Maintenance.value === 0) ">
+                            <div class="col-xs-12">APV : J+{{ parseInt(garage.firstContactDelay.Maintenance.value) + 1 }}</div>
+                        </div>
+                        <br>
+                        <div class="row" v-if="hasSubscription('NewVehicleSale') && garage.firstContactDelay && garage.firstContactDelay.NewVehicleSale && (garage.firstContactDelay.NewVehicleSale.value || garage.firstContactDelay.NewVehicleSale.value === 0)">
+                            <div class="col-xs-12">VN : J+{{ parseInt(garage.firstContactDelay.NewVehicleSale.value) + 1 }}</div>
+                        </div>
+                        <br>
+                        <div class="row" v-if="hasSubscription('UsedVehicleSale') && garage.firstContactDelay && garage.firstContactDelay.UsedVehicleSale && (garage.firstContactDelay.UsedVehicleSale.value || garage.firstContactDelay.UsedVehicleSale.value === 0)">
+                            <div class="col-xs-12">VO : J+{{ parseInt(garage.firstContactDelay.UsedVehicleSale.value) + 1 }}</div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                  <!--<div class="row form-group">
+                    <label class="col-md-2">Forcer le premier contact à :</label>
+                      <select  class="col-md-3" v-model="garage.firstContactDelay.value">
+                          <option :value="0">Désactiver</option>
+                          <option :value="1">J+1</option>
+                          <option v-for="i in 60" :value="i" v-if="i % 5 === 0">
+                              J+{{i}}
+                          </option>
+                      </select>
+                  </div>-->
+                  <!--<div class="row">
+                    <div class="col-xs-2"></div>
+                    <div class="col-xs-10" v-if="campaignScenario">
+                      <p>Durée de la campagne : {{ campaignScenario.duration }}</p>
+                      <p>Recontact APV : {{ campaignScenario.recontactConfig.maintenance.enabled  ? 'Oui' : 'Non' }}</p>
+                      <p>Recontact VN/VO : {{ campaignScenario.recontactConfig.sale.enabled  ? 'Oui' : 'Non' }}</p>
+                      <h4>Maintenance</h4>
+                      <p style="padding-left: 20px">Démarrage de la campagne : {{ displayScenarioDelay(campaignScenario.campaignsStart.Maintenance) }}</p>
+                      <p style="padding-left: 20px">Premier contact : {{ campaignScenario.campaignsStart.Maintenance.name }}</p>
+                      <p style="padding-left: 20px" v-for="(chainItem, index) in campaignScenario.emailsChains.Maintenance[0]"
+                        v-if="index != 0">
+                        Suivi de {{ chainItem.name }} {{ displayScenarioDelay(chainItem) }} {{ displayScenarioDelayType(chainItem) }}
+                      </p>
+                      <p style="padding-left: 20px">FollowupUnsatisfied ? : {{ displayFollowupMessage(campaignScenario) }}</p>
+                      <br>
+                      <h4>Vente</h4>
+                      <p style="padding-left: 20px">Démarrage de la campagne : {{ displayScenarioDelay(campaignScenario.campaignsStart.VehicleSale) }}</p>
+                      <p style="padding-left: 20px">Premier contact : {{ campaignScenario.campaignsStart.VehicleSale.name }}</p>
+                      <p style="padding-left: 20px" v-for="(chainItem, index) in campaignScenario.emailsChains.VehicleSale[0]"
+                        v-if="index != 0">
+                        Suivi de {{ chainItem.name }} {{ displayScenarioDelay(chainItem) }} {{ displayScenarioDelayType(chainItem) }}
+                      </p>
+                    </div>
+                  </div>--> <br>
+
+                  <div class="row form-group">
+                    <label class="col-md-2">Liens&nbsp;</label>
+
+                    <select class="col-md-3" v-model="newLinkInput"  @change="addLink">
+                      <option value="" disabled selected>Créer un lien</option>
+                      <option>website</option>
+                      <option>appointment</option>
+                      <option>contact</option>
+                      <option>quote</option>
+                      <option>facebook</option>
+                      <option>googleplus</option>
+                      <option>twitter</option>
+                      <option>yelp</option>
+                    </select>
+                    <ul class="col-md-offset-1 col-md-6" v-if="garage && garage.links">
+                      <li v-for="(link, linkIndex) in garage.links" class="row">
+                        <input class="col-md-3" v-model="link.name" placeholder="name"/>
+                        <input  class="col-md-6" v-model="link.url" placeholder="url"/>
+                        <button @click="removeLink(linkIndex)" class="col-md-1">X</button>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="row form-group" style="margin-bottom: 30px; margin-top: 30px">
+                    <label class="col-md-2">Seuils d'alertes</label>
+                    <div class="col-md-3">
+                      <div class="row">
+                        <div class="col-xs-6">Sensible APV</div>
+                        <input class="col-xs-6" v-model="garage.thresholds.alertSensitiveThreshold.maintenance" type="number"/>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="col-xs-6">Sensible VN</div>
+                        <input class="col-xs-6" v-model="garage.thresholds.alertSensitiveThreshold.sale_new" type="number"/>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="col-xs-6">Sensible VO</div>
+                        <input class="col-xs-6" v-model="garage.thresholds.alertSensitiveThreshold.sale_used" type="number"/>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="col-xs-6">Sensible CT</div>
+                        <input class="col-xs-6" v-model="garage.thresholds.alertSensitiveThreshold.vehicle_inspection" type="number"/>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-md-2">Quota d'utilisateurs&nbsp;</label>
+
+                    <input class="col-md-3" v-model="garage.usersQuota" type="number"/>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-md-2">Partager les avis sur Pages Jaunes &nbsp;</label>
+                    <input class="col-md-3" v-model="garage.shareReviews" type="checkbox"/>
+                  </div>
+                </div>
+                <!-- !TAB PARAMETRAGE -->
+
+                <!-- TAB ACTIONS -->
+                <div v-show="currentTab === 'actions'">
+                  <div class="row form-group">
+                    <label class="col-md-2">Export eSeller/Selectup</label>
+                    <div class="col-md-9">
+
+                      <div class="row">
+                        <label class="col-md-2">Activé ( {{ (garage.selectup.enabled == true)?"Oui":"Non" }} )  : </label>
+                        <input class="col-md-2" v-model="garage.selectup.enabled" type="checkbox"/>
+                      </div>
+
+                      <div class="row">
+                        <label class="col-md-2">Login APV: </label>
+                        <input class="col-md-2" v-model="garage.selectup.loginAPV" type="text"/>
+                      </div>
+                      <div class="row">
+                        <label class="col-md-2">Login VN: </label>
+                        <input class="col-md-2" v-model="garage.selectup.loginVN" type="text"/>
+                      </div>
+                       <div class="row">
+                        <label class="col-md-2">Login VO: </label>
+                        <input class="col-md-2" v-model="garage.selectup.loginVO" type="text"/>
+                      </div>
+
+                      <div class="row">
+                        <label class="col-md-2">Nouveau mot de passe : </label>
+                        <input class="col-md-2" v-model="garage.selectup.password" type="text"/>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="row form-group">
+                    <label class="col-md-2">Export daimler (MBParis)</label>
+                    <div class="col-md-9">
+                      <div class="row">
+                        <label class="col-md-4">Activé ( {{ (garage.daimler.enabled == true)?"Oui":"Non" }} )  : </label>
+                        <input class="col-md-4" v-model="garage.daimler.enabled" type="checkbox"/>
+                      </div>
+                      <div class="row">
+                        <label class="col-md-4">Nom (ex: MBParis)</label>
+                        <input class="col-md-4" v-model="garage.daimler.name" type="text"/>
+                      </div>
+                      <div class="row">
+                        <label class="col-md-4">retailerId (ex: 5266)</label>
+                        <input class="col-md-4" v-model="garage.daimler.retailerId" type="number"/>
+                      </div>
+                      <div class="row">
+                        <label class="col-md-4">url Api / email adress</label>
+                        <input class="col-md-4" v-model="garage.daimler.urlApi" type="text"/>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row form-group">
+                    <label class="col-md-2">Export Salesforce</label>
+                    <div class="col-md-9">
+                      <div class="row">
+                        <label class="col-md-7">Activé ( {{ (garage.salesforce.enabled == true)?"Oui":"Non" }} )  : </label>
+                        <input class="col-md-4" v-model="garage.salesforce.enabled" type="checkbox"/>
+                      </div>
+                      <div class="row">
+                        <label class="col-md-7">url API</label>
+                        <input class="col-md-4" v-model="garage.salesforce.urlApi" type="text"/>
+                      </div>
+                      <div class="row">
+                        <label class="col-md-7">client_id: </label>
+                        <input class="col-md-4" v-model="garage.salesforce.clientId" type="text"/>
+                      </div>
+                      <div class="row">
+                        <label class="col-md-7">client_secret: </label>
+                        <input class="col-md-4" v-model="garage.salesforce.clientSecret" type="text"/>
+                      </div>
+                       <div class="row">
+                        <label class="col-md-7">user: </label>
+                        <input class="col-md-4" v-model="garage.salesforce.user" type="text"/>
+                      </div>
+                       <div class="row">
+                        <label class="col-md-7">pw: </label>
+                        <input class="col-md-4" v-model="garage.salesforce.pw" type="text"/>
+                      </div>
+                       <div class="row">
+                        <label class="col-md-7">token: </label>
+                        <input class="col-md-4" v-model="garage.salesforce.token" type="text"/>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-7">
+                          Veuillez remplir l'apiURl et tous les paramètres de Salesforce pour récupérer le outletID et outletName
+                        </div>
+                        <div class="col-md-4">
+                          <button type="button" class="btn btn-block btn-sm btn-warning" @click="getOutlet">Récupérer les outlets</button>
+                        </div>
+                      </div>
+                      <div class="row form-group">
+                        <label class="col-md-7">OutletID</label>
+                        <select  class="col-md-4" v-model="garage.salesforce.outletId" @change="setOutletName($event)">
+                          <option :value="garage.salesforce.outletId" disabled>{{ garage.salesforce.outletId }}</option>
+                          <option v-for="outlet of outlets" :value="outlet.outletID" :key="outlet.outletID">
+                            {{ outlet.outletID }} - {{ outlet.outletPartnerNumber }} - {{ outlet.outletName }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="row">
+                        <label class="col-md-7">outletName</label>
+                        <input class="col-md-4" v-model="garage.salesforce.outletName" type="text"/>
+                      </div>
+                      <div class="row form-group">
+                    <label class="col-md-4">Liste de source autorisée pour l'envoie de LEAD vers l'API</label>
+                    <select class="col-md-3" v-model="newSourceType"  @change="addSource">
+                      <option value="" disabled selected>Choisir une source</option>
+                      <option v-for="source in sourceTypes" >
+                        {{ source }}
+                      </option>
+                    </select>
+                    <ul class="col-md-4" v-if="garage && garage.salesforce && garage.salesforce.allowedSourceTypes">
+                      <li v-for="(source, sourceIndex) in garage.salesforce.allowedSourceTypes" class="pull-left">
+                        <span >{{ source }}</span>
+                        <button @click="removeSource(sourceIndex)" style="margin-right: 5px">X</button>
+                      </li>
+                    </ul>
+                  </div>
+                    </div>
+                  </div>
+
+                  <div class="white-card">
+                    <h4 class="row form-group text-center">CIC paramétrage (<span :class="cicEnableClass">{{ cicEnableMsg }}</span>)</h4>
+                    <div class="row form-group">
+                      <label class="col-md-4">Identifiant externe&nbsp;</label>
+                      <input class="col-md-6" v-model="garage.externalId"/>
+                    </div>
+                    <div class="row form-group">
+                      <label class="col-md-4">Email du responsable mécontent&nbsp;</label>
+                      <input class="col-md-6" v-model="garage.cic.email"/>
+                    </div>
+                    <div class="row form-group">
+                      <label class="col-md-4">Dernier envoi&nbsp;</label>
+                      <div class="col-md-6">{{ garage.cic.lastEmailSentDate || 'Jamais' }}</div>
+                    </div>
+                    <div class="row form-group">
+                      <label class="col-md-4">Détails du dernier lancement:&nbsp;</label>
+                      <div class="col-md-6">{{ garage.cic && garage.cic.details && garage.cic.details.message }}</div>
+                    </div>
+                  </div>
+                </div>
+                <!-- !TAB ACTIONS -->
+
+                <!-- TAB EREPUTATION -->
+                <div v-show="currentTab === 'exogenousReviewsConfigurations'">
+                  <div class="row">
+                    <h2> Gestion de la E-Réputation de l'établissement </h2>
+                    <p>Cette partie permet de gérer manuellement la E-Réputation de l'établissement sélectionné.<br>
+                    Le champ Token correspond soit au Token d'Authentification OAuth2 (Google, Facebook) soit à l'url de la page de l'établissement (PagesJaunes, Allogarage)<br>
+                    À noter que pour PagesJaunes et Allogarage le champ Token et ExternelID doivent et auront toujours la même valeur.<br>
+                    Aussi, un établissement n'est considéré connecté que si et seulement si Token ET ExternalID sont renseignés.</p>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-xs-12">
+                      <div class="row reputation">
+                        <h4>PagesJaunes : </h4>
+                        <label class="col-xs-3">Token (URL): </label>
+                        <input style="padding-left: 2px;margin-bottom:5px;" class="col-xs-9" v-model="garage.exogenousReviewsConfigurations.PagesJaunes.token" type="text"/>
+                        <label class="col-xs-3">External ID (URL) : </label>
+                        <input style="padding-left: 2px;margin-bottom:5px;" class="col-xs-9" readonly v-model="garage.exogenousReviewsConfigurations.PagesJaunes.externalId" type="text"/>
+                        <label class="col-xs-3">Token Last Refresh (ReadOnly) : </label>
+                        <input style="padding-left: 2px;margin-bottom:5px;" class="col-xs-9" readonly v-model="garage.exogenousReviewsConfigurations.PagesJaunes.lastRefresh" type="text"/>
+                        <label class="col-xs-3">Last Known Error : </label>
+                        <input style="padding-left: 2px;margin-bottom:5px;" class="col-xs-9" v-model="garage.exogenousReviewsConfigurations.PagesJaunes.error" type="text"/>
+                          <label class="col-xs-3">Last Known Error Occured At : </label>
+                          <input style="padding-left: 2px;margin-bottom:5px;" class="col-xs-9" v-model="garage.exogenousReviewsConfigurations.PagesJaunes.lastError" type="text"/>
+                        <label class="col-xs-3">Connected : </label>
+                        <label style="padding:0;" class="col-xs-9">{{ garage.exogenousReviewsConfigurations.PagesJaunes.token && garage.exogenousReviewsConfigurations.PagesJaunes.externalId ? 'Yes' : 'No'}}</label>
+                        <label class="col-xs-3">Connected by : </label><label style="padding:0;" class="col-xs-9">{{ garage.exogenousReviewsConfigurations.PagesJaunes.connectBy || '' }}</label>
+                      </div>
+                      <div class="row reputation">
+                        <h4>Google : </h4>
+                        <label class="col-xs-3">Token (OAuth2) : </label>
+                        <input style="padding-left: 2px;margin-bottom:5px;" class="col-xs-9" v-model="garage.exogenousReviewsConfigurations.Google.token" type="text"/>
+                        <label class="col-xs-3">External ID (Location ID) : </label>
+                        <input style="padding-left: 2px;margin-bottom:5px;" class="col-xs-9" v-model="garage.exogenousReviewsConfigurations.Google.externalId" type="text"/>
+                        <label class="col-xs-3">Token Last Refresh (ReadOnly) : </label>
+                        <input style="padding-left: 2px;margin-bottom:5px;" class="col-xs-9" readonly v-model="garage.exogenousReviewsConfigurations.Google.lastRefresh" type="text"/>
+                        <label class="col-xs-3">Last Known Error : </label>
+                        <input style="padding-left: 2px;margin-bottom:5px;" class="col-xs-9" v-model="garage.exogenousReviewsConfigurations.Google.error" type="text"/>
+                          <label class="col-xs-3">Last Known Error Occured At : </label>
+                          <input style="padding-left: 2px;margin-bottom:5px;" class="col-xs-9" v-model="garage.exogenousReviewsConfigurations.Google.lastError" type="text"/>
+                        <label class="col-xs-3">Connected : </label>
+                        <label style="padding:0;" class="col-xs-9">{{ garage.exogenousReviewsConfigurations.Google.token && garage.exogenousReviewsConfigurations.Google.externalId ? 'Yes' : 'No'}}</label>
+                        <label class="col-xs-3">Connected by : </label><label style="padding:0;" class="col-xs-9">{{ garage.exogenousReviewsConfigurations.Google.connectBy || '' }}</label>
+                      </div>
+                      <div class="row reputation">
+                        <h4>Facebook : </h4>
+                        <label class="col-xs-3">Token (OAuth2) : </label>
+                        <input style="padding-left: 2px;margin-bottom:5px;" class="col-xs-9" v-model="garage.exogenousReviewsConfigurations.Facebook.token" type="text"/>
+                        <label class="col-xs-3">External ID (Page ID) : </label>
+                        <input style="padding-left: 2px;margin-bottom:5px;" class="col-xs-9" v-model="garage.exogenousReviewsConfigurations.Facebook.externalId" type="text"/>
+                        <label class="col-xs-3">Token Last Refresh (ReadOnly) : </label>
+                        <input style="padding-left: 2px;margin-bottom:5px;" class="col-xs-9" readonly v-model="garage.exogenousReviewsConfigurations.Facebook.lastRefresh" type="text"/>
+                        <label class="col-xs-3">Last Known Error : </label>
+                        <input style="padding-left: 2px;margin-bottom:5px;" class="col-xs-9" v-model="garage.exogenousReviewsConfigurations.Facebook.error" type="text"/>
+                          <label class="col-xs-3">Last Known Error Occured At : </label>
+                          <input style="padding-left: 2px;margin-bottom:5px;" class="col-xs-9" v-model="garage.exogenousReviewsConfigurations.Facebook.lastError" type="text"/>
+                        <label class="col-xs-3">Connected : </label>
+                        <label style="padding:0;" class="col-xs-9">{{ garage.exogenousReviewsConfigurations.Facebook.token && garage.exogenousReviewsConfigurations.Facebook.externalId ? 'Yes' : 'No'}}</label>
+                        <label class="col-xs-3">Connected by : </label><label style="padding:0;" class="col-xs-9">{{ garage.exogenousReviewsConfigurations.Facebook.connectBy || '' }}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- !TAB EREPUTATION -->
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endraw %}
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    function onLoad() {
+      gapi.load('auth2', function() {
+        gapi.auth2.init();
+      });
+    }
+  </script>
+
+  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  {% include "../common/components/_vue-modal.nunjucks" %}
+  {% include "../common/components/_import-options-component.nunjucks" %}
+  {% include "../common/components/_auto-complete/auto-complete.nunjucks" %}
+  {% include "../common/components/garages-list/garages-list.component.nunjucks" %}
+  {% include "../common/components/_groups-list.nunjucks" %}
+  {% include "../common/components/_garages-pre-confs.nunjucks" %}
+  <script type="text/javascript">
+    /** -------------------------------------- INITIALISATIONS -------------------------------------- **/
+    let LogoEmails = {{ LogoEmails|safe }};
+    let LogoDirectoryPages = {{ LogoDirectoryPages|safe }};
+    let brands = {{ brands|safe }};
+    let campaignScenarios = {{ campaignScenarios|safe }};
+    var dms = {{ dms|safe }};
+    let importSchemas = {{ importSchemas|safe }};
+    let contactsConfig = {{ contactsConfig|safe }};
+    let dataFileTypes = {{ dataFileTypes|safe }};
+    let GarageTypes = {{ GarageTypes|safe }};
+    let garageTypesByValue = {};
+    let timezones = {{ timezones|safe }};
+    const defaultSelectupCredentials = { enabled: false, loginAPV: "", loginVN: "", loginVO: "", password: "" };
+    const defaultSalesforceCredentials = { enabled: false, clientId: '', clientSecret: '', user: '', pw: '', token: '', allowedSourceTypes: [] };
+    const defaultDaimlerCredentials = { enabled: false, urlApi: '' };
+    /** -------------------------------------- FUNCTION UTILS -------------------------------------- **/
+    function flatten(data) {
+      const result = {};
+      function recurse(cur, prop) {
+        if (Object(cur) !== cur) {
+          result[prop] = cur;
+        } else if (Array.isArray(cur)) {
+          const l = cur.length;
+          for (let i = 0; i < l; i++) {
+            recurse(cur[i], `${prop}.${i}`);
+          }
+          if (l === 0) {
+            result[prop] = [];
+          }
+        } else {
+          let isEmpty = true;
+          for (const p in cur) {
+            isEmpty = false;
+            recurse(cur[p], prop ? `${prop}.${p}` : p);
+          }
+          if (isEmpty && prop) {
+            result[prop] = {};
+          }
+        }
+      }
+      recurse(data, '');
+      return result;
+    }
+
+    /** ----------------------------------- FOMATING FOR QUICK FINDS ----------------------------------- **/
+    Object.values(GarageTypes).forEach((garageType) => {
+      garageTypesByValue[garageType.value] = garageType.name;
+    });
+
+    /** Our editor */
+    var editor = new Vue({
+      el: '#garage-edit',
+      data: {
+        wwwUrl: '{{lib.client.wwwUrl()}}',
+        LogoEmails: LogoEmails,
+        timezones: timezones,
+        LogoDirectoryPages: LogoDirectoryPages,
+        selectedDirectoryPageLogo: '',
+        selectedEmailLogo: '',
+        brands: brands,
+        campaignScenarios: campaignScenarios,
+        dms: dms,
+        contactsConfig: contactsConfig,
+        importSchemas: importSchemas,
+        ratingType: '',
+        garage: null,
+        campaignScenario: null,
+        garageGroup: '',
+        selectedGroup: '',
+        garageWithoutModif: null,
+        garages: null,
+        groups: [],
+        garageId: document.location.hash ? document.location.hash.substr(1) : '577a30d774616c1a0056c263',
+        refGarage: null,
+        GarageTypes: GarageTypes,
+        garageTypesByValue: garageTypesByValue,
+
+        newLinkInput : '',
+        newBrandInput : '',
+        rawImportSchema: '',
+        importSchemaInvalid: false,
+        saveInProgress:false,
+        createInProgress: false,
+        delayOptions: [
+          {text: 'Défaut', value: '' },
+          {text: 'Désactiver', value: -1 },
+          {text: 'Envoi immédiat', value: 0 },
+          {text: 'Envoi après 1 jour', value: 1 },
+          {text: 'Envoi après 2 jours', value: 2 },
+          {text: 'Envoi après 3 jours', value: 3 },
+          {text: 'Envoi après 4 jours', value: 4 },
+          {text: 'Envoi après 5 jours', value: 5 },
+          {text: 'Envoi après 6 jours', value: 6 },
+          {text: 'Envoi après 7 jours', value: 7 },
+          {text: 'Envoi après 8 jours', value: 8 },
+          {text: 'Envoi après 9 jours', value: 9 },
+          {text: 'Envoi après 10 jours', value: 10 },
+          {text: 'Envoi après 11 jours', value: 11 },
+          {text: 'Envoi après 12 jours', value: 12 },
+          {text: 'Envoi après 15 jours', value: 15 },
+          {text: 'Envoi après 30 jours', value: 30 }
+        ],
+        currentTab: 'info', // info
+        dmsPrefill: 'custom',
+        dmsPrefillOptions: Object.keys(PRECONFS.dms).map((d)=> ({ text:d, value:d })),
+        newDMSInput: '',
+        rawDMS : '',
+        rawDMSInvalid: false,
+        dataFileTypes: dataFileTypes,
+        ftp3s3log: null,
+        canAskRunFtp2S3: true,
+        googlePlaceUpdatePending: false,
+        googlePlaceDisplaySuccessMessage: false,
+        showSelectup : false,
+        outlets: [],
+        newSourceType: '',
+        sourceTypes: [],
+      },
+      created: function() {
+        document.getElementById("garage-edit").style.display = 'block';
+      },
+      async mounted() {
+        await Promise.all([ //this request use the same graphQL request above
+          await this.getGarage(this.garageId),
+          await this.getAllGarages(),
+          await this.getGroups(),
+          await this.getSourceType(),
+        ]);
+        this.setGarageInUrl(this.garageId);
+      },
+      computed: {
+        cicEnableClass() {
+          return this.cicEnableMsg.includes('Désactivé') ? 'red' : 'green';
+        },
+        cicEnableMsg() {
+          const d = new Date();
+          d.setDate(d.getDate() + (1 + 7 - d.getDay()) % 7);
+          if (this.garage && this.garage.cic.email && this.garage.externalId) return `Activé, prochain envoi le ${moment(d).format("DD/MM/YYYY")} à 7h00`;
+          return 'Désactivé';
+        },
+        garageCertif: function () {
+          if(this.garage && this.garage.slug && this.garage.slug !== 'nc') {
+            if (this.garage.type === this.GarageTypes.VEHICLE_INSPECTION.value)
+              return this.wwwUrl + '/controle-technique/' + this.garage.slug;
+            else return this.wwwUrl + '/garage/' + this.garage.slug;
+          }
+          return '';
+        },
+        garageBadge: function () {
+          if (this.garage && this.garage.slug && this.garage.slug !== 'nc') {
+            return this.wwwUrl + '/img/garage/' + this.garage.slug + '/badge/60px.png';
+          }
+          return '';
+        },
+        importSchemaOptionsFilterToString: function () {
+          return this.garage && this.garage.importSchema && this.garage.importSchema.options ? this.garage.importSchema.options.filter : '';
+        }
+      },
+      events: {
+        'importOptions-change': function (options, isValid) {
+          if(!this.garage.importSchema) {
+            Vue.set(this.garage, 'importSchema', {});
+          }
+          if(!this.garage.importSchema.options) {
+            Vue.set(this.garage.importSchema, 'options', options ? options : {});
+          }
+          this.importSchemaInvalid = !isValid;
+        }
+      },
+      watch:{
+        rawDMS: function () {
+          this.updateDMS();
+        },
+        selectedDirectoryPageLogo: function (val) {
+          if (val) {
+            this.addDirectoryPageLogo(val);
+            this.selectedDirectoryPageLogo = '';
+          }
+        },
+        selectedEmailLogo: function(val) {
+          if (val) {
+            this.addEmailLogo(val);
+            this.selectedEmailLogo = '';
+          }
+        },
+        'garage.exogenousReviewsConfigurations.PagesJaunes.token': function(val) {
+          this.garage.exogenousReviewsConfigurations.PagesJaunes.externalId = val;
+        },
+        'garage.exogenousReviewsConfigurations.Allogarage.token': function(val) {
+          this.garage.exogenousReviewsConfigurations.Allogarage.externalId = val;
+        },
+        ratingType: function(val) {
+          this.garage.isReverseRating = val === 'rating-descendant';
+        }
+      },
+      methods: {
+        setOutletName(event) {
+          const outlet = this.outlets.find(o => o.outletID === event.target.value);
+          this.garage.salesforce.outletName = outlet.outletName;
+        },
+        getDateFormatted(d) {
+          if (!d) return null;
+          return moment(new Date(d)).format("DD/MM/YYYY à HH:mm");
+        },
+        isModified(field) {
+          if (!this.garage[field] && (!this.garage.googlePlace || !this.garage.googlePlace[field])) return 'Non';
+          return this.garage[field] !== (this.garage.googlePlace && this.garage.googlePlace[field]) ? 'Oui' : 'Non';
+        },
+        setGarageInUrl(garageId) {
+          document.location = document.location.toString().replace(/#.+/,'') + '#' + garageId;
+        },
+        getAllGarages: async function (GarageId) {
+          const res = await axios.get('{{ lib.client.url.getShortUrl('ADMIN_ALL_GARAGES') }}');
+          if (res.request.status === 200) {
+            this.garages = res.data;
+
+          } else {
+            alert("Erreur ! Plus de détails dans la console");
+            console.error(err);
+          }
+        },
+        getGroups: async function (GarageId) {
+          const res = await axios.get('{{ lib.client.url.getShortUrl('ADMIN_GARAGES_GROUPS') }}');
+          if (res.request.status === 200) {
+            this.groups = res.data;
+          } else {
+            alert("Erreur ! Plus de détails dans la console");
+            console.error(err);
+          }
+        },
+        getGarage: async function (GarageId) {
+          const res = await axios.get('{{ lib.client.url.getShortUrl('ADMIN_GARAGE_BY_ID') }}' + GarageId);
+          if (res.request.status === 200) {
+            this.editGarage(res.data);
+          } else {
+            alert("Erreur ! Plus de détails dans la console");
+            console.error(err);
+          }
+        },
+
+        editGarage: function (garage) {
+          this.setGarageInUrl(garage.id);
+          this.garage = garage;
+          this.refGarage = JSON.parse(JSON.stringify(garage)); // don't work {...garage};
+          this.garageGroup = garage.group || '';
+          this.rawDMS = JSON.stringify(garage.dms || '');
+          this.updateDMS();
+          this.rawImportSchema = JSON.stringify(garage.importSchema || '');
+          this.ftp3s3log = null;
+          this.canAskRunFtp2S3 = true;
+          if (!this.garage.importSchema) {
+            this.$set(this.garage, 'importSchema', { path: '', options: {filters: ''}});
+          }
+          if (!this.garage.importSchema.path) {
+            this.$set(this.garage.importSchema, 'path', '');
+          }
+          if (!this.garage.importSchema.options) {
+            this.$set(this.garage.importSchema, 'options', {filters: ''});
+          }
+          if (!this.garage.importSchema.options.filters) {
+            this.$set(this.garage.importSchema.options, 'filters', '');
+          }
+          if (!this.garage.googlePlaceId) {
+            this.$set(this.garage, 'googlePlaceId', '');
+          }
+          if (!this.garage.selectup) {
+            this.$set(this.garage, 'selectup', { ...defaultSelectupCredentials });
+          }
+          if (!this.garage.salesforce) {
+            this.$set(this.garage, 'salesforce', { ...defaultSalesforceCredentials });
+          }
+          if (!this.garage.daimler) {
+            this.$set(this.garage, 'daimler', { ...defaultDaimlerCredentials });
+          }
+          if (this.garage.imports) {
+            this.garage.imports.forEach((dataFile,d) => {
+              if (dataFile.params && dataFile.params.files) {
+                var clone = (o) => JSON.parse(JSON.stringify(o));
+                dataFile.params.files.forEach((method, i) => {
+                  if (!method.columnFilter) {
+                    dataFile = clone(dataFile);
+                    dataFile.params.files[i].columnFilter = false;
+                    dataFile.params.files[i].columnFilterSeparator = null;
+                    dataFile.params.files[i].columnFilterColumnNumber = null;
+                    dataFile.params.files[i].columnFilterColumnValue = null;
+                    this.$set(this.garage.imports, d, dataFile);
+                  }
+                  if (!method.enableLastModifiedCheck) {
+                    dataFile = clone(dataFile);
+                    dataFile.params.files[i].enableLastModifiedCheck = false;
+                    this.$set(this.garage.imports, d, dataFile);
+                  }
+                });
+              }
+            });
+          }
+          this.ratingType = this.garage.isReverseRating ? 'rating-descendant' : this.garage.ratingType;
+          this.garageWithoutModif = JSON.parse(JSON.stringify(garage));
+          //force updates if(editor._watchers) { editor._watchers.map(function(w) { w.update();}); }
+        },
+        getScenarioUrl: function (garage) {
+          return '{{ lib.client.url.getShortUrl("ADMIN_CAMPAIGN_SCENARIO_INDEX") }}#'+ garage.campaignScenarioId
+        },
+        updateGarageGroup: function (val) {
+          this.garageGroup = val;
+        },
+        displayScenarioDelay: function (item) {
+          if (item.daysAfterCampaignCreation) {
+            return 'après ' + item.daysAfterCampaignCreation +  (item.daysAfterCampaignCreation === 1 ? ' jour' : ' jours');
+          }
+          if (item.daysAfterLastContact) {
+            return 'après ' + item.daysAfterLastContact + (item.daysAfterLastContact === 1 ? ' jour' : ' jours');
+          }
+          return 'immédiatement'
+        },
+        getSurveyLogoUrl: function (logo) {
+          return '/static-redirect/images/survey/' + logo;
+        },
+        getDirectoryPageLogoUrl: function (logo) {
+          return '/certificate/images/logos/' + logo;
+        },
+        addDirectoryPageLogo: function (val) {
+          this.garage.logoDirectoryPage.push(val);
+        },
+        addEmailLogo: function (val) {
+          this.garage.logoEmail.push(val);
+        },
+        removeDirectoryPageLogo: function (logo) {
+          if (this.garage.logoDirectoryPage && this.garage.logoDirectoryPage.length === 1) {
+              alert('Cette liste doit contenir au moins un logo');
+              return;
+          }
+          var index = this.garage.logoDirectoryPage.indexOf(logo);
+          this.garage.logoDirectoryPage.splice(index, 1);
+        },
+        removeEmailLogo: function (logo) {
+          if (this.garage.logoEmail && this.garage.logoEmail.length === 1) {
+            alert('Cette liste doit contenir au moins un logo');
+            return;
+          }
+          var index = this.garage.logoEmail.indexOf(logo);
+          this.garage.logoEmail.splice(index, 1);
+        },
+        /** garage ID update*/
+        garageIdUpdated: async function (garage) {
+          this.garageId = garage.id;
+          await this.getGarage(garage.id);
+          if (!this.garage.logoEmail) {
+            this.garage.logoEmail = this.garageWithoutModif.logoEmail;
+          }
+          if (!this.garage.status) {
+            this.garage.status = this.garageWithoutModif.status;
+          }
+        },
+        /** brandNames array*/
+        addBrand: function (event) {
+          event.preventDefault();
+          if(!this.newBrandInput) {
+            return;
+          }
+          var text = this.newBrandInput.trim();
+          if (text) {
+            this.garage.brandNames.push(text);
+            this.newBrandInput = '';
+          }
+          return false;
+        },
+        removeBrand: function (index) {
+          this.garage.brandNames.splice(index, 1);
+        },
+        addSource: function (event) {
+          event.preventDefault();
+          if(!this.newSourceType) {
+            return;
+          }
+          const text = this.newSourceType.trim();
+          if (text) {
+            this.garage.salesforce.allowedSourceTypes.push(text);
+            this.newSourceType = '';
+          }
+          return false;
+        },
+        removeSource: function (index) {
+          this.garage.salesforce.allowedSourceTypes.splice(index, 1);
+        },
+        /** links array */
+        addLink: function (event) {
+          event.preventDefault();
+          var name = this.newLinkInput.trim();
+          if (name) {
+            this.garage.links.push({ 'name': name, 'url': '' });
+            this.garage.newLinkInput = '';
+          }
+          return false;
+        },
+        removeLink: function (index) {
+          this.garage.links.splice(index, 1);
+        },
+        /** generate an empty DMS config*/
+        generateDMS: function() {
+          var jsondms = {};
+          jsondms.uploadFolder = 'unknown';
+          jsondms.Maintenances = {};
+          jsondms.Maintenances.method = this.newDMSInput;
+          jsondms.Maintenances.fileSuffix = 'csv';
+          jsondms.UsedVehicleSales = {};
+          jsondms.UsedVehicleSales.method = this.newDMSInput;
+          jsondms.UsedVehicleSales.fileSuffix = 'csv';
+          jsondms.NewVehicleSales = {};
+          jsondms.NewVehicleSales.method = this.newDMSInput;
+          jsondms.NewVehicleSales.fileSuffix = 'csv';
+          this.rawDMS = JSON.stringify(jsondms);
+          this.updateDMS();
+        },
+        /** parse json dms*/
+        updateDMS: function () {
+          try {
+            this.garage.dms=JSON.parse(this.rawDMS);
+            this.rawDMSInvalid = false;
+          }catch(e) {
+            this.rawDMSInvalid = true;
+          }
+        },
+        /** Prefill dms fields */
+        prefillDMSConfig: function() {
+          if (!this.dmsPrefill) return;
+          var newFields = {
+            imports: [],
+            importSchema: { options: {} },
+            dms: {},
+          };
+          if (this.dmsPrefill !== 'custom') {
+            newFields = {
+              imports: JSON.parse(JSON.stringify(PRECONFS.dms[this.dmsPrefill].imports)),
+              importSchema: JSON.parse(JSON.stringify(PRECONFS.dms[this.dmsPrefill].importSchema)),
+              dms: JSON.parse(JSON.stringify(PRECONFS.dms[this.dmsPrefill].dms))
+            };
+            if (this.garage.group) {
+              var group = this.garage.group;
+              newFields.imports.forEach(function (im) {
+                if (im.params && im.params.files) {
+                  im.params.files.forEach(function (param) {
+                    if (param.path) {
+                      param.path = param.path.replace('group', group);
+                    }
+                  });
+                }
+              });
+            }
+          }
+          this.garage = Object.assign({}, this.garage, newFields);
+          this.rawDMS = JSON.stringify(this.garage.dms);
+          this.rawImportSchema = JSON.stringify(this.garage.importSchema);
+          this.rawDMSInvalid = false;
+        },
+        /** Call to API */
+        hasSubscription: function (subscription) {
+          return this.garage && this.garage.subscriptions && this.garage.subscriptions[subscription] && this.garage.subscriptions[subscription].enabled && this.garage.subscriptions.active;
+        },
+        removeSubscription: function (subscription) {
+          // this.$set(this.garage.subscriptions[subscription], "enabled", false);
+        },
+        addSubscription: function (subscription) {
+          // this.$set(this.garage.subscriptions[subscription], "enabled", true);
+        },
+        /** Branchements */
+        importsAddDataFile: function(event) {
+          var type = event.target.value;
+          if (!type) return;
+          if (!this.garage.imports) {
+            this.$set(this.garage, 'imports', []);
+          }
+          this.garage.imports.push({ type: type, method: 'FTP', params: {} });
+
+        },
+        importsRemoveDataFile: function (index) {
+          this.garage.imports.splice(index, 1);
+        },
+        importsAddFTPFile: function (datafile, datafileIndex) {
+          var empty = {
+            path:'',
+            charset: '',
+            enableLastModifiedCheck: false,
+            columnFilter: false,
+            columnFilterSeparator: null,
+            columnFilterColumnNumber: null,
+            columnFilterColumnValue: null
+          }
+          if (datafile.params.files) {
+            datafile.params.files.push(empty);
+          } else {
+            this.$set(this.garage.imports[datafileIndex].params, 'files', [empty]);
+          }
+        },
+        importsRemoveFTPFile: function (datafile, index) {
+          datafile.params.files.splice(index, 1);
+        },
+        ////////////////////
+        save: async function (event) {
+          this.garage.ratingType = this.ratingType.split('-')[0];
+          const flattGarage = flatten(this.garage);
+          const flattRefGarage = flatten(this.refGarage);
+          const setGarage = {
+            id: this.garage.id
+          };
+
+          for (const keyG of Object.keys(flattGarage)) {
+            if (/logoEmail/.test(keyG)) { // save array
+              setGarage.logoEmail = this.garage.logoEmail;
+            } else if (/logoDirectoryPage/.test(keyG)) {
+              setGarage.logoDirectoryPage = this.garage.logoDirectoryPage;
+            } else if (/brandNames/.test(keyG)) {
+              setGarage.brandNames = this.garage.brandNames;
+            } else if (/imports/.test(keyG)) {
+              setGarage.imports = this.garage.imports;
+            } else if (/importSchema/.test(keyG)) {
+              setGarage.importSchema = this.garage.importSchema;
+            } else if (/dms/.test(keyG)) {
+              setGarage.dms = this.garage.dms;
+            } else if (/links/.test(keyG)) {
+              setGarage.links = this.garage.links;
+            } else if (/allowedSourceTypes/.test(keyG)) {
+              setGarage['salesforce.allowedSourceTypes'] = this.garage.salesforce.allowedSourceTypes;
+            } else if (JSON.stringify(flattGarage[keyG]) !== JSON.stringify(flattRefGarage[keyG])) {
+              setGarage[keyG] = flattGarage[keyG];
+            }
+          };
+
+          const res = await axios.put('{{ lib.client.url.getShortUrl('ADMIN_GARAGE') }}', setGarage);
+          if (res.request.status === 200) {
+            await this.getGarage(setGarage.id)
+            alert('Garage sauvegardé avec succès');
+          }
+          else {
+            alert("Erreur ! Plus de détails dans la console");
+            console.error(res);
+          }
+        },
+
+        getOutlet: async function () {
+          const parameters = { ...this.garage.salesforce };
+          const res = await axios.post('{{ lib.client.url.getShortUrl('ADMIN_GARAGE_OUTLETS') }}', parameters);
+          this.outlets = res.data;
+        },
+
+        getSourceType: async function (GarageId) {
+          const res = await axios.get('{{ lib.client.url.getShortUrl('ADMIN_GARAGE_SOURCETYPES') }}');
+          this.sourceTypes = res.data;
+        },
+        // ask a copie from FTP To S3
+        askRunFtp2S3: function (event) {
+          event.preventDefault();
+          if (!this.canAskRunFtp2S3) { return; }
+          this.canAskRunFtp2S3 = false;
+          this.ftp3s3log = 'Demande en attente...';
+          try {
+            var garageId = this.garage.id;
+            var request = new XMLHttpRequest();
+            var url = '{{ lib.client.url.getShortUrl('ADMIN_GARAGE_RUN_FTP2S3') }}'
+              + '?garageId=' + encodeURIComponent(garageId);
+            request.open('GET', url, true);
+            request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+            request.send();
+            request.onload = function () {
+              if (request.status !== 200 && request.status !== 304) {
+                this.results = { isValid: false };
+                this.error_msg = 'Erreur sur le serveur';
+                this.canAskRunFtp2S3 = true;
+              } else {
+                var resSocket = JSON.parse(request.responseText);
+                var HOST = (document.location.protocol.indexOf('https') > -1 ? 'wss' : 'ws') + '://' + document.location.host + resSocket.websocket;
+                var ws = new WebSocket(HOST);
+
+                ws.onmessage = function (event) {
+                  var res = event.data && JSON.parse(event.data);
+                  if (res && res.status === 'running') { return; }
+                  if (res && res.status === 'ok') {
+                    this.ftp3s3log = res.details;
+                    this.canAskRunFtp2S3 = true;
+                  } else if (res && res.status === 'ko') {
+                    this.ftp3s3log = res.message;
+                    this.canAskRunFtp2S3 = true;
+                  } else {
+                    this.ftp3s3log = 'Erreur serveur';
+                    this.canAskRunFtp2S3 = true;
+                  }
+                  ws.close();
+                }.bind(this);
+              }
+            }.bind(this);
+          } catch (e) {
+            console.error(e);
+          }
+        },
+        // fill empty fields using google place api
+        updateGooglePlace: function (event) {
+          event.preventDefault();
+          const url = '{{ lib.client.url.getUrlNamespace('GOOGLE_PLACE').UPDATE_ONE }}';
+
+          this.googlePlaceUpdatePending = true;
+          gsTools.postRequest(url.replace(':garageId', this.garage.id), {}, (errUpdate, result) => {
+            if (errUpdate) {
+              window.alert('Erreur: impossible de mettre à jour Google Place.\nconsultez la console du navigateur pour plus d\'informations.');
+              console.error(errUpdate);
+            } else {
+              for (const field of Object.keys(result.result)) {
+                if (field === 'googlePlace') {
+                  if (!this.garage[field]) this.garage[field] = {};
+                  for (const field of Object.keys(result.result.googlePlace)) this.garage.googlePlace[field] = result.result.googlePlace[field];
+                } else this.garage[field] = result.result[field];
+                this.$set(this.garage, field, this.garage[field]);
+              }
+              this.googlePlaceDisplaySuccessMessage = true;
+              setTimeout(() => { this.googlePlaceDisplaySuccessMessage = false; }, 4000);
+            }
+            this.googlePlaceUpdatePending = false;
+          });
+        }
+      }
+    });
+
+  </script>
+{% endblock %}

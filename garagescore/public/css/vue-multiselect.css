@@ -1,0 +1,31 @@
+.multiselect {
+  font-size: 1rem;
+}
+
+.multiselect--active {
+  z-index: 3;
+}
+
+.multiselect__content {
+  width: 100% !important;
+}
+
+.multiselect__tags {
+  border-radius: 3px;
+  border-color: #BABABA;
+}
+
+.multiselect__single {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.multiselect__input {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.multiselect__option--disabled {
+  pointer-events: none !important;
+}
+/*# sourceMappingURL=vue-multiselect.css.map */

@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="en" class="darkbo js">
+<head>
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
+	<title>CSS . Garagescore</title>
+	<meta charset="utf-8" />
+  	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/darkbo.css"/>
+  	<link rel="stylesheet" href="showcase/showcase.css"/>
+    <link rel="shortcut icon" href="icons/favicon.ico?v=1581954028" type="image/x-icon">
+    <link rel="icon" href="icons/favicon.ico?v=1581954028" type="image/x-icon">
+</head>
+<body id="gs-dbo">
+	<header class="affix">
+		<a href="#" class="v4-tease">Dark Back Office, Framework CSS</a>
+	</header>
+    <br><br><br>
+    <div id="pig-animation">
+        <img id="fence-far" src="icons/bootstrap.png"/>
+        <img  id="pig-leg-left-back" src="icons/html5.png"/>
+        <img  id="pig-leg-left-front" src="icons/css3.png"/>
+        <img id="pig-body" src="icons/DBO.png" />
+    </div><!--pig-animationr-->
+	<div class="container bs-docs-container">
+	<div class="row">
+	<div class="col-md-9">
+
+        <div class="bs-docs-section">
+            <h1 class="h1-anim not">Overview</h1>
+            <h3 class="not">
+                Global CSS settings, fundamental HTML elements styled and enhanced with <code>.darkbo</code> class, and Bootstrap grid system.
+            </h3>
+            <h2 class="not">HTML5 doctype</h2>
+            <p>
+                Darkbo framework require the use of the HTML5 doctype. Include it at the beginning of all your pages.
+            </p>
+            <pre class="pre-scrollable">
+&lt;!DOCTYPE html>
+&lt;html lang="en">
+    ...
+&lt;/html>
+            </pre>
+            <h2 class="not">Typography and links</h2><br>
+            <p>
+                <strong>Darkbo.css</strong> sets basic global display, typography, and link styles. Specifically, we:
+                <br><br>
+                Set <code>background-image: linear-gradient(180deg, #000 60%, #414968);</code> on the <code>body</code>.<br><br>
+                Use the <code>font-family : "Roboto Regular";</code>.<br><br>
+                For any use of our Darkbo.css framework, just put the <code>.darkbo</code> class on the body of the page web or just on the element to styled.
+            </p>
+            <h2 class="not">Showcase.css</h2>
+            <p>For improved cross-browser rendering, we use <code>Showcase.css</code>.</p>
+            <h2 class="not">Containers</h2>
+            <p>Use <code>.container</code> for a responsive fixed width container.</p>
+            <pre class="pre-scrollable">
+&lt;div class="container">
+  ...
+&lt;/div>
+            </pre>
+            <p>Use <code>.container-fluid</code> for a full width container, spanning the entire width of your viewport.</p>
+            <pre class="pre-scrollable">
+&lt;div class="container-fluid">
+  ...
+&lt;/div>
+            </pre>
+            <h2 class="not">Grid system</h2>
+            <p>
+                Bootstrap includes a responsive, mobile first fluid grid system that appropriately scales up to 12 columns as the device or viewport size increases.
+            </p>
+        </div><!--.bs-docs-section-->
+
+        <div class="bs-docs-section" id="Thypography">
+
+        <h2 id="thypography-headings">Typography</h2>
+        <h3>Headings</h3>
+        <h1>h1. Garagescore heading <small>Secondary text</small></h1>
+        <h2 class="not">h2. Garagescore heading <small>Secondary text</small></h2>
+        <h3 class="not">h3. Garagescore heading <small>Secondary text</small></h3>
+        <h4>h4. Garagescore heading <small>Secondary text</small></h4>
+        <h5>h5. Garagescore heading <small>Secondary text</small></h5>
+        <h6>h6. Garagescore heading <small>Secondary text</small></h6>
+        <br>
+        <p>
+            Create lighter, secondary text in any heading with a generic <code>&lt;small></code> tag or the <code>.small</code> class.
+        </p>
+        <div class="well center-block">
+            <pre class="pre-scrollable ">
+&lt;h1>h1. Garagescore heading &lt;small>Secondary text&lt;/small>&lt;/h1>
+&lt;h2>h2. Garagescore heading &lt;small>Secondary text&lt;/small>&lt;/h2>
+&lt;h3>h3. Garagescore heading &lt;small>Secondary text&lt;/small>&lt;/h3>
+&lt;h4>h4. Garagescore heading &lt;small>Secondary text&lt;/small>&lt;/h4>
+&lt;h5>h5. Garagescore heading &lt;small>Secondary text&lt;/small>&lt;/h5>
+&lt;h6>h6. Garagescore heading &lt;small>Secondary text&lt;/small>&lt;/h6>
+            </pre>
+        </div>
+        <h3 id="thypography-marked-text">Marked text</h3>
+        <p>
+            For highlighting a run of text due to its relevance in another context, use the <code>&lt;mark></code> tag.
+        </p>
+        <div class="well center-block">
+            You can use the mark tag to <mark>Garagescore</mark> text.
+            <br><br>
+            <pre class="pre-scrollable ">
+You can use the mark tag to &lt;mark> Garagescore &lt;/mark> text.
+            </pre>
+        </div>
+
+        <h3 id="thypography-deleted-text">Deleted text</h3>
+        <p>For indicating blocks of text that have been deleted use the <code>&lt;del></code> tag.</p>
+        <div class="well center-block">
+            <del>This line of text is meant to be treated as deleted text.</del>
+            <br><br>
+            <pre class="pre-scrollable ">
+&lt;del>This line of text is meant to be treated as deleted text.&lt;/del>
+            </pre>
+        </div>
+
+        <h3 id="thypography-underlined-text">Underlined text</h3>
+        <p>To underline text use the <code>&lt;u></code> tag.</p>
+        <div class="well center-block">
+            <u>This line of text will render as underlined</u>
+            <br><br>
+            <pre class="pre-scrollable ">
+&lt;u>This line of text will render as underlined&lt;/u>
+            </pre>
+        </div>
+
+        <h3 id="thypography-small-text">Small text</h3>
+        <p>
+            For de-emphasizing inline or blocks of text, use the <code>&lt;small></code> tag to set text at 85% the size of the parent. Heading elements receive their own font-size for nested <code>&lt;small></code> elements.
+        </p>
+        <p>
+            You may alternatively use an inline element with .small in place of any <code>&lt;small></code>.
+        </p>
+        <div class="well center-block">
+            <small>This line of text is meant to be treated as fine print.</small>
+            <br><br>
+            <pre class="pre-scrollable ">
+&lt;small>This line of text is meant to be treated as fine print.&lt;/small>
+            </pre>
+        </div>
+
+        <h3>Bold</h3>
+        <p>For emphasizing a snippet of text with a heavier font-weight.</p>
+        <div class="well center-block">
+            The following snippet of text is <strong>rendered as bold text.</strong>
+            <br><br>
+            <pre class="pre-scrollable ">
+&lt;strong class="">rendered as bold text&lt;/strong>
+            </pre>
+        </div>
+
+        <h3>Italics</h3>
+        <p>For emphasizing a snippet of text with italics.</p>
+        <div class="well center-block">
+            <p>The following snippet of text is rendered as <em>italicized text.</em></p>
+            <br>
+            <pre class="pre-scrollable ">
+&lt;em>italicized text&lt;/em>
+            </pre>
+        </div>
+
+        <h3>Addresses</h3>
+        <p>
+            Present contact information for the nearest ancestor or the entire body of work. Preserve formatting by ending all lines with <code>&lt;br></code>.
+        </p>
+        <br>
+        <div class="well center-block">
+            <address>
+                <strong>Full Name</strong><br>
+                <a href="mailto:#">first.last@example.com</a>
+            </address>
+            <pre class="pre-scrollable ">
+&lt;address>
+ &lt;strong>Full Name&lt;/strong>&lt;br>
+ &lt;a href="mailto:#">first.last@example.com&lt;/a>
+&lt;/address>
+            </pre>
+        </div>
+        <h3>Lists</h3><br>
+        <h4>Basic List</h4>
+		<p>Use <code>pre</code> for multiple lines of code. Be sure to escape any angle brackets in the code for proper rendering.</p>
+		<p>You may optionally add the <code>.pre-scrollable</code> class, which will set a max-height of 350px and provide a y-axis scrollbar.</p>
+        <div class="well center-block">
+            <pre class="pre-scrollable pre-bg">
+{
+*_reference* *generic_xls_mmddyyyy*;
+"foreigns" {
+"paraserColumnsid"."58658514083210125565659898",
+"paraser\sqsiqhsu"
+"484965197845984712320549dsdz"
+}
+"fileformat" {
+"format" "slsx"
+"charset"."win1252"
+}
+*_reference* *generic_xls_mmddyyyy*;
+"foreigns" {
+"paraserColumnsid"."58658514083210125565659898",
+"paraser\sqsiqhsu"
+"484965197845984712320549dsdz"
+}
+"fileformat" {
+"format" "slsx"
+"charset"."win1252"
+}
+}
+            </pre>
+            <pre class="pre-scrollable">
+&lt;pre class="pre-scrollable pre-bg">
+{
+*_reference* *generic_xls_mmddyyyy*;
+"foreigns" {
+"paraserColumnsid"."58658514083210125565659898",
+"paraser\sqsiqhsu"
+"484965197845984712320549dsdz"
+}
+"fileformat" {
+"format" "slsx"
+"charset"."win1252"
+}
+*_reference* *generic_xls_mmddyyyy*;
+"foreigns" {
+"paraserColumnsid"."58658514083210125565659898",
+"paraser\sqsiqhsu"
+"484965197845984712320549dsdz"
+}
+"fileformat" {
+"format" "slsx"
+"charset"."win1252"
+}
+}
+&lt;/pre&gt;
+            </pre>
+        </div>
+        <h4>List add elements</h4>
+        <div class="well center-block">
+            <form class="form-group list">
+                <p><a class="btn btn-3d btn-3d-1 btn-primary-3d" href="#" role="button">Create a new user</a></p>
+                <div class="form-horizontal scroll">
+                    <p><a href="mailto:#">a.pache@garagemoderne.fr</a></p>
+                    <p><a href="mailto:#">a.pache@garagemoderne.fr</a></p>
+                    <p><a href="mailto:#">a.pache@garagemoderne.fr</a></p>
+                    <p><a href="mailto:#">a.rey@renault.fr</a></p>
+                    <p><a href="mailto:#">alexandra@renault.fr</a></p>
+                    <p><a href="mailto:#">alexandra@peugeot.fr</a></p>
+                    <p><a href="mailto:#">a.pache@garagemoderne.fr</a></p>
+                    <p><a href="mailto:#">a.pache@garagemoderne.fr</a></p>
+                    <p><a href="mailto:#">a.pache@garagemoderne.fr</a></p>
+                    <p><a href="mailto:#">a.rey@renault.fr</a></p>
+                    <p><a href="mailto:#">alexandra@renault.fr</a></p>
+                    <p><a href="mailto:#">alexandra@peugeot.fr</a></p>
+                </div>
+            </form>
+            <pre class="pre-scrollable">
+&lt;form class="form-group list">
+&lt;p>&lt;a class="btn btn-3d btn-3d-1 btn-primary-3d not" href="#" role="button">Create a new user&lt;/a>&lt;/p>
+&lt;div class="form-horizontal">
+&lt;p>&lt;a href="mailto:#">a.pache@garagemoderne.fr&lt;/a>&lt;/p>
+&lt;p>&lt;a href="mailto:#">a.pache@garagemoderne.fr&lt;/a>&lt;/p>
+&lt;p>&lt;a href="mailto:#">a.pache@garagemoderne.fr&lt;/a>&lt;/p>
+&lt;p>&lt;a href="mailto:#">a.rey@renault.fr&lt;/a>&lt;/p>
+&lt;p>&lt;a href="mailto:#">alexandra@renault.fr&lt;/a>&lt;/p>
+&lt;/div>
+&lt;/form>
+            </pre>
+        </div>
+        <h4>Unordered</h4>
+        <p>A list of items in which the order does not explicitly matter.</p>
+        <div class="well center-block">
+            <ul>
+                <li>Lorem ipsum dolor sit amet</li>
+                <li>Consectetur adipiscing elit</li>
+                <li>Integer molestie lorem at massa</li>
+                <li>Facilisis in pretium nisl aliquet
+                    <ul>
+                        <li>Phasellus iaculis neque</li>
+                        <li>Purus sodales ultricies</li>
+                        <li>Vestibulum laoreet porttitor sem</li>
+                    </ul>
+                </li>
+                <li>Faucibus porta lacus fringilla vel</li>
+                <li>Aenean sit amet erat nunc</li>
+            </ul>
+            <pre class="pre-scrollable ">
+&lt;ul>
+ &lt;li>...&lt;/li>
+&lt;/ul>
+            </pre>
+        </div>
+            <h4>Ordered</h4>
+            <p>A list of items in which the order does explicitly matter.</p>
+            <div class="well center-block">
+                <ol>
+                    <li>Lorem ipsum dolor sit amet</li>
+                    <li>Consectetur adipiscing elit</li>
+                    <li>Integer molestie lorem at massa</li>
+                    <li>Facilisis in pretium nisl aliquet</li>
+                    <li>Nulla volutpat aliquam velit</li>
+                    <li>Faucibus porta lacus fringilla vel</li>
+                    <li>Aenean sit amet erat nunc</li>
+                    <li>Eget porttitor lorem</li>
+                </ol>
+                <pre class="pre-scrollable ">
+&lt;ol>
+ &lt;li>...&lt;/li>
+&lt;/ol>
+                </pre>
+            </div>
+            <h4>Unstyled</h4>
+            <p>Remove the default <code>list-style</code> and left margin on list items (immediate children only). <strong>This only applies to immediate children list items</strong>, meaning you will need to add the class for any nested lists as well.</p>
+            <div class="well center-block">
+                <ul class="list-unstyled">
+                    <li>Lorem ipsum dolor sit amet</li>
+                    <li>Consectetur adipiscing elit</li>
+                    <li>Integer molestie lorem at massa</li>
+                    <li>Facilisis in pretium nisl aliquet
+                        <ul>
+                            <li>Phasellus iaculis neque</li>
+                            <li>Purus sodales ultricies</li>
+                            <li>Vestibulum laoreet porttitor sem</li>
+                        </ul>
+                    </li>
+                    <li>Faucibus porta lacus fringilla vel</li>
+                    <li>Aenean sit amet erat nunc</li>
+                </ul>
+                <pre class="pre-scrollable ">
+&lt;ul class="list-unstyled">
+  &lt;li>...&lt;/li>
+&lt;/ul>
+                </pre>
+            </div>
+    </div><!--.bs-docs-section-->
+
+    <div class="bs-docs-section" id="control-table">
+        <h2>Tables</h2>
+		<h3>Basic exemple</h3>
+		<p>For basic styling—light padding and only horizontal dividers—add the base class <code>.table</code> to any <code>&lt;table></code>. It may seem super redundant, but given the widespread use of tables for other plugins like calendars and date pickers, we've opted to isolate our custom table styles.</p>
+        <br>
+        <div class="well center-block">
+            <table class="table">
+                <thead>
+                    <tr>
+                      <th>Colonne 1</th>
+                      <th>Colonne 2</th>
+                      <th>Colonne 3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      <td>NONVALIDElesbadianes@aol.com</td>
+                      <td>BOUNCE</td>
+                      <td>28/03/2017</td>
+                    </tr>
+                    <tr>
+                      <td>NONVALIDElesbadianes@aol.com</td>
+                      <td>BOUNCE</td>
+                      <td>28/03/2017</td>
+                    </tr>
+                    <tr>
+                      <td>NONVALIDElesbadianes@aol.com</td>
+                      <td>BOUNCE</td>
+                      <td>28/03/2017</td>
+                    </tr>
+                    <tr>
+                      <td>NONVALIDElesbadianes@aol.com</td>
+                      <td>BOUNCE</td>
+                      <td>28/03/2017</td>
+                    </tr>
+                </tbody>
+            </table><br><br>
+            <pre class="pre-scrollable ">
+&lt;table class="table">
+&lt;thead>
+&lt;tr>
+&lt;th>Firstname&lt;/th>
+&lt;th>Lastname&lt;/th>
+&lt;th>Email&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>NONVALIDElesbadianes@aol.com&lt;/td>
+&lt;td>BOUNCE&lt;/td>
+&lt;td>28/03/2017&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Hatemberrqhmoun@gmx.fr&lt;/td>
+&lt;td>DÉSABONNEMENT&lt;/td>
+&lt;td>28/03/2017&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>pahache89@wanadoo.fr&lt;/td>
+&lt;td>BOUNCE&lt;/td>
+&lt;td>28/03/2017&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+            </pre>
+        </div>
+        <h3>Condensed table</h3>
+        <p>Add <code>.table-condensed</code> to make tables more compact by cutting cell padding in half.</p>
+        <div class="well center-block">
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                      <th>Colonne 1</th>
+                      <th>Colonne 2</th>
+                      <th>Colonne 3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      <td>NONVALIDElesbadianes@aol.com</td>
+                      <td>BOUNCE</td>
+                      <td>28/03/2017</td>
+                    </tr>
+                    <tr>
+                      <td>NONVALIDElesbadianes@aol.com</td>
+                      <td>BOUNCE</td>
+                      <td>28/03/2017</td>
+                    </tr>
+                    <tr>
+                      <td>NONVALIDElesbadianes@aol.com</td>
+                      <td>BOUNCE</td>
+                      <td>28/03/2017</td>
+                    </tr>
+                    <tr>
+                      <td>NONVALIDElesbadianes@aol.com</td>
+                      <td>BOUNCE</td>
+                      <td>28/03/2017</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+	</div><!--.bs-docs-section-->
+
+    <div class="bs-docs-section">
+        <h2>Forms</h2>
+        <h3>Basic example</h3>
+        <p>Individual form controls automatically receive some global styling. All textual <code>&lt;input></code>, <code>&lt;textarea></code>, and <code>&lt;select></code> elements with <code>.form-control</code> are set to <code>width: 100%;</code> by default. Wrap labels and controls in <code>.form-group</code> for optimum spacing.</p>
+        <br>
+        <div class="well center-block">
+            <form>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                </div>
+                <div class="box">
+                    <input type="file" name="file1" id="file1" class="form-control"/>
+                    <label for="file1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Choisissez un fichier&hellip;</span></label>
+                </div>
+                <div class="checkbox">
+                <label>
+                    <input type="checkbox" class="toggle"/>&nbsp; Check me out
+                </label>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form><br>
+            <pre class="pre-scrollable">
+&lt;form>
+&lt;div class="form-group">
+&lt;label for="exampleInputEmail1">Email address&lt;/label>
+&lt;input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+&lt;/div>
+&lt;div class="form-group">
+&lt;label for="exampleInputPassword1">Password&lt;/label>
+&lt;input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+&lt;/div>
+&lt;div class="box">
+&lt;input type="file" name="file" id="file" class="form-control"/>
+&lt;label for="file">&lt;svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">&lt;path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/>&lt;/svg> &lt;span>Choisissez un fichier&hellip;&lt;/span>&lt;/label>
+&lt;/div>
+&lt;div class="checkbox">
+&lt;label>
+&lt;input type="checkbox" class="toggle"/>&nbsp; Check me out
+&lt;/label>
+&lt;/div>
+&lt;button type="submit" class="btn btn-primary">Submit&lt;/button>
+&lt;/form>
+            </pre>
+        </div>
+        <br>
+        <div class="bs-callout bs-callout-warning">
+            <h4>Don't mix form groups with input groups</h4>
+            <p>
+                Do not mix form groups directly with input groups. Instead, nest the input group inside of the form group.
+            </p>
+        </div>
+        <h3>Inline form</h3>
+        <p>
+            Add <code>.form-inline</code> to your form (which doesn't have to be a <code>&lt;form></code>) for left-aligned and inline-block controls. <strong>This only applies to forms within viewports that are at least 768px wide.</strong>
+        </p><br>
+        <div class="well center-block">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="exampleInputName2">Name</label>&nbsp;
+                    <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail2">Email</label>&nbsp;
+                    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+                </div>
+            <button type="submit" class="btn btn-primary">Send invitation</button>
+            </form><br>
+            <pre class="pre-scrollable">
+&lt;form class="form-inline">
+&lt;div class="form-group">
+&lt;label for="exampleInputName2">Name&lt;/label>
+&lt;input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
+&lt;/div>
+&lt;div class="form-group">
+&lt;label for="exampleInputEmail2">Email&lt;/label>
+&lt;input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+&lt;/div>
+&lt;button type="submit" class="btn btn-primary">Send invitation&lt;/button>
+&lt;/form>
+            </pre>
+        </div>
+        <h3>Horizontal form</h3>
+        <p>
+            Use Bootstrap's predefined grid classes to align labels and groups of form controls in a horizontal layout by adding <code>.form-horizontal</code> to the form (which doesn't have to be a <code>&lt;form></code>). Doing so changes <code>.form-groups</code> to behave as grid rows, so no need for <code>.row</code>.
+        </p><br>
+        <div class="well center-block">
+            <form class="form-horizontal">
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" class="toggle">&nbsp; Remember me
+                    </label>
+                </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">Sign in</button>
+                </div>
+            </div>
+            </form>
+            <pre class="pre-scrollable">
+&lt;form class="form-horizontal">
+&lt;div class="form-group">
+&lt;label for="inputEmail3" class="col-sm-2 control-label">Email&lt;/label>
+&lt;div class="col-sm-10">
+&lt;input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+&lt;/div>
+&lt;/div>
+&lt;div class="form-group">
+&lt;label for="inputPassword3" class="col-sm-2 control-label">Password&lt;/label>
+&lt;div class="col-sm-10">
+&lt;input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+&lt;/div>
+&lt;/div>
+&lt;div class="form-group">
+&lt;div class="col-sm-offset-2 col-sm-10">
+&lt;div class="checkbox">
+&lt;label>
+&lt;input type="checkbox" class="toggle">&nbsp; Remember me
+&lt;/label>
+&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;div class="form-group">
+&lt;div class="col-sm-offset-2 col-sm-10">
+&lt;button type="submit" class="btn btn-primary">Sign in&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;/form>
+            </pre>
+        </div>
+        <h3>Supported controls</h3>
+        <p>Examples of standard form controls supported in an example form layout.</p><br>
+		<h4>Input</h4>
+		<p>
+			Most common form control, text-based input fields. Includes support for all HTML5 types: <code>text</code>, <code>password</code>, <code>datetime</code>, <code>datetime-local</code>, <code>date</code>, <code>month</code>, <code>time</code>, <code>week</code>, <code>number</code>, <code>email</code>, <code>url</code>, <code>search</code>, <code>tel</code>, and <code>color</code>.
+		</p>
+        <div class="bs-callout bs-callout-danger">
+            <h4>Type declaration required</h4>
+            <p>
+                Inputs will only be fully styled if their <code>type</code> is properly declared.
+            </p>
+        </div><br>
+        <div class="well center-block">
+		  <input type="text" class="form-control" placeholder="Text input">
+            <br>
+            <pre id="to-copy" class="pre-scrollable ">
+&lt;input type="text" class="form-control" placeholder="Text input"&gt;
+            </pre>
+        </div>
+        <div class="bs-callout bs-callout-info">
+            <h4>Input groups</h4>
+            <p>
+                To add integrated text or buttons before and/or after any text-based <code>&lt;input></code>.
+            </p>
+        </div><br>
+        <h4>Textarea</h4>
+		<p>Form control which supports multiple lines of text. Change <code>rows</code> attribute as necessary.</p>
+        <div class="well center-block">
+            <textarea class="form-control" rows="3"></textarea>
+            <br>
+            <pre class="pre-scrollable ">
+&lt;textarea class="form-control" rows="3"&gt;&lt;/textarea&gt;
+            </pre>
+        </div>
+        <h4>Checkboxes and radios</h4>
+        <p>
+            Checkboxes are for selecting one or several options in a list, while radios are for selecting one option from many.
+            Disabled checkboxes and radios are supported, but to provide a "not-allowed" cursor on hover of the parent <code>&lt;label></code>, you'll need to add the <code>.disabled</code> class to the parent <code>.radio</code>, <code>.radio-inline</code>, <code>.checkbox</code>, or <code>.checkbox-inline</code>.
+        </p>
+        <h5>Default (stacked)</h5>
+        <div class="well center-block">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" class="toggle">
+                    &nbsp;&nbsp;Option one is this and that&mdash;be sure to include why it's great
+                </label>
+            </div>
+            <div class="checkbox disabled" class="toggle">
+                <label>
+                    <input type="checkbox" value="" disabled class="toggle">
+                    &nbsp;&nbsp;Option two is disabled
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked class="toggle">
+                    &nbsp;&nbsp;Option one is this and that&mdash;be sure to include why it's great
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" class="toggle">
+                    &nbsp;&nbsp;Option two can be something else and selecting it will deselect option one
+                </label>
+            </div>
+            <div class="radio disabled">
+                <label>
+                    <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" disabled class="toggle">
+                    &nbsp;&nbsp;Option three is disabled
+                </label>
+            </div><br>
+            <pre class="pre-scrollable">
+&lt;div class="checkbox">
+&lt;label>
+&lt;input type="checkbox" value="" class="toggle">
+&nbsp;&nbsp;Option one is this and that&mdash;be sure to include why it's great
+&lt;/label>
+&lt;/div>
+&lt;div class="checkbox disabled" class="toggle">
+&lt;label>
+&lt;input type="checkbox" value="" disabled class="toggle">
+&nbsp;&nbsp;Option two is disabled
+&lt;/label>
+&lt;/div>
+&lt;div class="radio">
+&lt;label>
+&lt;input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked class="toggle">
+&nbsp;&nbsp;Option one is this and that&mdash;be sure to include why it's great
+&lt;/label>
+&lt;/div>
+&lt;div class="radio">
+&lt;label>
+&lt;input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" class="toggle">
+&nbsp;&nbsp;Option two can be something else and selecting it will deselect option one
+&lt;/label>
+&lt;/div>
+&lt;div class="radio disabled">
+&lt;label>
+&lt;input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" disabled class="toggle">
+&nbsp;&nbsp;Option three is disabled
+&lt;/label>
+&lt;/div>
+            </pre>
+        </div>
+        <h4>Inline checkboxes and radios</h4>
+        <p>
+            Use the <code>.checkbox-inline</code> or <code>.radio-inline</code> classes on a series of checkboxes or radios for controls that appear on the same line.
+        </p><br>
+        <div class="well center-block">
+            <label class="checkbox-inline">
+            <input type="checkbox" class="toggle" id="inlineCheckbox1" value="option1">&nbsp;&nbsp; 1
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" class="toggle" id="inlineCheckbox2" value="option2">&nbsp;&nbsp; 2
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" class="toggle" id="inlineCheckbox3" value="option3">&nbsp;&nbsp; 3
+            </label>
+            <br><br>
+            <label class="radio-inline">
+                <input type="radio" class="toggle" name="inlineRadioOptions" id="inlineRadio1" value="option1">&nbsp;&nbsp; 1
+            </label>
+            <label class="radio-inline">
+                <input type="radio" class="toggle" name="inlineRadioOptions" id="inlineRadio2" value="option2">&nbsp;&nbsp; 2
+            </label>
+            <label class="radio-inline">
+                <input type="radio" class="toggle" name="inlineRadioOptions" id="inlineRadio3" value="option3">&nbsp;&nbsp; 3
+            </label><br><br>
+            <pre class="pre-scrollable">
+&lt;label class="checkbox-inline">
+&lt;input type="checkbox" class="toggle" id="inlineCheckbox1" value="option1">&nbsp;&nbsp; 1
+&lt;/label>
+&lt;label class="checkbox-inline">
+&lt;input type="checkbox" class="toggle" id="inlineCheckbox2" value="option2">&nbsp;&nbsp; 2
+&lt;/label>
+&lt;label class="checkbox-inline">
+&lt;input type="checkbox" class="toggle" id="inlineCheckbox3" value="option3">&nbsp;&nbsp; 3
+&lt;/label>
+
+&lt;label class="radio-inline">
+&lt;input type="radio" class="toggle" name="inlineRadioOptions" id="inlineRadio1" value="option1">&nbsp;&nbsp; 1
+&lt;/label>
+&lt;label class="radio-inline">
+&lt;input type="radio" class="toggle" name="inlineRadioOptions" id="inlineRadio2" value="option2">&nbsp;&nbsp; 2
+&lt;/label>
+&lt;label class="radio-inline">
+&lt;input type="radio" class="toggle" name="inlineRadioOptions" id="inlineRadio3" value="option3">&nbsp;&nbsp; 3
+&lt;/label>
+            </pre>
+        </div>
+        <h4>Checkboxes and radios without label text</h4>
+        <p>
+            Should you have no text within the <code>&lt;label></code>, the input is positioned as you'd expect. <strong>Currently only works on non-inline checkboxes and radios.</strong> Remember to still provide some form of label for assistive technologies (for instance, using <code>aria-label</code>).
+        </p><br>
+        <div class="well center-block">
+            <div class="checkbox">
+            <label>
+                <input type="checkbox" class="toggle" id="blankCheckbox" value="option1" aria-label="...">
+            </label>
+            </div>
+            <div class="radio">
+            <label>
+                <input type="radio" class="toggle" name="blankRadio" id="blankRadio1" value="option1" aria-label="...">
+            </label>
+            </div>
+            <pre class="pre-scrollable">
+&lt;div class="checkbox">
+&lt;label>
+&lt;input type="checkbox" class="toggle" id="blankCheckbox" value="option1" aria-label="...">
+&lt;/label>
+&lt;/div>
+&lt;div class="radio">
+&lt;label>
+&lt;input type="radio" class="toggle" name="blankRadio" id="blankRadio1" value="option1" aria-label="...">
+&lt;/label>
+&lt;/div>
+            </pre>
+        </div>
+        <h4 id="control-selects">Selects</h4>
+        <p>
+            Note that many native select menus—namely in Safari and Chrome—have rounded corners that cannot be modified via <code>border-radius</code> properties.
+        </p>
+        <div class="well center-block">
+            <select class="form-control">
+                <option>Ajouter un garage</option>
+                <option>2</option>
+            </select>
+            <br>
+            <pre class="pre-scrollable ">
+&lt;select class="form-control"&gt;
+&lt;option&gt;Ajouter un garage&lt;/option&gt;
+&lt;option&gt;2&lt;/option&gt;
+&lt;/select&gt;
+		  </pre>
+        </div>
+        <p>
+            For <code>&lt;select></code> controls with the multiple attribute, <code>multiple</code> options are shown by default.
+        </p>
+        <div class="well center-block">
+            <select multiple class="form-control">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+            <br>
+            <pre class="pre-scrollable">
+&lt;select multiple class="form-control">
+&lt;option>1&lt;/option>
+&lt;option>2&lt;/option>
+&lt;option>3&lt;/option>
+&lt;option>4&lt;/option>
+&lt;option>5&lt;/option>
+&lt;/select>
+            </pre>
+        </div>
+        <h4>Static control</h4>
+        <p>When you need to place plain text next to a form label within a form, use the <code>.form-control-static</code> class on a <code>&lt;p></code>.</p><br>
+        <div class="well center-block">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Email</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">email@example.com</p>
+                    </div>
+                </div>
+            <div class="form-group">
+                <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                </div>
+            </div>
+            </form>
+            <pre class="pre-scrollable ">
+&lt;form class="form-horizontal">
+&lt;div class="form-group">
+&lt;label class="col-sm-2 control-label">Email&lt;/label>
+&lt;div class="col-sm-10">
+&lt;p class="form-control-static">email@example.com&lt;/p>
+&lt;/div>
+&lt;/div>
+&lt;div class="form-group">
+&lt;label for="inputPassword" class="col-sm-2 control-label">Password&lt;/label>
+&lt;div class="col-sm-10">
+&lt;input type="password" class="form-control" id="inputPassword" placeholder="Password">
+&lt;/div>
+&lt;/div>
+&lt;/form>
+            </pre>
+        </div>
+        <div class="well center-block">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label class="sr-only">Email</label>
+                    <p class="form-control-static">email@example.com</p>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword2" class="sr-only">Password</label>
+                    <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary">Confirm</button>
+            </form>
+            <pre class="pre-scrollable ">
+&lt;form class="form-inline">
+&lt;div class="form-group">
+&lt;label class="sr-only">Email&lt;/label>
+&lt;p class="form-control-static">email@example.com&lt;/p>
+&lt;/div>
+&lt;div class="form-group">
+&lt;label for="inputPassword2" class="sr-only">Password&lt;/label>
+&lt;input type="password" class="form-control" id="inputPassword2" placeholder="Password">
+&lt;/div>
+&lt;button type="submit" class="btn btn-primary">Confirm&lt;/button>
+&lt;/form>
+            </pre>
+        </div>
+        <h4>Focus state</h4>
+        <p>We add <code>#focusedInput</code> id.</p>
+        <div class="well center-block">
+            <input id="focusedInput" class="form-control" type="text" value="Demonstrative focus state">
+            <br>
+            <pre class="pre-scrollable">
+&lt;input id="focusedInput" class="form-control" type="text" value="Demonstrative focus state">
+            </pre>
+        </div>
+        <h4>Disabled state</h4>
+        <p>
+            Add the <code>disabled</code> boolean attribute on an input to prevent user interactions.
+        </p>
+        <div class="well center-block">
+            <input type="text" class="form-control" placeholder="Disabled input" disabled>
+            <br>
+            <pre class="pre-scrollable">
+&lt;input type="text" class="form-control" placeholder="Disabled input" disabled>
+            </pre>
+        </div>
+        <h4>Readonly state</h4>
+        <p>
+            Add the <code>readonly</code> boolean attribute on an input to prevent modification of the input's value. Read-only inputs appear lighter (just like disabled inputs), but retain the standard cursor.
+        </p>
+        <div class="well center-block">
+            <input type="text" class="form-control" placeholder="Readonly input" readonly>
+            <br>
+            <pre class="pre-scrollable">
+&lt;input type="text" class="form-control" placeholder="Readonly input" value="Readonly input" readonly>
+            </pre>
+        </div>
+        <br>
+        <h4>Help text</h4>
+        <p>Block level help text for form controls.</p><br>
+        <div class="bs-callout bs-callout-info">
+            <h4>Associating help text with form controls</h4>
+            <p>
+                Help text should be explicitly associated with the form control it relates to using the <code>aria-describedby</code> attribute. This will ensure that assistive technologies – such as screen readers – will announce this help text when the user focuses or enters the control.
+            </p>
+        </div><br><br>
+        <div class="well center-block">
+            <p><strong>Input with help text</strong></p>
+            <label class="sr-only" for="inputHelpBlock">Input with help text</label>
+            <input type="text" id="inputHelpBlock" class="form-control" aria-describedby="helpBlock"><br>
+            <span id="helpBlock" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+            <pre class="pre-scrollable">
+&lt;label class="sr-only" for="inputHelpBlock">Input with help text&lt;/label>
+&lt;input type="text" id="inputHelpBlock" class="form-control" aria-describedby="helpBlock">
+...
+&lt;span id="helpBlock" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.&lt;/span>
+            </pre>
+        </div>
+		<h4>With optional icons</h4>
+        <div class="well center-block">
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search.." aria-describedby="basic-addon1">
+            </div>
+            <br>
+            <pre class="pre-scrollable">
+&lt;div class="input-group">
+&lt;span class="input-group-addon" id="basic-addon1"&gt;&lt;i class="glyphicon glyphicon-search"&gt;&lt;/i&gt;&lt;/span&gt;
+&lt;input type="text" class="form-control" placeholder="Search.." aria-describedby="basic-addon1"/&gt;
+&lt;/div&gt;
+            </pre>
+        </div>
+        <h4>Attractive Rounded input</h4>
+        <br>
+        <div class="well center-block">
+            <div class="input-group col-md-5">
+                <span class="input-group-addon add" id="basic-addon1"><span>Contact</span></span>
+                <input type="text" class="form-control add" value="http://auto.selection.fr/rendez-vous-atelier" aria-describedby="basic-addon1" readonly>
+                <span class="input-group-addon remove" id="basic-addon1"><i class="fa fa-times" aria-hidden="true"></i></span>
+            </div>
+            <br>
+            <pre class="pre-scrollable">
+&lt;div class="input-group col-md-5">
+&lt;span class="input-group-addon add" id="basic-addon1">&lt;span>Contact&lt;/span>&lt;/span>
+&lt;input type="text" class="form-control add" value="http://auto.selection.fr/rendez-vous-atelier" aria-describedby="basic-addon1" readonly>
+&lt;span class="input-group-addon remove" id="basic-addon1">&lt;i class="fa fa-times" aria-hidden="true">&lt;/i>&lt;/span>
+&lt;/div>
+            </pre>
+        </div>
+        <div class="well center-block">
+            <div class="input-group col-md-1">
+                <input type="text" class="form-control add marques" value="Fiat" aria-describedby="basic-addon1" readonly>
+                <span class="input-group-addon remove" id="basic-addon1"><i class="fa fa-times" aria-hidden="true"></i></span>
+            </div>
+            <br>
+            <pre class="pre-scrollable">
+&lt;div class="input-group">
+&lt;input type="text" class="form-control add marques" value="Fiat" aria-describedby="basic-addon1" readonly>
+&lt;span class="input-group-addon remove" id="basic-addon1">&lt;i class="fa fa-times" aria-hidden="true">&lt;/i>&lt;/span>
+&lt;/div>
+            </pre>
+        </div>
+        <h4>Optional icons in horizontal and inline forms</h4>
+        <br>
+        <div class="well center-block">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="">Input with icon</label>
+                    <div class="input-group col-sm-9">
+                        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Search.." aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="">Input with icon</label>
+                    <div class="input-group col-sm-9">
+                        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Search.." aria-describedby="basic-addon1">
+                    </div>
+                </div>
+            </form>
+            <pre class="pre-scrollable">
+&lt;form class="form-horizontal">
+&lt;div class="form-group">
+&lt;label class="control-label col-sm-3" for="">Input with icon&lt;/label>
+&lt;div class="input-group col-sm-9">
+&lt;span class="input-group-addon" id="basic-addon1">&lt;i class="glyphicon glyphicon-search">&lt;/i>&lt;/span>
+&lt;input type="text" class="form-control" placeholder="Search.." aria-describedby="basic-addon1">
+&lt;/div>
+&lt;/div>
+&lt;div class="form-group">
+&lt;label class="control-label col-sm-3" for="">Input with icon&lt;/label>
+&lt;div class="input-group col-sm-9">
+&lt;span class="input-group-addon" id="basic-addon1">&lt;i class="glyphicon glyphicon-search">&lt;/i>&lt;/span>
+&lt;input type="text" class="form-control" placeholder="Search.." aria-describedby="basic-addon1">
+&lt;/div>
+&lt;/div>
+&lt;/form>
+            </pre>
+        </div>
+        <div class="well center-block">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label class="control-label" for="">Input with icon</label>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Search.." aria-describedby="basic-addon1">
+                    </div>
+                </div>
+            </form>
+            <form class="form-inline">
+                <div class="form-group">
+                    <label class="control-label" for="">Input with icon</label>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Search.." aria-describedby="basic-addon1">
+                    </div>
+                </div>
+            </form><br>
+            <pre class="pre-scrollable">
+&lt;form class="form-inline">
+&lt;div class="form-group">
+&lt;label class="control-label" for="">Input with icon&lt;/label>
+&lt;div class="input-group">
+&lt;span class="input-group-addon" id="basic-addon1">&lt;i class="glyphicon glyphicon-search">&lt;/i>&lt;/span>
+&lt;input type="text" class="form-control" placeholder="Search.." aria-describedby="basic-addon1">
+&lt;/div>
+&lt;/div>
+&lt;/form>
+&lt;form class="form-inline">
+&lt;div class="form-group">
+&lt;label class="control-label" for="">Input with icon&lt;/label>
+&lt;div class="input-group">
+&lt;span class="input-group-addon" id="basic-addon1">&lt;i class="glyphicon glyphicon-search">&lt;/i>&lt;/span>
+&lt;input type="text" class="form-control" placeholder="Search.." aria-describedby="basic-addon1">
+&lt;/div>
+&lt;/div>
+&lt;/form>
+            </pre>
+        </div>
+        <h3>Control sizing</h3>
+        <p>Set heights using classes like <code>.input-lg</code>, and set widths using grid column classes like <code>.col-lg-*</code>.</p>
+        <br>
+        <h4>Height sizing</h4>
+        <p>Create taller or shorter form controls that match button sizes.</p>
+        <div class="well center-block">
+            <input class="form-control input-lg" type="text" placeholder=".input-lg"><br>
+            <input class="form-control" type="text" placeholder="Default input"><br>
+            <input class="form-control input-sm" type="text" placeholder=".input-sm"><br>
+
+            <select class="form-control input-lg"><option>.input-lg</option><option>2</option></select><br>
+            <select class="form-control"><option>Default input</option><option>2</option></select><br>
+            <select class="form-control input-sm"><option>.input-sm</option><option>2</option></select><br>
+            <pre class="pre-scrollable">
+&lt;input class="form-control input-lg" type="text" placeholder=".input-lg">
+&lt;input class="form-control" type="text" placeholder="Default input">
+&lt;input class="form-control input-sm" type="text" placeholder=".input-sm">
+
+&lt;select class="form-control input-lg">...&lt;/select>
+&lt;select class="form-control">...&lt;/select>
+&lt;select class="form-control input-sm">...&lt;/select>
+            </pre>
+        </div>
+        <br>
+        <h4>Horizontal form group sizes</h4>
+        <p>Quickly size labels and form controls within <code>.form-horizontal</code> by adding <code>.form-group-lg</code> or <code>.form-group-sm</code>.</p><br>
+        <div class="well center-block">
+            <form class="form-horizontal">
+                <div class="form-group form-group-lg">
+                    <label class="col-sm-2 control-label" for="formGroupInputLarge">Large label</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" id="formGroupInputLarge" placeholder="Large input">
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <label class="col-sm-2 control-label" for="formGroupInputSmall">Small label</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" id="formGroupInputSmall" placeholder="Small input">
+                    </div>
+                </div>
+            </form>
+            <pre class="pre-scrollable">
+&lt;form class="form-horizontal">
+&lt;div class="form-group form-group-lg">
+&lt;label class="col-sm-2 control-label" for="formGroupInputLarge">Large label&lt;/label>
+&lt;div class="col-sm-10">
+&lt;input class="form-control" type="text" id="formGroupInputLarge" placeholder="Large input">
+&lt;/div>
+&lt;/div>
+&lt;div class="form-group form-group-sm">
+&lt;label class="col-sm-2 control-label" for="formGroupInputSmall">Small label&lt;/label>
+&lt;div class="col-sm-10">
+&lt;input class="form-control" type="text" id="formGroupInputSmall" placeholder="Small input">
+&lt;/div>
+&lt;/div>
+&lt;/form>
+            </pre>
+        </div>
+        <h4>Column sizing</h4>
+        <p>Wrap inputs in grid columns, or any custom parent element, to easily enforce desired widths.</p>
+        <div class="well center-block">
+            <div class="row">
+                <div class="col-xs-2">
+                    <input type="text" class="form-control" placeholder=".col-xs-2">
+                </div>
+                <div class="col-xs-3">
+                    <input type="text" class="form-control" placeholder=".col-xs-3">
+                </div>
+                <div class="col-xs-4">
+                    <input type="text" class="form-control" placeholder=".col-xs-4">
+                </div>
+            </div><br>
+            <pre class="pre-scrollable">
+&lt;div class="row">
+&lt;div class="col-xs-2">
+&lt;input type="text" class="form-control" placeholder=".col-xs-2">
+&lt;/div>
+&lt;div class="col-xs-3">
+&lt;input type="text" class="form-control" placeholder=".col-xs-3">
+&lt;/div>
+&lt;div class="col-xs-4">
+&lt;input type="text" class="form-control" placeholder=".col-xs-4">
+&lt;/div>
+&lt;/div>
+            </pre>
+        </div>
+        </div><!--Forms-->
+
+       <div class="bs-docs-section" id="buttons-tags">
+
+        <h2 id="Buttons">Buttons</h2>
+        <h3>Button tags</h3>
+        <p>
+            Use the button classes on an <code>&lt;a></code>, <code>&lt;button></code>, or <code>&lt;input></code> element.
+        </p>
+        <div class="well center-block">
+            <a class="btn btn-primary" href="#" role="button">Link</a>
+            <button class="btn btn-primary" type="submit">Button</button>
+            <input class="btn btn-primary" type="button" value="Input">
+            <input class="btn btn-primary" type="submit" value="Submit">
+            <br><br>
+            <pre class="pre-scrollable">
+&lt;a class="btn btn-primary" href="#" role="button">Link&lt;/a>
+&lt;button class="btn btn-primary" type="submit">Button&lt;/button>
+&lt;input class="btn btn-primary" type="button" value="Input">
+&lt;input class="btn btn-primary" type="submit" value="Submit">
+            </pre>
+        </div>
+        <div class="bs-callout bs-callout-warning">
+            <h4>Context-specific usage</h4>
+            <p>
+                While button classes can be used on <code>&lt;a></code> and <code>&lt;button></code> elements, only <code>&lt;button></code> elements are supported within our nav and navbar components.
+            </p>
+        </div>
+        <br>
+        <div class="bs-callout bs-callout-warning">
+            <h4>Links acting as buttons</h4>
+            <p>
+                If the <code>&lt;a></code> elements are used to act as buttons – triggering in-page functionality, rather than navigating to another document or section within the current page – they should also be given an appropriate <code>role="button"</code>.
+            </p>
+        </div>
+        <br>
+        <div class="bs-callout bs-callout-warning">
+            <h4>Cross-browser rendering</h4>
+            <p>
+                As a best practice, we highly recommend using the <code>&lt;button></code> element whenever possible to ensure matching cross-browser rendering.
+            </p>
+        </div>
+        <h3>Options</h3>
+        <p>Use any of the available button classes to quickly create a styled button.</p>
+        <div class="well center-block">
+            <button type="button" class="btn btn-default">Default</button>
+
+            <button type="button" class="btn btn-primary">Primary</button>
+
+            <button type="button" class="btn btn-success">Success</button>
+
+            <button type="button" class="btn btn-info">Info</button>
+
+            <button type="button" class="btn btn-warning">warning</button>
+
+            <button type="button" class="btn btn-danger">Danger</button>
+
+            <button class="btn btn-3d btn-3d-1 btn-primary-3d">Button 3D</button>
+
+            <button type="button" class="btn btn-link">Link</button>
+            <br><br>
+            <pre class="pre-scrollable ">
+&lt;button type="button" class="btn btn-default">Default&lt;/button>
+
+&lt;button type="button" class="btn btn-primary">Primary&lt;/button>
+
+&lt;button type="button" class="btn btn-success">Success&lt;/button>
+
+&lt;button type="button" class="btn btn-info">Info&lt;/button>
+
+&lt;button type="button" class="btn btn-warning">warning&lt;/button>
+
+&lt;button type="button" class="btn btn-danger">Danger&lt;/button>
+
+&lt;button class="btn btn-3d btn-3d-1 btn-primary-3d">Button 3D&lt;/button>
+
+&lt;button type="button" class="btn btn-link">Link&lt;/button>
+            </pre>
+        </div>
+        <h3 id="buttons-sizes">Sizes</h3>
+        <p>
+            Fancy larger or smaller buttons? Add <code>.btn-lg</code>, <code>.btn-sm</code>, or <code>.btn-xs</code> for additional sizes.
+        </p>
+        <div class="well center-block">
+            <p><button type="button" class="btn btn-primary btn-lg">Large button</button></p>
+            <p><button type="button" class="btn btn-primary">Default button</button></p>
+            <p><button type="button" class="btn btn-primary btn-sm">Small button</button></p>
+            <p><button type="button" class="btn btn-primary btn-xs">Extra small button</button></p>
+            <br>
+            <pre class="pre-scrollable ">
+&lt;button type="button" class="btn btn-primary btn-lg">Large button&lt;/button>
+&lt;button type="button" class="btn btn-primary">Default button&lt;/button>
+&lt;button type="button" class="btn btn-primary btn-sm">Small button&lt;/button>
+&lt;button type="button" class="btn btn-primary btn-xs">Extra small button&lt;/button>
+            </pre>
+        </div>
+        <p>Create block level buttons—those that span the full width of a parent— by adding <code>.btn-block</code>.</p>
+        <div class="well center-block">
+            <div class="well center-block" style="max-width:400px">
+                <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button>
+                <button type="button" class="btn btn-default btn-lg btn-block">Block level button</button>
+            </div>
+            <pre class="pre-scrollable ">
+&lt;button type="button" class="btn btn-primary btn-lg btn-block">Block level button&lt;/button>
+&lt;button type="button" class="btn btn-default btn-lg btn-block">Block level button&lt;/button>
+            </pre>
+        </div>
+        <h4>Active state</h4>
+        <p>
+            Buttons will appear pressed (with a darker background, darker border, and inset shadow) when active. For <code>&lt;button></code> elements, this is done via <code>:active</code>. For <code>&lt;a></code> elements, it's done with <code>.active</code>. However, you may use <code>.active</code> on <code>&lt;button></code>s (and include the <code>aria-pressed="true"</code> attribute) should you need to replicate the active state programmatically.
+        </p>
+        <div class="well center-block">
+            <button type="button" class="btn btn-primary btn-lg active">Primary button</button>
+            <button type="button" class="btn btn-default btn-lg active">Button</button><br><br>
+            <pre class="pre-scrollable">
+&lt;button type="button" class="btn btn-primary btn-lg active">Primary button&lt;/button>
+&lt;button type="button" class="btn btn-default btn-lg active">Button&lt;/button>
+            </pre>
+        </div>
+        <h4>Anchor element</h4>
+        <p>Add the <code>.active</code> class to <code>&lt;a></code> buttons.</p>
+        <div class="well center-block">
+            <a href="#" class="btn btn-primary btn-lg active" role="button">Primary link</a>
+            <a href="#" class="btn btn-default btn-lg active" role="button">Link</a><br><br>
+            <pre class="pre-scrollable">
+&lt;a href="#" class="btn btn-primary btn-lg active" role="button">Primary link&lt;/a>
+&lt;a href="#" class="btn btn-default btn-lg active" role="button">Link&lt;/a>
+            </pre>
+        </div>
+        <h4>Disabled state</h4>
+        <p>Make buttons look unclickable by fading them back with <code>opacity</code>.</p>
+        <div class="well center-block">
+            <button type="button" class="btn btn-lg btn-primary" disabled="disabled">Primary button</button>
+            <button type="button" class="btn btn-default btn-lg" disabled="disabled">Button</button><br><br>
+            <pre class="pre-scrollable">
+&lt;button type="button" class="btn btn-lg btn-primary" disabled="disabled">Primary button&lt;/button>
+&lt;button type="button" class="btn btn-default btn-lg" disabled="disabled">Button&lt;/button>
+            </pre>
+        </div>
+        <div class="bs-callout bs-callout-warning">
+            <h4>Cross-browser compatibility</h4>
+            <p>
+                If you add the <code>disabled</code> attribute to a <code>&lt;button></code>, Internet Explorer 9 and below will render text gray with a nasty text-shadow that we cannot fix.
+            </p>
+        </div><br>
+        <h4>Anchor element</h4>
+        <p>Add the <code>.disabled</code> class to <code>&lt;a></code> buttons.</p>
+        <div class="well center-block">
+            <a href="#" class="btn btn-primary btn-lg disabled" role="button">Primary link</a>
+            <a href="#" class="btn btn-default btn-lg disabled" role="button">Link</a><br><br>
+            <pre class="pre-scrollable">
+&lt;a href="#" class="btn btn-primary btn-lg disabled" role="button">Primary link&lt;/a>
+&lt;a href="#" class="btn btn-default btn-lg disabled" role="button">Link&lt;/a>
+            </pre>
+        </div>
+        <br>
+        <h4>Modal / Popup</h4>
+        <div class="well center-block">
+            <a class="btn btn-primary" href="#popup1">Let me Pop up</a>
+            <div id="popup1" class="overlay">
+                <div class="popup">
+                    <h2>Garagescore Modal</h2>
+                    <a class="close" href="#">&times;</a>
+                    <div class="content">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sodales convallis malesuada. Ut id lacus ultrices, eleifend arcu sollicitudin, dignissim ex. Sed in est convallis, feugiat dolor quis, feugiat urna. Vivamus porta elit at pretium tristique. Vestibulum ultrices tortor viverra augue semper, iaculis suscipit ipsum auctor. Proin mollis metus sed molestie auctor. Suspendisse volutpat fermentum metus vitae euismod.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sodales convallis malesuada. Ut id lacus ultrices, eleifend arcu sollicitudin, dignissim ex. Sed in est convallis, feugiat dolor quis, feugiat urna. Vivamus porta elit at pretium tristique. Vestibulum ultrices tortor viverra augue semper, iaculis suscipit ipsum auctor. Proin mollis metus sed molestie auctor. Suspendisse volutpat fermentum metus vitae euismod.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sodales convallis malesuada. Ut id lacus ultrices, eleifend arcu sollicitudin, dignissim ex. Sed in est convallis, feugiat dolor quis, feugiat urna. Vivamus porta elit at pretium tristique. Vestibulum ultrices tortor viverra augue semper, iaculis suscipit ipsum auctor. Proin mollis metus sed molestie auctor. Suspendisse volutpat fermentum metus vitae euismod.
+                    </div>
+                    <div class="action-block">
+                        <button type="button" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <pre class="pre-scrollable ">
+&lt;a class="button-popup" href="#popup1">Let me Pop up&lt;/a>
+&lt;div id="popup1" class="overlay">
+&lt;div class="popup">
+&lt;h2>Garagescore Modal&lt;/h2>
+&lt;a class="close" href="#">&times;&lt;/a>
+&lt;div class="content">
+Lorem ipsum dolor.
+&lt;/div>
+&lt;div class="action-block">
+&lt;button type="button" class="btn btn-primary">Save&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;/div>
+            </pre>
+        </div>
+        <h4 id="buttons-icons">Icons</h4>
+        <br>
+        <div class="well center-block">
+            <div class="icon icon-1">
+                <a href="#" class="effet-1 icon-information"><i class="fa" aria-hidden="true"></i></a>
+                <a href="#" class="effet-1 icon-branchement"><i class="fa" aria-hidden="true"></i></a>
+                <a href="#" class="effet-1 icon-parametrage"><i class="fa" aria-hidden="true"></i></a>
+            </div>
+            <br>
+            <pre class="pre-scrollable ">
+&lt;div class="icon icon-1">
+&lt;a href="#" class="effet-1 icon-information">&lt;i class="fa" aria-hidden="true">&lt;/i>&lt;/a>
+&lt;a href="#" class="effet-1 icon-branchement">&lt;i class="fa" aria-hidden="true">&lt;/i>&lt;/a>
+&lt;a href="#" class="effet-1 icon-parametrage">&lt;i class="fa" aria-hidden="true">&lt;/i>&lt;/a>
+&lt;/div>
+            </pre>
+        </div>
+        <h4>File input</h4>
+        <div class="well center-block">
+            <div class="box">
+                <input type="file" name="file" id="file" class="form-control"/>
+                <label for="file"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Choisissez un fichier&hellip;</span></label>
+            </div>
+            <pre class="pre-scrollable">
+&lt;div class="box"&gt;
+&lt;input type="file" name="file" id="file" class="form-control"/&gt;
+&lt;label for="file"&gt;&lt;svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">&lt;path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/>&lt;/svg&gt; &lt;span>Choose a file&hellip;&lt;/span>&lt;/label&gt;
+&lt;/div&gt;
+            </pre>
+        </div>
+        <h4>Pagination</h4>
+        <div class="well center-block">
+            <nav aria-label="...">
+            <ul class="pagination">
+                <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                <li ><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li class="active"><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+            </nav>
+            <pre class="pre-scrollable ">
+&lt;nav aria-label="...">
+&lt;ul class="pagination">
+&lt;li class="disabled">&lt;a href="#" aria-label="Previous">&lt;span aria-hidden="true">&laquo;&lt;/span>&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#">1&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#">2&lt;/a>&lt;/li>
+&lt;i class="active">&lt;a href="#">3&lt;/a>&lt;/li>
+&lt;i>&lt;a href="#">4&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#">5&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#">&raquo;&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/nav>
+  		    </pre>
+        </div>
+        <h4>Switch button</h4><br>
+        <div class="well center-block">
+            <p><input  type="checkbox" class="switch" id="test1"><label for="test1"><span class="ui"></span><span class="text">Activer mode maintenance</span></label></p>
+            <p><input  type="checkbox" class="switch" id="test2"  checked="checked"><label for="test2"><span class="ui"></span><span class="text">Déactiver mode maintenance</span></label></p>
+            <br>
+            <pre class="pre-scrollable ">
+&lt;input type="checkbox" id="test1">&lt;label for="test1">&lt;span class="ui">&lt;/span>&lt;span class="text">Activer mode maintenance&lt;/span>&lt;/label>
+  		    </pre>
+        </div>
+    </div><!--Buttons-->
+
+
+	<div class="bs-docs-section" id="control-navbar">
+
+        <h3>Navs</h3>
+        <div class="well center-block">
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#link" role="button" aria-haspopup="true" aria-expanded="false">
+                        Garages
+                    </a>
+                </li>
+                <li role="presentation" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="true" aria-expanded="false">
+                        Emails <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="">Test de la génération...</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="">Gestion des contacts</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="">Non-contactables</a></li>
+                    </ul>
+                </li>
+                <li role="presentation" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#link" role="button" aria-haspopup="true" aria-expanded="false">
+                        Campagnes
+                    </a>
+                </li>
+                <li role="presentation" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#link" role="button" aria-haspopup="true" aria-expanded="false">
+                        Avis
+                    </a>
+                </li>
+                <li role="presentation" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#link" role="button" aria-haspopup="true" aria-expanded="false">
+                        Rapports
+                    </a>
+                </li>
+            </ul>
+            <br>
+            <pre class="pre-scrollable ">
+&lt;ul class="nav nav-tabs">
+&lt;li role="presentation" class="dropdown">
+&lt;a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+Garages
+&lt;/a>
+&lt;/li>
+&lt;li role="presentation" class="dropdown">
+&lt;a class="dropdown-toggle " data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+Emails &lt;span class="caret">&lt;/span>
+&lt;/a>
+&lt;ul class="dropdown-menu">
+&lt;li>&lt;a href="">Test de la génération...&lt;/a>&lt;/li>
+&lt;li role="separator" class="divider">&lt;/li>
+&lt;li>&lt;a href="">Gestion des contacts&lt;/a>&lt;/li>
+&lt;li role="separator" class="divider">&lt;/li>
+&lt;li>&lt;a href="">Non-contactables&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li role="presentation" class="dropdown">
+&lt;a class="dropdown-toggle " data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+Campagnes
+&lt;/a>
+&lt;/li>
+&lt;li role="presentation" class="dropdown">
+&lt;a class="dropdown-toggle " data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+Avis
+&lt;/a>
+&lt;/li>
+&lt;li role="presentation" class="dropdown">
+&lt;a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+Rapports
+&lt;/a>
+&lt;/li>
+&lt;/ul>
+		      </pre>
+        </div>
+		<h4>Accordion</h4>
+        <div class="well center-block">
+            <div class="panel panel-default">
+                <div class="acordeon">
+                    <input id="acordeon-one" type="checkbox" class="inp-acordeon">
+                    <label for="acordeon-one" class="lab-acordeon">Compte de facturation 1</label>
+                    <div class="acordeon-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, architecto, explicabo perferendis nostrum, maxime impedit atque odit sunt pariatur illo obcaecati soluta molestias iure facere dolorum adipisci eum? Saepe, itaque.</p>
+                        <div class="acordeon">
+                            <input id="acordeon-foor" type="checkbox" class="inp-acordeon">
+                            <label for="acordeon-foor" class="lab-acordeon">Compte de facturation 1-1</label>
+                            <div class="acordeon-content">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, architecto, explicabo perferendis nostrum, maxime impedit atque odit sunt pariatur illo obcaecati soluta molestias iure facere dolorum adipisci eum? Saepe, itaque.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="acordeon">
+                    <input id="acordeon-two" type="checkbox" class="inp-acordeon">
+                    <label for="acordeon-two" class="lab-acordeon">Compte de facturation 2</label>
+                    <div class="acordeon-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, architecto, explicabo perferendis nostrum, maxime impedit atque odit sunt pariatur illo obcaecati soluta molestias iure facere dolorum adipisci eum? Saepe, itaque.</p>
+                    </div>
+                </div>
+                <div class="acordeon">
+                    <input id="acordeon-three" type="checkbox" class="inp-acordeon">
+                        <label for="acordeon-three" class="lab-acordeon">Compte de facturation 3</label>
+                    <div class="acordeon-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, architecto, explicabo perferendis nostrum, maxime impedit atque odit sunt pariatur illo obcaecati soluta molestias iure facere dolorum adipisci eum? Saepe, itaque.</p>
+                    </div>
+                </div>
+            </div>
+            <pre class="pre-scrollable ">
+&lt;div class="panel panel-default">
+&lt;div class="acordeon">
+&lt;input id="acordeon-one" type="checkbox" class="inp-acordeon">
+&lt;label for="acordeon-one" class="lab-acordeon">Compte de facturation 1&lt;/label>
+&lt;div class="acordeon-content">
+&lt;p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, architecto, explicabo perferendis nostrum, maxime impedit atque odit sunt pariatur illo obcaecati soluta molestias iure facere dolorum adipisci eum? Saepe, itaque.&lt;/p>
+&lt;/div>
+&lt;/div>
+&lt;/div>
+            </pre>
+        </div>
+
+
+        <h3 id="control-social">Social Network</h3>
+        <div class="well center-block">
+            <footer class="social">
+                <a href='#'><i class="fa fa-facebook fa-3x fa-fw"></i></a>
+                <a href='#'><i class="fa fa-twitter fa-3x fa-fw"></i></a>
+                <a href='#'><i class="fa fa-youtube-play fa-3x fa-fw"></i></a>
+                <a href='#'><i class="fa fa-rss fa-3x fa-fw"></i></a>
+                <a href='#'><i class="fa fa-linkedin fa-3x fa-fw"></i></a>
+            </footer>
+            <br>
+            <pre class="pre-scrollable ">
+&lt;footer class="social">
+&lt;a href='#'>&lt;i class="fa fa-facebook fa-3x fa-fw">&lt;/i>&lt;/a>
+&lt;a href='#'>&lt;i class="fa fa-twitter fa-3x fa-fw">&lt;/i>&lt;/a>
+&lt;a href='#'>&lt;i class="fa fa-youtube-play fa-3x fa-fw">&lt;/i>&lt;/a>
+&lt;a href='#'>&lt;i class="fa fa-rss fa-3x fa-fw">&lt;/i>&lt;/a>
+&lt;a href='#'>&lt;i class="fa fa-linkedin fa-3x fa-fw">&lt;/i>&lt;/a>
+&lt;/footer>
+            </pre>
+        </div>
+
+    </div><!--.bs-docs-section-->
+
+    <div class="bs-docs-section">
+
+        <aside class="sticky">
+            <ul>
+                <li><a href="#" class="widget" target="_blank"><span>https://www.garagescore.com/garage/garage-de-l-etoile-mercedes-benz-brest</span><img src="icons/ic-widget.png" ></a></li>
+                <li><a href="#" class="certificat" target="_blank"><span>https://www.garagescore.com/garage/garage-de-l-etoile-mercedes-benz-brest</span><img src="icons/ic-certificat.png" ></a></li>
+            </ul>
+        </aside>
+
+    </div><!--.bs-docs-section-->
+
+	</div><!--.col-md-9-->
+
+	<div class="col-md-3" role="complementary">
+		<nav class="bs-docs-sidebar hidden-print hidden-sm hidden-xs affix ac-container">
+                <div>
+					<input id="ac-1" name="accordion-1" type="radio" checked>
+					<label for="ac-1">Overview</label>
+					<article class="ac-links">
+						<ul class="nav-menu-droite">
+                            <li class=""><a class="" href="#">HTML5 doctype</a></li>
+                            <li class=""><a class="" href="#">Typography and links</a></li>
+                            <li class=""><a class="" href="#">Showcase.css</a></li>
+                            <li class=""><a class="" href="#">Containers</a></li>
+                            <li class=""><a class="" href="#">Grid system</a></li>
+                        </ul>
+					</article>
+				</div>
+                <div>
+					<input id="ac-2" name="accordion-1" type="radio">
+					<label for="ac-2">Typography</label>
+					<article class="ac-links">
+						<ul class="nav-menu-droite">
+                            <li class=""><a class="" href="#thypography-headings">Headings</a></li>
+                            <li class=""><a class="" href="#thypography-marked-text">Marked text</a></li>
+                            <li class=""><a class="" href="#thypography-deleted-text">Deleted text</a></li>
+                            <li class=""><a class="" href="#thypography-underlined-text">Underlined text</a></li>
+                            <li class=""><a class="" href="#thypography-small-text">Small text</a></li>
+                            <li class=""><a class="" href="#thypography-small-text">Bold</a></li>
+                            <li class=""><a class="" href="#thypography-small-text">Italics</a></li>
+                            <li class=""><a class="" href="#thypography-small-text">Addresses</a></li>
+                            <li class=""><a class="" href="#thypography-small-text">Lists</a></li>
+                        </ul>
+					</article>
+				</div>
+                <div>
+					<input id="ac-3" name="accordion-1" type="radio">
+					<label for="ac-3">Tables</label>
+					<article class="ac-links">
+						<ul class="nav-menu-droite">
+                            <li class=""><a class="" href="#control-table">Basic exemple</a></li>
+                            <li class=""><a class="" href="#control-table">Condensed table</a></li>
+                        </ul>
+					</article>
+				</div>
+                <div>
+					<input id="ac-3" name="accordion-1" type="radio">
+					<label for="ac-3">Forms</label>
+					<article class="ac-links">
+						<ul class="nav-menu-droite">
+                            <li class=""><a class="" href="#control-table">Basic exemple</a></li>
+                        </ul>
+					</article>
+				</div>
+                <div>
+					<input id="ac-4" name="accordion-1" type="radio">
+					<label for="ac-4">Inputs</label>
+					<article class="ac-links">
+						<ul class="nav-menu-droite">
+                            <li class=""><a class="" href="#inputs-input">Input</a></li>
+                            <li class=""><a class="" href="#inputs-textarea">Textarea</a></li>
+                            <li class=""><a class="" href="#inputs-basic-block">Basic block</a></li>
+                            <li class=""><a class="" href="#inputs-basic-list">List</a></li>
+                            <li class=""><a class="" href="#inputs-file-input">File input</a></li>
+                        </ul>
+					</article>
+				</div>
+				<div>
+					<input id="ac-5" name="accordion-1" type="radio">
+					<label for="ac-5">Buttons</label>
+					<article class="ac-links">
+						<ul class="nav-menu-droite">
+                            <li class=""><a class="" href="#buttons-tags">Button tags</a></li>
+                            <li class=""><a class="" href="#buttons-sizes">Sizes</a></li>
+                            <li class=""><a class="" href="#buttons-basic-button">Basic Button</a></li>
+                            <li class=""><a class="" href="#buttons-3D">Button 3D</a></li>
+                            <li class=""><a class="" href="#buttons-icons">Icons</a></li>
+                            <li class=""><a class="" href="#buttons-pagination">Pagination</a></li>
+                            <li class=""><a class="" href="#buttons-radio">Radio</a></li>
+                            <li class=""><a class="" href="#buttons-checkBoxes">CheckBoxes</a></li>
+                            <li class=""><a class="" href="#buttons-switch-button">Switch button</a></li>
+                        </ul>
+					</article>
+				</div>
+				<div>
+					<input id="ac-6" name="accordion-1" type="radio">
+					<label for="ac-6">Control</label>
+					<article class="ac-links">
+						<ul class="nav-menu-droite">
+                            <li class=""><a class="" href="#control-selects">Selects</a></li>
+                            <li class=""><a class="" href="#control-navbar">navbar</a></li>
+                            <li class=""><a class="" href="#control-accordion">Accordion</a></li>
+                            <li class=""><a class="" href="#control-attractive-rounded-input">Attractive Rounded input</a></li>
+                        </ul>
+					</article>
+				</div>
+            <br>
+            <a href="#top" class="back-to-top"> Back to top </a>
+		</nav>
+	</div><!--.col-md-3 role="complementary"-->
+	</div><!--.row-->
+	</div><!--.container-fluid-->
+    <script src="js/showcase.js" type="text/javascript"></script>
+</body>
+</html>

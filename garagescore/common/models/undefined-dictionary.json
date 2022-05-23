@@ -1,0 +1,20 @@
+{
+  "name": "UndefinedDictionary",
+  "base": "GarageScoreBaseModel",
+  "options": {},
+  "mongodb": {
+    "collection": "UndefinedDictionary"
+  },
+  "http": {
+    "path": "undefined-dictionary"
+  },
+  "properties": {
+    "word": {
+      "type": "String"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

@@ -1,0 +1,57 @@
+.rating-star {
+  font-size: 20px;
+  display: inline-block;
+  margin-right: 32px;
+  width: 42px;
+  height: 66px;
+  cursor: pointer;
+  background-repeat: no-repeat;
+}
+
+.rating-star.rating-star-1 {
+  color: #f6cc55;
+  background-image: url(/static/latest/images/www/survey/orange_star.svg) !important;
+  background-size: 100%;
+}
+.rating-star-2, .rating-star-3 {
+  color: #f6cc55;
+  background-image: url(/static/latest/images/www/survey/orange_star_o.svg);
+  background-size: 100%;
+}
+.rating-star-4 {
+  color: #f6cc55;
+  background-image: url(/static/latest/images/www/survey/orange_star_o.svg);
+  background-size: 100%;
+}
+.rating-star-5 {
+  color: #f6cc55;
+  background-image: url(/static/latest/images/www/survey/orange_star_o.svg);
+  background-size: 100%;
+}
+.rating-global-4 .rating-star-2, .rating-global-6 .rating-star-2, .rating-global-8 .rating-star-2, .rating-global-10 .rating-star-2 {
+  background-image: url(/static/latest/images/www/survey/orange_star.svg);
+  background-size: 100%;
+}
+.rating-global-6 .rating-star-3, .rating-global-8 .rating-star-3, .rating-global-10 .rating-star-3 {
+  background-image: url(/static/latest/images/www/survey/orange_star.svg);
+  background-size: 100%;
+}
+.rating-global-8 .rating-star-4, .rating-global-10 .rating-star-4 {
+  background-image: url(/static/latest/images/www/survey/orange_star.svg);
+  background-size: 100%;
+}
+.rating-global-10 .rating-star-5 {
+  background-image: url(/static/latest/images/www/survey/orange_star.svg);
+  background-size: 100%;
+}
+
+.rating-star-sub {
+  margin-top: 52px; /* 42px for the star + 10px of margin with the star */
+  font-family: Arial;
+  font-size: 10px;
+  line-height: 1;
+  text-align: center;
+}
+.rating-star-sub-big {
+  font-size: 14px;
+}

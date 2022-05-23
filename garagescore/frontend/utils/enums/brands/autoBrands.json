@@ -1,0 +1,457 @@
+{
+  "CITROEN": {
+    "value": "Citroën",
+    "properties": {
+      "top5": true,
+      "garageType": "Dealership"
+    }
+  },
+  "DACIA": {
+    "value": "Dacia",
+    "properties": {
+      "top5": true,
+      "garageType": "Dealership"
+    }
+  },
+  "PEUGEOT": {
+    "value": "Peugeot",
+    "properties": {
+      "top5": true,
+      "garageType": "Dealership"
+    }
+  },
+  "RENAULT": {
+    "value": "Renault",
+    "properties": {
+      "top5": true,
+      "garageType": "Dealership"
+    }
+  },
+  "VOLKSWAGEN": {
+    "value": "Volkswagen",
+    "properties": {
+      "top5": true,
+      "garageType": "Dealership"
+    }
+  },
+  "ABARTH": {
+    "value": "Abarth",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "ALFA_ROMEO": {
+    "value": "Alfa Romeo",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "ALPINE": {
+    "value": "Alpine",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "ASTON_MARTIN": {
+    "value": "Aston Martin",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "AUDI": {
+    "value": "Audi",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "BENTLEY": {
+    "value": "Bentley",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "BMW": {
+    "value": "BMW",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "BMW_ALPINA": {
+    "value": "BMW Alpina",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "CADILLAC": {
+    "value": "Cadillac",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "CATERHAM": {
+    "value": "Caterham",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "CHEVROLET": {
+    "value": "Chevrolet",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "CHRYSLER": {
+    "value": "Chrysler",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "CUPRA": {
+    "value": "Cupra",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "DAIHATSU": {
+    "value": "Daihatsu",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "DODGE": {
+    "value": "Dodge",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "DONKERVOORT": {
+    "value": "Donkervoort",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "DS": {
+    "value": "DS",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "FERRARI": {
+    "value": "Ferrari",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "FIAT": {
+    "value": "Fiat",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "FORD": {
+    "value": "Ford",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "HONDA": {
+    "value": "Honda",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "HUMMER": {
+    "value": "Hummer",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "HYUNDAI": {
+    "value": "Hyundai",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "INFINITI": {
+    "value": "Infiniti",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "ISUZU": {
+    "value": "Isuzu",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "IVECO": {
+    "value": "Iveco",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "JAGUAR": {
+    "value": "Jaguar",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "JEEP": {
+    "value": "Jeep",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "KIA": {
+    "value": "KIA",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "KTM": {
+    "value": "KTM",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "LADA": {
+    "value": "Lada",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "LAMBORGHINI": {
+    "value": "Lamborghini",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "LANCIA": {
+    "value": "Lancia",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "LAND_ROVER": {
+    "value": "Land Rover",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "LEXUS": {
+    "value": "Lexus",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "LOTUS": {
+    "value": "Lotus",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "MASERATI": {
+    "value": "Maserati",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "MAZDA": {
+    "value": "Mazda",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "MCLAREN": {
+    "value": "McLaren",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "MERCEDES_BENZ": {
+    "value": "Mercedes-Benz",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "MG": {
+    "value": "MG",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "MIA_ELECTRIC": {
+    "value": "Mia Electric",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "MINI": {
+    "value": "MINI",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "MITSUBISHI": {
+    "value": "Mitsubishi",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "NISSAN": {
+    "value": "Nissan",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "OPEL": {
+    "value": "Opel",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "POLESTAR": {
+    "value": "Polestar",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "PORSCHE": {
+    "value": "Porsche",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "ROLLS_ROYCE": {
+    "value": "Rolls-Royce",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "SAAB": {
+    "value": "Saab",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "SEAT": {
+    "value": "Seat",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "SKODA": {
+    "value": "Škoda",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "SMART": {
+    "value": "Smart",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "SSANGYONG": {
+    "value": "SsangYong",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "SUBARU": {
+    "value": "Subaru",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "SUZUKI": {
+    "value": "Suzuki",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "TESLA_MOTORS": {
+    "value": "Tesla Motors",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "TOYOTA": {
+    "value": "Toyota",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "VOLVO": {
+    "value": "Volvo",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "VOLKSWAGEN_UTILITAIRES": {
+    "value": "Volkswagen Utilitaires",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  }
+}

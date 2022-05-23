@@ -1,0 +1,31 @@
+{
+  "name": "GarageImportStatistic",
+  "plural": "GarageImportStatistics",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "mongodb": {
+    "collection": "garageImportStatistics"
+  },
+  "http": {
+    "path": "garage-import-statistic"
+  },
+  "mixins": {
+    "SmartSort": true
+  },
+  "properties": {
+    "report": {
+      "type": "object"
+    },
+    "problematicGarages": {
+      "type": "array"
+    }
+  },
+  "validations": [],
+  "relations": {
+  },
+  "acls": [
+  ],
+  "methods": {
+  }
+}

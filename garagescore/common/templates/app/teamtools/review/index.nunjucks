@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- JAVASCIPRT -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.6.0/vue-router.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.3.4/vue-resource.min.js"></script>
+
+  <!-- STYLES -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="app.css">
+
+  <meta charset="UTF-8">
+  <title>GarageScore | Recette</title>
+</head>
+<body>
+<div class="garagescore-header">
+  <img class="garagescore-logo" src="{{ lib.client.staticUrl('/images/garagescore-top-logo-menu.svg') }}">
+  <span>Équipe > Outil de recette</span>
+  <span class="pull-right">{{ user }}</span>
+</div>
+
+{% raw %}
+  <div id="gs-review-vue">
+    <div class="row" v-if="!loading">
+      <!-- LEFT PART PROJECTS LIST -->
+      <div class="col-xs-12 col-md-3 gs-review-projects-list">
+        <div class="gs-review-project" v-for="(project, projectIndex) in projects" @click="selectProject(projectIndex)">
+          {{ project.name }}
+        </div>
+      </div>
+
+      <!-- MIDDLE PART -->
+      <div class="col-xs-12 col-md-9 gs-review-project-details">
+
+        <!-- ON TOP OF PROJECT TITLE AND APP REVIEW URL -->
+        <div class="col-xs-12 gs-review-project-top">
+          {{ selectedProject.name }}
+        </div>
+
+        <!-- PROJECT COLUMNS -->
+        <div class="col-xs-12 gs-review-project-columns" v-if="selectedProject.columns">
+
+          <div class="gs-review-project-column" v-for="column in selectedProject.columns">
+            <div class="gs-review-project-column-name">
+              {{ column.name }}
+            </div>
+            <div class="gs-review-project-column-cards" v-if="column.cards">
+              <div class="gs-review-project-add-card">
+                <div>
+                  <textarea v-model="column.newCard" placeholder="Ajouter une note..." maxlength="250"></textarea>
+                </div>
+                <div>
+                  <button class="btn btn-default btn-sm" @click="addNote(selectedProject, column)">Ajouter la note</button>
+                </div>
+              </div>
+              <div class="gs-review-project-column-card" v-for="(card, cardIndex) in column.cards">
+                <div class="pull-right">
+                  <button @click="deleteCard(selectedProject, column, card)" class="btn btn-xs"><i class="fa fa-times"></i></button>
+                  <button @click="moveCard(selectedProject, column, getDestColumn(selectedProject, column) ,card)" class="btn btn-xs"><i class="fa fa-arrows-h" aria-hidden="true"></i></button>
+                </div>
+                <div v-show="!card.editing" @click="editCard(card, 'editcard' + card.id)">
+                  <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;
+                  <span style="white-space: pre-line">{{ card.note }}</span>
+                </div>
+                <div v-show="card.editing">
+                  <textarea class="gs-edit-area"
+                            v-model="card.edit"
+                            @blur="stopEditCard(selectedProject, column, card)"
+                            :id="'editcard' + card.id"
+                            maxlength="250"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- LOADING -->
+    <div v-else>
+      LOADING...
+    </div>
+  </div>
+
+  <script src="app/review-app.js"></script>
+  <script src="app.js"></script>
+
+{% endraw %}
+</body>
+</html>

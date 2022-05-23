@@ -1,0 +1,40 @@
+var schemaJson = {
+    "@context": "http://schema.org",    
+    {% if networkTypeDisplayName == 'CarRepairer' %}
+    "@type": "AutoRepair",
+    {% else %}
+    "@type": "AutoRepair", "additionalType":"AutoDealer",
+    {% endif %}
+    "name": "{{ name|escapejs }}",
+    "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "{{ city|escapejs }}",
+        "postalCode":"{{ postalCode|escapejs }}",
+        "streetAddress": "{{ streetAddress|escapejs }}"
+    },
+    {% if latitude %}
+    "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "{{ latitude }}",
+        "longitude": "{{ longitude }}"
+    },
+    {% endif %}
+    "aggregateRating": {
+        "@type": "AggregateRating",
+        "bestRating" : "10",
+        "ratingValue": "{{ rating }}",
+        "ratingCount": "{{respondentsCount}}",
+        "reviewCount": "{{respondentsCount}}"
+    },
+    {% if brandLogos %}
+    "logo": "{{ brandLogos[0]|escapejs }}",
+    "image": "{{ brandLogos[0]|escapejs }}",
+    {% endif %}
+    "url": "{{ url|escapejs }}"
+};
+
+var script = document.createElement('script');
+script.setAttribute('type', 'application/ld+json');
+script.innerText = JSON.stringify(schemaJson);
+
+document.getElementsByTagName('head')[0].appendChild(script);

@@ -1,0 +1,52 @@
+{% macro getRow(singData) %}
+  {% set shouldSurface = 1 if (singData.aws_postgres.count_contacts == singData.cockpit.totalShouldSurfaceInCampaignStats) else 0 %}
+  {% set shouldReceive = 1 if (singData.aws_postgres.count_should_receive_survey == singData.cockpit.countShouldReceiveSurveys) else 0 %}
+  {% set responded = 1 if singData.aws_postgres.count_responded == singData.cockpit.countSurveysResponded else 0 %}
+  {% set total = shouldSurface + responded + shouldReceive %}
+  {% if total == 3 %}
+    <tr>
+  {% elseif total == 2 %}
+    <tr style="background-color:#fff67b">
+  {% elseif total == 1 %}
+    <tr style="background-color:orange">
+  {% else %}
+    <tr style="background-color:red">
+  {% endif %}
+{% endmacro %}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body>
+  <div style="margin: 20px">
+
+  </div>
+  <table border="1" cellspacing="0">
+    <tr>
+      <td rowspan="2">Garage</td>
+      <td colspan="2">Nb Contacts</td>
+      <td colspan="2">Nb sondés</td>
+      <td colspan="2">Nb répondants</td>
+    </tr>
+    <tr>
+      <td style="width: 70px;">Cockpit</td>
+      <td style="width: 70px;">Bime postgres</td>
+      <td style="width: 70px;">Cockpit</td>
+      <td style="width: 70px;">Bime postgres</td>
+      <td style="width: 70px;">Cockpit</td>
+      <td style="width: 70px;">Bime postgres</td>
+    </tr>
+    {% for singData in contact.payload.data %}
+      {{ getRow(singData) }}
+        <td>{{ singData.garage.publicDisplayName }} <br> {{ singData.garage.id }} </td>
+        <td style="text-align: right">{{ singData.cockpit.totalShouldSurfaceInCampaignStats }}</td>
+        <td style="text-align: right">{{ singData.aws_postgres.count_contacts }}</td>
+        <td style="text-align: right">{{ singData.cockpit.countShouldReceiveSurveys }}</td>
+        <td style="text-align: right">{{ singData.aws_postgres.count_should_receive_survey }}</td>
+        <td style="text-align: right">{{ singData.cockpit.countSurveysResponded }}</td>
+        <td style="text-align: right">{{ singData.aws_postgres.count_responded }}</td>
+      </tr>
+    {% endfor %}
+  <br>
+  <br>
+</body>
+</html>

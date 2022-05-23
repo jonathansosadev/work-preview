@@ -1,0 +1,570 @@
+{
+  "GeneralStats": {
+    "comment": "Top and Average, shared in the whole application. Use ALL in type if no special type",
+    "args": [
+      { "name": "period", "type": "String!" },
+      { "name": "cockpitType", "type": "String!" },
+      { "name": "type", "type": "String!", "defaultValue": "ALL" },
+      { "name": "key", "type": "String!" }
+    ],
+    "type": "GeneralStats(period: String!, cockpitType: String!, type: String!, key: String!)"
+  },
+  "AutomationKpis": {
+    "comment": "Top KPIs, shared across Automation tabs",
+    "args": [
+      { "name": "period", "type": "String!" },
+      { "name": "cockpitType", "type": "String" },
+      { "name": "type", "type": "String" },
+      { "name": "garageId", "type": "[String]" }
+    ],
+    "type": "AutomationKpis(period: String!, cockpitType: String, type: String, garageId: [String])"
+  },
+  "AutomationGaragesList": {
+    "comment": "Automation KPIs by Garage",
+    "args": [
+      { "name": "period", "type": "String!" },
+      { "name": "cockpitType", "type": "String" },
+      { "name": "type", "type": "String" },
+      { "name": "garageId", "type": "[String]" },
+      { "name": "orderBy", "type": "String", "defaultValue": "countCampaigns" },
+      { "name": "order", "type": "String", "defaultValue": "DESC" },
+      { "name": "search", "type": "String", "defaultValue": "" },
+      { "name": "limit", "type": "Int", "defaultValue": 10 },
+      { "name": "skip", "type": "Int", "defaultValue": 0 }
+    ],
+    "type": "AutomationGaragesList(period: String!, cockpitType: String, type: String, garageId: [String], orderBy: String, order: String, search: String, limit: Int, skip: Int)"
+  },
+  "AutomationCampaignsList": {
+    "comment": "Automation KPIs by Garage",
+    "args": [
+      { "name": "period", "type": "String!" },
+      { "name": "cockpitType", "type": "String" },
+      { "name": "type", "type": "String" },
+      { "name": "garageId", "type": "[String]" },
+      { "name": "orderBy", "type": "String", "defaultValue": "firstRunDayNumber" },
+      { "name": "order", "type": "String", "defaultValue": "DESC" },
+      { "name": "search", "type": "String", "defaultValue": "" },
+      { "name": "limit", "type": "Int", "defaultValue": 10 }
+    ],
+    "type": "AutomationCampaignsList(period: String!, cockpitType: String, type: String, garageId: [String], orderBy: String, order: String, search: String, limit: Int)"
+  },
+  "ErepKpis": {
+    "comment": "Top KPI, shared between all the Ereputation tabs.",
+    "args": [
+      { "name": "period", "type": "String!" },
+      { "name": "source", "type": "String" },
+      { "name": "cockpitType", "type": "String" },
+      { "name": "garageId", "type": "[String]" }
+    ],
+    "type": "ErepKpis(period: String!, source: String, cockpitType: String, garageId: [String])"
+  },
+  "ErepConnections": {
+    "comment": "Erep Connections infos by Garage.",
+    "args": [
+      { "name": "cockpitType", "type": "String!" },
+      { "name": "garageId", "type": "[String]" }
+    ],
+    "type": "ErepConnections(cockpitType: String!, garageId: [String])"
+  },
+  "ErepReviews": {
+    "comment": "Erep list of reviews",
+    "args": [
+      { "name": "period", "type": "String!" },
+      { "name": "garageId", "type": "[String]" },
+      { "name": "source", "type": "String" },
+      { "name": "cockpitType", "type": "String" },
+      { "name": "search", "type": "String", "defaultValue": "" },
+      { "name": "limit", "type": "Int", "defaultValue": 10 },
+      { "name": "skip", "type": "Int", "defaultValue": 0 },
+      { "name": "score", "type": "String" },
+      { "name": "response", "type": "String" }
+    ],
+    "type": "ErepReviews(period: String!, garageId: [String], source: String, cockpitType: String, search: String, limit: Int, skip: Int, score: String, response: String)"
+  },
+  "userGetGaragesAndAgents": {
+    "comment": "Getting garages available to be assigned to a user",
+    "args": [{ "name": "id", "type": "String!" }],
+    "type": "userGetGaragesAndAgents(id: String!)"
+  },
+  "userGetGaragesWithUsers": {
+    "comment": "Search/List garages and users in profile",
+    "args": [
+      { "name": "skip", "type": "Int" },
+      { "name": "limit", "type": "Int" },
+      { "name": "search", "type": "String" }
+    ],
+    "type": "userGetGaragesWithUsers(skip: Int, limit: Int, search: String)"
+  },
+  "garageGetGarage": {
+    "comment": "Get One garage",
+    "args": [{ "name": "garageId", "type": "ID!" }],
+    "type": "garageGetGarage(garageId: ID!)"
+  },
+  "garageGetGarages": {
+    "comment": "Get all garages",
+    "args": [],
+    "type": "garageGetGarages"
+  },
+  "billingAccountGetBillingAccount": {
+    "comment": "Get one billing account",
+    "args": [{ "name": "billingAccountId", "type": "ID!" }],
+    "type": "billingAccountGetBillingAccount(billingAccountId: ID!)"
+  },
+  "billingAccountGetBillingAccounts": {
+    "comment": "Get all billing accounts",
+    "args": [],
+    "type": "billingAccountGetBillingAccounts"
+  },
+  "reportLatestMonthlySummaries": {
+    "comment": "In greyBo, gets 12 monthly summaries",
+    "args": [{ "name": "email", "type": "String!" }],
+    "type": "reportLatestMonthlySummaries(email: String!)"
+  },
+  "rgpdGetRelatedDataFromInput": {
+    "comment": "Search related datas from phone or email",
+    "args": [{ "name": "input", "type": "String!" }],
+    "type": "rgpdGetRelatedDataFromInput(input: String!)"
+  },
+  "garageGetMakeSurveyGarages": {
+    "comment": "Retrieve garages with their survey delays",
+    "args": [
+      { "name": "page", "type": "Int" },
+      { "name": "search", "type": "String" }
+    ],
+    "type": "garageGetMakeSurveyGarages(page: Int, search: String)"
+  },
+  "ConfigurationGetLearningResources": {
+    "comment": "Returns all e-learning resources",
+    "args": [],
+    "type": "ConfigurationGetLearningResources"
+  },
+  "kpiByPeriodSourceList": {
+    "comment": "/cockpit/leads/sources, get kpi for sources leads",
+    "args": [
+      { "name": "periodId", "type": "String" },
+      { "name": "cockpitType", "type": "String" },
+      { "name": "garageId", "type": "[String]" },
+      { "name": "leadSaleType", "type": "String" },
+      { "name": "sort", "type": "String" },
+      { "name": "order", "type": "String" }
+    ],
+    "type": "kpiByPeriodSourceList(periodId: String, cockpitType: String, garageId:[String], leadSaleType: String, sort: String, order: String)"
+  },
+  "kpiByPeriodGetList": {
+    "comment": "get different list kpi",
+    "args": [
+      { "name": "periodId", "type": "String!" },
+      { "name": "cockpitType", "type": "String" },
+      { "name": "garageId", "type": "[String]" },
+      { "name": "userId", "type": "String" },
+      { "name": "dataType", "type": "String" },
+      { "name": "listType", "type": "String" },
+      { "name": "cockpitInterface", "type": "String" },
+      { "name": "search", "type": "String" },
+      { "name": "limit", "type": "Int" },
+      { "name": "skip", "type": "Int" },
+      { "name": "sort", "type": "String" },
+      { "name": "order", "type": "String" }
+    ],
+    "type": "kpiByPeriodGetList(periodId: String, cockpitType: String, garageId: [String], userId: String, dataType: String, listType: String, cockpitInterface: String, search: String, limit: Int, skip: Int, sort: String, order: String)"
+  },
+  "kpiByPeriodGetErepKpiList": {
+    "comment": "Get EReputation KPIs by Garage",
+    "args": [
+      { "name": "period", "type": "String!" },
+      { "name": "garageId", "type": "[String]" },
+      { "name": "cockpitType", "type": "String" },
+      { "name": "orderBy", "type": "String" },
+      { "name": "order", "type": "String" },
+      { "name": "skip", "type": "Int", "defaultValue": 0 },
+      { "name": "limit", "type": "Int", "defaultValue": 10 },
+      { "name": "search", "type": "String", "defaultValue": "" }
+    ],
+    "type": "kpiByPeriodGetErepKpiList(period:String!, garageId:[String], cockpitType:String, orderBy:String, order:String, skip:Int, limit:Int, search:String)"
+  },
+  "dataGetContactsList": {
+    "comment": "get contacts list, use by /cockpit/contacts/reviews",
+    "args": [
+      { "name": "limit", "type": "Int" },
+      { "name": "skip", "type": "Int" },
+      { "name": "contactsOrder", "type": "String!" },
+      { "name": "periodId", "type": "String!" },
+      { "name": "search", "type": "String" },
+      { "name": "garageId", "type": "[String]" },
+      { "name": "cockpitType", "type": "String" },
+      { "name": "type", "type": "String" },
+      { "name": "emailStatus", "type": "String" },
+      { "name": "phoneStatus", "type": "String" },
+      { "name": "campaignStatus", "type": "String" },
+      { "name": "revisionStatus", "type": "String" },
+      { "name": "ticketStatus", "type": "String" },
+      { "name": "dataId", "type": "String" },
+      { "name": "frontDeskUserName", "type": "String" }
+    ],
+    "type": "dataGetContactsList(limit: Int, skip: Int, contactsOrder: String!, periodId: String!, search: String, garageId: [String], cockpitType: String, type: String, emailStatus: String, phoneStatus: String, campaignStatus: String, revisionStatus: String, ticketStatus: String, dataId: String, frontDeskUserName: String)"
+  },
+  "AutomationAvailableTargets": {
+    "comment": "Fetch available targets to display in cockpit/automation/campaigns management section",
+    "args": [{ "name": "dataType", "type": "String" }],
+    "type": "AutomationAvailableTargets(dataType: String)"
+  },
+  "AutomationGetCampaignsForSpecificTarget": {
+    "comment": "Fetch automation campaigns list for a specific target, for display in the campaign manager",
+    "args": [
+      { "name": "target", "type": "String" },
+      { "name": "affectedGarageIds", "type": "[String]" }
+    ],
+    "type": "AutomationGetCampaignsForSpecificTarget(target: String, affectedGarageIds: [String])"
+  },
+  "AutomationGetCustomContents": {
+    "comment": "Fetch automation campaigns custom content for garageIds",
+    "args": [
+      { "name": "garageIds", "type": "[String!]" },
+      { "name": "target", "type": "String" }
+    ],
+    "type": "AutomationGetCustomContents(garageIds: [String!], target: String)"
+  },
+  "dataGetLeadTicket": {
+    "comment": "Get a data leadTicket",
+    "args": [{ "name": "dataId", "type": "String!" }],
+    "type": "dataGetLeadTicket(dataId:String!)"
+  },
+  "dataGetHomeB2C": {
+    "comment": "Get total reviews counts and reviews sample for our homepage",
+    "args": [],
+    "type": "dataGetHomeB2C"
+  },
+  "dataGetLeadsList": {
+    "comment": "Gets leads list",
+    "args": [
+      { "name": "limit", "type": "Int", "defaultValue": 10 },
+      { "name": "before", "type": "Date" },
+      { "name": "followed", "type": "Boolean", "defaultValue": false },
+      { "name": "periodId", "type": "String!" },
+      { "name": "garageId", "type": "[String]" },
+      { "name": "cockpitType", "type": "String" },
+      { "name": "search", "type": "String" },
+      { "name": "leadBodyType", "type": "String" },
+      { "name": "leadFinancing", "type": "String" },
+      { "name": "leadTiming", "type": "String" },
+      { "name": "leadSaleType", "type": "String" },
+      { "name": "leadManager", "type": "String" },
+      { "name": "leadStatus", "type": "String" },
+      { "name": "leadSource", "type": "String" },
+      { "name": "followupLeadStatus", "type": "String" }
+    ],
+    "type": "dataGetLeadsList(limit: Int, before: Date, followed: Boolean, periodId: String!, garageId: [String], cockpitType: String, search: String, leadBodyType: String, leadFinancing: String, leadTiming: String, leadSaleType: String, leadManager: String, leadStatus: String, leadSource: String, followupLeadStatus: String)"
+  },
+  "userGetUsers": {
+    "comment": "Get users",
+    "args": [
+      { "name": "limit", "type": "Int" },
+      { "name": "skip", "type": "Int" },
+      { "name": "search", "type": "String" },
+      { "name": "role", "type": "String" },
+      { "name": "job", "type": "String" },
+      { "name": "lastCockpitOpenAt", "type": "String" }
+    ],
+    "type": "userGetUsers(skip: Int, limit: Int, search: String, role: String, job: String, lastCockpitOpenAt: String)"
+  },
+  "userGetUserById": {
+    "comment": "Get a user",
+    "args": [{ "name": "userId", "type": "String!" }],
+    "type": "userGetUserById(userId: String!)"
+  },
+  "reportKpiGetMonthlySummary": {
+    "comment": "Get a report of the KPI monthly summary",
+    "args": [
+      { "name": "reportId", "type": "String!" },
+      { "name": "dataType", "type": "String" }
+    ],
+    "type": "reportKpiGetMonthlySummary(reportId: String!, dataType: String)"
+  },
+  "garageGetGaragesConditions": {
+    "comment": "Get a user garages conditons",
+    "args": [{ "name": "id", "type": "String!" }],
+    "type": "garageGetGaragesConditions(id: String!)"
+  },
+  "garageGetB2CSiteIndex": {
+    "comment": "Get garages B2C site index",
+    "args": [{ "name": "locale", "type": "String!" }],
+    "type": "garageGetB2CSiteIndex(locale: String!)"
+  },
+  "kpiByPeriodGetGaragesConversions": {
+    "comment": "Get garagesConversions stats",
+    "args": [
+      { "name": "garageIds", "type": "[String]" },
+      { "name": "cockpitType", "type": "String!" },
+      { "name": "periodId", "type": "String" }
+    ],
+    "type": "kpiByPeriodGetGaragesConversions(garageIds: [String], cockpitType: String!, periodId: String)"
+  },
+  "dataGetAvailableSources": {
+    "comment": "Gets sources that can be set when creating a manual lead",
+    "args": [
+      { "name": "garageId", "type": "[String]" },
+      { "name": "leadSaleType", "type": "String" },
+      { "name": "customSourcesOnly", "type": "Boolean", "default": false }
+    ],
+    "type": "dataGetAvailableSources(garageId: [String], leadSaleType: String, customSourcesOnly: Boolean)"
+  },
+  "IdeaboxGetIdeas": {
+    "comment": "Fetch ideas",
+    "args": [
+      { "name": "after", "type": "String" },
+      { "name": "ideaId", "type": "String" }
+    ],
+    "type": "IdeaboxGetIdeas(after: String, ideaId: String)"
+  },
+  "dataGetUnsatisfiedList": {
+    "comment": "Get unsatisfied list",
+    "args": [
+      { "name": "limit", "type": "Int" },
+      { "name": "before", "type": "String" },
+      { "name": "periodId", "type": "String!" },
+      { "name": "garageId", "type": "[String]" },
+      { "name": "cockpitType", "type": "String" },
+      { "name": "search", "type": "String" },
+      { "name": "unsatisfiedDataType", "type": "String" },
+      { "name": "unsatisfiedElapsedTime", "type": "String" },
+      { "name": "surveySatisfactionLevel", "type": "String" },
+      { "name": "unsatisfiedHasLead", "type": "String" },
+      { "name": "unsatisfiedManager", "type": "String" },
+      { "name": "unsatisfiedStatus", "type": "String" },
+      { "name": "unsatisfiedFollowUpStatus", "type": "String" }
+    ],
+    "type": "dataGetUnsatisfiedList(limit: Int, before: String, periodId: String!,  garageId: [String],  cockpitType: String,  search: String,  unsatisfiedDataType: String,  unsatisfiedElapsedTime: String,  surveySatisfactionLevel: String,  unsatisfiedHasLead: String,  unsatisfiedManager: String,  unsatisfiedStatus: String,  unsatisfiedFollowUpStatus: String)"
+  },
+  "userGetGarageScoreUsers": {
+    "comment": "Get garage score users",
+    "args": [
+      { "name": "perfManagers", "type": "Boolean" },
+      { "name": "bizDevs", "type": "Boolean" }
+    ],
+    "type": "userGetGarageScoreUsers(perfManagers: Boolean, bizDevs: Boolean)"
+  },
+  "kpiByPeriodGetKpi": {
+    "comment": "Get Kpi by period",
+    "args": [
+      { "name": "periodId", "type": "String!" },
+      { "name": "cockpitType", "type": "String" },
+      { "name": "garageId", "type": "[String]" },
+      { "name": "userId", "type": "String" },
+      { "name": "kpiType", "type": "Int" }
+    ],
+    "type": "kpiByPeriodGetKpi(periodId: String!, cockpitType: String, garageId: [String], userId: String, kpiType: Int )"
+  },
+  "CockpitExport": {
+    "comment": "Start an Export job",
+    "args": [
+      { "name": "exportName", "type": "String" },
+      { "name": "exportType", "type": "String!" },
+      { "name": "periodId", "type": "String" },
+      { "name": "startPeriodId", "type": "String" },
+      { "name": "endPeriodId", "type": "String" },
+      { "name": "dataTypes", "type": "[String]" },
+      { "name": "garageIds", "type": "[String!]" },
+      { "name": "fields", "type": "[String]!" },
+      { "name": "recipients", "type": "[String!]!" },
+      { "name": "frontDeskUsers", "type": "[FrontDeskUser!]" },
+      { "name": "cockpitType", "type": "String" },
+      { "name": "adminFilterRole", "type": "String" },
+      { "name": "adminFilterJob", "type": "String" },
+      { "name": "adminFilterLastCockpitOpenAt", "type": "String" },
+      { "name": "adminSearch", "type": "String" },
+      { "name": "exportConfigurationId", "type": "String" },
+      { "name": "frequency", "type": "String!" },
+      { "name": "selectedAutomationCampaigns", "type": "[String]" },
+      { "name": "automationCampaignType", "type": "String" },
+      { "name": "isBackdoor", "type": "Boolean" }
+
+    ],
+    "type": "CockpitExport(exportName: String, exportType: String!, periodId: String, startPeriodId: String, endPeriodId: String, dataTypes: [String], garageIds: [String!], fields: [String]!, recipients: [String!]!, frontDeskUsers : [FrontDeskUser!], cockpitType : String, adminFilterRole: String, adminFilterJob: String, adminFilterLastCockpitOpenAt: String, adminSearch: String, exportConfigurationId: String, frequency: String!, selectedAutomationCampaigns: [String], automationCampaignType: String, isBackdoor: Boolean)"
+  },
+  "cockpitTopFiltersGetCockpitFilters": {
+    "comment": "Get cockpit filters",
+    "args": [
+      { "name": "source", "type": "String" },
+      { "name": "garageId", "type": "[String]" },
+      { "name": "cockpitType", "type": "String" },
+      { "name": "type", "type": "String" },
+      { "name": "ticketType", "type": "String" },
+      { "name": "leadSaleType", "type": "String" },
+      { "name": "filterToFetch", "type": "String!" },
+      { "name": "groupDistinctOnType", "type": "Boolean" }
+    ],
+    "type": "cockpitTopFiltersGetCockpitFilters(source: String, garageId: [String], cockpitType: String, type: String, ticketType: String, leadSaleType: String, filterToFetch: String!, groupDistinctOnType: Boolean)"
+  },
+  "kpiByPeriodGetSolvedUnsatisfied": {
+    "comment": "Get garage history solved unsatisfied stats",
+    "args": [
+      { "name": "cockpitType", "type": "String!" },
+      { "name": "garageIds", "type": "[String]" }
+    ],
+    "type": "kpiByPeriodGetSolvedUnsatisfied(cockpitType: String!, garageIds: [String])"
+  },
+  "kpiByPeriodGetChartData": {
+    "comment": "get kpi data for leads' charts",
+    "args": [
+      {
+        "name": "periodId",
+        "type": "String!"
+      },
+      {
+        "name": "kpiType",
+        "type": "Int!"
+      },
+      {
+        "name": "cockpitType",
+        "type": "String"
+      },
+      {
+        "name": "garageId",
+        "type": "[String]"
+      },
+      {
+        "name": "userId",
+        "type": "String"
+      },
+      {
+        "name": "dataType",
+        "type": "String"
+      },
+      {
+        "name": "frontDeskUserName",
+        "type": "String"
+      },
+      {
+        "name": "campaignType",
+        "type": "String"
+      }
+    ],
+    "type": "kpiByPeriodGetChartData(periodId: String!, kpiType : Int! ,cockpitType: String, garageId: [String], userId: String, dataType: String, frontDeskUserName: String, campaignType: String)"
+  },
+  "kpiByPeriodGetSingle": {
+    "comment": "Get federated kpis by period",
+    "args": [
+      { "name": "garageIds", "type": "[String]" },
+      { "name": "cockpitType", "type": "String!" },
+      { "name": "periodId", "type": "String!" },
+      { "name": "type", "type": "String" },
+      { "name": "frontDesk", "type": "String" }
+    ],
+    "type": "kpiByPeriodGetSingle(cockpitType: String!, garageIds: [String], periodId: String!, type: String, frontDesk: String)"
+  },
+  "cockpitExportsConfigurationGet": {
+    "comment": "Get a user export configuration",
+    "args": [
+      { "name": "id", "type": "String" },
+      { "name": "userId", "type": "String"}
+    ],
+    "type": "cockpitExportsConfigurationGet(id: String, userId: String)"
+  },
+  "userGetUserTemporaryPassword": {
+    "comment": "Get a user password to connect as him/her",
+    "args": [{ "name": "id", "type": "String!" }],
+    "type": "userGetUserTemporaryPassword(id: String!)"
+  },
+  "dataGetUnsatisfiedTicket": {
+    "comment": "Get an unsatisfiedTicket",
+    "args": [{ "name": "id", "type": "ID!" }],
+    "type": "dataGetUnsatisfiedTicket(id: ID!)"
+  },
+  "userGetEmailValidation": {
+    "comment": "Validate an email via mailgun API",
+    "args": [{ "name": "email", "type": "String!" }],
+    "type": "userGetEmailValidation(email: String!)"
+  },
+  "dataGetReviewsList": {
+    "comment": "Get a reviews list",
+    "args": [
+      { "name": "limit", "type": "Int!" },
+      { "name": "before", "type": "String" },
+      { "name": "periodId", "type": "String!" },
+      { "name": "cockpitType", "type": "String!" },
+      { "name": "search", "type": "String" },
+      { "name": "garageId", "type": "[String]" },
+      { "name": "type", "type": "String" },
+      { "name": "surveySatisfactionLevel", "type": "String" },
+      { "name": "publicReviewStatus", "type": "String" },
+      { "name": "publicReviewCommentStatus", "type": "String" },
+      { "name": "followupUnsatisfiedStatus", "type": "String" },
+      { "name": "followupLeadStatus", "type": "String" },
+      { "name": "dataId", "type": "ID" },
+      { "name": "source", "type": "String" },
+      { "name": "frontDeskUserName", "type": "String" }
+    ],
+    "type": "dataGetReviewsList(limit: Int!, before: String, periodId: String!, cockpitType: String!, search: String, garageId: [String], type: String, surveySatisfactionLevel: String, publicReviewStatus: String, publicReviewCommentStatus: String, followupUnsatisfiedStatus: String, followupLeadStatus: String, dataId: ID, source: String, frontDeskUserName: String)"
+  },
+  "reviewReplyTemplateGetTemplates":{
+    "comment": "Fetchs templates of one or more garages",
+    "args":[
+      {"name":"queryText", "type":"String"},
+      {"name":"page", "type": "Int"},
+      {"name":"ratingCategory", "type":"String"},
+      {"name":"source", "type":"String"},
+      {"name":"limit", "type": "Int"},
+      { "name": "garageId", "type": "ID" }
+    ],
+    "type": "reviewReplyTemplateGetTemplates(page: Int, queryText: String, ratingCategory: String, source: String, limit:Int, garageId: ID)"
+  },
+  "garagesGetAutomaticReviewResponseDelay":{
+    "comment": "Fetchs Review Response Delay of an user's garage",
+    "args": [
+      {"name":"page", "type": "Int"},
+      {"name":"limit", "type": "Int"}
+    ],
+    "type": "garagesGetAutomaticReviewResponseDelay(page: Int, limit:Int )"
+  },
+  "garageGetGaragesSignatures":{
+    "comment": "Fetchs Review Response Delay of a garage",
+    "args": [],
+    "type": "garageGetGaragesSignatures"
+  },
+  "garageGetAllSources": {
+    "comment": "Get all cross lead sources",
+    "args": [],
+    "type": "garageGetAllSources"
+  },
+  "cockpitTopFiltersGetFrontDeskUsersDms": {
+    "comment": "Get Available FrontDeskUsers Dms for the exports",
+    "args": [
+      { "name": "dataTypes", "type": "[String!]!"},
+      { "name": "garageIds", "type": "[String!]!"}
+    ],
+    "type": "cockpitTopFiltersGetFrontDeskUsersDms(dataTypes: [String!]!, garageIds: [String!]!)"
+  },
+  "cockpitTopFiltersGetFrontDeskUsersCusteed": {
+    "comment": "Get Available FrontDeskUsers Custeed for the exports",
+    "args": [
+      { "name": "dataTypes", "type": "[String!]!"},
+      { "name": "garageIds", "type": "[String!]!"}
+    ],
+    "type": "cockpitTopFiltersGetFrontDeskUsersCusteed(dataTypes: [String!]!, garageIds: [String!]!)"
+  },
+  "kpiByPeriodGetKpis": {
+    "comment": "Get KpiByPeriod Kpis",
+    "args": [
+      {"name": "periodId","type": "String!"},
+      {"name": "kpiOrderBy","type": "String!"},
+      {"name": "kpiOrder","type": "String!"},
+      {"name": "cockpitType","type": "String"},
+      {"name": "garageIds","type": "[String!]"},
+      {"name": "search","type": "String"},
+      {"name": "type","type": "String"},
+      {"name": "frontDeskUserName","type": "String"},
+      {"name": "allUsers","type": "Boolean"},
+      {"name": "limit","default": 10,"type": "Int"},
+      {"name": "skip","type": "Int"},
+      {"name": "kpiType","type": "Int"}
+    ],
+    "type": "kpiByPeriodGetKpis(periodId: String!, kpiOrderBy: String!, kpiOrder: String!, cockpitType: String, garageIds: [String!], search: String, type: String, frontDeskUserName: String, allUsers: Boolean, limit: Int, skip: Int, kpiType: Int)"
+  },
+    "reportGetData": {
+    "comment": "Get datas to display for a report",
+    "args": [
+      { "name": "reportId", "type": "String!"}
+    ],
+    "type": "reportGetData(reportId: String!)"
+  }
+}

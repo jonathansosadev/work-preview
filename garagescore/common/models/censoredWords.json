@@ -1,0 +1,34 @@
+{
+  "name": "CensoredWords",
+  "plural": "CensoredWords",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "http": {
+    "path": "censoredWords"
+  },
+  "mixins": {
+    "Stream": true,
+    "SmartSort": true
+  },
+  "mongodb": {
+    "collection": "censoredWords"
+  },
+  "indexes": {
+  },
+  "properties": {
+    "words": {
+      "type": "array"
+    },
+    "language": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+  },
+  "acls": [
+  ],
+  "methods": {
+  }
+}

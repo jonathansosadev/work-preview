@@ -1,0 +1,33 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+<style type="text/css">
+	.page-header {
+   margin-top: 20px;
+  }
+  .big-button {
+    width: 50%;
+    height: 200px;
+    font-size: 50px;
+    padding-top: 60px;
+    overflow: hidden;
+  }
+</style>
+{% endblock %}
+{% block page %}
+<div class="page-header">
+  <h1>Liste des garages</h1><br/>
+</div>
+<div class="col-md-12">
+  <div class="row text-center">
+    <a class="btn btn-success big-button" target="_blank" href="{{ lib.client.url.getShortUrl('ADMIN_EXPORTS_GARAGES_DOWNLOAD') }}">
+      Exporter au format CSV
+    </a>
+  	<br/>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+
+{% endblock %}

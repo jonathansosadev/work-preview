@@ -1,0 +1,672 @@
+{
+  "SubscribeToAutomation": {
+    "comment": "Makes the logged in user subscribe to Automation with all his garages and all users belonging to those garages",
+    "args": [],
+    "type": "SubscribeToAutomation"
+  },
+  "AutomationCampaignsToggleStatus": {
+    "comment": "Toggles the status the Automation Campaigns for 1 one multiple Garages IDLE <=> RUNNING",
+    "args": [
+      { "name": "target", "type": "String!" },
+      { "name": "garageIds", "type": "[String]!" },
+      { "name": "status", "type": "String" },
+      { "name":  "channelType", "type": "String" }
+    ],
+    "type": "AutomationCampaignsToggleStatus(target: String!, garageIds: [String]!, status: String, channelType: String)"
+  },
+  "AutomationCampaignsAssignCustomContentToCampaigns": {
+    "comment": "Assign a custom content ID to n campaign(s)",
+    "args": [
+      { "name": "target", "type": "String!" },
+      { "name": "garageIds", "type": "[String]!" },
+      { "name": "customContentId", "type": "String" }
+    ],
+    "type": "AutomationCampaignsAssignCustomContentToCampaigns(target: String!, garageIds: [String]!, customContentId: String)"
+  },
+  "AutomationCampaignsSetCustomContent": {
+    "comment": "Set the customContent of automation campaigns",
+    "args": [
+      { "name": "target", "type": "String!" },
+      { "name": "affectedGarageIds", "type": "[String]!" },
+      { "name": "displayName", "type": "String!"},
+      { "name": "promotionalMessage", "type": "String" },
+      { "name": "themeColor", "type": "String" },
+      { "name": "dayNumberStart", "type": "Int!" },
+      { "name": "dayNumberEnd", "type": "Int" },
+      { "name": "noExpirationDate", "type": "Boolean" },
+      { "name": "customContentId", "type": "String"},
+      { "name": "customUrl", "type": "String"},
+      { "name": "customButtonText", "type": "String"}
+    ],
+    "type": "AutomationCampaignsSetCustomContent(target: String!, affectedGarageIds: [String]!, displayName: String!, promotionalMessage: String, themeColor: String, dayNumberStart: Int!, dayNumberEnd: Int, noExpirationDate: Boolean, customContentId: String, customUrl: String, customButtonText: String)"
+  },
+  "AutomationCampaignsDeleteCustomContent": {
+    "comment": "Delete the customContent of automation campaigns",
+    "args": [
+      { "name": "customContentId", "type": "String!"}
+    ],
+    "type": "AutomationCampaignsDeleteCustomContent(customContentId: String!)"
+  },
+  "GarageSetGarageStatus": {
+    "comment": "Toggles the status of a garage",
+    "args": [
+      { "name": "id", "type": "String!" },
+      { "name": "status", "type": "String!" },
+      { "name": "tickets", "type": "[garageSetGarageStatusTicket]"}
+    ],
+    "type": "GarageSetGarageStatus(id: String!, status: String!, tickets: [garageSetGarageStatusTicket])"
+  },
+  "GarageCreateLiveCallTickets": {
+    "comment": "Request live call on OVH and create tickets for them",
+    "args": [],
+    "type": "GarageCreateLiveCallTickets"
+  },
+  "ElearningResourceWatched": {
+    "comment": "Set a resource as watched for the current user",
+    "args": [{ "name": "url", "type": "String!" }],
+    "type": "ElearningResourceWatched(url: String!)"
+  },
+  "DataSetLeadTicketSelfAssigned": {
+    "comment": "Self-assign a user to a leadTicket",
+    "args": [{ "name": "dataId", "type": "String!" }],
+    "type": "DataSetLeadTicketSelfAssigned(dataId: String!)"
+  },
+  "UserUpdateCockpitHistory": {
+    "comment": "(onurlchange) Run after the user navigate in a new cockpit tab, set user history (lastCockpitOpenAt, userAccess...)",
+    "args": [{ "name": "routeName", "type": "String!" }, { "name": "isBackdoor", "type": "Boolean" }],
+    "type": "UserUpdateCockpitHistory(routeName: String!, isBackdoor: Boolean)"
+  },
+  "garageSetCrossLeadsSubscription": {
+    "comment": "set crossLeads subscription, use by /cockpit/cross-leads",
+    "args": [],
+    "type": "garageSetCrossLeadsSubscription"
+  },
+  "garageAskProductDemo": {
+    "comment": "ask product demonstration, use by /cockpit/cross-leads",
+    "args": [
+      { "name": "productName", "type": "String!" }
+    ],
+    "type": "garageAskProductDemo(productName:String!)"
+  },
+  "garageSetSurveySignature": {
+    "comment": "Updates the signatures with which surveys will be signed for a garage",
+    "args": [{ "name": "modifications", "type": "[garageSetSurveySignatureModifications!]!"}],
+    "type": "garageSetSurveySignature(modifications: [garageSetSurveySignatureModifications!]!)"
+  },
+  "sendTestSurvey": {
+    "comment": "Sending a test survey for garagescore or automation",
+    "args": [
+      { "name": "garageType", "type": "String!" },
+      { "name": "lang", "type": "String!" },
+      { "name": "dataType", "type": "String!" },
+      { "name": "email", "type": "String" },
+      { "name": "mobilePhone", "type": "String" },
+      { "name": "target", "type": "String" },
+      { "name": "sendGDPR", "type": "Boolean" }
+    ],
+    "type": "sendTestSurvey(garageType:String!, lang:String!, dataType:String!, email:String, mobilePhone:String, target:String, sendGDPR:Boolean)"
+  },
+  "dataSetLeadTicket": {
+    "comment": "Set a leadTicket field",
+    "args": [
+      { "name": "dataId", "type": "String!" },
+      { "name": "field", "type": "String!" },
+      { "name": "value", "type": "String" },
+      { "name": "arrayValue", "type": "[String]" }
+    ],
+    "type": "dataSetLeadTicket(dataId:String!, field:String!, value:String, arrayValue:[String])"
+  },
+  "garageSetTicketsConfiguration": {
+    "comment": "Set garage ticketsConfiguration and user alert",
+    "args": [
+      { "name": "garageId", "type": "String" },
+      { "name": "userId", "type": "String" },
+      { "name": "oldUserId", "type": "String" },
+      { "name": "alertType", "type": "String" }
+    ],
+    "type": "garageSetTicketsConfiguration(garageId:String, userId:String, oldUserId:String, alertType:String)"
+  },
+  "garageSetRemoveCrossLeadsSource": {
+    "comment": "delete source crossleads",
+    "args": [
+      { "name": "garageId", "type": "String" },
+      { "name": "email", "type": "String" },
+      { "name": "phone", "type": "String" }
+    ],
+    "type": "garageSetRemoveCrossLeadsSource(garageId:String, email:String, phone:String)"
+  },
+  "garageUpdateTag": {
+    "comment": "Updates a certain tag",
+    "args": [
+      { "name": "garageIds", "type": "[ID!]!" },
+      { "name": "currentTag", "type": "String!" },
+      { "name": "newTag", "type": "String" }
+    ],
+    "type": "garageUpdateTag(garageIds:[ID!]!, currentTag:String!, newTag:String)"
+  },
+  "garageSetTag": {
+    "comment": "Set a tag to a garage or list of garages",
+    "args": [
+      { "name": "garageIds", "type": "[ID!]!" },
+      { "name": "tag", "type": "String!" }
+    ],
+    "type": "garageSetTag(garageIds:[ID!]!, tag:String)"
+  },
+  "garageRemoveTag": {
+    "comment": "Remove a tag from all garages belonging to the requesting user",
+    "args": [
+      { "name": "tag", "type": "String!" }
+    ],
+    "type": "garageRemoveTag(tag:String!)"
+  },
+  "dataSetContactTicket": {
+    "comment": "Set garage contactTicket",
+    "args": [
+      { "name": "id", "type": "String"},
+      { "name": "score", "type": "Int"},
+      { "name": "unsatisfiedCriteria", "type": "[String]"},
+      { "name": "resolved", "type": "Int"},
+      { "name": "comment", "type": "String"},
+      { "name": "status", "type": "String"},
+      { "name": "assigner", "type": "String"},
+      { "name": "leadType", "type": "String"},
+      { "name": "leadToCreate", "type": "Boolean"},
+      { "name": "leadAssigner", "type": "String"},
+      { "name": "leadComment", "type": "String"},
+      { "name": "leadTiming", "type": "String"},
+      { "name": "leadBodyType", "type": "[String]"},
+      { "name": "leadEnergy", "type": "[String]"},
+      { "name": "leadCylinder", "type": "[String]"},
+      { "name": "leadFinancing", "type": "String"},
+      { "name": "leadSaleType", "type": "String"},
+      { "name": "leadTradeIn", "type": "String"},
+      { "name": "leadBudget", "type": "String"},
+      { "name": "leadBrandModel", "type": "String"}
+    ],
+    "type": "dataSetContactTicket(id: String, score: Int, unsatisfiedCriteria: [String], resolved: Int, comment: String, status: String, assigner: String, leadType: String, leadToCreate: Boolean, leadAssigner: String, leadComment: String, leadTiming: String, leadBodyType: [String], leadEnergy: [String], leadCylinder: [String], leadFinancing: String, leadSaleType: String, leadTradeIn: String, leadBudget: String, leadBrandModel: String)"
+  },
+  "userSetDeleteUser": {
+    "comment": "Delete a user",
+    "args": [
+      {"name": "userId", "type": "String!"}
+    ],
+    "type": "userSetDeleteUser(userId: String!)"
+  },
+  "userSetUserUnsubscribeMakeSurveys": {
+    "comment": "Unsubscribe to the make surveys",
+    "args": [
+    ],
+    "type": "userSetUserUnsubscribeMakeSurveys"
+  },
+  "dataSetAction": {
+    "comment": "add new action on data",
+    "args": [
+      { "name": "id", "type": "String" },
+      { "name": "name", "type": "String" },
+      { "name": "type", "type": "String" },
+      { "name": "assignerUserId", "type": "String" },
+      { "name": "ticketManagerId", "type": "String" },
+      { "name": "previousTicketManagerId", "type": "String" },
+      { "name": "comment", "type": "String" },
+      { "name": "wasTransformedToSale", "type": "Boolean" },
+      { "name": "alertContributors", "type": "Boolean" },
+      { "name": "unsatisfactionResolved", "type": "Boolean" },
+      { "name": "missedSaleReason", "type": "[String]" },
+      { "name": "providedSolutions", "type": "[String]" },
+      { "name": "claimReasons", "type": "[String]" },
+      { "name": "reminderFirstDay", "type": "Int" },
+      { "name": "reminderStatus", "type": "String" },
+      { "name": "reminderDate", "type": "String" },
+      { "name": "reminderNextDay", "type": "Int" },
+      { "name": "reminderActionName", "type": "String" },
+      { "name": "createdAt", "type": "String" }
+    ],
+    "type": "dataSetAction(id: String, name: String, type: String, assignerUserId: String, ticketManagerId: String, previousTicketManagerId: String, comment: String, wasTransformedToSale: Boolean, alertContributors: Boolean, unsatisfactionResolved: Boolean, missedSaleReason: [String], providedSolutions: [String], claimReasons: [String], reminderFirstDay: Int, reminderStatus: String, reminderDate: String, reminderNextDay: Int, reminderActionName: String, createdAt: String)"
+  },
+  "GarageSetGarage": {
+    "comment": "Modify garage",
+    "args": [
+      { "name": "id", "type": "String!"},
+      { "name": "garagesModifications", "type": "GarageSetGarageGarageModifications!"}
+    ],
+    "type": "GarageSetGarage(id: String!, garagesModifications: GarageSetGarageGarageModifications!)"
+  },
+  "GarageSetGarageMakeSurveys": {
+    "comment": "Modify garage make survey and delta on the survey",
+    "args": [
+      { "name": "modifications", "type": "[GarageSetGarageMakeSurveysModifications]!" },
+      { "name": "isAlertAdmin", "type": "Boolean" }
+    ],
+    "type": "GarageSetGarageMakeSurveys(modifications: [GarageSetGarageMakeSurveysModifications]!, isAlertAdmin: Boolean )"
+  },
+  "garageSetAutomaticReviewResponseDelay": {
+    "comment": "Modify garage automatic reply delay",
+    "args": [
+      { "name": "garageId", "type": "ID!"},
+      { "name": "automaticReviewResponseDelay", "type": "Int!" }
+    ],
+    "type": "garageSetAutomaticReviewResponseDelay(garageId: ID!, automaticReviewResponseDelay: Int! )"
+  },
+  "userSetAddUser": {
+    "comment": "add a user",
+    "args": [
+      { "name": "garages", "type": "[ID]!" },
+      { "name": "newUserEmail", "type": "String!" },
+      { "name": "newUserFirstName", "type": "String" },
+      { "name": "newUserLastName", "type": "String" },
+      { "name": "newUserJob", "type": "String!" },
+      { "name": "newUserRole", "type": "String!" }
+    ],
+    "type": "userSetAddUser(garages: [ID]!, newUserEmail: String!, newUserFirstName: String, newUserLastName: String, newUserJob: String!, newUserRole: String!)"
+  },
+  "IdeaboxAddIdea": {
+    "comment": "Post an idea",
+    "args": [
+      { "name": "user", "type": "String!" },
+      { "name": "title", "type": "String!" },
+      { "name": "category", "type": "String!" }
+    ],
+    "type": "IdeaboxAddIdea(user: String!, title: String!, category: String! )"
+  },
+  "IdeaboxSetIdeaVote": {
+    "comment": "Vote/Unvote an idea",
+    "args": [
+      { "name": "user", "type": "String!" },
+      { "name": "ideaId", "type": "String!" },
+      { "name": "isLike", "type": "Boolean!" }
+    ],
+    "type": "IdeaboxSetIdeaVote(user: String!, ideaId: String!, isLike: Boolean! )"
+  },
+  "IdeaboxSetIdeaContent": {
+    "comment": "Update an idea",
+    "args": [
+      { "name": "user", "type": "String!" },
+      { "name": "ideaId", "type": "String!" },
+      { "name": "newTitle", "type": "String!" },
+      { "name": "newCategory", "type": "String!" },
+      { "name": "newStatus", "type": "Boolean!" }
+    ],
+    "type": "IdeaboxSetIdeaContent(user: String!, ideaId: String!, newTitle: String!, newCategory: String!, newStatus: Boolean! )"
+  },
+  "IdeaboxSetIdeaAddComment": {
+    "comment": "Add a comment to an idea",
+    "args": [
+      { "name": "user", "type": "String!" },
+      { "name": "ideaId", "type": "String!" },
+      { "name": "newComment", "type": "String!" }
+    ],
+    "type": "IdeaboxSetIdeaAddComment(user: String!, ideaId: String!, newComment: String! )"
+  },
+  "IdeaboxSetIdeaUpdateComment": {
+    "comment": "Update an idea's comment",
+    "args": [
+      { "name": "user", "type": "String!" },
+      { "name": "ideaId", "type": "String!" },
+      { "name": "commentId", "type": "Int!" },
+      { "name": "newComment", "type": "String!" }
+    ],
+    "type": "IdeaboxSetIdeaUpdateComment(user: String!, ideaId: String!, commentId: Int!, newComment: String! )"
+  },
+  "garageSetSource": {
+    "comment": "Set source for a garage",
+    "args": [
+      { "name": "type", "type": "String" },
+      { "name": "garageId", "type": "String!" },
+      { "name": "followed_phones", "type": "[String!]" },
+      { "name": "followed_email", "type": "String" }
+    ],
+    "type": "garageSetSource(type: String, garageId: String!, followed_phones: [String!], followed_email: String )"
+  },
+  "garageSetCreateSubscriptions": {
+    "comment": "Create subscriptions for a garage",
+    "args": [
+      { "name": "garageId", "type": "ID!" },
+      { "name": "billingAccountId", "type": "ID!" },
+      { "name": "subscriptions", "type": "garageSetCreateSubscriptionsInput" }
+    ],
+    "type": "garageSetCreateSubscriptions(garageId: ID!, billingAccountId: ID!, subscriptions: garageSetCreateSubscriptionsInput)"
+  },
+  "garageSetUpdateSubscriptions": {
+    "comment": "Update subscriptions for a garage",
+    "args": [
+      { "name": "garageId", "type": "ID!" },
+      { "name": "billingAccountId", "type": "ID!" },
+      { "name": "subscriptions", "type": "garageSetUpdateSubscriptionsInput" }
+    ],
+    "type": "garageSetUpdateSubscriptions(garageId: ID!, billingAccountId: ID!, subscriptions: garageSetUpdateSubscriptionsInput)"
+  },
+  "garageSetStopSubscriptions": {
+    "comment": "Stop subscriptions for a garage",
+    "args": [
+      { "name": "garageId", "type": "ID!" },
+      { "name": "billingAccountId", "type": "ID!" }
+    ],
+    "type": "garageSetStopSubscriptions(garageId: ID!, billingAccountId: ID!)"
+  },
+  "dataSetDeleteReply": {
+    "comment": "Delete a reply from FB or Google",
+    "args": [
+      { "name": "reviewId", "type": "ID!" },
+      { "name": "commentId", "type": "ID" },
+      { "name": "exogenous", "type": "Boolean" },
+      { "name": "replyId", "type": "ID" }
+    ],
+    "type": "dataSetDeleteReply(reviewId: ID!, commentId: ID, exogenous: Boolean, replyId: ID )"
+  },
+  "dataSetCreateReply": {
+    "comment": "Create a reply for facebook or google",
+    "args": [
+      { "name": "reviewId", "type": "String!" },
+      { "name": "exogenous", "type": "Boolean" },
+      { "name": "comment", "type": "String" },
+      { "name": "commentId", "type": "ID" },
+      { "name": "replyId", "type": "Boolean" }
+    ],
+    "type": "dataSetCreateReply(reviewId: String!, exogenous: Boolean, comment: String, commentId: ID, replyId: Boolean,)"
+  },
+  "dataSetUpdateReply": {
+    "comment": "Update a reply for google",
+    "args": [
+      { "name": "reviewId", "type": "ID!" },
+      { "name": "exogenous", "type": "Boolean" },
+      { "name": "comment", "type": "String" },
+      { "name": "commentId", "type": "ID" },
+      { "name": "replyId", "type": "ID" }
+    ],
+    "type": "dataSetUpdateReply(reviewId: ID!, exogenous: Boolean, comment: String, commentId: ID, replyId: ID)"
+  },
+  "cockpitExportsConfigurationAddOne": {
+    "comment": "Add a new export configuration for a user",
+    "args": [
+      { "name": "userId", "type": "String!"},
+      { "name": "exportType", "type": "String!" },
+      { "name": "periodId", "type": "String" },
+      { "name": "startPeriodId", "type": "String" },
+      { "name": "endPeriodId", "type": "String" },
+      { "name": "frequency", "type": "String!" },
+      { "name": "dataTypes", "type": "[String]!" },
+      { "name": "garageIds", "type": "[String!]!" },
+      { "name": "fields", "type": "[String!]!" },
+      { "name": "name", "type": "String!" },
+      { "name": "recipients", "type": "[String!]!" },
+      { "name": "frontDeskUsers", "type": "[FrontDeskUser!]" }
+    ],
+    "type": "cockpitExportsConfigurationAddOne(userId: String!, exportType: String!, periodId: String, startPeriodId: String, endPeriodId: String, frequency: String!, dataTypes: [String]!, garageIds: [String!]!, fields: [String!]!, name: String!, recipients: [String!]!, frontDeskUsers : [FrontDeskUser!])"
+  },
+  "cockpitExportsConfigurationDeleteOne": {
+    "comment": "Delete a user's export configuration",
+    "args": [
+      { "name": "id", "type": "String!"}
+    ],
+    "type": "cockpitExportsConfigurationDeleteOne(id: String!)"
+  },
+  "cockpitExportsConfigurationUpdateOne": {
+    "comment": "Update a user's export configuration",
+    "args": [
+      { "name": "id", "type": "String!"},
+      { "name": "userId", "type": "String!"},
+      { "name": "exportType", "type": "String!" },
+      { "name": "periodId", "type": "String" },
+      { "name": "startPeriodId", "type": "String" },
+      { "name": "endPeriodId", "type": "String" },
+      { "name": "frequency", "type": "String!" },
+      { "name": "dataTypes", "type": "[String]!" },
+      { "name": "garageIds", "type": "[String!]!" },
+      { "name": "fields", "type": "[String!]!" },
+      { "name": "name", "type": "String!" },
+      { "name": "recipients", "type": "[String!]!" },
+      { "name": "frontDeskUsers", "type": "[FrontDeskUser!]" }
+    ],
+    "type": "cockpitExportsConfigurationUpdateOne(id: String!, userId: String!, exportType: String!, periodId: String, startPeriodId: String, endPeriodId: String, frequency: String!, dataTypes: [String]!, garageIds: [String!]!, fields: [String!]!, name: String!, recipients: [String!]!, frontDeskUsers : [FrontDeskUser!])"
+  },
+  "dataSetManualTicket": {
+    "comment": "create a ManualUnsatisfied or ManualLead ticket",
+    "args": [
+      { "name": "ticketType", "type": "String!"},
+      { "name": "fullName", "type": "String" },
+      { "name": "email", "type": "String" },
+      { "name": "phone", "type": "String" },
+      { "name": "garageId", "type": "ID!" },
+      { "name": "brandModel", "type": "String" },
+      { "name": "sourceType", "type": "String" },
+      { "name": "requestType", "type": "String" },
+      { "name": "vehicleModel", "type": "String" },
+      { "name": "leadSaleType", "type": "String" },
+      { "name": "leadTiming", "type": "String" },
+      { "name": "leadFinancing", "type": "String" },
+      { "name": "leadTradeIn", "type": "String" },
+      { "name": "type", "type": "String" },
+      { "name": "make", "type": "String" },
+      { "name": "model", "type": "String" },
+      { "name": "immat", "type": "String" },
+      { "name": "frontDeskUserName", "type": "String" },
+      { "name": "unsatisfiedCriterias", "type": "String" },
+      { "name": "comment", "type": "String" }
+    ],
+    "type": "dataSetManualTicket(ticketType: String!, fullName: String, email: String, phone: String, garageId: ID!, brandModel: String, sourceType: String, requestType: String, vehicleModel: String, leadSaleType: String, leadTiming: String, leadFinancing: String, leadTradeIn: String, type: String, make: String, model: String, immat: String, frontDeskUserName: String, unsatisfiedCriterias: String, comment: String)"
+  },
+  "userSetUserPasswordReset": {
+    "comment": "Reset a user password and send a email",
+    "args": [
+      { "name": "id", "type": "String!"}
+    ],
+    "type": "userSetUserPasswordReset(id: String!)"
+  },
+  "dataSetField": {
+    "comment": "Update a field in data",
+    "args": [
+      { "name": "id", "type": "ID!"},
+      { "name": "field", "type": "String" },
+      { "name": "value", "type": "String" }
+    ],
+    "type": "dataSetField(id: ID!, field: String, value: String)"
+  },
+  "garageSetMatch": {
+    "comment": "Match garages",
+    "args": [
+      { "name": "garageId", "type": "ID!"},
+      { "name": "oldGarageId", "type": "ID"},
+      { "name": "externalGarageId", "type": "ID!"},
+      { "name": "baseGarageId", "type": "ID!"},
+      { "name": "source", "type": "String!"}
+    ],
+    "type": "garageSetMatch(garageId: ID!, oldGarageId: ID, externalGarageId: ID!, baseGarageId: ID!, source: String!)"
+  },
+  "dataSetReviewReport": {
+    "comment": "Report an issue with moderation",
+    "args": [
+      { "name": "id", "type": "ID!"},
+      { "name": "comment", "type": "String!" }
+    ],
+    "type": "dataSetReviewReport(id: ID!, comment: String!)"
+  },
+  "garageSetExogenousConfiguration": {
+    "comment": "Set a garage exogenousConfifugation source",
+    "args": [
+      { "name": "garageId", "type": "ID!"},
+      { "name": "source", "type": "String!" },
+      { "name": "code", "type": "String!" }
+    ],
+    "type": "garageSetExogenousConfiguration(garageId: ID!, source: String!, code: String!)"
+  },
+  "contactSetContactToBeSent": {
+    "comment": "Create a contact in db",
+    "args": [
+      { "name": "firstName", "type": "String!"},
+      { "name": "lastName", "type": "String!" },
+      { "name": "email", "type": "String!" },
+      { "name": "phone", "type": "String!" },
+      { "name": "context", "type": "String" },
+      { "name": "message", "type": "String" },
+      { "name": "name", "type": "String" },
+      { "name": "raisonsociale", "type": "String" }
+    ],
+    "type": "contactSetContactToBeSent(firstName: String!, lastName: String!, email: String!, phone: String!, context: String, message: String, name: String, raisonsociale: String)"
+  },
+  "garageSetDisconnectFromSource": {
+    "comment": "Disconnect a garage from a source",
+    "args": [
+      { "name": "garageId", "type": "ID!"},
+      { "name": "source", "type": "String!" }
+    ],
+    "type": "garageSetDisconnectFromSource(garageId: ID!, source: String!)"
+  },
+  "userSetFirstVisit": {
+    "comment": "set first visit of erep page",
+    "args": [
+      { "name": "firstVisit", "type": "String!"},
+      { "name": "value", "type": "Boolean!" }
+    ],
+    "type": "userSetFirstVisit(firstVisit: String!, value: Boolean!)"
+  },
+  "dataSetCancelReminder": {
+    "comment": "Cancel a reminder action",
+    "args": [
+      { "name": "id", "type": "ID!"},
+      { "name": "userId", "type": "ID!" },
+      { "name": "createdAt", "type": "String!" },
+      { "name": "ticketType", "type": "String!" }
+    ],
+    "type": "dataSetCancelReminder(id: ID!, userId: ID!, createdAt: String!, ticketType: String!)"
+  },
+  "reviewReplyTemplateSetAddTemplate":{
+    "comment": "Adds a new template",
+    "args": [
+      {"name":"title", "type":"String!"},
+      {"name":"content", "type": "String!"},
+      {"name":"sources", "type": "[String]!"},
+      {"name":"garageIds", "type": "[ID]!"},
+      {"name":"ratingCategories", "type": "[String]!"},
+      {"name":"automated", "type": "Boolean!"}
+    ],
+    "type": "reviewReplyTemplateSetAddTemplate(title: String!, content: String!, sources:[String]!, garageIds: [ID]!, ratingCategories:[String]!, automated: Boolean! )"
+  },
+  "reviewReplyTemplateSetUpdateTemplate":{
+    "comment": "Updates a template",
+    "args": [
+      {"name":"templateId", "type": "ID!"},
+      {"name":"title", "type":"String"},
+      {"name":"content", "type": "String"},
+      {"name":"sources", "type": "[String]"},
+      {"name":"garageIds", "type": "[ID]"},
+      {"name":"ratingCategories", "type": "[String]"},
+      {"name":"automated", "type": "Boolean"}
+    ],
+    "type": "reviewReplyTemplateSetUpdateTemplate(templateId: ID!, title: String, content: String, sources:[String], garageIds: [ID], ratingCategories:[String], automated: Boolean )"
+  },
+  "reviewReplyTemplateSetDeleteTemplate":{
+    "comment": "Deletes a template",
+    "args": [
+      {"name":"templateId", "type": "ID!"}
+    ],
+    "type": "reviewReplyTemplateSetDeleteTemplate(templateId: ID!)"
+  },
+  "userSetSendSlackMessage": {
+    "comment": "Send a slack message",
+    "args": [
+      { "name": "message", "type": "String!"},
+      { "name": "channel", "type": "String" }
+    ],
+    "type": "userSetSendSlackMessage(message: String!, channel: String)"
+  },
+  "userSetSubscribeToErep": {
+    "comment": "Set subscription to erep for a user",
+    "args": [],
+    "type": "userSetSubscribeToErep"
+  },
+  "userSetUpdateOne": {
+    "comment": "Update a user info",
+    "args": [
+      { "name": "id", "type": "ID!"},
+      { "name": "addGarages", "type": "[String]" },
+      { "name": "removeGarages", "type": "[String]" },
+      { "name": "civility", "type": "String" },
+      { "name": "firstName", "type": "String" },
+      { "name": "lastName", "type": "String" },
+      { "name": "email", "type": "String" },
+      { "name": "phone", "type": "String" },
+      { "name": "mobilePhone", "type": "String" },
+      { "name": "businessName", "type": "String" },
+      { "name": "address", "type": "String" },
+      { "name": "postCode", "type": "String" },
+      { "name": "job", "type": "String" },
+      { "name": "city", "type": "String" },
+      { "name": "alertsUnsatisfiedVn", "type": "Boolean" },
+      { "name": "alertsUnsatisfiedVo", "type": "Boolean" },
+      { "name": "alertsUnsatisfiedVI", "type": "Boolean" },
+      { "name": "alertsUnsatisfiedMaintenance", "type": "Boolean" },
+      { "name": "alertsLeadApv", "type": "Boolean" },
+      { "name": "alertsLeadVn", "type": "Boolean" },
+      { "name": "alertsLeadVo", "type": "Boolean" },
+      { "name": "alertsExogenousNewReview", "type": "Boolean" },
+      { "name": "alertsEscalationUnsatisfiedMaintenance", "type": "Boolean" },
+      { "name": "alertsEscalationUnsatisfiedVn", "type": "Boolean" },
+      { "name": "alertsEscalationUnsatisfiedVo", "type": "Boolean" },
+      { "name": "alertsEscalationUnsatisfiedVi", "type": "Boolean" },
+      { "name": "alertsEscalationLeadMaintenance", "type": "Boolean" },
+      { "name": "alertsEscalationLeadVn", "type": "Boolean" },
+      { "name": "alertsEscalationLeadVo", "type": "Boolean" },
+      { "name": "reportConfigsDailyUnsatisfiedApv", "type": "Boolean" },
+      { "name": "reportConfigsDailyUnsatisfiedVn", "type": "Boolean" },
+      { "name": "reportConfigsDailyUnsatisfiedVo", "type": "Boolean" },
+      { "name": "reportConfigsDailyUnsatisfiedVI", "type": "Boolean" },
+      { "name": "reportConfigsDailyLeadVn", "type": "Boolean" },
+      { "name": "reportConfigsDailyLeadVo", "type": "Boolean" },
+      { "name": "reportConfigsWeeklyUnsatisfiedApv", "type": "Boolean" },
+      { "name": "reportConfigsWeeklyUnsatisfiedVn", "type": "Boolean" },
+      { "name": "reportConfigsWeeklyUnsatisfiedVo", "type": "Boolean" },
+      { "name": "reportConfigsWeeklyUnsatisfiedVI", "type": "Boolean" },
+      { "name": "reportConfigsWeeklyLeadVn", "type": "Boolean" },
+      { "name": "reportConfigsWeeklyLeadVo", "type": "Boolean" },
+      { "name": "reportConfigsMonthlyUnsatisfiedApv", "type": "Boolean" },
+      { "name": "reportConfigsMonthlyUnsatisfiedVn", "type": "Boolean" },
+      { "name": "reportConfigsMonthlyUnsatisfiedVo", "type": "Boolean" },
+      { "name": "reportConfigsMonthlyUnsatisfiedVI", "type": "Boolean" },
+      { "name": "reportConfigsMonthlyLeadVn", "type": "Boolean" },
+      { "name": "reportConfigsMonthlyLeadVo", "type": "Boolean" },
+      { "name": "reportConfigsMonthlySummaryUnsatisfiedApv", "type": "Boolean" },
+      { "name": "reportConfigsMonthlySummaryUnsatisfiedVn", "type": "Boolean" },
+      { "name": "reportConfigsMonthlySummaryUnsatisfiedVo", "type": "Boolean" },
+      { "name": "reportConfigsMonthlySummaryUnsatisfiedVI", "type": "Boolean" },
+      { "name": "reportConfigsMonthlySummaryLeadVn", "type": "Boolean" },
+      { "name": "reportConfigsMonthlySummaryLeadVo", "type": "Boolean" },
+      { "name": "reportConfigsMonthlySummaryContactsApv", "type": "Boolean" },
+      { "name": "reportConfigsMonthlySummaryContactsVn", "type": "Boolean" },
+      { "name": "reportConfigsMonthlySummaryContactsVo", "type": "Boolean" },
+      { "name": "reportConfigsMonthlySummaryContactsVI", "type": "Boolean" },
+      { "name": "ACCESS_TO_WELCOME", "type": "Boolean" },
+      { "name": "ACCESS_TO_SATISFACTION", "type": "Boolean" },
+      { "name": "ACCESS_TO_UNSATISFIED", "type": "Boolean" },
+      { "name": "ACCESS_TO_LEADS", "type": "Boolean" },
+      { "name": "ACCESS_TO_AUTOMATION", "type": "Boolean" },
+      { "name": "ACCESS_TO_CONTACTS", "type": "Boolean" },
+      { "name": "ACCESS_TO_E_REPUTATION", "type": "Boolean" },
+      { "name": "ACCESS_TO_ESTABLISHMENT", "type": "Boolean" },
+      { "name": "ACCESS_TO_TEAM", "type": "Boolean" },
+      { "name": "role", "type": "String" }
+    ],
+    "type": "userSetUpdateOne(id: ID!, addGarages: [String], removeGarages: [String], civility: String, firstName: String, lastName: String, email: String, phone: String, mobilePhone: String, businessName: String, address: String, postCode: String, job: String, city: String, alertsUnsatisfiedVn: Boolean, alertsUnsatisfiedVo: Boolean, alertsUnsatisfiedVI: Boolean,alertsUnsatisfiedMaintenance: Boolean, alertsLeadApv: Boolean, alertsLeadVn: Boolean, alertsLeadVo: Boolean, alertsExogenousNewReview: Boolean, alertsEscalationUnsatisfiedMaintenance: Boolean, alertsEscalationUnsatisfiedVn: Boolean, alertsEscalationUnsatisfiedVo: Boolean,alertsEscalationUnsatisfiedVi: Boolean, alertsEscalationLeadMaintenance: Boolean,alertsEscalationLeadVn: Boolean, alertsEscalationLeadVo: Boolean,reportConfigsDailyUnsatisfiedApv: Boolean, reportConfigsDailyUnsatisfiedVn: Boolean,reportConfigsDailyUnsatisfiedVo: Boolean, reportConfigsDailyUnsatisfiedVI: Boolean,reportConfigsDailyLeadVn: Boolean, reportConfigsDailyLeadVo: Boolean,reportConfigsWeeklyUnsatisfiedApv: Boolean, reportConfigsWeeklyUnsatisfiedVn: Boolean,reportConfigsWeeklyUnsatisfiedVo: Boolean, reportConfigsWeeklyUnsatisfiedVI: Boolean,reportConfigsWeeklyLeadVn: Boolean, reportConfigsWeeklyLeadVo: Boolean,reportConfigsMonthlyUnsatisfiedApv: Boolean, reportConfigsMonthlyUnsatisfiedVn: Boolean,reportConfigsMonthlyUnsatisfiedVo: Boolean, reportConfigsMonthlyUnsatisfiedVI: Boolean,reportConfigsMonthlyLeadVn: Boolean, reportConfigsMonthlyLeadVo: Boolean,reportConfigsMonthlySummaryUnsatisfiedApv: Boolean,reportConfigsMonthlySummaryUnsatisfiedVn: Boolean, reportConfigsMonthlySummaryUnsatisfiedVo: Boolean,reportConfigsMonthlySummaryUnsatisfiedVI: Boolean, reportConfigsMonthlySummaryLeadVn: Boolean,reportConfigsMonthlySummaryLeadVo: Boolean, reportConfigsMonthlySummaryContactsApv: Boolean,reportConfigsMonthlySummaryContactsVn: Boolean,reportConfigsMonthlySummaryContactsVo: Boolean,reportConfigsMonthlySummaryContactsVI: Boolean, ACCESS_TO_WELCOME: Boolean,ACCESS_TO_SATISFACTION: Boolean, ACCESS_TO_UNSATISFIED: Boolean,ACCESS_TO_LEADS: Boolean,ACCESS_TO_AUTOMATION: Boolean,ACCESS_TO_CONTACTS: Boolean, ACCESS_TO_E_REPUTATION: Boolean,ACCESS_TO_ESTABLISHMENT: Boolean,ACCESS_TO_TEAM: Boolean,role: String)"
+  },
+  "rgpdSetAnonymizeFromInput": {
+    "comment": "Anonymize data from input",
+    "args": [
+      { "name": "input", "type": "String!"}
+    ],
+    "type": "rgpdSetAnonymizeFromInput(input: String!)"
+  },
+  "WidgetGroupCreateWidgetGroup": {
+    "comment": "Create a new WidgetGroup",
+    "args": [
+      { "name": "garageIds", "type": "[ID!]!" }
+    ],
+    "type": "WidgetGroupCreateWidgetGroup(garageIds: [ID!]!): WidgetGroupCreateWidgetGroupResult"
+  },
+  "WidgetGroupSetWidgetGroup": {
+    "comment": "Update an existing WidgetGroup",
+    "args": [
+      { "name": "widgetGroupId", "type": "ID!" },
+      { "name": "garageIds", "type": "[ID]!" }
+    ],
+    "type": "WidgetGroupSetWidgetGroup(widgetGroupId: ID!, garageIds: [ID!]!): WidgetGroupSetWidgetGroupResult"
+  }
+}

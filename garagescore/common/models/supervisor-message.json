@@ -1,0 +1,32 @@
+{
+  "name": "SupervisorMessage",
+  "plural": "SupervisorMessages",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "mongodb": {
+    "collection": "supervisorMessages"
+  },
+  "http": {
+    "path": "supervisor-message"
+  },
+  "mixins": {
+    "SmartSort": true
+  },
+  "properties": {
+    "type": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "string"
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "validations": [],
+  "acls": [
+  ],
+  "methods": {
+  }
+}

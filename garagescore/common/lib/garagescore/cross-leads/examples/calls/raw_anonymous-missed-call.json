@@ -1,0 +1,19 @@
+{
+  "countrySuffix" : "fr",
+  "planType" : "priceplan",
+  "duration" : 0,
+  "priceWithoutTax" : {
+    "currencyCode" : "EUR",
+    "value" : 0,
+    "text" : "0.00 €"
+  },
+  "designation" : "france ",
+  "destinationType" : "landline",
+  "hangupNature" : "",
+  "creationDatetime" : "2020-07-25T14:20:57+02:00",
+  "calling" : "0033anonymous",
+  "wayType" : "transfer",
+  "dialed" : "0033339071142",
+  "consumptionId" : 8717047811.0,
+  "called" : "0033339071142"
+}

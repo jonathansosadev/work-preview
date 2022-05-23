@@ -1,0 +1,32 @@
+{
+  "BY_GARAGES": {
+    "value": "BY_GARAGES",
+    "properties": {
+      "exportTypes": ["GARAGE"]
+    }
+  },
+  "BY_FRONT_DESK_USERS": {
+    "value": "BY_FRONT_DESK_USERS",
+    "properties": {
+      "exportTypes": ["FRONT_DESK_USERS_DMS", "FRONT_DESK_USERS_CUSTEED"]
+    }
+  },
+  "BY_DATA": {
+    "value": "BY_DATA",
+    "properties": {
+      "exportTypes": ["SATISFACTION", "CONTACTS", "CONTACTS_MODIFIED", "LEADS", "FORWARDED_LEADS", "UNSATISFIED", "EREPUTATION"]
+    }
+  },
+  "BY_ADMIN_USERS": {
+    "value": "BY_ADMIN_USERS",
+    "properties": {
+      "exportTypes": ["ADMIN_USERS"]
+    }
+  },
+  "BY_ADMIN_GARAGES": {
+    "value": "BY_ADMIN_GARAGES",
+    "properties": {
+      "exportTypes": ["ADMIN_GARAGES"]
+    }
+  }
+}

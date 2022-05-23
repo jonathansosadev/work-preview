@@ -1,0 +1,302 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block page %}
+  <div class="page-header">
+    <h1>Liste des clients uniques</h1>
+  </div>
+
+  <div id="reviews-list" v-if="!loading">
+
+    <div class="col-md-12 topcommands">
+      <div class="row">
+        <div class="col-md-12">
+          <form id="review-filters" class="form-inline">
+            <div class="form-group">
+              Query : <input class="form-control input-sm query-input" v-model="mongoQuery" type="text"><br/>
+              Fields: <input class="form-control input-sm query-input" v-model="mongoFields" type="text">
+            </div>
+            <div class="form-group">
+              <button class="toggle-button" @click="getMore(0)">Appliquer les filtres (Refresh)</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 topcommands">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <button class="toggle-button" @click="needHelp = !needHelp">Aide sur les requêtes</button>
+          </div>
+          <div v-show="needHelp">
+            <h4>Aide sur les requêtes</h4>
+            <span>Le champ <b>Query</b> correspond aux filtres de la recherche. (Si besoin d'aide pour une requête compliquée, demander à un dev)</span>
+            <p>Exemples :</p>
+            <span>{ "garageId": "56fc47f75e42f41a00200f04" }</span>&nbsp;&nbsp;<span class="explain">Va chercher les customers dont le garageId est 56fc47f75e42f41a00200f04</span><br/>
+            <span>{ "index": { "$all": [ { "$elemMatch": { "k": "lastMaintenanceAt", "v": { "$gte": "newDate('2020-01-02')", "$lt": "newDate('2020-12-24')" }}}]} }</span>&nbsp;&nbsp;<span class="explain">Va chercher les customers dont la date de dernière maintenance est entre le 2 janvier 2020 et le 24 décembre 2020</span><br/>
+            <br/>
+            <span>Le champ <b>Fields</b> permet de réduire la taille des documents qu'on récupère en spécifiant les champs nécéssaires uniquement. L'id est toujours inclus, sauf si explicitement exclu</span>
+            <p>Exemples :</p>
+            <span>{ "garageId": true, "email": true }</span>&nbsp;&nbsp;<span class="explain">Va chercher seulement l'id, le garageId et l'email du customer </span><br/>
+            <span>{ "garageId": true, "phone": true, "_id": false }</span>&nbsp;&nbsp;<span class="explain">Va chercher seulement le garageId et le phone du customer </span><br/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 topcommands">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <button class="toggle-button" @click="createCsv">Créer un CSV des datas présent dans <b>dataToAddToCustomers</b></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table">
+            <thead>
+              <th>Liste des clients uniques (clicker sur un customer pour avoir son historique)</th>
+            </thead>
+            <tbody>
+              <tr
+                v-for="customer in customers.slice(0, limit)"
+                :key="customer._id"
+                is="reviewrow"
+                :customer="customer"
+              ></tr>
+            </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="row">
+        <div v-if="skip > 0" class="col-md-2 col-md-offset-4">
+          <button class="toggle-button" @click="getMore(-1)">
+            <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div v-if="customers.length > limit" class="col-md-2 col-md-offset-1">
+          <button class="toggle-button" @click="getMore(1)">
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+      <br/><br/>
+    </div>
+  </div>
+
+  {% raw %}
+    <script type="x/template" id="review-template">
+      <tr>
+        <td class="customer-row" @click="toggleShowDetails()">
+          <div class="customer-row__top">
+            <span class="customer-info">Nom: <b>{{customer.fullName}}</b></span>
+            <span v-if="customer.phone" class="customer-info">Tel: <b>{{customer.phone}}</b></span>
+            <span v-if="customer.email" class="customer-info">Email: <b>{{customer.email}}</b></span>
+            <span v-if="customer.clientId" class="customer-info">ClientId: <b>{{customer.clientId}}</b></span>
+          </div>
+          <div class="customer-row__bottom">
+            <span class="customer-info">CustomerId: <b>{{customer._id}}</b></span>
+            <span class="customer-info">sur le garage <b>{{customer.garagePublicDisplayName}}</b> ({{customer.garageId}})</span>
+          </div>
+          <xmp class="customer-row__details" v-show="expandedHistory">{{ getCustomerInformations(customer) }}</xmp>
+        </td>
+      </tr>
+    </script>
+  {% endraw %}
+
+{% endblock %}
+
+
+{% block scripts %}
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+      new Vue({
+        el: '#reviews-list',
+        components: {
+          'reviewrow': {
+            template: '#review-template',
+            props: ['customer'],
+            replace: true, // tr in the template
+            data: function () {
+              return {
+                updatedStatus: '',
+                expandedHistory: false
+              } ;
+            },
+            methods: {
+              toggle(e) {
+                this.$emit('toggle', e)
+              },
+              toggleShowDetails() {
+                this.expandedHistory = !this.expandedHistory;
+              },
+              isRegularCampaignItem(item) {
+                return !!item.dataId;
+              },
+              isAutomationCampaignItem(item) {
+                return !!item.campaignId;
+              },
+              getCustomerInformations(customer) {
+                return JSON.stringify(customer, null, 2)
+              },
+              formatDate(date) {
+                return date.toLocaleDateString('fr', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+              }
+            }
+          }
+        },
+        data: function (){
+          return {
+            customers: {{ customers|safe }},
+            informations: null,
+            keys: null,
+            mongoFields: decodeURIComponent("{{mongoFields}}").replaceAll('&quot;', '"'),
+            mongoQuery: decodeURIComponent("{{mongoQuery}}").replaceAll('&quot;', '"'),
+            skip: "{{skip}}",
+            limit: "{{limit}}",
+            loading: false,
+            expandedCustomerIds: {},
+            needHelp: false
+          };
+        },
+        computed: {
+          displayedCustomers() {
+            this.customers.slice(0, this.limit)
+          }
+        },
+        methods: {
+          getObject(key) {
+            return this.informations[key];
+          },
+          getParams() {
+            var params = "?";
+            if(this.mongoFields) params += "&mongoFields="+encodeURIComponent(this.mongoFields);
+            if(this.mongoQuery) params += "&mongoQuery="+encodeURIComponent(this.mongoQuery);
+            if (this.skip) params += `&skip=${parseInt(this.skip, 10)}`;
+            return params;
+          },
+          getMore: function(skip) {
+            this.loading = true;
+            if (skip === 1) this.skip = parseInt(this.skip) + parseInt(this.limit);
+            if (skip === -1) this.skip =  parseInt(this.skip) - parseInt(this.limit);
+            if (skip === 0) this.skip = 0;
+            var request = new XMLHttpRequest();
+            var url = '{{ lib.client.url.getShortUrl("ADMIN_CUSTOMERS_LIST") }}' + this.getParams();
+            request.open('GET', url, true);
+            request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+            request.send();
+            request.onload = function () {
+              if (request.status !== 200 && request.status !== 304) {
+                alert("Erreur sur le serveur");
+              } else {
+                this.customers = JSON.parse(request.responseText);
+                history.pushState({ page: JSON.stringify(this.getParams())}, 'Garagescore', document.location.protocol + '//' + document.location.host + document.location.pathname + this.getParams());
+                this.loading = false;
+              }
+            }.bind(this);
+          },
+          async createCsv() {
+            const res = await axios.get('{{ lib.client.url.getUrl('ADMIN_EXPORTS_AUTOMATION_REPORT_CSV') }}');
+            if (res.status === 200) { 
+              alert('Creation du rapport CSV en cours, une alerte slack sera disponible dans çavapastrop')
+            } else {
+              alert('Erreur sur le serveur')
+            }
+          },
+        }
+      });
+    });//DOMContentLoaded
+
+  </script>
+
+{% endblock %}
+{% block css %}
+  <style type="text/css">
+    .explain {
+      color: green;
+    }
+
+    .query-input {
+      width: 100%!important;
+      font-weight: bold;
+    }
+
+    .topcommands {
+      margin-bottom: 30px;
+      font-style: italic;
+    }
+    .review-score, .review-comment {
+
+    }
+
+    .toggle-button {
+        background-color: #529030;
+    }
+
+    .review-score, .review-comment {
+      font-size: 15px;
+      max-width: 250px;
+      text-overflow: ellipsis;
+      overflow-x: hidden;
+    }
+    .reply-link, .reply-link:hover, .reply-link:visited	{
+
+    }
+    .reply-txt b{
+      text-decoration: underline;
+    }
+    .review-recommend {
+      font-size: 25px;
+      text-align: center;
+    }
+    form select{
+      color: black;
+    }
+    .form-group{
+      margin-left: 10px;
+      margin-bottom: 10px!important;
+        width:100%;
+    }
+    .updatedStatus {
+      display: none;
+      color: green;
+    }
+    .fa-angle-double-left, .fa-angle-double-right {
+      color: white;
+      font-size: 30px;
+    }
+    .status-suggestion {
+      color: #bbb;
+    }
+
+    .customer-row {
+      border-bottom: solid 2px white;
+      cursor: pointer;
+    }
+    .customer-row__top {
+      margin-bottom: 10px;
+    }
+    .customer-row__details {
+      margin-top: 10px;
+    }
+    .customer-row__details ul {
+      margin-left: 30px;
+      padding-left: 15px;
+      border-left: solid 1px white;
+    }
+    .customer-row__details li {
+      float: unset;
+    }
+    .customer-info {
+      font-size: 16px;
+      margin-right: 30px;
+    }
+    .customer-smallinfo {
+      font-size: 14px;
+      margin-right: 20px;
+    }
+  </style>
+{% endblock %}

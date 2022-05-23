@@ -1,0 +1,26 @@
+{
+  "NOT_TO_SURFACE": {
+    "value": "----",
+    "properties": {}
+  },
+  "EMPTY": {
+    "value": "Empty",
+    "properties": {}
+  },
+  "WRONG": {
+    "value": "Wrong",
+    "properties": {}
+  },
+  "UNSUBSCRIBED": {
+    "value": "Unsubscribed",
+    "properties": {}
+  },
+  "RECENTLY_CONTACTED": {
+    "value": "RecentlyContacted",
+    "properties": {}
+  },
+  "VALID": {
+    "value": "Valid",
+    "properties": {}
+  }
+}

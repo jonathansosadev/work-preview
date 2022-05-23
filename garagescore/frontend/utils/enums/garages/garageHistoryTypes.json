@@ -1,0 +1,22 @@
+{
+  "MAINTENANCE": {
+    "value": "Maintenance",
+    "properties": {}
+  },
+  "NEWVEHICLESALE":{
+    "value": "NewVehicleSale",
+    "properties": {}
+  },
+  "USEDVEHICLESALE": {
+    "value": "UsedVehicleSale",
+    "properties": {}
+  },
+  "VEHICLEINSPECTION":{
+    "value": "VehicleInspection",
+    "properties": {}
+  },
+  "OTHER": {
+    "value": "other",
+    "properties": {}
+  }
+}

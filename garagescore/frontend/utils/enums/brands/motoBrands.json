@@ -1,0 +1,254 @@
+{
+  "BMW_MOTORRAD": {
+    "value": "BMW Motorrad",
+    "properties": {
+      "top5": true,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "HONDA": {
+    "value": "Honda",
+    "properties": {
+      "top5": true,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "KAWASAKI": {
+    "value": "Kawasaki",
+    "properties": {
+      "top5": true,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "SUZUKI": {
+    "value": "Suzuki",
+    "properties": {
+      "top5": true,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "YAMAHA": {
+    "value": "Yamaha",
+    "properties": {
+      "top5": true,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "APRILIA": {
+    "value": "Aprilia",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "BIMOTA": {
+    "value": "Bimota",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "BUELL": {
+    "value": "Buell",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "BULTACO": {
+    "value": "Bultaco",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "CAGIVA": {
+    "value": "Cagiva",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "DAELIM": {
+    "value": "Daelim",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "DUCATI": {
+    "value": "Ducati",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "GILERA": {
+    "value": "Gilera",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "HARLEY_DAVIDSON": {
+    "value": "Harley-Davidson",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "HUSQVARNA": {
+    "value": "Husqvarna",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "HYOSUNG": {
+    "value": "Hyosung",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "INDIAN": {
+    "value": "Indian",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "KEEWAY": {
+    "value": "Keeway",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "KTM": {
+    "value": "KTM",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "KYMCO": {
+    "value": "Kymco",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "LAVERDA": {
+    "value": "Laverda",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "MACBOR": {
+    "value": "Macbor",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "MAHINDRA": {
+    "value": "Mahindra",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "MALAGUTI": {
+    "value": "Malaguti",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "MBK": {
+    "value": "MBK",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "MOTO_GUZZI": {
+    "value": "Moto Guzzi",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "MOTOBECANE": {
+    "value": "Motobécane",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "MUZ": {
+    "value": "Muz",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "MV_AGUSTA": {
+    "value": "MV Agusta",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "PEUGEOT": {
+    "value": "Peugeot",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "PIAGGIO": {
+    "value": "Piaggio",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "RIEJU": {
+    "value": "Rieju",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "ROYAL_ENFIELD": {
+    "value": "Royal Enfield",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "TRIUMPH": {
+    "value": "Triumph",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "VICTORY": {
+    "value": "Victory",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "VOXAN": {
+    "value": "Voxan",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  }
+}

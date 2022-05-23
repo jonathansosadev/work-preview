@@ -1,0 +1,26 @@
+{
+  "name": "ParserVehicleMakes",
+  "base": "GarageScoreBaseModel",
+  "options": {},
+  "mixins": {
+    "SmartSort": true
+  },
+  "mongodb": {
+    "collection": "parserVehicleMakes"
+  },
+  "http": {
+    "path": "parser-vehicle-makes"
+  },
+  "properties": {
+    "_reference": {
+      "type": "String"
+    },
+    "makes": {
+      "type": "Object"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

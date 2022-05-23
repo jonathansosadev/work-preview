@@ -1,0 +1,178 @@
+{
+  "TRANSFER": {
+    "value": "transfer",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": "icon-gs-group"
+    }
+  },
+  "CUSTOMER_CALL": {
+    "value": "customerCall",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": "icon-gs-help-customer-support"
+    }
+  },
+  "DATA_MODIFICATION": {
+    "value": "dataModification",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": "icon-gs-file-text"
+    }
+  },
+  "MEETING": {
+    "value": "meeting",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": "icon-gs-calendar"
+    }
+  },
+  "CUSTOMER_DIRECT_EXCHANGE": {
+    "value": "customerDirectExchange",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": "icon-gs-call-bubble"
+    }
+  },
+  "INVESTIGATION": {
+    "value": "investigation",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": "icon-gs-file-text"
+    }
+  },
+  "CONSTRUCTOR_QUERY": {
+    "value": "constructorQuery",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": "icon-gs-make-bubble"
+    }
+  },
+  "REMINDER": {
+    "value": "reminder",
+    "properties": {
+      "isReminderLike": true,
+      "ticketHistoryIcon": "icon-gs-programming-time"
+    }
+  },
+
+  "UNSATISFIED_STARTED": {
+    "value": "unsatisfiedStarted",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": "icon-gs-sad"
+    }
+  },
+  "GARAGE_SECOND_VISIT": {
+    "value": "garageSecondVisit",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": "icon-gs-calendar"
+    }
+  },
+  "UNSATISFIED_FOLLOWUP_RESPONDED": {
+    "value": "unsatisfiedFollowupResponded",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": "icon-gs-folder-check"
+    }
+  },
+  "UNSATISFIED_CLOSED": {
+    "value": "unsatisfiedClosed",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": -1
+    }
+  },
+  "UNSATISFIED_REOPENED": {
+    "value": "unsatisfiedReopened",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": "icon-gs-unlock"
+    }
+  },
+  "LEAD_STARTED": {
+    "value": "leadStarted",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": "icon-gs-car-repair"
+    }
+  },
+  "INCOMING_CALL": {
+    "value": "incomingCall",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": "icon-gs-help-customer-support"
+    }
+  },
+  "INCOMING_MISSED_CALL": {
+    "value": "incomingMissedCall",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": "icon-gs-help-customer-support"
+    }
+  },
+  "INCOMING_EMAIL": {
+    "value": "incomingEmail",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": "icon-gs-chat-bubble"
+    }
+  },
+  "PROPOSITION": {
+    "value": "proposition",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": "icon-gs-cash-bag-euro"
+    }
+  },
+  "LEAD_FOLLOWUP_RESPONDED": {
+    "value": "leadFollowupResponded",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": "icon-gs-folder-check"
+    }
+  },
+  "POSTPONED_LEAD": {
+    "value": "postponedLead",
+    "properties": {
+      "isReminderLike": true,
+      "ticketHistoryIcon": "icon-gs-programming-time"
+    }
+  },
+  "LEAD_CLOSED": {
+    "value": "leadClosed",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": -1
+    }
+  },
+  "LEAD_REOPENED": {
+    "value": "leadReopened",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": "icon-gs-unlock"
+    }
+  },
+  "SEND_API_SALESFORCE": {
+    "value": "sendApiSalesforce",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": "icon-gs-web-share"
+    }
+  },
+  "SEND_API_SELECTUP": {
+    "value": "sendApiSelectup",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": "icon-gs-web-share"
+    }
+  },
+  "SEND_LEAD_BY_EMAIL": {
+    "value": "sendLeadByEmail",
+    "properties": {
+      "isReminderLike": false,
+      "ticketHistoryIcon": "icon-gs-web-mail"
+    }
+  }
+}

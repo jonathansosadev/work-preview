@@ -1,0 +1,66 @@
+{
+  "name": "Campaign",
+  "plural": "Campaigns",
+  "base": "GarageScoreBaseModel",
+  "options": {
+    "strictObjectIDCoercion": true
+  },
+  "mongodb": {
+    "collection": "campaigns"
+  },
+  "http": {
+    "path": "campaign"
+  },
+  "mixins": {
+    "EventEmitter": true,
+    "Status": true,
+    "Stream": true,
+    "SmartSort": true
+  },
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "dataFileId": {
+      "type": "string"
+    },
+    "completeScheduledAt": {
+      "type": "number"
+    },
+    "completedAt": {
+      "type": "Date"
+    },
+    "surveyData": {
+      "type": "object"
+    },
+    "shouldSurfaceInStatistics": {
+      "type": "boolean",
+      "default" : true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "garage": {
+      "type": "belongsTo",
+      "model": "Garage",
+      "foreignKey": ""
+    }
+  },
+  "indexes": {
+    "completeScheduledAt_index": {"completeScheduledAt": 1},
+    "status_index": {"status": 1},
+    "createdAt_index": {"createdAt": 1},
+    "garageId_index": {"garageId": 1,"createdAt": 1},
+    "dataFileId_index": {"dataFileId": 1}
+  },
+  "acls": [
+  ],
+  "methods": {
+  }
+}

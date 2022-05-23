@@ -1,0 +1,22 @@
+{
+  "BLOCKED_NOT_ENOUGH_HISTORIC": {
+    "value": "BLOCKED_NOT_ENOUGH_HISTORIC",
+    "properties": {}
+  },
+  "IDLE": {
+    "value": "IDLE",
+    "properties": {}
+  },
+  "RUNNING": {
+    "value": "RUNNING",
+    "properties": {}
+  },
+  "COMPLETE": {
+    "value": "COMPLETE",
+    "properties": {}
+  },
+  "CANCELLED": {
+    "value": "CANCELLED",
+    "properties": {}
+  }
+}

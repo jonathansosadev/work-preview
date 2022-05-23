@@ -1,0 +1,255 @@
+<html>
+<head>
+  <title>{% if garage.name %}{{ garage.name }} - {% endif %}GarageScore</title>
+  {% include  "../common_head.nunjucks" -%}
+</head>
+<body>
+<div id="surveyContainer">
+  <survey :survey="survey"></survey>
+</div>
+{% include  "../common_top.nunjucks" -%}
+<script>
+  i18n.loadForSurveyJS('backoffice:survey:dealership:vehicle-sale');
+  survey.title = t('surveyTitle', { garageName: unescapeHTML('{{ garage.name }}') });
+
+  var score = PARAMS['score'];
+  var getTitleQ1 = function () {
+    if (!PARAMS['score']) return t("noScore");
+    if (garage.ratingType === 'rating') return t('currentScore', { garageName: unescapeHTML("{{ garage.name }}"), score: score });
+    else return t('currentStars', { garageName: unescapeHTML("{{ garage.name }}"), stars: Math.floor(score  / 2) });
+  }
+  var titleQ1 = getTitleQ1();
+
+  var saleNewChoices= [
+    { value: 'SaleNew1', text: t('SaleNew1') },
+    { value: 'SaleNew2', text: t('SaleNew2') },
+    { value: 'SaleNew3', text: t('SaleNew3') },
+    { value: 'SaleNew4', text: t('SaleNew4') },
+    { value: 'SaleNew5', text: t('SaleNew5') },
+  ];
+  var saleUsedChoices= [
+    { value: 'SaleUsed1', text: t('SaleUsed1') },
+    { value: 'SaleUsed2', text: t('SaleUsed2') },
+    { value: 'SaleUsed3', text: t('SaleUsed3') },
+    { value: 'SaleUsed4', text: t('SaleUsed4') },
+    { value: 'SaleUsed5', text: t('SaleUsed5') },
+  ];
+
+  var page2Conditions = [];
+  saleNewChoices.forEach(function(c) { page2Conditions.push("{unsatisfiedCriteriaNewVehicleSale[0]} = '"+c.value+"'"); });
+  saleUsedChoices.forEach(function(c) { page2Conditions.push("{unsatisfiedCriteriaUsedVehicleSale[0]} = '"+c.value+"'"); });
+  page2Conditions = page2Conditions.join(" or ");
+
+  var page1 = { name: '{{ surveyPageTypes.REVIEW_PAGE }}', questions: [] };
+  var page2 = {
+    name: '{{ surveyPageTypes.UNSATISFIED_PAGE }}',
+    questions: [],
+    visibleIf: page2Conditions
+  };
+  var page3 = { name: '{{ surveyPageTypes.CONTACT_PAGE }}', questions: [] };
+  var page4 = { name: '{{ surveyPageTypes.SHAREWITHPARTNERS_PAGE }}', questions: [], visibleIf: `({rating} >= 9 and '${survey.country}'!='FR') or '${survey.country}'='FR'` };
+
+  survey.pages.push(page1);
+  survey.pages.push(page2);
+  survey.pages.push(page3);
+  survey.pages.push(page4);
+  if (garage.ratingType === 'stars') {
+    page1.questions.push({
+      type: "starrating",
+      name: "rating",
+      title: titleQ1,
+      isRequired: true,
+      choices: ["2", "4", "6", "8", "10"],
+      defaultValue: 2 * Math.ceil(score / 2),
+      minRateDescription: t('minRateDescription')[survey.locale],
+      maxRateDescription: t('maxRateDescription')[survey.locale]
+    });
+  } else {
+    page1.questions.push({
+      isRequired: true,
+      type: "rating",
+      name: "rating",
+      defaultValue: score,
+      rateValues: garage.isReverseRating ? [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0] : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      title: titleQ1,
+      minRateDescription: garage.isReverseRating ? t('maxRateDescription') : t('minRateDescription'),
+      maxRateDescription: garage.isReverseRating ? t('minRateDescription') : t('maxRateDescription'),
+    });
+  }
+
+  page1.questions.push(generateUnsatisfiedCriteria("unsatisfiedCriteriaNewVehicleSale", false, "{rating} < 9 and {rating} > 6 and {dataType} = 'NewVehicleSale'", saleNewChoices));
+  page1.questions.push(generateUnsatisfiedCriteria("unsatisfiedCriteriaNewVehicleSale", true, "{rating} < 6 or {rating} = 6 and {dataType} = 'NewVehicleSale'", saleNewChoices));
+
+
+  page1.questions.push(generateUnsatisfiedCriteria("unsatisfiedCriteriaUsedVehicleSale", false, "{rating} < 9 and {rating} > 6 and {dataType} = 'UsedVehicleSale'", saleUsedChoices));
+  page1.questions.push(generateUnsatisfiedCriteria("unsatisfiedCriteriaUsedVehicleSale", true, "{rating} < 6 or {rating} = 6 and {dataType} = 'UsedVehicleSale'", saleUsedChoices));
+
+
+  page1.questions.push({
+    type: "comment",
+    name: "comment",
+    isRequired: true,
+    title: t('comment'),
+    validators: [
+      {
+        type: "comment"
+      }
+    ]
+  });
+  page1.questions.push({
+    type: "boolean",
+    name: "acceptTermOfUse",
+    label: ' ', // a html element must be putted after the input element to contain a link
+    // defaultValue: true,
+    isRequired: true,
+    validators: [
+      {
+        type: "termsofusevalidator"
+      }
+    ]
+  });
+
+  page2.questions.push({
+    type: "html",
+    name: "messageX",
+    html: t('messageX')
+  });
+
+  var unsatisfiedConditions = function (valueNew, valueUsed) {
+    var conditions = [];
+    if (valueNew) {
+      for (var i = 0; i < saleNewChoices.length; i++) {
+        conditions.push("{unsatisfiedCriteriaNewVehicleSale[" + i + "]} = '" + valueNew + "'");
+      }
+    }
+    if (valueUsed) {
+      for (var i = 0; i < saleUsedChoices.length; i++) {
+        conditions.push("{unsatisfiedCriteriaUsedVehicleSale[" + i + "]} = '" + valueUsed + "'");
+      }
+    }
+    return conditions.join(" or ");
+  };
+
+  page2.questions.push({
+    type: "checkbox",
+    choices: [
+      { value: 'Sale1', text: t('Sale1') },
+      { value: 'Sale2', text: t('Sale2') },
+      { value: 'Sale3', text: t('Sale3') },
+      { value: 'Sale4', text: t('Sale4') }
+    ],
+    visibleIf: unsatisfiedConditions('SaleNew1', 'SaleUsed1'),
+    name: "unsatisfiedCriteria1",
+    title: t('unsatisfiedCriteria1')
+  });
+
+  page2.questions.push({
+    type: "checkbox",
+    choices: [
+      { value: 'Sale5', text: t('Sale5') },
+      { value: 'Sale6', text: t('Sale6') },
+      { value: 'Sale7', text: t('Sale7') },
+      { value: 'Sale8', text: t('Sale8') }
+    ],
+    name: "unsatisfiedCriteria2",
+    visibleIf: unsatisfiedConditions('SaleNew2', 'SaleUsed2'),
+    title: t('unsatisfiedCriteria2')
+  });
+
+  page2.questions.push({
+    type: "checkbox",
+    choices: [
+      { value: 'Sale13', text: t('Sale13') },
+      { value: 'Sale14', text: t('Sale14') },
+      { value: 'Sale15', text: t('Sale15') },
+      { value: 'Sale16', text: t('Sale16') }
+    ],
+    name: "unsatisfiedCriteria4",
+    visibleIf: unsatisfiedConditions('SaleNew3', 'SaleUsed3'),
+    title: t('unsatisfiedCriteria4')
+  });
+
+  page2.questions.push({
+    type: "checkbox",
+    choices: [
+      { value: 'Sale17', text: t('Sale17') },
+      { value: 'Sale18', text: t('Sale18') },
+      { value: 'Sale19', text: t('Sale19') },
+      { value: 'Sale20', text: t('Sale20') }
+    ],
+    name: "unsatisfiedCriteria5",
+    visibleIf: unsatisfiedConditions('SaleNew4', 'SaleUsed4'),
+    title: t('unsatisfiedCriteria5')
+  });
+
+  page2.questions.push({
+    type: "checkbox",
+    choices: [
+      { value: 'Sale21', text: t('Sale21') },
+      { value: 'Sale22', text: t('Sale22') },
+      { value: 'Sale23', text: t('Sale23') },
+      { value: 'Sale24', text: t('Sale24') }
+    ],
+    name: "unsatisfiedCriteria6",
+    visibleIf: unsatisfiedConditions('SaleNew5', 'SaleUsed5'),
+    title: t('unsatisfiedCriteria6')
+  });
+
+  page3.questions.push({
+    type: "checkbox",
+    choices: [
+      { value: 'alreadyCustomer', text: t('alreadyCustomer') },
+      { value: 'factoryWebsite', text: t('factoryWebsite') },
+      { value: 'garageWebsite', text: t('garageWebsite') },
+      { value: 'leboncoinWebsite', text: t('leboncoinWebsite') },
+      { value: 'lacentraleWebsite', text: t('lacentraleWebsite') },
+      { value: 'advertingWebsite', text: t('advertingWebsite') },
+      { value: 'discountCommunication', text: t('discountCommunication') },
+      { value: 'proximity', text: t('proximity') },
+      { value: 'thirdPartyRecommendation', text: t('thirdPartyRecommendation') },
+      { value: 'socialNetworks', text: t('socialNetworks') },
+      { value: 'autre', text: t('autre') },
+    ],
+    isRequired: true,
+    name: "serviceMiddleMans",
+    visibleIf: "{dataType} = 'UsedVehicleSale'",
+    title: t('serviceMiddleMans')
+  });
+
+  page3.questions.push({
+    type: "checkbox",
+    choices: [
+      { value: 'alreadyCustomer', text: t('alreadyCustomer') },
+      { value: 'factoryWebsite', text: t('factoryWebsite') },
+      { value: 'garageWebsite', text: t('garageWebsite') },
+      { value: 'discountCommunication', text: t('discountCommunication') },
+      { value: 'proximity', text: t('proximity') },
+      { value: 'thirdPartyRecommendation', text: t('thirdPartyRecommendation') },
+      { value: 'socialNetworks', text: t('socialNetworks') },
+      { value: 'autre', text: t('autre') },
+    ],
+    isRequired: true,
+    name: "serviceMiddleMans",
+    visibleIf: "{dataType} = 'NewVehicleSale'",
+    title: t('serviceMiddleMans')
+  });
+
+  page3.questions.push({
+    type: "text",
+    isRequired: false,
+    name: "serviceMiddleManOther",
+    visibleIf: "{serviceMiddleMans} contains 'autre'",
+    title: t('serviceMiddleManOther')
+  });
+
+  commonQuestions.customerInfos.forEach(function (q) {
+    page3.questions.push(q)
+  });
+
+  //page3.questions.push(commonQuestions.customerShareWithGarage);
+
+  page4.questions.push(commonQuestions.shareWithPartners);
+</script>
+{% include  "../common_footer.nunjucks" -%}
+</body>
+</html>

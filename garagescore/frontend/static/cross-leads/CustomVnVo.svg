@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="21.5" height="21.5" viewBox="0 0 21.5 21.5">
+  <g id="CustomVnVo" transform="translate(-343.75 -1091.75)">
+    <rect id="Rectangle_2188" data-name="Rectangle 2188" width="21" height="21" rx="2" transform="translate(344 1092)" fill="#fff" stroke="rgba(188,188,188,0.5)" stroke-width="0.5"/>
+    <g id="Groupe_7276" data-name="Groupe 7276" transform="translate(318.63 1078.053)">
+      <g id="Groupe_7274" data-name="Groupe 7274" transform="translate(31.87 17.448)">
+        <path id="Tracé_4973" data-name="Tracé 4973" d="M-2.333-5.023H-3.667V-7.567H-3A2.619,2.619,0,0,0-.333-10.128,2.619,2.619,0,0,0-3-12.69a2.619,2.619,0,0,0-2.667,2.562H-7a3.928,3.928,0,0,1,4-3.843,3.928,3.928,0,0,1,4,3.843,3.9,3.9,0,0,1-3.333,3.79Z" transform="translate(7 13.971)" fill="#757575"/>
+      </g>
+      <g id="Groupe_7275" data-name="Groupe 7275" transform="translate(33.948 27.606)">
+        <path id="Tracé_4974" data-name="Tracé 4974" d="M-1.079-.719a.641.641,0,0,0-.64.64.641.641,0,0,0,.64.64.641.641,0,0,0,.64-.64.641.641,0,0,0-.64-.64m0,2.562A1.924,1.924,0,0,1-3-.079,1.924,1.924,0,0,1-1.079-2,1.924,1.924,0,0,1,.843-.079,1.924,1.924,0,0,1-1.079,1.843" transform="translate(3 2)" fill="#757575"/>
+      </g>
+    </g>
+  </g>
+</svg>

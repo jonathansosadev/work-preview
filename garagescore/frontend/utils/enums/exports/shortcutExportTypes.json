@@ -1,0 +1,114 @@
+{
+  "SATISFACTION_GARAGES": {
+    "value": "SATISFACTION_GARAGES",
+    "properties": {
+      "category": "BY_GARAGES",
+      "exportType": "GARAGES"
+    }
+  },
+  "SATISFACTION_FRONT_DESK_USERS": {
+    "value": "SATISFACTION_FRONT_DESK_USERS",
+    "properties": {
+      "category": "BY_FRONT_DESK_USERS",
+      "exportType": "FRONT_DESK_USERS_DMS"
+    }
+  },
+  "SATISFACTION_REVIEWS": {
+    "value": "SATISFACTION_REVIEWS",
+    "properties": {
+      "category": "BY_DATA",
+      "exportType": "SATISFACTION"
+    }
+  },
+  "UNSATISFIED_GARAGES": {
+    "value": "UNSATISFIED_GARAGES",
+    "properties": {
+      "category": "BY_GARAGES",
+      "exportType": "GARAGES"
+    }
+  },
+  "UNSATISFIED_FRONT_DESK_USERS": {
+    "value": "UNSATISFIED_FRONT_DESK_USERS",
+    "properties": {
+      "category": "BY_FRONT_DESK_USERS",
+      "exportType": "FRONT_DESK_USERS_DMS"
+    }
+  },
+  "UNSATISFIED_REVIEWS": {
+    "value": "UNSATISFIED_REVIEWS",
+    "properties": {
+      "category": "BY_DATA",
+      "exportType": "UNSATISFIED"
+    }
+  },
+  "LEADS_GARAGES": {
+    "value": "LEADS_GARAGES",
+    "properties": {
+      "category": "BY_GARAGES",
+      "exportType": "GARAGES"
+    }
+  },
+  "LEADS_FRONT_DESK_USERS": {
+    "value": "LEADS_FRONT_DESK_USERS",
+    "properties": {
+      "category": "BY_FRONT_DESK_USERS",
+      "exportType": "FRONT_DESK_USERS_CUSTEED"
+    }
+  },
+  "LEADS_REVIEWS": {
+    "value": "LEADS_REVIEWS",
+    "properties": {
+      "category": "BY_DATA",
+      "exportType": "LEADS"
+    }
+  },
+  "LEADS_FORWARDED_REVIEWS": {
+    "value": "LEADS_FORWARDED_REVIEWS",
+    "properties": {
+      "category": "BY_DATA",
+      "exportType": "FORWARDED_LEADS"
+    }
+  },
+  "CONTACTS_GARAGES": {
+    "value": "CONTACTS_GARAGES",
+    "properties": {
+      "category": "BY_GARAGES",
+      "exportType": "GARAGES"
+    }
+  },
+  "CONTACTS_FRONT_DESK_USERS": {
+    "value": "CONTACTS_FRONT_DESK_USERS",
+    "properties": {
+      "category": "BY_FRONT_DESK_USERS",
+      "exportType": "FRONT_DESK_USERS_DMS"
+    }
+  },
+  "CONTACTS_REVIEWS": {
+    "value": "CONTACTS_REVIEWS",
+    "properties": {
+      "category": "BY_DATA",
+      "exportType": "CONTACTS"
+    }
+  },
+  "EREPUTATION_GARAGES": {
+    "value": "EREPUTATION_GARAGES",
+    "properties": {
+      "category": "BY_GARAGES",
+      "exportType": "GARAGES"
+    }
+  },
+  "EREPUTATION_REVIEWS": {
+    "value": "EREPUTATION_REVIEWS",
+    "properties": {
+      "category": "BY_DATA",
+      "exportType": "EREPUTATION"
+    }
+  },
+  "AUTOMATION_RGPD": {
+    "value": "AUTOMATION_RGPD",
+    "properties": {
+      "category": "BY_DATA",
+      "exportType": "AUTOMATION_RGPD"
+    }
+  }
+}

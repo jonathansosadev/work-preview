@@ -1,0 +1,230 @@
+{% extends "../common/layouts/darkbo.nunjucks" %} {% block css %}
+<style type="text/css">
+  textarea,
+  button {
+    width: 100%;
+    color: black;
+  }
+  #results {
+    display: none;
+  }
+  .list-group-item {
+    float: initial;
+    height: 30px;
+    padding: 5px 15px;
+    color: black;
+  }
+  .list-group {
+    margin-bottom: 0;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  .clkable {
+    cursor: pointer;
+  }
+  .scrollableList {
+    margin: 5px;
+  }
+  .frame {
+    border: 1px solid white;
+    padding-bottom: 12px;
+  }
+  .desc {
+    background-color: whitesmoke;
+    color: #0e0e0e;
+    padding: 8px 12px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+  }
+</style>
+{% endblock %} {% block page %}
+<div class="page-header">
+  <h1>Gérer la modération</h1>
+</div>
+<div id="censoredWords">
+  <div class="col-md-8 topcommands">
+    <h4>Testez votre avis</h4>
+    <textarea v-model="review" style="padding: 10px 15px" title="review" cols=200 rows=10></textarea>
+    <button class="btn btn-primary" v-on:click="moderate()"><strong>TESTER</strong></button>
+    <hr/>
+    <div class="row">
+      <h2 class="text-center col-md-12" v-bind:class="{ 'col-md-6': status === 'Rejected'}" style="margin-top:9px">
+        <span v-if="status" class="label" v-bind:class="{ 'label-danger': status === 'Rejected', 'label-success': status !== 'Rejected' }">
+          {{ "{{ status }}" }}
+        </span>
+      </h2>
+      <div v-if="reason" class="alert alert-warning text-center col-md-5" role="alert">
+        <strong>{{ "{{ reason }}" }}</strong>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <h4>Gérer la liste noire des mots</h4>
+    <p class="desc">
+      <span style="font-size: larger">A savoir avant d'ajouter un mot :</span><br/>
+      - Un mot ajouté en <span style="color: red">minuscule</span> va être <strong>insensible à la casse</strong><br/>
+      (Ex : le mot 'con' va censurer 'CON', 'Con', 'cOn' dans le texte)<br/>
+      - Un mot ajouté avec <span style="color: red">au moins une majuscule</span> va être <strong>sensible à la casse</strong><br/>
+      (Ex : le mot 'Simon' va censurer uniquement 'Simon' dans le texte)
+      <span style="font-size: larger">Conseils :</span><br/>
+      - Ajouter 'Simon' et 'SIMON' pour les noms / prénoms<br/>
+      - <strong>NE JAMAIS mettre d'accents</strong> car dans le texte, 'éàè...' sont remplacé par 'eae' avant la comparaison<br/>
+      - Eviter les apostrophes et <strong>ne pas mettre d'insultes au pluriel</strong> car les 's' en fin de mot sont retirés
+    </p>
+    <div class="col-md-12 frame" v-for="dictionary in dictionaries">
+      <span style="margin: 8px" v-on:click="downloadDictionary(dictionary)" class="btn btn-default btn-xs pull-right" type="button">
+        <i class="fa fa-download"></i>
+      </span>
+      <h4>{{ "{{ dictionary.language.toUpperCase() }}" }}</h4>
+      <div>
+        <div class="input-group">
+          <input v-model="search[dictionary.language]" type="text" class="form-control" placeholder="Ajouter ou chercher...">
+          <span class="input-group-btn">
+            <button v-on:click="addWord(dictionary)" class="btn btn-primary" type="button"><i class="fa fa-plus"></i></button>
+          </span>
+        </div>
+      </div>
+      <div class="scrollableList">
+        <ul class="list-group">
+          <li class="list-group-item" v-for="word in filter(dictionary.words, dictionary)">{{ "{{ word }}" }}
+            <i v-on:click="deleteWord(dictionary, word)" class="fa fa-remove pull-right text-danger clkable"></i>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+  let REASONS = {
+    AUTHOR_IS_NOT_INDIVIDUAL: 'inhumanAuthor',
+    CONTENT_INCLUDES_PERSONAL_DATA: 'includesPersonalData',
+    CONTENT_IS_ABUSIVE: 'abusive',
+    CONTENT_IS_MEANINGLESS: 'meaningless',
+    CONTENT_IS_TOO_SHORT: 'tooShort',
+    CONTENT_IS_UNINTELLIGIBLE: 'unintelligible',
+    CONTENT_IS_UNRELATED_TO_REVIEWED_ITEM: 'unrelated',
+    INCOHERENT_RATING: 'incoherentRating',
+    REJECTED_BY_CUSTOMER_REQUEST: 'rejectedByCustomerRequest'
+  };
+  function displayReason(value) {
+    switch (value) {
+      case REASONS.AUTHOR_IS_NOT_INDIVIDUAL:
+        return 'L’auteur n’est pas une personne physique';
+      case REASONS.CONTENT_INCLUDES_PERSONAL_DATA:
+        return 'Le contenu comporte des informations personnelles';
+      case REASONS.CONTENT_IS_ABUSIVE:
+        return 'Le contenu comporte des injures ou grossièretés';
+      case REASONS.CONTENT_IS_MEANINGLESS:
+        return 'Le contenu comporte des caractères aléatoires ou des suites de mots sans aucune signification'; // eslint-disable-line max-len
+      case REASONS.CONTENT_IS_TOO_SHORT:
+        return 'Le contenu est plus court que les 10 caractères exigés';
+      case REASONS.CONTENT_IS_UNINTELLIGIBLE:
+        return 'Le contenu est mal écrit au point d’en être inintelligible';
+      case REASONS.CONTENT_IS_UNRELATED_TO_REVIEWED_ITEM:
+        return 'Le contenu est sans rapport avec le sujet noté';
+      case REASONS.INCOHERENT_RATING:
+        return 'Le score ne correspond pas à la notation';
+      case REASONS.REJECTED_BY_CUSTOMER_REQUEST:
+        return 'Demande de retrait par le client';
+      default:
+        return value;
+    }
+  }
+  document.addEventListener("DOMContentLoaded", function() {
+
+    new Vue({
+      el: '#censoredWords',
+      data: function () {
+        return {
+          dictionaries: [],
+          search: { "en": "", "fr":"", "es": "" },
+          reason: '',
+          status: '',
+          review: ''
+        };
+      },
+      watch: {
+      },
+      mounted: function () {
+        this.getCensoredWords();
+      },
+      methods: {
+        getCensoredWords: function () {
+          let request = new XMLHttpRequest();
+          let url = '{{ lib.client.url.getShortUrl("ADMIN_REVIEWS_CENSORED_WORDS") }}';
+          request.open('GET', url, true);
+          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          request.onload = () => {
+            if (request.status !== 200 && request.status !== 304){
+              alert("Erreur " + request.status + " ! " + request.responseText);
+            } else {
+              this.dictionaries = JSON.parse(request.responseText);
+              console.log('CensoredWords loaded !');
+            }
+          };
+          request.send();
+        },
+        updateCensoredWords: function (dictionary) {
+          let request = new XMLHttpRequest();
+          let posturl = '{{ lib.client.url.getUrl('ADMIN_REVIEWS_CENSORED_WORDS_UPDATE') }}' + dictionary.id;
+          request.open('POST', posturl, true);
+          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          request.onload = () => {
+            if (request.status !== 200 && request.status !== 304) {
+              alert("Erreur ! Plus de détails dans la console");
+              console.error("Update error : ");
+              console.error(request.responseText);
+            } else {
+              console.log('CensoredWords updated !');
+              this.getCensoredWords();
+            }
+          };
+          request.send(JSON.stringify({ words: dictionary.words }));
+        },
+        addWord: function (dictionary) {
+          let newWord = this.search[dictionary.language].trim();console.log({newWord,s:this.search })
+          if (!newWord) return;
+          dictionary.words.push(newWord);
+          dictionary.words.sort();
+          this.search[dictionary.language] = '';
+          this.updateCensoredWords(dictionary);
+        },
+        deleteWord: function (dictionary, word) {
+          let index = dictionary.words.indexOf(word);
+          if (confirm("Êtes-vous sûr de vouloir supprimer le mot '" + dictionary.words[index] + "' ?")) {
+            dictionary.words.splice(index, 1);
+            this.updateCensoredWords(dictionary);
+          }
+        },
+        filter: function (words, dictionary) {
+          return words.filter(c => c.toLowerCase().indexOf(this.search[dictionary.language].toLowerCase().trim()) >= 0);
+        },
+        moderate: function() {
+          let request = new XMLHttpRequest();
+          let posturl = '{{ lib.client.url.getShortUrl("ADMIN_REVIEWS_TEST_MODERATION") }}';
+          request.open('POST', posturl, true);
+          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          request.onload = () => {
+            if (request.status !== 200 && request.status !== 304) {
+              alert("Erreur " + request.status + " !");
+            } else {
+              const data = JSON.parse(request.responseText);
+              this.reason = displayReason(data.rejectedReason);
+              this.status = data.approvableStatus;
+            }
+          };
+          request.send(JSON.stringify({ review: this.review }));
+        },
+        downloadDictionary: function (dictionary) {
+          let csvContent = "data:text/csv;charset=utf-8," + encodeURIComponent(dictionary.words.join('\r\n'));
+          let link = document.createElement("a");
+          link.setAttribute("href", csvContent);
+          link.setAttribute("download", "censored-words-" + dictionary.language + ".txt");
+          link.click();
+        }
+      }
+    });
+  });
+</script> {% endblock %}

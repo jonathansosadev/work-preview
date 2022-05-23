@@ -1,0 +1,31 @@
+{
+  "name": "ParserTypes",
+  "base": "GarageScoreBaseModel",
+  "options": {},
+  "mixins": {
+    "SmartSort": true
+  },
+  "mongodb": {
+    "collection": "parserTypes"
+  },
+  "http": {
+    "path": "parser-types"
+  },
+  "properties": {
+    "_reference": {
+      "type": "String"
+    },
+    "types": [{
+      "key": {
+        "type": "String"
+      },
+      "alias": {
+        "type": "String"
+      }
+    }]
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

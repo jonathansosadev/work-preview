@@ -1,0 +1,26 @@
+{
+  "LAST_MONTH": {
+    "value": "LAST_MONTH",
+    "properties": {
+      "rollingPeriod": false
+    }
+  },
+  "LAST_QUARTER": {
+    "value": "LAST_QUARTER",
+    "properties": {
+      "rollingPeriod": true
+    }
+  },
+  "CURRENT_YEAR": {
+    "value": "CURRENT_YEAR",
+    "properties": {
+      "rollingPeriod": true
+    }
+  },
+  "ALL_HISTORY": {
+    "value": "ALL_HISTORY",
+    "properties": {
+      "rollingPeriod": true
+    }
+  }
+}

@@ -1,0 +1,228 @@
+{% include  "../i18n/i18n.nunjucks" -%}
+{% include  "../i18n/phone.nunjucks" -%}
+<script>
+  {% include  "./common_questions.js" -%}
+</script>
+<script>
+  function unescapeHTML(string) {
+    var elt = document.createElement("span");
+    elt.innerHTML = string;
+    return elt.innerText;
+  }
+  i18n.loadForSurveyJS('backoffice:survey:common-top');
+  var id = '{{ id }}';
+  var surveyType = '{{ surveyType }}';
+  // get url params
+  var PARAMS = {};
+  window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+    PARAMS[key] = value;
+  });
+  var customer = {% if customer %}{{ customer | safe }}{% else %}null{% endif %};
+  var vehicle = {% if vehicle %}{{ vehicle | safe }}{% else %}null{% endif %};
+  // TODO #3569 Replace by surveySignature
+  var garage = {
+    name: '{{ garage.name }}',
+    type: '{{ garage.type }}',
+    googlePlaceId: '{{ garage.googlePlaceId }}',
+    googleCampaignActivated: {{ garage.googleCampaignActivated }},
+    manager: '{{ garage.manager }}',
+    address: '{{ garage.address }}',
+    city: '{{ garage.city }}',
+    postalCode: '{{ garage.postalCode }}',
+    locale: '{{ garage.locale }}',
+    ratingType: '{{ garage.ratingType }}',
+    isReverseRating: {{ garage.isReverseRating }},
+  };
+  /***************************/
+  /* CUSTOM MOBILE VALIDATOR */
+  /***************************/
+  var needValidPhone = t('needValidPhone');
+  var needTermsOfUse = t('needTermsOfUse');
+  var needSharing = t('needSharing');
+  var phoneCountry = garage.locale.split('_').pop() || 'FR';
+  var MobilePhoneValidator = (function (_super) {
+    Survey.__extends(MobilePhoneValidator, _super);
+    function MobilePhoneValidator() {
+      _super.call(this);
+    }
+    MobilePhoneValidator.prototype.getType = function () {
+      return "mobilephonevalidator";
+    };
+    MobilePhoneValidator.prototype.validate = function (value, name) {
+      if (!value || !phoneLib.validatePhoneNumberFromInput(value, 'mobile', phoneCountry)) {
+        return new Survey.ValidatorResult(null, new Survey.CustomError(this.getErrorText(name)));
+      }
+      return null;
+    };
+    //the default error text. It shows if user do not set the 'text' property
+    MobilePhoneValidator.prototype.getDefaultErrorText = function (name) {
+      return needValidPhone[survey.locale];
+    };
+    return MobilePhoneValidator;
+  })(Survey.SurveyValidator);
+  Survey.MobilePhoneValidator = MobilePhoneValidator;
+
+  var termsOfUseValidator = (function (_super) {
+    Survey.__extends(termsOfUseValidator, _super);
+    function termsOfUseValidator() {
+      _super.call(this);
+    }
+    termsOfUseValidator.prototype.getType = function () {
+      return "termsofusevalidator";
+    };
+    termsOfUseValidator.prototype.validate = function (value, name) {
+      if (!value) {
+        //report an error
+        return new Survey.ValidatorResult(null, new Survey.CustomError(this.getErrorText(name)));
+      }
+      //return Survey.ValidatorResult object if you want to correct the entered value
+      // return new Survey.ValidatorResult(youCorrectedValue);
+      //return nothing if there is no any error.
+      return null;
+    };
+    //the default error text. It shows if user do not set the 'text' property
+    termsOfUseValidator.prototype.getDefaultErrorText = function (name) {
+      return needTermsOfUse[survey.locale];
+    };
+    return termsOfUseValidator;
+  })(Survey.SurveyValidator);
+  Survey.termsOfUseValidator = termsOfUseValidator;
+
+  var termOfSharingValidator = (function (_super) {
+    Survey.__extends(termOfSharingValidator, _super);
+    function termOfSharingValidator() {
+      _super.call(this);
+    }
+    termOfSharingValidator.prototype.getType = function () {
+      return "termofsharingvalidator";
+    };
+    termOfSharingValidator.prototype.validate = function (value, name) {
+      if (!value) {
+        //report an error
+        return new Survey.ValidatorResult(null, new Survey.CustomError(this.getErrorText(name)));
+      }
+      return null;
+    };
+    termOfSharingValidator.prototype.getDefaultErrorText = function (name) {
+      return needSharing[survey.locale];
+    };
+    return termOfSharingValidator;
+  })(Survey.SurveyValidator);
+  Survey.termOfSharingValidator = termOfSharingValidator;
+
+  Survey
+    .JsonObject
+    .metaData
+    .addClass("mobilephonevalidator", [], function () {
+      return new MobilePhoneValidator();
+    }, "surveyvalidator");
+  Survey
+    .JsonObject
+    .metaData
+    .addClass("termsofusevalidator", [], function () {
+      return new termsOfUseValidator();
+    }, "surveyvalidator");
+  Survey
+    .JsonObject
+    .metaData
+    .addClass("termofsharingvalidator", [], function () {
+      return new termOfSharingValidator();
+    }, "surveyvalidator");
+
+  /******************/
+  /* HTML SIGNATURE */
+  /******************/
+  var garageType = '{{ garage.type }}';
+
+  var signature1 = t('signature1', { brand: ((garageType === "VehicleInspection") ? 'Custeed' : 'GarageScore') });
+  var signature15 = t('signature15', { brand: ((garageType === "VehicleInspection") ? 'Custeed' : 'GarageScore') });
+  var signature2 = t('signature2');
+  var signature3 = t('signature3');
+  var signature4 = t('signature4');
+  // TODO #3569 Replace by surveySignature
+  var signatureHTML = function (locale) {
+    var p1 = signature1[locale];
+    var p15 = (surveyType !== 'surveyFollowupLead') ? signature15[locale] : '';
+    var p2 = signature2[locale];
+    var p3 = signature3[locale];
+    var p4 = signature4[locale];
+    var result = '<p>' + p1 + p15 + '<br><br>' + p2 + '.<br><br>' + p3 + ',</p>';
+    var garage = {
+      {% if garage.manager %}manager: {
+        firstName: {% if garage.manager.firstName %}"{{ garage.manager.firstName }}"{% else %}""{% endif %},
+        lastName: {% if garage.manager.lastName %}"{{ garage.manager.lastName }}"{% else %}""{% endif %},
+        job: {% if garage.manager.job %}"{{ garage.manager.job }}"{% else %}""{% endif %},
+        phone: {% if garage.manager.phone %}"{{ garage.manager.phone }}"{% else %}""{% endif %}
+      },{% endif %}
+      name: {% if garage.name %}"{{ garage.name }}"{% else %}""{% endif %},
+      address: {% if garage.address %}"{{ garage.address }}"{% else %}""{% endif %},
+      postalCode: {% if garage.postalCode %}"{{ garage.postalCode }}"{% else %}""{% endif %},
+      city: {% if garage.city %}"{{ garage.city }}"{% else %}""{% endif %}
+    };
+    if (!garage.manager || !garage.manager.lastName) {
+      result += '<b>' + p4 + ' ' + garage.name + '</b><br>';
+    } else {
+      result += '<b>' + garage.manager.firstName + ' ' + garage.manager.lastName + '</b><br>';
+      result += garage.manager.job ? garage.manager.job : '';
+    }
+    result += '<br><b>' + garage.name + '</b>';
+
+    result += garage.address ? '<p>' + garage.address + '</p>' : '';
+    if (garage.city) {
+      result += '<p>' + (garage.postalCode ? (garage.postalCode + ' ') : '') + garage.city + '</p>';
+    }
+    result += (garage.manager && garage.manager.phone) ? '<p>' + garage.manager.phone + '</p>' : '';
+
+    return result;
+  };
+
+  /***************/
+  /* INIT SURVEY */
+  /***************/
+  const surveyLocale = '{{ garage.locale }}';
+  const surveyLang = surveyLocale.split('_')[0];
+  Survey.surveyLocalization.locales[surveyLocale] = {
+    pagePrevText: t('pagePrevText')['{{ garage.locale }}'],
+    pageNextText: t('pageNextText')['{{ garage.locale }}'],
+    completeText: t('completeText')['{{ garage.locale }}'],
+    progressText: t('progressText')['{{ garage.locale }}'],
+    optionsCaption: t('optionsCaption')['{{ garage.locale }}'],
+    requiredError: t('requiredError')['{{ garage.locale }}']
+  };
+  var survey = {
+    pages: [],
+    completedHtml: signatureHTML('{{ garage.locale }}'),
+    sendResultOnPageNext: true, // save results on completing every page. onPartialSend event is fired.
+    showProgressBar: 'bottom',
+    showPageNumbers: true,
+    showPageTitles: false,
+    showQuestionNumbers: 'off',
+    requiredText: '',
+    locale: surveyLocale,
+    country: garage.locale.split('_').pop() || 'FR',
+  };
+
+  var askUnsatisfiedCriteria = t('askUnsatisfiedCriteria');
+  function generateUnsatisfiedCriteria(name, isRequired, condition, choices){
+    return {
+      type: "checkbox",
+      choices: choices,
+      isRequired: isRequired,
+      name: name,
+      title: askUnsatisfiedCriteria,
+      visibleIf: condition
+    }
+  }
+
+  function displayShareOnGoogleQuestion(garage) {
+    return garage && garage.googlePlaceId && garage.googleCampaignActivated;
+  }
+
+  /********************/
+  /* SHARED QUESTIONS */
+  /********************/
+  var commonQuestions = surveyGetCommonQuestions(customer, garage);
+
+</script>
+
+{% include "./analytics.nunjucks" %}

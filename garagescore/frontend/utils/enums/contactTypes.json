@@ -1,0 +1,242 @@
+{
+  "TEST": {
+    "value": "TEST",
+    "properties": {
+      "jobType": "SEND_CONTACT_LOW_PRIORITY"
+    }
+  },
+  "MONTHLY_SUMMARY_EMAIL": {
+    "value": "MONTHLY_SUMMARY_EMAIL",
+    "properties": {
+      "jobType": "SEND_CONTACT_LOW_PRIORITY"
+    }
+  },
+  "MONTHLY_SUMMARY_SMS": {
+    "value": "MONTHLY_SUMMARY_SMS",
+    "properties": {
+      "jobType": "SEND_CONTACT_LOW_PRIORITY"
+    }
+  },
+  "REPORT_EMAIL": {
+    "value": "REPORT_EMAIL",
+    "properties": {
+      "jobType": "SEND_CONTACT_LOW_PRIORITY"
+    }
+  },
+  "ALERT_EMAIL": {
+    "value": "ALERT_EMAIL",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "CAMPAIGN_EMAIL": {
+    "value": "CAMPAIGN_EMAIL",
+    "properties": {
+      "jobType": "SEND_CONTACT_LOW_PRIORITY"
+    }
+  },
+  "CAMPAIGN_SMS": {
+    "value": "CAMPAIGN_SMS",
+    "properties": {
+      "jobType": "SEND_CONTACT_LOW_PRIORITY"
+    }
+  },
+  "USER_MESSAGE_EMAIL": {
+    "value": "USER_MESSAGE_EMAIL",
+    "properties": {
+      "jobType": "SEND_CONTACT_LOW_PRIORITY"
+    }
+  },
+  "RESET_PASSWORD_EMAIL": {
+    "value": "RESET_PASSWORD_EMAIL",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "WELCOME_EMAIL": {
+    "value": "WELCOME_EMAIL",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "CAMPAIGNS_READY": {
+    "value": "CAMPAIGNS_READY",
+    "properties": {
+      "jobType": "SEND_CONTACT_LOW_PRIORITY"
+    }
+  },
+  "FTP_CREDENTIALS": {
+    "value": "FTP_CREDENTIALS",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "SUPERVISOR_REPORT_EMAIL": {
+    "value": "SUPERVISOR_REPORT_EMAIL",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "SUPERVISOR_GARAGE_REPORT_EMAIL": {
+    "value": "SUPERVISOR_GARAGE_REPORT_EMAIL",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "SUPERVISOR_SYNCHRONISATION_REPORT": {
+    "value": "SUPERVISOR_SYNCHRONISATION_REPORT",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "SUPERVISOR_ZOHO_SYNCHRONISATION_REPORT": {
+    "value": "SUPERVISOR_ZOHO_SYNCHRONISATION_REPORT",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "SUPERVISOR_LACK_OF_PHONE": {
+    "value": "SUPERVISOR_LACK_OF_PHONE",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "SUPERVISOR_SOURCE_TYPE_MISMATCH": {
+    "value": "SUPERVISOR_SOURCE_TYPE_MISMATCH",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "SUPERVISOR_X_LEADS_STATS_REPORT": {
+    "value": "SUPERVISOR_X_LEADS_STATS_REPORT",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "SUBSCRIPTION_REQUEST_EMAIL": {
+    "value": "SUBSCRIPTION_REQUEST_EMAIL",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "SUBSCRIPTION_CONFIRMATION_EMAIL": {
+    "value": "SUBSCRIPTION_CONFIRMATION_EMAIL",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "SUBSCRIPTION_FEATURE_REQUEST_EMAIL": {
+    "value": "SUBSCRIPTION_FEATURE_REQUEST_EMAIL",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "USER_ACCESS_REQUEST": {
+    "value": "USER_ACCESS_REQUEST",
+    "properties": {
+      "jobType": "SEND_CONTACT_LOW_PRIORITY"
+    }
+  },
+  "LEAD_SUCCESS_ALERT": {
+    "value": "LEAD_SUCCESS_ALERT",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "UNSATISFIED_SUCCESS_ALERT": {
+    "value": "UNSATISFIED_SUCCESS_ALERT",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "ESCALATE_LEAD_1": {
+    "value": "ESCALATE_LEAD_1",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "ESCALATE_LEAD_2": {
+    "value": "ESCALATE_LEAD_2",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "ESCALATE_UNSATISFIED_1": {
+    "value": "ESCALATE_UNSATISFIED_1",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "ESCALATE_UNSATISFIED_2": {
+    "value": "ESCALATE_UNSATISFIED_2",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "PRODUCT_DEMONSTRATION": {
+    "value": "PRODUCT_DEMONSTRATION",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "CUSTOMER_CONFIRM": {
+    "value": "CUSTOMER_CONFIRM",
+    "properties": {
+      "jobType": "SEND_CONTACT_LOW_PRIORITY"
+    }
+  },
+  "AUTOMATION_CAMPAIGN_EMAIL": {
+    "value": "AUTOMATION_CAMPAIGN_EMAIL",
+    "properties": {
+      "jobType": "SEND_CONTACT_LOW_PRIORITY"
+    }
+  },
+  "AUTOMATION_CAMPAIGN_SMS": {
+    "value": "AUTOMATION_CAMPAIGN_SMS",
+    "properties": {
+      "jobType": "SEND_CONTACT_LOW_PRIORITY"
+    }
+  },
+  "AUTOMATION_GDPR_EMAIL": {
+    "value": "AUTOMATION_GDPR_EMAIL",
+    "properties": {
+      "jobType": "SEND_CONTACT_LOW_PRIORITY"
+    }
+  },
+  "AUTOMATION_GDPR_SMS": {
+    "value": "AUTOMATION_GDPR_SMS",
+    "properties": {
+      "jobType": "SEND_CONTACT_LOW_PRIORITY"
+    }
+  },
+  "CROSS_LEADS_SELF_ASSIGN_CALL": {
+    "value": "CROSS_LEADS_SELF_ASSIGN_CALL",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "CROSS_LEADS_SELF_ASSIGN_EMAIL": {
+    "value": "CROSS_LEADS_SELF_ASSIGN_EMAIL",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "CROSS_LEADS_RECONTACT": {
+    "value": "CROSS_LEADS_RECONTACT",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "CROSS_LEADS_SELF_ASSIGN_MISSED_CALL": {
+    "value": "CROSS_LEADS_SELF_ASSIGN_MISSED_CALL",
+    "properties": {
+      "jobType": "SEND_CONTACT_MEDIUM_PRIORITY"
+    }
+  },
+  "COCKPIT_EXPORT_EMAIL": {
+    "value": "COCKPIT_EXPORT_EMAIL",
+    "properties": {
+      "jobType": "SEND_CONTACT_HIGH_PRIORITY"
+    }
+  }
+}

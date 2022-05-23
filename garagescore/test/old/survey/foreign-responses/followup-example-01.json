@@ -1,0 +1,17 @@
+[
+    {
+        "source": "Internal survey",
+        "payload": {
+            "isComplete": true,
+            "pageNumber": 0,
+            "pageCount": 1,
+            "timestamp": 1518884707617.0,
+            "followupStatus": "Resolved",
+            "follwupRecontact": "Yes",
+            "followupChangeMind": "Yes",
+            "followupUnsatisfiedRating": "9",
+            "unsatisfiedComment": "merci",
+            "followupUnsatisfiedComment" : "Rien"
+        }
+    }
+]

@@ -1,0 +1,38 @@
+{
+  "REPORT_CONFIGS_UNSATISFIED_VI": {
+    "value": "UnsatisfiedVI",
+    "properties": {}
+  },
+  "REPORT_CONFIGS_UNSATISFIED_MAINTENANCE": {
+    "value": "unsatisfiedApv",
+    "properties": {}
+  },
+  "REPORT_CONFIGS_UNSATISFIED_VN": {
+    "value": "unsatisfiedVn",
+    "properties": {}
+  },
+  "REPORT_CONFIGS_UNSATISFIED_VO": {
+    "value": "unsatisfiedVo",
+    "properties": {}
+  },
+  "REPORT_CONFIGS_LEAD_VN": {
+    "value": "leadVn",
+    "properties": {}
+  },
+  "REPORT_CONFIGS_LEAD_VO": {
+    "value": "leadVo",
+    "properties": {}
+  },
+  "REPORT_CONFIGS_CONTACTS_APV": {
+    "value": "contactsApv",
+    "properties": {}
+  },
+  "REPORT_CONFIGS_CONTACTS_VN": {
+    "value": "contactsVn",
+    "properties": {}
+  },
+  "REPORT_CONFIGS_CONTACTS_VO": {
+    "value": "contactsVo",
+    "properties": {}
+  }
+}

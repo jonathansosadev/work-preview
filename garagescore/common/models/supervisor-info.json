@@ -1,0 +1,23 @@
+{
+  "name": "SupervisorInfo",
+  "plural": "SupervisorInfos",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "mongodb": {
+    "collection": "supervisorInfos"
+  },
+  "http": {
+    "path": "supervisor-info"
+  },
+  "mixins": {
+    "SmartSort": true
+  },
+  "properties": {
+  },
+  "validations": [],
+  "acls": [
+  ],
+  "methods": {
+  }
+}

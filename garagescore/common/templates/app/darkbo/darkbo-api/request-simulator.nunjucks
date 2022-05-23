@@ -1,0 +1,554 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block page %}
+  <div class="page-header">
+    <h1>Requêter l'API publique</h1>
+  </div>
+  <div class="col-md-12" id="app" style="margin-bottom:25px;">
+    <div class="row">
+      <u class="col-md-12">Instructions</u>
+      <p class="col-md-12">
+        En utilisant la première partie vous pouvez voir les clés d'API disponibles ainsi que les autorisations qui y sont associées.<br/>
+        Ensuite, vous pourrez sélectionner cette clé pour effectuer des requêtes sur l'API publique. <br/>
+        En utilisant le formulaire dédié vous pourrez choisir la méthode ainsi que les paramètres
+      </p>
+    </div>
+
+    <br/>
+    <div style="background-color: whitesmoke; color: #0e0e0e; padding: 20px; width: 90%; left: 5%;">
+      <h3>Sélection de l'appId et aperçu des autorisations</h3>
+      <div class="row">
+        <div class="col-xs-5">
+          <label for="appId">appId</label>
+          <select id="appId" class="form-control" @change="loadAuthorizations" v-model="authorizations.appId">
+            <option v-for="apiKey in apiKeys" :value="apiKey">
+              {% raw %} {{ appInfos[apiKey].displayName }}&nbsp;({{ apiKey }}) {% endraw %}
+            </option>
+          </select>
+        </div>
+        <div class="col-xs-7">
+          <label for="appSecret">appSecret</label>
+          <input id="appSecret" class="form-control" type="text" v-model="authorizations.appSecret" readonly/>
+        </div>
+        <!--<div class="col-xs-2">
+          <label>&nbsp;</label>
+          <button class="btn btn-primary form-control" v-on:click="generateKeys()"> Generate new key pair</button>
+        </div>-->
+      </div>
+
+      <div class="row" style="margin-top: 20px;">
+        <div class="col-xs-2 col-xs-offset-1">
+          <div class="text-center">Données complètes</div>
+          <div class="text-center">
+            <switch-button :value="!!authorizations.fullData"></switch-button>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="text-center">Accès à tous les garages</div>
+          <div class="text-center">
+            <switch-button :value="!!authorizations.allGaragesAuthorized"></switch-button>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="text-center">Accès aux reviews non partagées</div>
+          <div class="text-center">
+            <switch-button :value="!!authorizations.allReviews"></switch-button>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="text-center">Accès aux garages non lancés</div>
+          <div class="text-center">
+            <!-- Pour activer le change  @change="authorizations.withheldGarageData = !!!authorizations.withheldGarageData" -->
+            <switch-button :value="!!authorizations.withheldGarageData"></switch-button>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="text-center">Accès aux garages non indexés</div>
+          <div class="text-center">
+            <switch-button :value="!!authorizations.nonIndexedGarages"></switch-button>
+          </div>
+        </div>
+      </div>
+      <div class="row" :v-if="authorizations.garageTypesAuthorized && authorizations.garageTypesAuthorized.length">
+        <div class="col-xs-12">
+          <span v-show="authorizations.garageTypesAuthorized.length">Types de garages autorisés : </span>
+          <ul style="margin-top: 5px; background-color: whitesmoke;">
+            <li v-for="(garageType, index) in authorizations.garageTypesAuthorized" style="margin-right: 15px;">
+              {% raw %} <span>{{ garageType }}</span> {% endraw %}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row" :v-if="authorizations.allGaragesAuthorized">
+        <!--<gs-garages-list :updated="addGarage" :excluded-garages="authorizations.authorizedGarages"></gs-garages-list>-->
+        <div class="col-xs-12">
+          <span v-show="authorizations.authorizedGarages.length">Garages autorisés : </span>
+          <ul style="margin-top: 5px; background-color: whitesmoke;">
+            <li v-for="(garageId, index) in authorizations.authorizedGarages" style="margin-right: 15px;">
+                {% raw %} <span>{{ garages[garageId] && garages[garageId].publicDisplayName }}</span> {% endraw %}
+              <!--<a @click="removeGarage(index)" class="removeGarage">X</a>-->
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!--<div class="row">
+        <button class="col" v-on:click="saveKeys()">Save API Keys and info</button>
+      </div> -->
+    </div>
+
+    <div style="background-color: whitesmoke; color: #0e0e0e; margin-top:20px; padding: 20px; width: 90%; left: 5%;">
+      <h3>Spécification de la requête</h3>
+      <div class="row">
+        <div class="col-xs-5">
+          <label for="requestType">Requête</label>
+          <select id="requestType" class="form-control" v-model="currentRequest">
+            <option v-for="requestName in requestNames">{% raw %} {{ requestName }} {% endraw %}</option>
+          </select>
+        </div>
+        <div class="col-xs-7">
+        <div>
+            <label for="url-api-garagescore-com">url API</label>
+            <input id="url-api-garagescore-com" class="form-control" type="text" :value="requestOptions[currentRequest].apiEndpoint" readonly/>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <div class="col-xs-3" v-for="requestOption in requestOptions[currentRequest].params">
+          <div v-if="requestOption.type === 'text'">
+            <label :for="requestOption.label">{% raw %} {{ requestOption.label }} {% endraw %}</label>
+            <input :id="requestOption.label" class="form-control" type="text" v-model="requestOption.value"/>
+          </div>
+          <div v-else-if="requestOption.type === 'number'">
+            <label :for="requestOption.label">{% raw %} {{ requestOption.label }} {% endraw %}</label>
+            <input :id="requestOption.label" class="form-control" type="number" v-model="requestOption.value"/>
+          </div>
+          <div v-else-if="requestOption.type === 'date'">
+            <label :for="requestOption.label">{% raw %} {{ requestOption.label }} {% endraw %}</label>
+            <input :id="requestOption.label" class="form-control" type="date" v-model="requestOption.value"/>
+          </div>
+          <div v-else-if="requestOption.type === 'boolean'">
+            <div class="text-center" style="font-weight:700;"> {% raw %} {{ requestOption.label }} {% endraw %} </div>
+            <div class="text-center" style="margin-top: 12px;">
+              <switch-button :value="!!requestOption.value" @click="requestOption.value = !!!requestOption.value"></switch-button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <div class="col-xs-2">
+          <button type="button" class="btn btn-primary" v-on:click="makeRequest()">Lancer la requête</button>
+        </div>
+        <div class="col-xs-2" v-if="requestOptions[currentRequest].nextPage">
+          <button type="button" class="btn btn-primary" v-on:click="makeRequest('nextPage')">Page suivante</button>
+        </div>
+      </div>
+
+      <div class="row" v-show="lastResult || loading || requestError" style="margin-top:10px;">
+        <div class="col-xs-12">
+          <h3>Résultat de la requête</h3>
+          <pre v-if="lastResult"><code>{% raw %} {{ lastResult }} {% endraw %}</code></pre>
+          <pre v-else-if="loading"><code>Requête en cours...</code></pre>
+          <pre v-else-if="requestError" style="color: red;"><code>{% raw %} {{ requestError }} {% endraw %}</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+
+  {% include "../common/components/switch-button.nunjucks" %}
+  {% include "../common/components/_auto-complete/auto-complete.nunjucks" %}
+  {% include "../common/components/garages-list/garages-list.component.nunjucks" %}
+
+  <script type="text/javascript">
+    if (!gsTools) {
+      throw new Error('tools not found !');
+    }
+    Vue.prototype.$gsTools = gsTools;
+
+    const s4 = () => Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const r = () => charset.charAt(Math.floor(Math.random() * charset.length));
+    const r4 = () => `${r()}${r()}${r()}${r()}`;
+
+    const publicApiBaseUrl = '{{ publicApiBaseUrl }}';
+
+    document.addEventListener("DOMContentLoaded", function () {
+      new Vue({
+        el: '#app',
+        data: {
+          // URLs For API / Ajax Calls
+          fetchGaragesUrl: '{{ lib.client.url.getShortUrl("ADMIN_GARAGES_LIST_COMPONENT") }}',
+          appInfos: {{ appInfos | safe }},
+          publicApiBaseUrl,
+          apiKeys: [],
+          garages: {},
+          authorizations: {
+            appId: "",
+            appSecret: "",
+            fullData: false,
+            allGaragesAuthorized: false,
+            authorizedGarages: [],
+            allReviews: false,
+            withheldGarageData: false,
+            nonIndexedGarages: false,
+            garageTypesAuthorized: [],
+          },
+          currentRequest: '',
+          requestNames: [],
+          lastResult: '',
+          loading: false,
+          requestError: '',
+          requestOptions: {
+            /* Garages */
+            'Données de tous les garages': {
+              url: '/garages/data',
+              apiEndpoint: publicApiBaseUrl + '/garages/data/after/[garageID]?appId=[appId]&signature=[signature]',
+              params: [{
+                label: 'Après (garageId)',
+                type: 'text',
+                value: ''
+              }],
+              requestBuilder() {
+                let after = this.params[0].value.length ? '/after/' + this.params[0].value : '';
+                return this.url + after;
+              },
+              resultHandler(res) {
+                if (res.next && res.datas) {
+                  this.nextPage = '/' + res.next;
+                  return res.datas;
+                } else {
+                  this.nextPage = null;
+                  return res.datas || res;
+                }
+              }
+            },
+            "Recherche de garages": {
+              url: '/garage/searchwith/:criteria/:value',
+              apiEndpoint: publicApiBaseUrl + '/garage/searchwith/[critere]/[value]?appId=[appId]&signature=[signature]',
+              params: [
+                {
+                  label: 'Critère',
+                  type: 'text',
+                  value: ''
+                }, {
+                  label: 'Valeur',
+                  type: 'text',
+                  value: ''
+                }
+              ],
+              requestBuilder() {
+                return this.url
+                    .replace(':criteria', this.params[0].value)
+                    .replace(':value', this.params[1].value);
+              },
+              resultHandler(res) {
+                return res;
+              }
+            },
+            "Données d'un garage": {
+              url: '/garage/:garageId/data',
+              apiEndpoint: publicApiBaseUrl + '/garage/[garageID]/data?appId=[appId]&signature=[signature]',
+              params: [{
+                label: 'GarageId',
+                type: 'text',
+                value: ''
+              }],
+              requestBuilder() {
+                return this.url.replace(':garageId', this.params[0].value);
+              },
+              resultHandler(res) {
+                return res;
+              }
+            },
+            /* Reviews */
+            "Avis déposés sur un garage": {
+              url: '/garage/:garageId/reviews',
+              apiEndpoint: publicApiBaseUrl + '/garage/[garageID]/reviews?pLimit=[pLimit]&appId=[appId]&signature=[signature]',
+              params: [
+                {
+                  label: 'GarageId',
+                  type: 'text',
+                  value: ''
+                },{
+                  label: "Limite du nombre d'éléments par page",
+                  type: 'number',
+                  paramName: 'pLimit',
+                  value: 50
+                },{
+                  label: 'Numéro de page',
+                  type: 'number',
+                  paramName: 'pagina',
+                  value: 0
+                }
+              ],
+              requestBuilder() {
+                let res = this.url.replace(':garageId', this.params[0].value);
+                if (this.params.slice(1).filter(p => p.value > 0).length) {
+                  res += '?';
+                  res += this.params.slice(1)
+                      .filter(p => p.value > 0)
+                      .map(p => `${p.paramName}=${p.value}`)
+                      .join('&');
+                }
+                return res;
+              },
+              resultHandler(res) {
+                return res;
+              }
+            },
+            "Avis déposés à une date donnée": {
+              url: '/garage/reviews/:day/:month/:year',
+              apiEndpoint: publicApiBaseUrl + '/garage/reviews/[day]/[month]/[year]?dateField=[value]&appId=[appId]&signature=[signature]',
+              params: [{
+                label: "Date",
+                type: "date",
+                value: new Date().toISOString().split('T').shift()
+              },{
+                label: "Filtrer sur champ",
+                type: 'text',
+                paramName: 'dateField',
+                value: ''
+              },{
+                label: "Activer la pagination",
+                type: 'boolean',
+                paramName: "pagination",
+                value: 0
+              }],
+              requestBuilder() {
+                let res = this.url
+                    .replace(':year', this.params[0].value.split('-')[0])
+                    .replace(':month', this.params[0].value.split('-')[1])
+                    .replace(':day', this.params[0].value.split('-')[2]);
+
+                if (this.params.slice(1).filter(p => p.value).length) {
+                  res += '?';
+                  res += this.params.slice(1)
+                      .filter(p => p.value)
+                      .map(p => `${p.paramName}=${p.value}`)
+                      .join('&');
+                }
+                return res;
+              },
+              resultHandler(res) {
+                if (res.next && res.reviews) {
+                  this.nextPage = '/' + res.next;
+                  return res.reviews;
+                } else {
+                  this.nextPage = null;
+                  return res.reviews || res;
+                }
+              },
+              nextPage: null
+            },
+            /* Leads */
+            "Leads d'un garage": {
+              url: '/garage/:garageId/leads',
+              apiEndpoint: publicApiBaseUrl + '/garage/[garageID]/leads?pLimit=[pLimit]&appId=[appId]&signature=[signature]',
+              params: [
+                {
+                  label: 'GarageId',
+                  type: 'text',
+                  value: ''
+                },{
+                  label: "Limite du nombre d'éléments par page",
+                  type: 'number',
+                  paramName: 'pLimit',
+                  value: 50
+                },{
+                  label: 'Numéro de page',
+                  type: 'number',
+                  paramName: 'pagina',
+                  value: 0
+                }
+              ],
+              requestBuilder() {
+                let res = this.url.replace(':garageId', this.params[0].value);
+                if (this.params.slice(1).filter(p => p.value > 0).length) {
+                  res += '?';
+                  res += this.params.slice(1)
+                      .filter(p => p.value > 0)
+                      .map(p => `${p.paramName}=${p.value}`)
+                      .join('&');
+                }
+                return res;
+              },
+              resultHandler(res) {
+                return res;
+              }
+            },
+            "Leads rapportés à une date donnée": {
+              url: '/garage/leads/:day/:month/:year',
+              apiEndpoint: publicApiBaseUrl + '/garage/leads/[day]/[month]/[year]?appId=[appId]&signature=[signature]',
+              params: [{
+                label: "Date",
+                type: "date",
+                value: new Date().toISOString().split('T').shift()
+              },{
+                label: 'Type de vente du lead (APV, VN, VO)',
+                type: 'text',
+                paramName: 'leadSaleType',
+                value: ''
+              }, {
+                label: 'Source du lead (DataFile, Automation, CrossLeads...)',
+                type: 'text',
+                paramName: 'source',
+                value: ''
+              },{
+                label: "Activer la pagination",
+                type: 'boolean',
+                paramName: "pagination",
+                value: 0
+              }],
+              requestBuilder() {
+                let res = this.url
+                    .replace(':year', this.params[0].value.split('-')[0])
+                    .replace(':month', this.params[0].value.split('-')[1])
+                    .replace(':day', this.params[0].value.split('-')[2]);
+
+                if (this.params.slice(1).filter(p => p.value).length) {
+                  res += '?';
+                  res += this.params.slice(1)
+                      .filter(p => p.value)
+                      .map(p => `${p.paramName}=${p.value}`)
+                      .join('&');
+                }
+                return res;
+              },
+              resultHandler(res) {
+                if (res.next && res.leads) {
+                  this.nextPage = '/' + res.next;
+                  return res.leads;
+                } else {
+                  this.nextPage = null;
+                  return res.leads || res;
+                }
+              },
+              nextPage: null
+            },
+            'Contact render': {
+              url: '/renderContact/:id',
+              apiEndpoint: publicApiBaseUrl + '/renderContact/[id]?appId=[appId]&signature=[signature]',
+              params: [{
+                label: 'Contact Id',
+                type: 'text',
+                value: ''
+              }],
+              requestBuilder() {
+                let contactId = this.params[0].value || '';
+                return this.url.replace(':id', contactId);
+              },
+              resultHandler(res) {
+                return res;
+              }
+            },
+            'FTP Configuration': {
+              url: '/ftp/ftp2s3/conf',
+              apiEndpoint: publicApiBaseUrl + '/ftp/ftp2s3/conf?garageId=[garageId]&signature=[signature]&appId=[appId]',
+              params: [{
+                label: 'garageId',
+                type: 'text',
+                paramName: 'garageId',
+                value: ''
+              }],
+              requestBuilder() {
+                let res = this.url
+                if (this.params.filter(p => p.value).length) {
+                  res += '?';
+                  res += this.params
+                      .filter(p => p.value)
+                      .map(p => `${p.paramName}=${p.value}`)
+                      .join('&');
+                }
+                return res;
+              },
+              resultHandler(res) {
+                return res;
+              }
+            },
+            'FTP Garages': {
+              url: '/ftp/ftp2s3/garages',
+              apiEndpoint: publicApiBaseUrl + '/ftp/ftp2s3/garages?signature=[signature]&appId=[appId]',
+              params: [],
+              requestBuilder() {
+                return this.url;
+              },
+              resultHandler(res) {
+                return res;
+              }
+            }
+          }
+        },
+        created() {
+          this.apiKeys = Object.keys(this.appInfos);
+          this.requestNames = Object.keys(this.requestOptions);
+          this.loadAuthorizations(this.apiKeys[0]);
+          this.currentRequest = this.requestNames[0];
+          gsTools.getRequest(this.fetchGaragesUrl, {}, (errGarages, fetchedGarages) => {
+            if (errGarages) {
+              alert('Unable to retrieve Garages List :(\n' + errGarages);
+            } else {
+              fetchedGarages.forEach(garage => {
+                this.garages[garage.id] = garage;
+              });
+            }
+          });
+        },
+        methods: {
+          generateKeys() {
+            this.authorizations.appId = `${s4()}${s4()}${s4()}${s4()}${s4()}${s4()}${s4()}${s4()}`;
+            this.authorizations.appSecret = `${r4()}${r4()}${r4()}${r4()}${r4()}${r4()}${r4()}${r4()}`;
+          },
+          loadAuthorizations(event) {
+            let apiKey = typeof event === 'string' ? event : event.target.value;
+            if (this.appInfos[apiKey]) {
+              this.authorizations = Object.assign({}, this.appInfos[apiKey]);
+              this.authorizations.authorizedGarages = this.appInfos[apiKey].authorizedGarages || [];
+              this.authorizations.garageTypesAuthorized = this.appInfos[apiKey].garageTypesAuthorized || [];
+            }
+          },
+          makeRequest(nextPage = false) {
+            this.lastResult = '';
+            this.requestError = null;
+            this.loading = true;
+            const reqType = this.currentRequest;
+            let url;
+            if (nextPage && this.requestOptions[reqType].nextPage) {
+              url = this.requestOptions[reqType].nextPage;
+            } else {
+                url = this.requestOptions[reqType].requestBuilder();
+            }
+            const requestParams = {
+              appId:this.authorizations.appId,
+              appSecret: this.authorizations.appSecret,
+              method:'GET',
+              uri: url.split('?').shift(),
+              queryParams: url.split('?')[1] || ''
+            };
+            gsTools.postRequest('/backoffice/api/sign-api-request', requestParams, (err, res) => {
+              if (err) {
+                this.loading = false;
+                this.requestError = err;
+                return;
+              }
+              gsTools.getRequest(
+                res.url,
+                {},
+                (err1, res1) => {
+                this.loading = false;
+                if (err1) {
+                  console.error(err1.error || err1);
+                  this.requestError = err1.error || err1;
+                  return;
+                }
+                res1 = this.requestOptions[reqType].resultHandler(res1);
+                this.lastResult = JSON.stringify(res1, null, 4);
+              });
+            });
+          },
+        },
+      });
+    });
+  </script>
+
+{% endblock %}

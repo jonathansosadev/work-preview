@@ -1,0 +1,97 @@
+.garagescore-front-page-container {
+	margin-top: 20px;
+}
+
+.garagescore-front-page-banner {
+  margin-bottom: 0px;
+  margin-top: 0px;
+  /*height: 86px;  98px height of image, minus 6px top margin, minus 6px bottom margin */
+}
+
+.garagescore-front-page-banner {
+  background-color: rgb(89,89,89);
+  height: 65px;
+}
+
+.garagescore-front-page-banner-title {
+  text-align: center;
+  padding-top: 10px;
+  margin: auto;
+}
+
+.garagescore-front-page-banner-title span {
+    display: none;
+  }
+
+.garagescore-front-page-banner-left, .garagescore-front-page-banner-right {
+  position: absolute;
+  top: 10px;
+  font-size: 15px;
+  color: rgba(255,255,255,0.75);
+}
+
+.garagescore-front-page-banner-left{  
+  left: 10px;
+}
+.garagescore-front-page-banner-right {
+  right: 10px;
+  
+  text-align: right;
+}
+@media (max-width: 992px) {
+	.garagescore-front-page-container {
+		margin-top: 70px;
+	}
+  .garagescore-front-page-banner {
+    background: rgb(89,89,89);
+    height: 40px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 5;
+  }
+  .garagescore-front-page-banner-title span {
+    display: inline-block;
+    color: white;
+  }
+  .garagescore-front-page-banner-title img {
+    display: inline-block;
+    height: 20px;
+  }
+  .garagescore-front-page-banner-left, .garagescore-front-page-banner-right {
+    display: none;
+  }
+}
+
+@media (max-width: 360px) {
+  .garagescore-front-page-banner-title span {
+    font-size: 13px;
+  }
+  .garagescore-front-page-banner-title img {
+    width: 100px;
+  }
+}
+@media (max-width: 300px) {
+  .garagescore-front-page-banner-title span {
+    font-size: 12px;
+  }
+  .garagescore-front-page-banner-title img {
+    width: 80px;
+  }
+}
+
+.garagescore-front-page-banner-branding a {
+  width: 100%;
+}
+.garagescore-front-page-banner-branding img {
+  height: 30px;
+  margin-top: 12px;
+  margin-left: 5px;
+}
+@media (max-width: 1300px) and (min-width:992px) { 
+  .garagescore-front-page-banner-branding img {
+    height: 31px;
+  }
+  .garagescore-front-page-banner-title .garagescore-garage-name {
+  }
+}

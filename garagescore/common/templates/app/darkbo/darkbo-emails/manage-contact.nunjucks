@@ -1,0 +1,661 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+
+  <style type="text/css">
+    body {
+      background-color: #333;
+      color: white;
+      font-family: Quicksand, Helvetica, Arial, sans-serif;
+    }
+
+    #serarch-filter {
+      margin: 0 auto;
+      margin-bottom: 50px;
+      margin-top: 25px;
+      border-radius: 4px;
+      border: 1px solid #adc5cf;
+      padding: 40px 25px;
+      background-color: white;
+      color: #333;
+    }
+
+    input[type=text] {
+      padding: 5px 8px;
+    }
+
+    button, #sendemail {
+      display: inline-block;
+      padding: 6px 12px;
+      margin-bottom: 0;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.42857143;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      -ms-touch-action: manipulation;
+      touch-action: manipulation;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      background-image: none;
+      border: 1px solid grey;
+      border-radius: 4px;
+      background: white;
+      color: grey;
+    }
+
+    .btn {
+      cursor: pointer;
+    }
+
+    .formgroup {
+      margin-bottom: 15px;
+    }
+
+    #sendemail, #sendemail div, #sendemail input {
+      display: inline-block;
+    }
+
+    #sendemail {
+      padding: 2px 12px;
+    }
+   label {
+     padding-right: 5px;
+   }
+
+    iframe {
+      border: 0;
+      width: 100%;
+      margin: auto;
+      height: auto;
+      display: block;
+      background: none;
+      background: white;
+    }
+
+    #subjectFrame {
+      display: none;
+      background: white;
+      color: black;
+      text-align: left;
+      padding: 0 8px;
+      /*border: 1px solid grey;*/
+      width: 100%;
+      margin: auto;
+      /*border-top: 5px solid white;*/
+      border-bottom: 1px solid black;
+    }
+
+    .modal-mask {
+      position: fixed;
+      z-index: 9998;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, .5);
+      display: table;
+      transition: opacity .3s ease;
+    }
+
+    .modal-wrapper {
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .modal-container {
+      width: 300px;
+      margin: 0px auto;
+      padding: 20px 30px;
+      background-color: #fff;
+      border-radius: 2px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+      transition: all .3s ease;
+      font-family: Helvetica, Arial, sans-serif;
+    }
+
+    .modal-header h3 {
+      margin-top: 0;
+      color: #42b983;
+    }
+
+    .modal-body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .modal-default-button {
+      float: right;
+    }
+
+    .center-col {
+      text-align: center;
+    }
+
+    .modal-email .modal-body {
+      margin: 0;
+    }
+    .modal-email .modal-header {
+      padding: 0;
+      border: 0;
+    }
+    .modal-email .modal-container {
+      padding: 0;
+    }
+    .modal-email .row {
+      margin: 0;
+      padding-right: 6px;
+    }
+    body {
+      margin: 0 !important;
+    }
+    .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+      word-break: break-word;
+    }
+    td, th {
+      max-width: 200px;
+    }
+    /*
+     * the following styles are auto-applied to elements with
+     * v-transition="modal" when their visiblity is toggled
+     * by Vue.js.
+     *
+     * You can easily play with the modal transition by editing
+     * these styles.
+     */
+
+    .modal-enter, .modal-leave {
+      opacity: 0;
+    }
+
+    .modal-enter .modal-container,
+    .modal-leave .modal-container {
+      -webkit-transform: scale(1.1);
+      transform: scale(1.1);
+    }
+  </style>
+{% endblock %}
+
+{% block page %}
+
+  <div id="contact-manager">
+    <div class="overlay-loading" v-if="loading"><div class="centered-loading"></div></div>
+    <div class="page-header">
+      <h1>Gestion des contacts</h1>
+    </div>
+    <div class="container">
+      <p>
+         Ici vous trouverez les différents emails/sms envoyés pour les alertes, les rapports et les campaignes
+      </p>
+    </div>
+
+    <div class="container">
+      <form id="serarch-filter" class="form-inline" @submit.prevent="searchMails(true)">
+        <div class="row">
+          <div class="formgroup col-xs-6">
+            <label class="col-md-4" style="padding-left: 0;padding-top: 6px">Date min</label>
+            <div class="input-group col-md-8">
+              <input class="flatpickr form-control" v-model="selectedMinDate" type="text" placeholder="Choisir une date ...">
+              <div class="input-group-addon btn" @click="selectedMinDate = ''">X</div>
+            </div>
+          </div>
+          <div class="formgroup col-xs-6">
+            <label class="col-md-4" style="padding-left: 0;padding-top: 6px">Date max</label>
+            <div class="input-group col-md-8">
+              <input class="flatpickr form-control" v-model="selectedMaxDate" type="text" placeholder="Choisir une date ...">
+              <div class="input-group-addon btn" @click="selectedMaxDate = ''">X</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="formgroup col-xs-4">
+            <div class="form-group">
+              <label class="">E-mail ou mobile</label>
+              <input id="email-or-phone" autofocus type="text" name="email-or-phone-input"
+                       placeholder="Email ou téléphone ..." class="form-control" v-model="clientEmail">
+            </div>
+            <div class="formgroup col-xs-12"></div>
+            <div class="form-group">
+              <label class="">Type de contact </label>
+              <select class="form-control" v-model="selectedType">
+                <option value="" selected>Tous</option>
+                <option v-for="contactType in contactTypes" :value="contactType">
+                  {{ '{{' }} contactType {{ '}}' }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="formgroup col-xs-8 text-right">
+            <label class="col-xs-12 text-left">Status de contact</label>
+            <div class="col-xs-3 text-left" v-for="contactStatus in contactsStatus">
+              <input class="col-xs-1" type="checkbox" :value="contactStatus" v-model="selectedStatus">
+              <label class="col-xs-10" for="checkbox">{{ '{{' }} contactStatus {{ '}}' }}</label>
+            </div>
+          </div>
+        </div>
+        <div class="row" v-if="selectedType === 'ALERT_EMAIL'">
+          <div class="formgroup col-md-12">
+            <label class="col-md-6">Type d'alertes </label>
+            <div class="col-md-6">
+              <select class=" form-control" v-model="selectedAlertType">
+                <option value="" selected>choisir un type</option>
+                <option v-for="alertType in alertTypes" :value="alertType">
+                  {{ '{{' }} alertType {{ '}}' }}
+                </option>
+            </select>
+            </div>
+          </div>
+          <div class="formgroup col-md-12">
+            <label class="col-md-12">Garage</label>
+            <div class="col-md-12">
+              <gs-garages-list :updated="setSelectedGarage" ></gs-garages-list>
+              <div class="col-md-12" v-if="selectedGarage" style="color: black">
+                Garage sélectionné: {{ '{{' }} selectedGarage.publicDisplayName {{ '}}' }}
+                <span class="btn" @click="unsetSelectedGarage()">X</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" v-if="selectedType === 'CAMPAIGN_EMAIL' || selectedType === 'CAMPAIGN_SMS'">
+          <div class="formgroup col-md-12">
+            <label class="col-md-12">Garage</label>
+            <div class="col-md-12">
+              <gs-garages-list :updated="setSelectedGarage" ></gs-garages-list>
+            </div>
+            <div class="col-md-12" v-if="selectedGarage" style="color: black">
+              Garage sélectionné: {{ '{{' }} selectedGarage.publicDisplayName {{ '}}' }}
+              <span class="btn" @click="unsetSelectedGarage()">X</span>
+            </div>
+          </div>
+        </div>
+        <div class="row" v-if="selectedType === 'CAMPAIGN_EMAIL' || selectedType === 'CAMPAIGN_SMS'">
+          <div class="formgroup col-xs-1">
+            <label>Contacts</label>
+          </div>
+          <div class="formgroup col-xs-11">
+            <div class="col-xs-6 text-left" v-for="contactConfig in filterContactsConfigs(selectedType)">
+              <input class="inline" type="checkbox" :value="contactConfig.key" v-model="selectedKeys" :id="contactConfig.key">
+              <label class="inline" :for="contactConfig.key"> - {{ '{{' }} contactConfig.name {{ '}}' }}</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-8"></div>
+          <div class="formgroup col-xs-4 text-right">
+            <button type="submit" id="show">Rechercher</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="container center-col" v-if="errorMsg">
+      {{ '{{' }} errorMsg {{ '}}' }}
+    </div>
+    <div class="container" style="margin: 0; width: 100%;">
+      <div class="row">
+        Total des contacts : {{ '{{' }} total {{ '}}' }}
+      </div>
+      <div class="row">
+        <table class="table" style="max-width: 100%">
+          <thead>
+          <tr>
+            <th>Date de création</th>
+            <th>ContactId / DataId / GarageId</th>
+              <th>Expéditeur</th>
+            <th>Destinataire</th>
+            <th>I</th>
+            <th>Type</th>
+            <th>Statut</th>
+            <th>Date d'envoi</th>
+            <th>Events</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="contact in currentContacts">
+            <td>{{ '{{' }} contact.createdAt | dateFormat {{ '}}' }}</td>
+            <td>{{ '{{' }} contact.id {{ '}}' }} / {{ '{{' }} contact.payload && contact.payload.dataId {{ '}}' }} / {{ '{{' }} contact.payload && contact.payload.garageId {{ '}}' }}</td>
+              <td>
+                  {{ '{{ ' }} contact.sender {{ '}}' }}
+              </td>
+            <td>
+              {{ '{{' }} contact.to {{ '}}' }} <span v-if="contact.recipient">( {{ '{{' }} contact.recipient {{ '}}' }} )</span><br>
+              <span v-if="contact.overrideTo">redirigé vers({{ '{{' }} contact.overrideTo{{ '}}' }})</span>
+            </td>
+            <td>
+              <contact-info :contact="contact" :contact-config="contactsConfigs[contact.payload.key]"></contact-info>
+            </td>
+            <td>
+              <div>{{ '{{' }} contact.type {{ '}}' }}</div>
+              <div v-if="contact.payload.key" style="font-size:10px">{{ '{{' }} contact.payload.key {{ '}}' }}</div>
+            </td>
+            <td>{{ '{{' }} contact.status {{ '}}' }}
+              <div><button @click="resend(contact.id, contact.type)">Réenvoyer</button></div>
+              <div v-if="!isEmail(contact.to)"><button  @click="resendSms(contact.id)">Réenvoyer SMS</button></div>
+              <div><span v-if="contact.failureDescription">({{ '{{' }} contact.failureDescription {{ '}}' }})</span></div>
+            </td>
+            <td><span v-if="contact.sendDate">{{ '{{' }} contact.sendDate | dateFormat {{ '}}' }}</span></td>
+            <td>
+              <button @click="viewContact(contact)">Voir</button>
+              <button @click="viewContact(contact,'text')">Voir Text</button>
+              <button @click="showEmailEvents(contact.id)">Events</button>
+            </td>
+          </tr>
+          <tr v-if="currentContacts.length === 0">
+            <td colspan="6" class="container-fluid no-result-msg">
+              Aucun résultat, veuillez modifier votre recherche.
+            </td>
+          </tr>
+          {% set PaginationRowSpan = 6 %}
+          {% set PaginationDisableStyle = true %}
+          {% include "../common/components/_pagination.nunjucks" %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <modal :show.boolean="showModal" :modal-width="350" :close-modal="closeModal">
+      <h3 slot="header">Evenements</h3>
+      <div slot="body" style="height: 300px;overflow: auto">
+        <table class="table" style="color: black" v-if="currentEvents.length > 0">
+          <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Date</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="event in currentEvents">
+            <td>{{ '{{' }} event.name {{ '}}' }}</td>
+            <td>{{ '{{' }} event.date | dateFormat {{ '}}' }}</td>
+          </tr>
+          </tbody>
+        </table>
+        <p v-if="currentEvents.length === 0" style="text-align: center;color: black">pas d'événements</p>
+      </div>
+    </modal>
+    <modal :show.boolean="showModalContent" :close-modal="closeModalContent" :modal-width="900" class="modal-email">
+      {#<h3 slot="header">Contenu du contact</h3>#}
+      <div slot="body">
+        <div id="subjectFrame"><b>Sujet : </b><span id="emailSubject"></span></div>
+        <iframe id="emailFrame" style="height: 550px;"></iframe>
+      </div>
+    </modal>
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+    {% include "../common/components/_vue-modal.nunjucks" %}
+    {% include "../common/components/_auto-complete/auto-complete.nunjucks" %}
+    {% include "../common/components/contact-info-block.nunjucks" %}
+    {% include "../common/components/garages-list/garages-list.component.nunjucks" %}
+    {% include "../common/components/_search_contacted_contacts.nunjucks" %}
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script type="text/javascript">
+
+    function escapeHtml(unsafe) {
+      if(!unsafe) return;
+      return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+    var contactTypes = {{ contactTypes|safe }};
+    var contactsConfigs = {{ contactsConfigs|safe }};
+    var alertTypes = {{ alertTypes|safe }};
+    var contactsStatus = {{ contactsStatus|safe }};
+
+    function FormatNumberLength(num, length) {
+      var r = "" + num;
+      while (r.length < length) {
+        r = "0" + r;
+      }
+      return r;
+    }
+    Vue.filter('dateFormat', function (value) {
+      var date = new Date(value);
+      var day = date.getDate();
+      var monthIndex = date.getMonth();
+      var year = date.getFullYear();
+      var hours = date.getHours();
+      var minutes = date.getMinutes();
+      var seconds = date.getSeconds();
+
+      return FormatNumberLength(day, 2) + '/' + FormatNumberLength(monthIndex + 1, 2) + '/' + year + ' '
+        + FormatNumberLength(hours, 2) + ':' + FormatNumberLength(minutes, 2) + ':' + FormatNumberLength(seconds, 2);
+    });
+
+    var v = new Vue({
+      el: '#contact-manager',
+      data: {
+        contactTypes: contactTypes,
+        contactsConfigs: contactsConfigs,
+        contactsStatus: contactsStatus,
+        alertTypes: alertTypes,
+        selectedGarage: null,
+        selectedAlertType: null,
+        selectedType: '',
+        selectedStatus: [],
+        selectedKeys: [],
+        selectedMaxDate: '',
+        selectedMinDate: '',
+        clientEmail: "",
+        currentPage: 1,
+        pageCount: 1,
+        total: 0,
+        pageSize: 10,
+        currentContacts: [],
+        currentCampaignItems: [],
+        currentEvents: [],
+        errorMsg: "",
+        showModal: false,
+        showModalContent: false,
+        loading: false,
+        recipient: ''
+      },
+      mounted: function () {
+        flatpickr('.flatpickr', {
+          enableTime: true,
+          time_24hr: true,
+          dateFormat: 'd-m-Y H:i',
+          altFormat: 'd-m-Y H:i'
+        });
+      },
+      methods: {
+        filterContactsConfigs: function (contactType) {
+          return Array.from(contactsConfigs.toArray).filter(conf => {
+            if (contactType === 'CAMPAIGN_EMAIL') return conf.channel === 'email';
+            if (contactType === 'CAMPAIGN_SMS') return conf.channel === 'sms';
+          });
+        },
+        getConf: function(contact) {
+          if (!contact.payload || !contact.payload.key) return null;
+          return this.contactsConfigs[contact.payload.key];
+        },
+        closeModal: function () {
+          this.showModal = false;
+        },
+        closeModalContent: function () {
+          this.showModalContent = false;
+        },
+        getPublicUrl(token){
+          return '{{ base_url }}/report/' + token;
+        },
+        setSelectedGarage: function (garage) {
+          this.selectedGarage = garage;
+        },
+        unsetSelectedGarage: function (garage) {
+          this.selectedGarage = null;
+        },
+        viewContact: function (contact, type) {
+          var request = new XMLHttpRequest();
+          var url = '{{ lib.client.url.getShortUrl('ADMIN_CONTACT_RENDERER') }}' + contact.id;
+          request.open('GET', url, true);
+          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          request.send();
+          this.loading = true;
+          request.onload = function () {
+            this.loading = false;
+            if (request.status !== 200 && request.status !== 304) {
+              this.errorMsg = "Erreur sur le serveur";
+            } else {
+              var res = JSON.parse(request.responseText);
+              this.showContent(res, type);
+              this.showModalContent = true;
+            }
+          }.bind(this);
+        },
+        showContent: function (content, type) {
+          if (!type) {
+            type = 'html'
+          }
+          var iframeEle = document.getElementById("emailFrame");
+          var iframeDoc = iframeEle.contentWindow.document;
+          iframeDoc.open();
+          if(type === 'html'){
+            iframeDoc.write(content.body || content.htmlBody);
+          } else {
+            iframeDoc.write(content.body || content.textBody.replace(/\n/g, "<br />"));
+          }
+          iframeDoc.close();
+          document.getElementById("emailSubject").innerHTML = escapeHtml(content.subject);
+          document.getElementById("subjectFrame").style.display = content.subject ? 'block' : 'none';
+        },
+        nextPage: function () {
+         this.currentPage = this.currentPage + 1;
+          this.searchMails();
+        },
+        goPage: function (num) {
+         this.currentPage = num;
+          this.searchMails();
+        },
+        forwardPage: function () {
+          this.currentPage = this.currentPage - 1;
+          this.searchMails();
+        },
+        searchMails: function (init, resend = null) {
+          this.errorMsg = '';
+          this.showContent({htmlBody: "", subject: ""});
+          if (init) {
+            this.currentPage = 1;
+          }
+          var filter = {
+            limit: this.pageSize,
+            skip: this.pageSize * (this.currentPage - 1),
+            order: "createdAt DESC",
+            where: {}
+          };
+          if (this.selectedType) {
+            filter.where.type = this.selectedType ;
+          }
+          if (this.selectedStatus.length > 0) {
+            filter.where.status = { inq: this.selectedStatus };
+          }
+          if (this.selectedKeys.length > 0) {
+            filter.where['payload.key'] = { inq: this.selectedKeys };
+          }
+          if (this.selectedMaxDate) {
+            filter.maxDate = this.selectedMaxDate;
+          }
+          if (this.selectedMinDate) {
+            filter.minDate = this.selectedMinDate;
+          }
+          if ((this.selectedType === 'CAMPAIGN_EMAIL' || this.selectedType === 'CAMPAIGN_SMS' || this.selectedType === 'ALERT_EMAIL') && this.selectedGarage) {
+            filter.where["payload.garageId"] = this.selectedGarage.id;
+          }
+          if (this.selectedType === 'ALERT_EMAIL' && this.selectedAlertType) {
+            filter.where["payload.alertType"] = this.selectedAlertType;
+          }
+          if (this.clientEmail) {
+            filter.where.to = this.clientEmail.trim();
+          }
+          var request = new XMLHttpRequest();
+          var url = '{{ lib.client.url.getShortUrl('ADMIN_CONTACT_LIST') }}?filter=' + encodeURIComponent(JSON.stringify(filter));
+          if(resend) {
+            url += `&resend=${resend.id}~${resend.type}`;
+          }
+          request.open('GET', url, true);
+          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          request.send();
+          this.loading = true;
+          request.onload = function () {
+            this.loading = false;
+            if (request.status !== 200 && request.status !== 304) {
+              this.errorMsg = "Erreur sur le serveur";
+            } else {
+              var res = JSON.parse(request.responseText);
+              if (!res) {
+                this.errorMsg = 'Erreur serveur';
+                this.currentContacts = 0;
+              } else {
+                this.currentContacts = res.contacts;
+                this.pageSize = res.limit;
+                this.total = res.total;
+                this.currentPage = (res.skip / res.limit) + 1;
+                this.pageCount = Math.floor(res.total / res.limit) + ((res.total % res.limit === 0) ? 0 : 1);
+              }
+            }
+          }.bind(this);
+        },
+        resend: function (id, type) {
+          this.searchMails(false, { id, type });
+        },
+        resendSms: async function (id) {
+          try {
+            const smsFactor = prompt(`Get smsFactor from Heroku:\nSMSFACTOR_API_USERNAME\nSMSFACTOR_API_PASSWORD\nSMSFACTOR_API_HOST\nand write like this: username:password@host`);
+            const [sfhost] = smsFactor.match(/http:(.)*/);
+            const [sfusername] = smsFactor.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/);
+            const [sfpassword] = smsFactor.match(/[\w]{8,}(?=@)/);
+            if (sfusername && sfpassword && sfhost) {
+              const res = await axios.post('{{ lib.client.url.getUrl('ADMIN_CONTACT_RE_SEND_SMS') }}', {
+                contactId: id,
+                sfusername,
+                sfpassword,
+                sfhost
+              });
+            } else {
+              alert("Please provide valid smsFactor config in this format user:password@host")
+            }
+          } catch(err) {
+            // do nothing 
+          }
+        },
+        showEmailEvents: function (contactId) {
+          this.currentEvents = [];
+          if (!contactId) {
+            this.currentEvents = [];
+            return;
+          }
+          var url = '/api/contact/' + contactId + '/emitted-events';
+          var request = new XMLHttpRequest();
+          request.open('GET', url, true);
+          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          request.send();
+          this.loading = true;
+          request.onload = function () {
+            this.loading = false;
+            if (request.status !== 200 && request.status !== 304) {
+              this.errorMsg = "Erreur sur le serveur";
+            } else {
+              var res = JSON.parse(request.responseText);
+              this.currentEvents = res;
+              this.showModal = true;
+              if (!res.isValid) {
+                this.errorMsg = res.validationDetails;
+              }
+            }
+          }.bind(this);
+        },
+        isEmail(email) {
+          return /@/.test(email)
+        }
+      }
+    });
+    v.searchMails();
+  </script>
+{% endblock %}

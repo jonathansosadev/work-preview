@@ -1,0 +1,149 @@
+{% extends "./_2cols-layout.nunjucks" %}
+{% block title %}
+Filtres header Cockpit inter-dépendants
+{% endblock %}
+{% block style %}
+<style>
+  label,
+  select,
+  input,
+  button {
+    width: 300px;
+    display: block;
+    margin: auto;
+    font-size: 18px;
+  }
+
+  label {
+    text-align: center;
+    font-weight: bold;
+  }
+
+  select {
+    margin-bottom: 10px;
+  }
+
+  button {
+    margin-top: 20px;
+    font-weight: bolder;
+    background: grey;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  form {
+    max-width: 350px;
+    padding-bottom: 10px;
+    display: block;
+    margin: auto;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+
+  #queryTime {
+    text-align: right;
+  }
+</style>
+{% endblock %}
+
+{% block intro %}
+<b>Choisir un filtre pour changer la liste des autres filres</b>
+
+<p>Dans cette expérience, nous consolidons toutes les combinaisons possibles de filtres dans une nouvelle collection <q>CockpitTopFilter</q>.</p>
+<p>Mis à part la période, nous avons rendu tous les autres filtres interdépendant.</p>
+<p>A noter, que nous nous sommes mis sciemment dans les plus mauvaises conditions
+  puisque en rendant l'utilisateur DMS et les managers des tickets interdépendants, la combinatoire augmente.</p>
+<p>L'implémentation finale pourra briser ces combinaisons userDMS/managerTicket, qui n'existeront pas, à priori, sur Cockpit et ce qui nous amènerait à collection environ 2x plus légère.</p>
+<p>La collection actuelle pour des combinaisons de filtres issues de 5.8 millions de datas pèse à peine 6Mo.</p>
+<p>Le réseau est donc responsable de la majorité du coût en temps de traitement.</p>
+<p>Un unique index clé/valeur est utilisé.</p>
+
+<b>Homonymes</b>
+<p>Certains noms, par exemple `CYRIL` apparaissent sur plusieurs établissements, le prototype élude la question mais au niveau produit,
+  le choix d'un collaborateur devra certainement forcer par corrélation le choix d'un établissement.</p>
+{% endblock %}
+  {% block content %}
+  <form>
+      <div>
+        <label>Type d'Établissement <span id="garageTypeCount" /> </label>
+        <select name="garageType" id="garageType" onchange="this.form.submit()">
+            <option value=""></option>
+        </select>
+      </div>
+      <div>
+        <label>Établissement <span id="garageIdCount" /> </label>
+        <select name="garageId" id="garageId" onchange="this.form.submit()">
+            <option value=""></option>
+        </select>
+      </div>
+    <div>
+      <label>Métier <span id="typeCount" /> </label>
+      <select name="type" id="type" onchange="this.form.submit()">
+          <option value=""></option>
+      </select>
+    </div>
+    <div>
+      <label>Source <span id="sourceCount" /> </label>
+      <select name="source" id="source" onchange="this.form.submit()">
+          <option value=""></option>
+      </select>
+    </div>
+    <div>
+      <label>Collaborateur DMS <span id="frontDeskUserNameCount" /> </label>
+      <select name="frontDeskUserName" id="frontDeskUserName" onchange="this.form.submit()">
+          <option value=""></option>
+      </select>
+    </div>
+    <div>
+      <label>Collaborateur ticket lead <span id="leadTicketManagerCount" /> </label>
+      <select name="leadTicketManager" id="leadTicketManager" onchange="this.form.submit()">
+          <option value=""></option>
+      </select>
+    </div>
+    <div>
+      <label>Collaborateur ticket mécontent <span id="unsatisfiedTicketManagerCount" /> </label>
+      <select name="unsatisfiedTicketManager" id="unsatisfiedTicketManager" onchange="this.form.submit()">
+          <option value=""></option>
+      </select>
+    </div>
+  </form>
+  <hr>
+  <div id="queryTime"></div>
+
+  {% endblock %}
+  {% block script %}
+  <script>
+    const filters = {{ filters | safe  }};
+    const query = {{ query | safe  }};
+    const queryTime = {{ queryTime }};
+    const godMode = '{{ godMode }} - {{email}}';
+    const queryTimeContainer = document.getElementById("queryTime");
+    queryTimeContainer.innerHTML = `godMode: ${godMode} - queryTime: ${queryTime}ms`;
+
+    const garageTypes = document.getElementById("garageType");
+    const garageIds = document.getElementById("garageId");
+    const types = document.getElementById("type");
+    const sources = document.getElementById("source");
+    const frontDeskUserNames = document.getElementById("frontDeskUserName");
+    const leadTicketManagers = document.getElementById("leadTicketManager");
+    const unsatisfiedTicketManagers = document.getElementById("unsatisfiedTicketManager");
+
+    filters.garageType.forEach(o => { garageTypes.options.add(new Option(o, o, false, query.garageType === o)); });
+    filters.garageId.forEach(o => { garageIds.options.add(new Option(o, o, false, query.garageId === o)); });
+    filters.type.forEach(o => { types.options.add(new Option(o, o, false, query.type === o)); });
+    filters.source.forEach(o => { sources.options.add(new Option(o, o, false, query.source === o)); });
+    filters.frontDeskUserName.forEach(o => { frontDeskUserName.options.add(new Option(o, o, false, query.frontDeskUserName === o)); });
+    filters.leadTicketManager.forEach(o => { leadTicketManagers.options.add(new Option(o, o, false, query.leadTicketManager === o)); });
+    filters.unsatisfiedTicketManager.forEach(o => { unsatisfiedTicketManagers.options.add(new Option(o, o, false, query.unsatisfiedTicketManager === o)); });
+
+    document.getElementById("garageTypeCount").innerHTML = ` (${filters.garageType.length})`;
+    document.getElementById("garageIdCount").innerHTML = ` (${filters.garageId.length})`;
+    document.getElementById("typeCount").innerHTML = ` (${filters.type.length})`;
+    document.getElementById("sourceCount").innerHTML = ` (${filters.source.length})`;
+    document.getElementById("frontDeskUserNameCount").innerHTML = ` (${filters.frontDeskUserName.length})`;
+    document.getElementById("leadTicketManagerCount").innerHTML = ` (${filters.leadTicketManager.length})`;
+    document.getElementById("unsatisfiedTicketManagerCount").innerHTML = ` (${filters.unsatisfiedTicketManager.length})`;
+    
+  </script>
+  {% endblock %}

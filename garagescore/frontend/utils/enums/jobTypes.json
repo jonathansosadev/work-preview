@@ -1,0 +1,158 @@
+{
+  "TEST_RATING_UPDATED": {
+    "value": "TEST_RATING_UPDATED",
+    "properties": {
+      "comment": "test job"
+    }
+  },
+  "SEND_CONTACT_HIGH_PRIORITY": {
+    "value": "SEND_CONTACT_HIGH_PRIORITY",
+    "properties": {
+      "comment": "Sending contacts with a high priority"
+    }
+  },
+  "SEND_CONTACT_MEDIUM_PRIORITY": {
+    "value": "SEND_CONTACT_MEDIUM_PRIORITY",
+    "properties": {
+      "comment": "Sending contacts with a medium priority"
+    }
+  },
+  "SEND_CONTACT_LOW_PRIORITY": {
+    "value": "SEND_CONTACT_LOW_PRIORITY",
+    "properties": {
+      "comment": "Sending contacts with a low priority"
+    }
+  },
+  "SEND_AUTOMATIC_REPLY": {
+    "value": "SEND_AUTOMATIC_REPLY",
+    "properties": {
+      "comment": "Replies to a review, automatically"
+    }
+  },
+  "CLOSE_EXPIRED_UNSATISFIED_TICKET": {
+    "value": "CLOSE_EXPIRED_UNSATISFIED_TICKET",
+    "properties": {
+      "comment": "auto close ticket after x days"
+    }
+  },
+  "CLOSE_EXPIRED_LEAD_TICKET": {
+    "value": "CLOSE_EXPIRED_LEAD_TICKET",
+    "properties": {
+      "comment": "auto close ticket after x days"
+    }
+  },
+  "SEND_UNSATISFIED_FOLLOWUP": {
+    "value": "SEND_UNSATISFIED_FOLLOWUP",
+    "properties": {
+      "comment": "send a unsatisfied followup survey"
+    }
+  },
+  "POSSIBLE_SUCCESS_ALERT": {
+    "value": "POSSIBLE_SUCCESS_ALERT",
+    "properties": {
+      "comment": "lead/unsatisfied success alerts"
+    }
+  },
+  "SEND_LEAD_FOLLOWUP": {
+    "value": "SEND_LEAD_FOLLOWUP",
+    "properties": {
+      "comment": "send a lead followup survey"
+    }
+  },
+  "ESCALATE": {
+    "value": "ESCALATE",
+    "properties": {
+      "comment": "escalation on lead/unsatisfied untreated"
+    }
+  },
+  "UPDATE_UNSATISFIED_DELAY_STATUS": {
+    "value": "UPDATE_UNSATISFIED_DELAY_STATUS",
+    "properties": {
+      "comment": "update the delay status (elapse time of a unsatisfied ticket)"
+    }
+  },
+  "CROSS_LEADS_INCOMING_CALL": {
+    "value": "CROSS_LEADS_INCOMING_CALL",
+    "properties": {
+      "comment": "generate cross lead data from phone or email parsed"
+    }
+  },
+  "CROSS_LEADS_INCOMING_EMAIL": {
+    "value": "CROSS_LEADS_INCOMING_EMAIL",
+    "properties": {
+      "comment": "Parse incoming email and create a lead ticket"
+    }
+  },
+  "CROSS_LEADS_SEND_SELF_ASSIGN_REMINDER": {
+    "value": "CROSS_LEADS_SEND_SELF_ASSIGN_REMINDER",
+    "properties": {
+      "comment": "Send self assign reminder if ticket is still untouched"
+    }
+  },
+  "AUTOMATION_ADD_DATAS_TO_CUSTOMER": {
+    "value": "AUTOMATION_ADD_DATAS_TO_CUSTOMER",
+    "properties": {
+      "comment": "Associate the data to a customer"
+    }
+  },
+  "AUTOMATION_CREATE_TICKET": {
+    "value": "AUTOMATION_CREATE_TICKET",
+    "properties": {
+      "comment": "create lead ticket for a customer"
+    }
+  },
+  "AUTOMATION_RESET_PRESSURE": {
+    "value": "AUTOMATION_RESET_PRESSURE",
+    "properties": {
+      "comment": "Reset the pressure of a customer for a designated type"
+    }
+  },
+  "AUTOMATION_SEND_CONTACT_TO_CUSTOMER": {
+    "value": "AUTOMATION_SEND_CONTACT_TO_CUSTOMER",
+    "properties": {
+      "comment": "send the ad to a customer"
+    }
+  },
+  "AUTOMATION_CHECK_CONTACT_MODIFICATION": {
+    "value": "AUTOMATION_CHECK_CONTACT_MODIFICATION",
+    "properties": {
+      "comment": "Check if the contact information has been modified through the survey. If yes, then the data needs to be computed through AUTOMATION_ADD_DATAS_TO_CUSTOMER"
+    }
+  },
+  "AUTOMATION_CONSOLIDATE_CUSTOMER": {
+    "value": "AUTOMATION_CONSOLIDATE_CUSTOMER",
+    "properties": {
+      "comment": "Consolidate customer"
+    }
+  },
+  "SHORT_URL_REFRESH": {
+    "value": "SHORT_URL_REFRESH",
+    "properties": {
+      "comment": "a job-cron who resets short urls everyday"
+    }
+  },
+  "MAILGUN_EVENT": {
+    "value": "MAILGUN_EVENT",
+    "properties": {
+      "comment": "A mailgun event received in our webhook to process"
+    }
+  },
+  "START_EXPORT": {
+    "value": "START_EXPORT",
+    "properties": {
+      "comment": "An export triggered by a click in cockpit"
+    }
+  },
+  "CLEAN_EXPORT": {
+    "value": "CLEAN_EXPORT",
+    "properties": {
+      "comment": "Destroy an export file from S3"
+    }
+  },
+  "EXTERNAL_API": {
+    "value": "EXTERNAL_API",
+    "properties": {
+      "comment": "Send a lead to external API"
+    }
+  }
+}

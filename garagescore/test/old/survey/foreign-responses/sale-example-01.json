@@ -1,0 +1,138 @@
+[
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "2",
+      "dataType" : "NewVehicleSale",
+      "title" : "Monsieur",
+      "fullName" : "Benjamin Thomas",
+      "email" : "oabida@garagescore.com",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "isComplete" : false,
+      "pageNumber" : 0,
+      "pageCount" : 4,
+      "timestamp" : 1518892802362.0
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "2",
+      "dataType" : "NewVehicleSale",
+      "title" : "Monsieur",
+      "fullName" : "Benjamin Thomas",
+      "email" : "oabida@garagescore.com",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "unsatisfiedCriteriaNewVehicleSale" : [
+        "SaleNew3",
+        "SaleNew4"
+      ],
+      "comment" : "Je suis un autre commentaire",
+      "acceptTermOfUse" : true,
+      "isComplete" : false,
+      "pageNumber" : 1,
+      "pageCount" : 4,
+      "timestamp" : 1518892825228.0
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "2",
+      "dataType" : "NewVehicleSale",
+      "title" : "Monsieur",
+      "fullName" : "Benjamin Thomas",
+      "email" : "oabida@garagescore.com",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "unsatisfiedCriteriaNewVehicleSale" : [
+        "SaleNew3",
+        "SaleNew4"
+      ],
+      "comment" : "Je suis un autre commentaire",
+      "acceptTermOfUse" : true,
+      "unsatisfiedCriteria4" : [
+        "Sale14",
+        "Sale15"
+      ],
+      "unsatisfiedCriteria5" : [
+        "Sale18",
+        "Sale20"
+      ],
+      "isComplete" : false,
+      "pageNumber" : 2,
+      "pageCount" : 4,
+      "timestamp" : 1518892833545.0
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "2",
+      "dataType" : "NewVehicleSale",
+      "title" : "Monsieur",
+      "fullName" : "Benjamin Thomas",
+      "email" : "oabida@garagescore.com",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "unsatisfiedCriteriaNewVehicleSale" : [
+        "SaleNew3",
+        "SaleNew4"
+      ],
+      "comment" : "Je suis un autre commentaire",
+      "acceptTermOfUse" : true,
+      "unsatisfiedCriteria4" : [
+        "Sale14",
+        "Sale15"
+      ],
+      "unsatisfiedCriteria5" : [
+        "Sale18",
+        "Sale20"
+      ],
+      "serviceMiddleMans" : [
+        "factoryWebsite",
+        "lacentraleWebsite"
+      ],
+      "customerShareWithGarage" : [
+        "J'accepte d'être averti uniquement par mon établissement des prochaines échéances 'd'entretien et d'offres commerciales"
+      ],
+      "isComplete" : false,
+      "pageNumber" : 3,
+      "pageCount" : 4,
+      "timestamp" : 1518892843228.0
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "2",
+      "title" : "Monsieur",
+      "fullName" : "Benjamin Thomas",
+      "email" : "oabida@garagescore.com",
+      "mobilePhone" : "+33 6 25 03 33 00",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "comment" : "Je suis un autre commentaire",
+      "acceptTermOfUse" : true,
+      "serviceMiddleMans" : [
+        "factoryWebsite",
+        "lacentraleWebsite"
+      ],
+      "customerShareWithGarage" : [
+        "J'accepte d'être averti uniquement par mon établissement des prochaines échéances 'd'entretien et d'offres commerciales"
+      ],
+      "shareWithPartners" : "Oui",
+      "isComplete" : true,
+      "pageNumber" : 2,
+      "pageCount" : 4,
+      "timestamp" : 1518892846706.0
+    }
+  }
+]

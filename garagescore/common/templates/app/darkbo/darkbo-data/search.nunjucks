@@ -1,0 +1,33 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+<style>
+button {
+    color: black;
+	margin-left: 10px; 
+}
+.searchbox {
+  padding: 15px 10px;
+  background: #3c3939;
+  margin-bottom: 20px;
+}
+</style>
+{% endblock %}
+{% block page %}<div class="container">
+	<h1> Chercher un client final par son data Id</h1>
+	<hr/>
+	<div class="col-md-12 searchbox">
+		<input value="" id="dataId" size="40" type="text" placeholder="dataId (24 chiffres)"/>
+		<button onClick="search()">Chercher</button>
+	</div>
+	<div class="col-md-12">Exemple: 5a9267f9bc98970003405c68</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+	// display data id info
+	function search() {
+		var id = document.getElementById('dataId').value;
+		if (id.length === 24) { document.location = "{{ lib.client.url.getShortUrl('ADMIN_DATA_DISPLAY_ROOT') }}" + id; }
+	}
+</script>
+{% endblock %}

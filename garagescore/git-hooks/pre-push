@@ -1,0 +1,30 @@
+#!/bin/sh
+# To use this hook, store this file in .git/hooks
+# This hook is called with the following parameters:
+#
+# $1 -- Name of the remote to which the push is being done
+# $2 -- URL to which the push is being done
+#
+# If pushing without using a named remote those arguments will be equal.
+#
+# Make some checks before pushing to Heroku
+
+remote="$1"
+url="$2"
+
+if [ "$url" = "https://git.heroku.com/garagescore.git" ]
+ then
+  echo "Pushing to Heroku, we run some tests before... (use --no-verify to ignore them)"
+  # doesnt work on windows TZ=Europe/Paris date "+%H:%M"
+  h=`date "+%H"`
+  m=`date "+%M"`
+  d=$((${h//0/}*60+${m//0/}))
+  if [[ ($d -gt $((12*60))) && ($d -lt $((13*60+30))) ]]
+   then
+     echo 'Push is forbidden during campaigns run'
+     exit 1
+  fi
+fi
+
+exit 0 
+

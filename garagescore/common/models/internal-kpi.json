@@ -1,0 +1,29 @@
+{
+  "name": "InternalKPI",
+  "plural": "InternalKPIs",
+  "base": "PersistedModel",
+  "http": {
+    "path": "internalkpis"
+  },
+  "mongodb": {
+    "collection": "internalkpis"
+  },
+  "options": {
+  },
+  "mixins": {
+  },
+  "indexes": {
+  },
+  "properties": {
+    "name": {  "type": "String", "required": true, "id": true },
+    "maintainer": {  "type": "String" },
+    "valuesPerPeriod": { "type": "Object" }
+  },
+  "validations": [],
+  "relations": {
+  },
+  "acls": [
+  ],
+  "methods": {
+  }
+}

@@ -1,0 +1,382 @@
+<script type="text/javascript">
+	// 'pre-made' dms configurations
+	/* eslint-disable */
+	var PRECONFS = { dms: {} };
+	var dms = PRECONFS.dms;
+	dms["DataFirst"] = {
+			"dms": {
+					"uploadFolder": "DataFirst",
+					"Mixed": {
+							"method": "ftp",
+							"fileSuffix": "csv"
+					}
+			},
+			"importSchema": {
+					"path": "datafirst_csv_ansi",
+					"options": {
+							"filter": "[\"Etablissement\"] = \"xxx\" and ((([\"TypeActeRealise\"] = \"Facture - Atelier\" or [\"TypeActeRealise\"] = \"VO Facture principale - VO\" or [\"TypeActeRealise\"] = \"VN Facture principale - VN\")) and (![\"NumeroFacture\"].includes(\"FI\") ))"
+					}
+			},
+			"imports": [
+			{
+					"type": "Mixed",
+					"method": "FTP",
+					"params": {
+							"suffix": "csv",
+							"charset": "cp1252",
+							"files": [
+							{
+									"path": "group/GarageScore__$YYYY$MM$DD.txt",
+									"charset": "cp1252"
+							}
+							]
+					}
+			}
+			],
+	};
+	dms['Maintenance Icar'] = {
+		"dms": {
+			"uploadFolder": "iCarSystems",
+			"Maintenances": {
+				"method": "FTP",
+				"fileSuffix": "csv"
+			},
+			"MixedVehicleSales": {
+				"method": "FTP",
+				"fileSuffix": "csv"
+			}
+		},
+		"importSchema": {
+			"path": "icar_generic",
+			"options": {
+				"filter": "[\"providedGarageId\"] = \"xxx\"   "
+			}
+		},
+		"imports": [
+			{
+				"type": "Maintenances",
+				"method": "FTP",
+				"params": {
+					"suffix": "csv",
+					"charset": "utf-8",
+					"files": [
+						{
+							"path": "group/Vue_OR_GarageScore.txt",
+							"charset": "cp1252",
+							"enableLastModifiedCheck": true,
+							"columnFilter": true,
+							"columnFilterSeparator": "tab",
+							"columnFilterColumnNumber": "7",
+							"columnFilterColumnValue": "$yyyy-$mm-$dd"
+						}
+					]
+				}
+			}
+		]
+	};
+	dms['Full Icar'] = {
+		"dms": {
+			"uploadFolder": "iCarSystems",
+			"Maintenances": {
+				"method": "FTP",
+				"fileSuffix": "csv"
+			},
+			"MixedVehicleSales": {
+				"method": "FTP",
+				"fileSuffix": "csv"
+			}
+		},
+		"importSchema": {
+			"path": "icar_generic",
+			"options": {
+				"filter": "[\"providedGarageId\"] = \"xxx\"  or [\"providedGarageId\"] = \"xxx\" "
+			}
+		},
+		"imports": [
+			{
+				"type": "MixedVehicleSales",
+				"method": "FTP",
+				"params": {
+					"suffix": "csv",
+					"charset": "utf-8",
+					"files": [
+						{
+							"path": "group/Vue_Ventes_GarageScore.txt",
+							"charset": "cp1252",
+							"enableLastModifiedCheck": true,
+							"columnFilter": true,
+							"columnFilterSeparator": "tab",
+							"columnFilterColumnNumber": "22",
+							"columnFilterColumnValue": "$yyyy-$mm-$dd"
+						}
+					]
+				}
+			},
+			{
+				"type": "Maintenances",
+				"method": "FTP",
+				"params": {
+					"suffix": "csv",
+					"charset": "utf-8",
+					"files": [
+						{
+							"path": "group/Vue_OR_GarageScore.txt",
+							"charset": "cp1252",
+							"enableLastModifiedCheck": true,
+							"columnFilter": true,
+							"columnFilterSeparator": "tab",
+							"columnFilterColumnNumber": "7",
+							"columnFilterColumnValue": "$yyyy-$mm-$dd"
+						}
+					]
+				}
+			}
+		]
+	};
+	dms['Maintenance DCSNET'] = {
+			"dms": {
+					"uploadFolder": "DCSnet",
+					"Maintenances": {
+							"method": "FTP",
+							"fileSuffix": "csv"
+					}
+			},
+			"importSchema": {
+					"path": "generic_txt_ansi_tab_ddmmyyyy",
+					"options": {
+							"filter": "[\"Nom Affaire\"] = \"xxx\" "
+					}
+			},
+			"imports": [
+			{
+					"type": "Maintenances",
+					"method": "FTP",
+					"params": {
+							"suffix": "csv",
+							"charset": "cp1252",
+							"files": [
+							{
+									"path": "group/garagescore_apv.csv",
+									"enableLastModifiedCheck": true,
+									"charset": "cp1252"
+							}
+							]
+					}
+			}
+			]
+	};
+	dms['Full DCSnet'] = {
+			"dms": {
+					"uploadFolder": "DCSnet",
+					"Maintenances": {
+							"method": "FTP",
+							"fileSuffix": "csv"
+					},
+					"UsedVehicleSales": {
+							"method": "FTP",
+							"fileSuffix": "csv"
+					},
+					"NewVehicleSales": {
+							"method": "FTP",
+							"fileSuffix": "csv"
+					}
+			},
+			"importSchema": {
+					"path": "generic_txt_ansi_tab_ddmmyyyy",
+					"options": {
+							"filter": "[\"Nom Affaire\"] = \"xxx\" or [\"Compte Affaire\"] = \"xxx\""
+					}
+			},
+			"imports": [
+			{
+					"type": "Maintenances",
+					"method": "FTP",
+					"params": {
+							"suffix": "csv",
+							"charset": "cp1252",
+							"files": [
+							{
+									"path": "group/garagescore_apv.csv",
+									"enableLastModifiedCheck": true,
+									"charset": "cp1252"
+							}
+							]
+					}
+			},
+			{
+					"type": "NewVehicleSales",
+					"method": "FTP",
+					"params": {
+							"suffix": "csv",
+							"charset": "cp1252",
+							"files": [
+							{
+									"path": "group/garagescore_vn.csv",
+									"enableLastModifiedCheck": true,
+									"charset": "cp1252"
+							}
+							]
+					}
+			},
+			{
+					"type": "UsedVehicleSales",
+					"method": "FTP",
+					"params": {
+							"suffix": "csv",
+							"charset": "cp1252",
+							"files": [
+							{
+									"path": "group/garagescore_vo.csv",
+									"enableLastModifiedCheck": true,
+									"charset": "cp1252"
+							}
+							]
+					}
+			}
+			]
+	};
+	dms['Full Cross'] = {
+			"dms": {
+					"uploadFolder": "Cross",
+					"Maintenances": {
+							"method": "FTP",
+							"fileSuffix": "xlsx"
+					},
+					"MixedVehicleSales": {
+							"method": "FTP",
+							"fileSuffix": "xlsx"
+					}
+			},
+			"importSchema": {
+					"path": "cross_xlsx_serial",
+					"options": {
+							"filter": "[\"N°module\"] = \"4\" or [\"N°module\"] = \"5\" or [\"N°module\"] = \"6\""
+					}
+			},
+			"imports": [
+			{
+					"type": "Maintenances",
+					"method": "FTP",
+					"params": {
+							"suffix": "xlsx",
+							"charset": "binary",
+							"files": [
+							{
+									"path": "group/FacturesAPV.xlsx",
+									"charset": "binary",
+									"enableLastModifiedCheck": true
+							}
+							]
+					}
+			},
+			{
+					"type": "MixedVehicleSales",
+					"method": "FTP",
+					"params": {
+							"suffix": "xlsx",
+							"charset": "binary",
+							"files": [
+							{
+									"path": "group/FacturesVNVO.xlsx",
+									"charset": "binary",
+									"enableLastModifiedCheck": true
+							}
+							]
+					}
+			}
+			]
+	};
+	dms["EBPMeca"] = {
+		"dms": {
+			"uploadFolder": "EBPMeca",
+			"Mixed": {
+				"method": "ftp",
+				"fileSuffix": "csv"
+			}
+		},
+		"importSchema": {
+			"path": "ebp",
+			"options": {
+				"filter": "[\"Etablissement\"] = \"xxx\" and [\"Type de document\"] = \"Facture\" and ([\"opt-out SMS\"] = \"NON\" or [\"opt-out email\"] = \"NON\")"
+			}
+		},
+		"imports": [
+			{
+				"type": "Mixed",
+				"method": "FTP",
+				"params": {
+					"suffix": "csv",
+					"charset": "cp1252",
+					"files": [
+						{
+							"path": "ebp-meca/Etablissement-$yyyy-$mm-$dd-******.csv",
+							"charset": "cp1252"
+						}
+					]
+				}
+			}
+		],
+	};
+	dms["Solware"] = {
+		"dms": {
+			"uploadFolder": "Solware",
+			"Mixed": {
+				"method": "ftp",
+				"fileSuffix": "xml"
+			}
+		},
+		"importSchema": {
+			"path": "solware",
+			"options": {
+				"filter": "(![\"CIVILITE\"] in (\"\", \"SOC\", \"ASSO\") ) and ([\"PRESTATION.PRESTATION_REALISEE\"] in (\"1\", \"5\", \"6\") )"
+			}
+		},
+		"imports": [
+			{
+				"type": "Mixed",
+				"method": "FTP",
+				"params": {
+					"suffix": "xml",
+					"charset": "utf-8",
+					"files": [
+						{
+							"path": "garage/Etablissement_$yyyy$mm$dd.xml",
+							"charset": "utf-8"
+						}
+					]
+				}
+			}
+		],
+	};
+	dms["Vulcain-Access"] = {
+			"dms": {
+					"uploadFolder": "Vulcain-Access",
+					"Maintenances": {
+							"method": "ftp",
+							"fileSuffix": "csv"
+					}
+			},
+			"importSchema": {
+					"path": "vulcain-access",
+					"options": {
+							"filter": "[\"d_prestation\"] = \"intervention atelier\""
+					}
+			},
+			"imports": [
+			{
+					"type": "Maintenances",
+					"method": "FTP",
+					"params": {
+							"suffix": "csv",
+							"charset": "cp1252",
+							"files": [
+							{
+									"path": "group/results_$yyyy-$mm-$dd_$yyyy-$mm-$dd.csv",
+									"charset": "cp1252"
+							}
+							]
+					}
+			}
+			],
+	};
+	</script>

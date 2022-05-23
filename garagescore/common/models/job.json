@@ -1,0 +1,68 @@
+{
+  "name": "Job",
+  "plural": "Jobs",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "mongodb": {
+    "collection": "jobs"
+  },
+  "http": {
+    "path": "job"
+  },
+  "properties": {
+    "jobId": {
+      "type": "String",
+      "required": true,
+      "id": true
+    },
+    "partition": {
+      "type": "String"
+    },
+    "type": {
+      "type": "String",
+      "required": true
+    },
+    "status": {
+      "type": "String",
+      "required": true
+    },
+    "scheduledAt": {
+      "type": "Number",
+      "required": true
+    },
+    "scheduledAtAsDate": {
+      "type": "Date",
+      "required": true
+    },
+    "payload": {
+      "type": "Object"
+    },
+    "runtime": {
+      "type": "Number"
+    },
+    "canceledAt": {
+      "type": "Date"
+    },
+    "processedBy": {
+      "type": "String"
+    },
+    "finishedAt": {
+      "type": "Date"
+    },
+    "errorMsg": {
+      "type": "String"
+    }
+  },
+  "indexes": {
+    "statusScheduled_index": { "status": 1, "scheduledAt": 1 },
+    "typeScheduled_index": { "type": 1, "scheduledAt": 1 },
+    "dataId_index": { "payload.dataId": 1 },
+    "darkBo_jobMonitoring_scheduledAtAsDate": { "scheduledAtAsDate": -1 },
+    "finishedAt": { "finishedAt": -1 }
+  },
+  "validations": [],
+  "relations": {},
+ "methods": {
+ }
+}

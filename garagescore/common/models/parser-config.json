@@ -1,0 +1,51 @@
+{
+  "name": "ParserConfig",
+  "base": "GarageScoreBaseModel",
+  "options": {},
+  "mixins": {
+    "SmartSort": true
+  },
+  "mongodb": {
+    "collection": "parserConfig"
+  },
+  "http": {
+    "path": "parser-config"
+  },
+  "properties": {
+    "_reference": { "type": "String" },
+    "country": { "type": "String" },
+    "foreigns": { 
+      "type": {
+        "parserColumnsId": { "type": "String" },
+        "parserVehicleMakesId": { "type": "String" }
+      }
+    },
+    "fileformat": { 
+      "type": {
+        "format": { "type": "String" },
+        "charset": { "type": "String" },
+        "ignoreFirstXLines": { "type": "String" },
+        "worksheetName": { "type": "String" },
+        "path": { "type": "String" }
+      } 
+    },
+    "format": { 
+      "type": {
+        "dataRecordCompletedAt": { "type": "Object" },
+        "vehicleRegistrationFirstRegisteredAt": { "type": "String" }
+      } 
+    },
+    "transformers": { 
+      "type": {
+        "tsvToCsv": { "type": "String" },
+        "vsvToCsv": { "type": "String" },
+        "colsizeCsv": { "type": "String" },
+        "headerlessCsv": { "type": "Object" }
+      } 
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

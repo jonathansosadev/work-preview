@@ -1,0 +1,52 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+<style type="text/css">
+	.page-header {
+   margin-top: 20px;
+ }
+
+</style>
+{% endblock %}
+{% block page %}
+<div class="page-header">
+  <h1>Garages indexés par les moteurs de recherche</h1>
+</div>
+<div class="col-md-12">
+  <div class="row">
+  	<h3>{{ garages.length}} garages indexés</h3>
+  	<br/>
+  </div>
+  <div class="row">
+  	<div class="col-md-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Slug</th>
+            <th>URL</th>
+          </tr>
+        </thead>
+        <tbody>
+         {% for garage in garages %}
+         <tr>
+           <td>{{garage.id}}</td>
+           <td>{{garage.publicDisplayName}}</td>
+           <td>{{garage.slug}}</td>
+           <td>
+            <a :href=" lib.client.wwwUrl() + 'garage/' + garage.slug" target="_blank">
+              https://www.garagescore.com/garage/{{garage.slug}}</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+
+{% endblock %}

@@ -1,0 +1,914 @@
+{
+  "name": "ConsolidatedGaragesStatistic",
+  "plural": "ConsolidatedGaragesStatistics",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "mongodb": {
+    "collection": "consolidatedGaragesStatistic"
+  },
+  "http": {
+    "path": "consolidatedGaragesStatistic"
+  },
+  "mixins": {
+    "EventEmitter": true,
+    "SmartSort": true,
+    "Stream": true
+  },
+  "indexes": {
+    "garageId_index": {"garageId": 1},
+    "daysFromEpoch_index": {"daysFromEpoch": 1},
+    "weeksFromEpoch_index": {"weeksFromEpoch": 1}
+  },
+  "properties": {
+    "numberOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "allGarageIds": {
+      "type": "string",
+      "required": false
+    },
+    "daysFromEpoch": {
+      "type": "number",
+      "required": true
+    },
+    "weeksFromEpoch": {
+      "type": "number",
+      "required": true
+    },
+    "monthsFromEpoch": {
+      "type": "number",
+      "required": true
+    },
+    "yearsFromEpoch": {
+      "type": "number",
+      "required": true
+    },
+    "importedFiles": {
+      "type": "number",
+      "required": true
+    },
+    "importedFilesWithError": {
+      "type": "number",
+      "required": true
+    },
+    "importedFilesWithSuccess": {
+      "type": "number",
+      "required": true
+    },
+    "importedApvFiles": {
+      "type": "number",
+      "required": true
+    },
+    "importedApvFilesWithError": {
+      "type": "number",
+      "required": true
+    },
+    "importedApvFilesWithSuccess": {
+      "type": "number",
+      "required": true
+    },
+    "importedMixedSalesFiles": {
+      "type": "number",
+      "required": true
+    },
+    "importedMixedSalesFilesWithError": {
+      "type": "number",
+      "required": true
+    },
+    "importedMixedSalesFilesWithSuccess": {
+      "type": "number",
+      "required": true
+    },
+    "importedVnFiles": {
+      "type": "number",
+      "required": true
+    },
+    "importedVnFilesWithError": {
+      "type": "number",
+      "required": true
+    },
+    "importedVnFilesWithSuccess": {
+      "type": "number",
+      "required": true
+    },
+    "importedVoFiles": {
+      "type": "number",
+      "required": true
+    },
+    "importedVoFilesWithError": {
+      "type": "number",
+      "required": true
+    },
+    "importedVoFilesWithSuccess": {
+      "type": "number",
+      "required": true
+    },
+    "importedMixedFiles": {
+      "type": "number",
+      "required": true
+    },
+    "importedMixedFilesWithError": {
+      "type": "number",
+      "required": true
+    },
+    "importedMixedFilesWithSuccess": {
+      "type": "number",
+      "required": true
+    },
+    "createdCampaigns": {
+      "type": "number",
+      "required": true
+    },
+    "createdApvCampaigns": {
+      "type": "number",
+      "required": true
+    },
+    "createdSaleCampaigns": {
+      "type": "number",
+      "required": true
+    },
+    "createdSurveys": {
+      "type": "number",
+      "required": true
+    },
+    "surveysWithResult": {
+      "type": "number",
+      "required": true
+    },
+    "createdApvSurveys": {
+      "type": "number",
+      "required": true
+    },
+    "surveysApvWithResult": {
+      "type": "number",
+      "required": true
+    },
+    "createdSaleSurveys": {
+      "type": "number",
+      "required": true
+    },
+    "surveysSaleWithResult": {
+      "type": "number",
+      "required": true
+    },
+    "createdApvFollowupSurveys": {
+      "type": "number",
+      "required": true
+    },
+    "createdSaleFollowupSurveys": {
+      "type": "number",
+      "required": true
+    },
+    "surveysApvFollowupWithResult": {
+      "type": "number",
+      "required": true
+    },
+    "surveysSaleFollowupWithResult": {
+      "type": "number",
+      "required": true
+    },
+    "apvContacts1SentByEmail": {
+      "type": "number",
+      "required": true
+    },
+    "apvContacts1SentByPhone": {
+      "type": "number",
+      "required": true
+    },
+    "apvContacts2SentByEmail": {
+      "type": "number",
+      "required": true
+    },
+    "apvContacts3SentByEmail": {
+      "type": "number",
+      "required": true
+    },
+    "saleContacts1SentByEmail": {
+      "type": "number",
+      "required": true
+    },
+    "saleContacts1SentByPhone": {
+      "type": "number",
+      "required": true
+    },
+    "saleContacts2SentByEmail": {
+      "type": "number",
+      "required": true
+    },
+    "saleContacts3SentByEmail": {
+      "type": "number",
+      "required": true
+    },
+    "contacts1SentByEmail": {
+      "type": "number",
+      "required": true
+    },
+    "contacts1SentByPhone": {
+      "type": "number",
+      "required": true
+    },
+    "contacts2SentByEmail": {
+      "type": "number",
+      "required": true
+    },
+    "contacts3SentByEmail": {
+      "type": "number",
+      "required": true
+    },
+    "contactsApvSentByEmail": {
+      "type": "number",
+      "required": true
+    },
+    "contactsSaleSentByEmail": {
+      "type": "number",
+      "required": true
+    },
+    "contactsSentByEmail": {
+      "type": "number",
+      "required": true
+    },
+    "thanksAndFollowupsApvSent": {
+      "type": "number",
+      "required": true
+    },
+    "thanksAndFollowupsSaleSent": {
+      "type": "number",
+      "required": true
+    },
+    "thanksAndFollowupsSent": {
+      "type": "number",
+      "required": true
+    },
+    "recontactsSentByPhone": {
+      "type": "number",
+      "required": true
+    },
+
+    "importedFilesNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "importedFilesWithErrorNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "importedFilesWithSuccessNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "importedApvFilesNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "importedApvFilesWithErrorNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "importedApvFilesWithSuccessNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "importedMixedSalesFilesNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "importedMixedSalesFilesWithErrorNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "importedMixedSalesFilesWithSuccessNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "importedVnFilesNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "importedVnFilesWithErrorNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "importedVnFilesWithSuccessNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "importedVoFilesNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "importedVoFilesWithErrorNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "importedVoFilesWithSuccessNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "importedMixedFilesNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "importedMixedFilesWithErrorNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "importedMixedFilesWithSuccessNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "createdCampaignsNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "createdApvCampaignsNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "createdSaleCampaignsNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "createdSurveysNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "surveysWithResultNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "createdApvSurveysNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "surveysApvWithResultNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "createdSaleSurveysNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "surveysSaleWithResultNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "createdApvFollowupSurveysNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "createdSaleFollowupSurveysNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "surveysApvFollowupWithResultNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "surveysSaleFollowupWithResultNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "apvContacts1SentByEmailNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "apvContacts1SentByPhoneNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "apvContacts2SentByEmailNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "apvContacts3SentByEmailNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "saleContacts1SentByEmailNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "saleContacts1SentByPhoneNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "saleContacts2SentByEmailNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "saleContacts3SentByEmailNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "contacts1SentByEmailNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "contacts1SentByPhoneNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "contacts2SentByEmailNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "contacts3SentByEmailNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "contactsApvSentByEmailNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "contactsSaleSentByEmailNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "contactsSentByEmailNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "thanksAndFollowupsApvSentNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "thanksAndFollowupsSaleSentNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "thanksAndFollowupsSentNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "recontactsSentByPhoneNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+
+    "importedFilesIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "importedFilesWithErrorIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "importedFilesWithSuccessIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "importedApvFilesIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "importedApvFilesWithErrorIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "importedApvFilesWithSuccessIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "importedMixedSalesFilesIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "importedMixedSalesFilesWithErrorIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "importedMixedSalesFilesWithSuccessIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "importedVnFilesIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "importedVnFilesWithErrorIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "importedVnFilesWithSuccessIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "importedVoFilesIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "importedVoFilesWithErrorIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "importedVoFilesWithSuccessIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "importedMixedFilesIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "importedMixedFilesWithErrorIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "importedMixedFilesWithSuccessIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "createdCampaignsIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "createdApvCampaignsIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "createdSaleCampaignsIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "createdSurveysIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "surveysWithResultIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "createdApvSurveysIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "surveysApvWithResultIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "createdSaleSurveysIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "surveysSaleWithResultIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "createdApvFollowupSurveysIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "createdSaleFollowupSurveysIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "surveysApvFollowupWithResultIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "surveysSaleFollowupWithResultIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "apvContacts1SentByEmailIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "apvContacts1SentByPhoneIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "apvContacts2SentByEmailIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "apvContacts3SentByEmailIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "saleContacts1SentByEmailIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "saleContacts1SentByPhoneIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "saleContacts2SentByEmailIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "saleContacts3SentByEmailIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "contacts1SentByEmailIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "contacts1SentByPhoneIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "contacts2SentByEmailIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "contacts3SentByEmailIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "contactsApvSentByEmailIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "contactsSaleSentByEmailIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "contactsSentByEmailIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "thanksAndFollowupsApvSentIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "thanksAndFollowupsSaleSentIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "thanksAndFollowupsSentIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "recontactsSentByPhoneIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "apvNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "vnNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "voNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "leadNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "apvIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "vnIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "voIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "leadIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+
+    "dataRecordsCreated": {
+      "type": "number",
+      "required": true
+    },
+    "dataRecordsApvCreated": {
+      "type": "number",
+      "required": true
+    },
+    "dataRecordsSaleCreated": {
+      "type": "number",
+      "required": true
+    },
+    "dataRecordsSaleVnCreated": {
+      "type": "number",
+      "required": true
+    },
+    "dataRecordsSaleVoCreated": {
+      "type": "number",
+      "required": true
+    },
+    "dataRecordsSaleUnknownCreated": {
+      "type": "number",
+      "required": true
+    },
+    "dataRecordsCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "dataRecordsApvCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "dataRecordsSaleCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "dataRecordsSaleVnCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "dataRecordsSaleVoCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "dataRecordsSaleUnknownCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "dataRecordsCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "dataRecordsApvCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "dataRecordsSaleCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "dataRecordsSaleVnCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "dataRecordsSaleVoCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "dataRecordsSaleUnknownCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "noDataRecordsCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "noDataRecordsApvCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "noDataRecordsSaleCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "noDataRecordsSaleVnCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "noDataRecordsSaleVoCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "noDataRecordsSaleUnknownCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "noDataRecordsCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "noDataRecordsApvCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "noDataRecordsSaleCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "noDataRecordsSaleVnCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "noDataRecordsSaleVoCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "noDataRecordsSaleUnknownCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+
+    "campaignItemsCreated": {
+      "type": "number",
+      "required": true
+    },
+    "campaignItemsApvCreated": {
+      "type": "number",
+      "required": true
+    },
+    "campaignItemsSaleCreated": {
+      "type": "number",
+      "required": true
+    },
+    "campaignItemsSaleVnCreated": {
+      "type": "number",
+      "required": true
+    },
+    "campaignItemsSaleVoCreated": {
+      "type": "number",
+      "required": true
+    },
+    "campaignItemsCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "campaignItemsApvCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "campaignItemsSaleCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "campaignItemsSaleVnCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "campaignItemsSaleVoCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "campaignItemsCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "campaignItemsApvCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "campaignItemsSaleCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "campaignItemsSaleVnCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "campaignItemsSaleVoCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "noCampaignItemsCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "noCampaignItemsApvCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "noCampaignItemsSaleCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "noCampaignItemsSaleVnCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "noCampaignItemsSaleVoCreatedNbOfGarages": {
+      "type": "number",
+      "required": true
+    },
+    "noCampaignItemsCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "noCampaignItemsApvCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "noCampaignItemsSaleCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "noCampaignItemsSaleVnCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+    "noCampaignItemsSaleVoCreatedIdsOfGarages": {
+      "type": "string",
+      "required": true
+    },
+
+    "publicReviewsCreated": {
+      "type": "number",
+      "required": true
+    }
+
+  },
+  "validations": [],
+  "relations": {},
+  "methods": {}
+}

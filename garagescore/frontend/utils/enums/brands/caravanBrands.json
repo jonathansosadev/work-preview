@@ -1,0 +1,366 @@
+{
+  "ADRIA": {
+    "value": "Adria",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "AUTOSTAR": {
+    "value": "Autostar",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "BAVARIA": {
+    "value": "Bavaria",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "BENIMAR": {
+    "value": "Benimar",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "BURSTNER": {
+    "value": "Burstner",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "CAMPEREVE": {
+    "value": "Campereve",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "CAMPSTER": {
+    "value": "Campster",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "CARADO": {
+    "value": "Carado",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "CARAVELAIR": {
+    "value": "Caravelair",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "CARTHAGO": {
+    "value": "Carthago",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "CHALLENGER": {
+    "value": "Challenger",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "CHAUSSON": {
+    "value": "Chausson",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "CI": {
+    "value": "Ci",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "CROSSCAMP": {
+    "value": "Crosscamp",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "DETHLEFFS": {
+    "value": "Dethleffs",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "DIGUE": {
+    "value": "Digue",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "ELIOS": {
+    "value": "Elios",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "ELNAGH": {
+    "value": "Elnagh",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "ERIBA": {
+    "value": "Eriba",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "ETRUSCO": {
+    "value": "Etrusco",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "FENDT": {
+    "value": "Fendt",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "FLEURETTE": {
+    "value": "Fleurette",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "FONTVENDOME": {
+    "value": "Fontvendome",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "FRANKIA": {
+    "value": "Frankia",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "GIOTTILINE": {
+    "value": "Giottiline",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "GLOBECAR": {
+    "value": "Globecar",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "HOBBY": {
+    "value": "Hobby",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "HYMER": {
+    "value": "Hymer",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "HYMERERIBA": {
+    "value": "Hymereriba",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "ITINEO": {
+    "value": "Itineo",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "KNAUS": {
+    "value": "Knaus",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "LABOHEME": {
+    "value": "Laboheme",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "LAIKA": {
+    "value": "Laika",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "LEVOYAGEUR": {
+    "value": "Levoyageur",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "MCLOUIS": {
+    "value": "Mclouis",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "MOBILVETTA": {
+    "value": "Mobilvetta",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "MOOVEO": {
+    "value": "Mooveo",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "NOTIN": {
+    "value": "Notin",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "PHOENIX": {
+    "value": "Phoenix",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "PILOTE": {
+    "value": "Pilote",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "POSSL": {
+    "value": "Possl",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "RAPIDO": {
+    "value": "Rapido",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "RIMOR": {
+    "value": "Rimor",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "ROLLERTEAM": {
+    "value": "Rollerteam",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "SEA": {
+    "value": "Sea",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "STERCKEMAN": {
+    "value": "Sterckeman",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "STYLEVAN": {
+    "value": "Stylevan",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "SUNLIGHT": {
+    "value": "Sunlight",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "TEC": {
+    "value": "Tec",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "TRIGANO": {
+    "value": "Trigano",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "VITO": {
+    "value": "Vito",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  },
+  "WEINSBERG": {
+    "value": "Weinsberg",
+    "properties": {
+      "top5": false,
+      "garageType": "Caravanning"
+    }
+  }
+}

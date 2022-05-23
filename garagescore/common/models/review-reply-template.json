@@ -1,0 +1,67 @@
+{
+  "name": "ReviewReplyTemplate",
+  "plural": "ReviewReplyTemplates",
+  "base": "GarageScoreBaseModel",
+  "options": {},
+  "mongodb": {
+    "collection": "reviewReplyTemplate"
+  },
+  "http": {
+    "path": "reviewReplyTemplate"
+  },
+  "mixins": {
+    "EventEmitter": true
+  },
+  "properties": {
+    "sources": {
+      "type": "array"
+    },
+    "ratingCategories": {
+      "type": "array"
+    },
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "garageIds": {
+      "type": "array"
+    },
+    "automated": {
+      "type": "boolean",
+      "default": false
+    },
+    "updatedBy": {
+      "type": "string"
+    },
+    "updatedById": {
+      "type": "id"
+    },
+    "updatedAt": {
+      "type": "date"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "createdById": {
+      "type": "id"
+    },
+    "createdAt": {
+      "type": "date"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {},
+  "indexes": {
+    "garageIds_idx": {
+      "garageIds": 1
+    },
+    "text": {
+      "title": "text",
+      "content": "text"
+    }
+  }
+}

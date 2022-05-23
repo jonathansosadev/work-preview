@@ -1,0 +1,500 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+
+  <style type="text/css">
+    body {
+      background-color: #333;
+      color: white;
+      font-family: Quicksand, Helvetica, Arial, sans-serif;
+    }
+
+    #serarch-filter {
+      margin: 0 auto;
+      margin-bottom: 50px;
+      margin-top: 25px;
+      border-radius: 4px;
+      border: 1px solid #adc5cf;
+      padding: 40px 25px;
+      background-color: white;
+      color: #333;
+    }
+
+    input[type=text] {
+      padding: 5px 8px;
+    }
+
+    button, #sendemail {
+      display: inline-block;
+      padding: 6px 12px;
+      margin-bottom: 0;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.42857143;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      -ms-touch-action: manipulation;
+      touch-action: manipulation;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      background-image: none;
+      border: 1px solid grey;
+      border-radius: 4px;
+      background: white;
+      color: grey;
+    }
+
+    .formgroup {
+      margin-bottom: 15px;
+    }
+
+    #sendemail, #sendemail div, #sendemail input {
+      display: inline-block;
+    }
+
+    #sendemail {
+      padding: 2px 12px;
+    }
+    label {
+      padding-right: 5px;
+    }
+  </style>
+{% endblock %}
+
+{% block page %}
+
+  <div id="campaign-manager">
+    <div class="overlay-loading" v-if="loading"><div class="centered-loading"></div></div>
+    <div class="page-header">
+      <h1>Liste des campaignes</h1>
+    </div>
+    <div class="container">
+      <p>Une partie des campagnes est aussi lancée manuellement.</p>
+      <p>Listez/filtrez les campagnes, vérifier leur état et lancer les manuellement si besoin.</p>
+    </div>
+
+    <div class="container">
+      <form id="serarch-filter" class="form-inline" @submit.prevent="searchMails(true)">
+        <div class="row">
+          <div class="formgroup col-xs-6">
+            <label class="col-md-4" style="padding-left: 0;padding-top: 6px">Date min</label>
+            <div class="input-group col-md-8">
+              <input class="flatpickr form-control" v-model="selectedMinDate" type="text" placeholder="Choisir une date ...">
+              <div class="input-group-addon btn" @click="selectedMinDate = ''">X</div>
+            </div>
+          </div>
+          <div class="formgroup col-xs-6">
+            <label class="col-md-4" style="padding-left: 0;padding-top: 6px">Date max</label>
+            <div class="input-group col-md-8">
+              <input class="flatpickr form-control" v-model="selectedMaxDate" type="text" placeholder="Choisir une date ...">
+              <div class="input-group-addon btn" @click="selectedMaxDate = ''">X</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="formgroup col-xs-4">
+            <div class="formgroup col-xs-12"></div>
+            <div class="form-group">
+              <label class="">Type de campagne </label>
+              <select class="form-control" v-model="selectedType">
+                <option value="" selected>choisir un type</option>
+                <option v-for="campaignType in campaignTypes" :value="campaignType">
+                  {{ '{{' }} campaignType {{ '}}' }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="formgroup col-xs-8 text-right">
+            <label class="col-xs-12 text-left">Status de la campaign</label>
+            <div class="col-xs-3 text-left" v-for="campaignStatus in campaignsStatus">
+              <input class="col-xs-1" type="checkbox" :value="campaignStatus" v-model="selectedStatus">
+              <label class="col-xs-10" for="checkbox">{{ '{{' }} campaignStatus {{ '}}' }}</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="formgroup col-md-12">
+            <label class="col-md-12">Garages</label>
+            <div class="col-md-12">
+              <gs-garages-list :updated="setSelectedGarage" :excluded-garages="[]" show-advanced></gs-garages-list>
+            </div>
+            <div class="col-md-12" v-if="selectedGarage" style="color: black">
+              Garage sélectionné: {{ '{{' }} selectedGarage.publicDisplayName {{ '}}' }}
+              <span class="btn" @click="unsetSelectedGarage()">X</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-8"></div>
+          <div class="formgroup col-xs-4 text-right">
+            <button type="submit" id="show">Rechercher</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="container center-col" v-if="errorMsg">
+      {{ '{{' }} errorMsg {{ '}}' }}
+    </div>
+    <div class="container" style="margin: 0; width: 100%;">
+      <div class="row">
+        Total des campagnes : {{ '{{' }} total {{ '}}' }}
+      </div>
+      <table class="table" style="max-width: 100%">
+        <thead>
+        <tr>
+          <th>
+            <div class="row">
+              <div class="col-xs-2">Date de création</div>
+              <div class="col-xs-3">Campaign</div>
+              <div class="col-xs-3">DataFile</div>
+              <div class="col-xs-4">Actions</div>
+            </div>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="campaign in currentCampaigns">
+          <td>
+            <div class="row">
+              <div class="col-xs-2">
+                {{ '{{' }} campaign.createdAt {{ '}}' }}
+              </div>
+              <div class="col-xs-3">
+                  id: {{'{{'}} campaign.id {{'}}'}}<br>
+                  Nom: {{ '{{' }} campaign.name {{ '}}' }}<br>
+                  Status: {{ '{{' }} campaign.status {{ '}}' }}<br>
+                  Type: {{ '{{' }} campaign.type {{ '}}' }}<br>
+              </div>
+              <div class="col-xs-3">
+                path: <a :href="'{{ lib.client.url.getShortUrl('ADMIN_GARAGE_PULL_VIEW_FILE') }}?filePath=' + (campaign.dataFilePath)">
+                  {{'{{'}} campaign.dataFilePath {{'}}'}}
+                </a><br>
+                <span>type: {{ '{{' }} campaign.dataFileType {{ '}}' }}</span><br>
+                <span>parser: {{ '{{' }} campaign.dataFileImportSchemaName {{ '}}' }}</span><br>
+              </div>
+              <div class="col-xs-4">
+                <button class="badge" v-if="campaign.status == 'New' " @click="runCampaign(campaign.id, campaign.dataFileId, 'campaigns')">
+                  Demander le lancement
+                </button>
+                <div>
+                  <button class="badge" @click="showDatas(campaign)">Afficher details des contacts</button>
+                </div>
+              </div>
+            </div>
+            <div class="row" v-if="campaign.showDatas">
+              <data-list :campaign-id="campaign.id"></data-list>
+            </div>
+          </td>
+        </tr>
+        <tr v-if="currentCampaigns.length == 0">
+          <td colspan="6" class="container-fluid no-result-msg">
+            Aucun résultat, veuillez modifier votre recherche.
+          </td>
+        </tr>
+        {% set PaginationRowSpan = 6 %}
+        {% set PaginationDisableStyle = true %}
+        {% include "../common/components/_pagination.nunjucks" %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+  {% include "../common/components/_vue-modal.nunjucks" %}
+  {% include "../common/components/_auto-complete/auto-complete.nunjucks" %}
+  {% include "../common/components/contact-info-block.nunjucks" %}
+  {% include "../common/components/garages-list/garages-list.component.nunjucks" %}
+  {% include "../common/components/_search_contacted_contacts.nunjucks" %}
+  {% include "./manage-campaign/_data-list.nunjucks" %}
+  <script type="text/javascript">
+
+    function escapeHtml(unsafe) {
+      if(!unsafe) return;
+      return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+    var campaignTypes = {{ campaignTypes|safe }};
+    var campaignsStatus = {{ campaignsStatus|safe }};
+
+    function FormatNumberLength(num, length) {
+      var r = "" + num;
+      while (r.length < length) {
+        r = "0" + r;
+      }
+      return r;
+    }
+    Vue.filter('dateFormat', function (value) {
+      var date = new Date(value);
+      var day = date.getDate();
+      var monthIndex = date.getMonth();
+      var year = date.getFullYear();
+      var hours = date.getHours();
+      var minutes = date.getMinutes();
+      var seconds = date.getSeconds();
+
+      return FormatNumberLength(day, 2) + '/' + FormatNumberLength(monthIndex + 1, 2) + '/' + year + ' '
+        + FormatNumberLength(hours, 2) + ':' + FormatNumberLength(minutes, 2) + ':' + FormatNumberLength(seconds, 2);
+    });
+
+    var v = new Vue({
+      el: '#campaign-manager',
+      data: {
+        campaignTypes: campaignTypes,
+        campaignsStatus: campaignsStatus,
+        selectedGarage: null,
+        selectedType: null,
+        selectedStatus: [],
+        selectedMaxDate: '',
+        selectedMinDate: '',
+        currentPage: 1,
+        pageCount: 1,
+        total: 0,
+        pageSize: 10,
+        currentCampaigns: [],
+        stats: {},
+        errorMsg: "",
+        loading: false
+      },
+      mounted: function () {
+        flatpickr('.flatpickr', {
+          enableTime: true,
+          time_24hr: true,
+          dateFormat: 'd-m-Y H:i',
+          altFormat: 'd-m-Y H:i'
+        });
+      },
+      methods: {
+        showDatas(campaign){
+          campaign.showDatas = true;
+        },
+        getPublicUrl(token){
+          return '{{ base_url }}/report/' + token;
+        },
+        setSelectedGarage: function (garage) {
+          this.selectedGarage = garage;
+        },
+        unsetSelectedGarage: function (garage) {
+          this.selectedGarage = null;
+        },
+        nextPage: function () {
+          this.currentPage = this.currentPage + 1;
+          this.searchMails();
+        },
+        goPage: function (num) {
+          this.currentPage = num;
+          this.searchMails();
+        },
+        forwardPage: function () {
+          this.currentPage = this.currentPage - 1;
+          this.searchMails();
+        },
+        searchMails: function (init) {
+          this.errorMsg = '';
+          if (init) {
+            this.currentPage = 1;
+          }
+          var filter = {
+            limit: this.pageSize,
+            skip: this.pageSize * (this.currentPage - 1),
+            order: "createdAt DESC",
+            where: {}
+          };
+          if (this.selectedType) {
+            filter.where.type = this.selectedType ;
+          }
+          if (this.selectedStatus.length > 0) {
+            filter.where.status = { inq: this.selectedStatus };
+          }
+          if (this.selectedMaxDate) {
+            filter.maxDate = this.selectedMaxDate;
+          }
+          if (this.selectedMinDate) {
+            filter.minDate = this.selectedMinDate;
+          }
+          if (this.selectedGarage) {
+            filter.where.garageId = this.selectedGarage.id;
+          }
+          var request = new XMLHttpRequest();
+          var url = '{{ lib.client.url.getShortUrl('ADMIN_GARAGE_PULL_LIST_CAMPAIGNS') }}?t=' + new Date().getTime();
+          request.open('POST', url, true);
+          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          request.send(JSON.stringify(filter));
+          this.loading = true;
+          request.onload = function () {
+            this.loading = false;
+            if (request.status != 200 && request.status != 304) {
+              alert("Erreur ! Plus de détails dans la console");
+              console.error("List error : ");
+              console.error(request.responseText);
+            } else {
+              var res = JSON.parse(request.responseText);
+              if (!res) {
+                alert("Erreur ! Plus de détails dans la console");
+                console.error("List error : ");
+                console.error(request.responseText);
+                this.currentCampaigns = [];
+              } else
+                this.currentCampaigns = res.campaigns.map(function (df) {
+                  df.showDatas = false;
+                  return df;
+                });
+              this.pageSize = res.limit;
+              this.total = res.total;
+              this.currentPage = (res.skip / res.limit) + 1;
+              this.pageCount = Math.floor(res.total / res.limit) + ((res.total % res.limit == 0) ? 0 : 1);
+            }
+          }.bind(this);
+        },
+        //load datafile stats
+        datafilestats: function(dataFileId) {
+          if(this.loading)  return;
+          this.loading = true;
+          var request = new XMLHttpRequest();
+          var posturl = '{{ lib.client.url.getShortUrl('ADMIN_GARAGE_PULL_DATA_FILE_STATS') }}?t=' + new Date().getTime();
+          request.open('POST', posturl, true);
+          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          request.onload = function() {
+            this.loading = false;
+            if (request.status != 200 && request.status != 304){
+              alert("Erreur ! Plus de détails dans la console");
+              console.error("List error : ");
+              console.error(request.responseText);
+            } else {
+              var res = JSON.parse(request.responseText);
+              console.log(request);
+              if(res.status === 'ok') {
+                this.$set(this.stats, dataFileId, res.stats);
+              } else {
+                alert("Erreur ! Plus de détails dans la console");
+                console.error("List error : ");
+                console.error(res.error);
+              }
+
+            }
+          }.bind(this);
+          request.send(JSON.stringify({dataFileId: dataFileId }));
+        },
+        // delete a datafile
+        deleteDatafile: function(dataFileId) {
+          if(this.loading)  return;
+          this.loading = true;
+          var request = new XMLHttpRequest();
+          var posturl = '{{ lib.client.url.getShortUrl('ADMIN_GARAGE_PULL_DATA_FILE_DELETE') }}?t=' + new Date().getTime();
+          request.open('POST', posturl, true);
+          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          request.onload = function() {
+            this.loading = false;
+            if (request.status != 200 && request.status != 304){
+              alert("Erreur ! Plus de détails dans la console");
+              console.error("List error : ");
+              console.error(request.responseText);
+            } else {
+              var res = JSON.parse(request.responseText);
+              console.log(request);
+              if(res.status === 'ok') {
+                this.pushes = res.pushes;
+              } else {
+                alert("Erreur ! Plus de détails dans la console");
+                console.error("List error : ");
+                console.error(res.error);
+              }
+
+            }
+          }.bind(this);
+          request.send(JSON.stringify({dataFileId: dataFileId, garageIds: this.checkedGarages }));
+        },
+        // cancel a 'Waiting' / 'New' campaign
+        cancelCampaign: function(campaignId, dataFileId, from) {
+          if(this.loading)  return;
+          this.loading = true;
+          var request = new XMLHttpRequest();
+          var posturl = '{{ lib.client.url.getShortUrl('ADMIN_GARAGE_PULL_CANCEL_CAMPAIGN') }}?t=' + new Date().getTime();
+          request.open('POST', posturl, true);
+          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          request.onload = function() {
+            this.loading = false;
+            if (request.status != 200 && request.status != 304){
+              alert("Erreur ! Plus de détails dans la console");
+              console.error("List error : ");
+              console.error(request.responseText);
+            } else {
+              var res = JSON.parse(request.responseText);
+              console.log(request);
+              if(res.status === 'ok') {
+                if (from === 'pushes') {
+                  this.$set(this.stats, dataFileId, res.stats);
+                } else {
+                  var campaign = res.campaigns[0];console.log(campaign.id)
+                  for(var i = 0; i < this.currentCampaigns.length; i++) {console.log(this.currentCampaigns[i].id)
+                    if (this.currentCampaigns[i].id === campaign.id) {
+                      this.currentCampaigns[i] = campaign;
+                      this.$set(this.currentCampaigns, this.currentCampaigns);
+                      break;
+                    }
+                  }
+                }
+              } else {
+                alert("Erreur ! Plus de détails dans la console");
+                console.error("List error : ");
+                console.error(res.error);
+              }
+
+            }
+          }.bind(this);
+          request.send(JSON.stringify({campaignId: campaignId, dataFileId: dataFileId, from: from }));
+        },
+        // run a 'New' campaign
+        runCampaign: function(campaignId, dataFileId, from) {
+          if(this.loading)  return;
+          this.loading = true;
+          var request = new XMLHttpRequest();
+          var posturl = '{{ lib.client.url.getShortUrl('ADMIN_GARAGE_PULL_RUN_CAMPAIGN') }}?t=' + new Date().getTime();
+          request.open('POST', posturl, true);
+          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          request.onload = function() {
+            this.loading = false;
+            if (request.status != 200 && request.status != 304){
+              alert("Erreur ! Plus de détails dans la console");
+              console.error("List error : ");
+              console.error(request.responseText);
+            } else {
+              var res = JSON.parse(request.responseText);
+              console.log(request);
+              if(res.status === 'ok') {
+                if (from === 'pushes') {
+                  this.$set(this.stats, dataFileId, res.stats);
+                } else {
+                  var campaign = res.campaigns[0];console.log(campaign.id)
+                  for(var i = 0; i < this.currentCampaigns.length; i++) {console.log(this.currentCampaigns[i].id)
+                    if (this.currentCampaigns[i].id === campaign.id) {
+                      this.currentCampaigns[i] = campaign;
+                      this.$set(this.currentCampaigns, this.currentCampaigns);
+                      break;
+                    }
+                  }
+                }
+
+              } else {
+                alert("Erreur ! Plus de détails dans la console");
+                console.error("List error : ");
+                console.error(res.error);
+              }
+
+            }
+          }.bind(this);
+          request.send(JSON.stringify({campaignId: campaignId, dataFileId: dataFileId, from: from }));
+        },
+      }
+    });
+    v.searchMails();
+  </script>
+{% endblock %}

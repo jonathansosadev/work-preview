@@ -1,0 +1,38 @@
+{
+  "DEALERSHIP": {
+    "value": "Dealership",
+    "properties": {}
+  },
+  "MOTORBIKE_DEALERSHIP":{
+    "value": "MotorbikeDealership",
+    "properties": {}
+  },
+  "AGENT": {
+    "value": "Agent",
+    "properties": {}
+  },
+  "CAR_REPAIRER":{
+    "value": "CarRepairer",
+    "properties": {}
+  },
+  "CARAVANNING": {
+    "value": "Caravanning",
+    "properties": {}
+  },
+  "VEHICLE_INSPECTION": {
+    "value": "VehicleInspection",
+    "properties": {}
+  },
+  "CAR_RENTAL":{
+    "value": "CarRental",
+    "properties": {}
+  },
+  "UTILITY_CAR_DEALERSHIP": {
+    "value": "UtilityCarDealership",
+    "properties": {}
+  },
+  "OTHER":{
+    "value": "Other",
+    "properties": {}
+  }
+}

@@ -1,0 +1,444 @@
+[
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "10",
+      "title" : "Monsieur",
+      "fullName" : "Richard",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "isComplete" : false,
+      "pageNumber" : 0,
+      "pageCount" : 5,
+      "timestamp" : 1518873596679.0
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "10",
+      "title" : "Monsieur",
+      "fullName" : "Richard",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "comment" : "hello comment ",
+      "leadType" : "Interested",
+      "isComplete" : false,
+      "pageNumber" : 1,
+      "pageCount" : 5,
+      "timestamp" : 1518873640212.0
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "10",
+      "title" : "Monsieur",
+      "fullName" : "Richard",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "comment" : "hello comment ",
+      "leadType" : "Interested",
+      "isComplete" : false,
+      "pageNumber" : 1,
+      "pageCount" : 5,
+      "timestamp" : 1518874108198.0
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "10",
+      "title" : "Monsieur",
+      "fullName" : "Richard",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "comment" : "hello comment ",
+      "leadType" : "Interested",
+      "isComplete" : false,
+      "pageNumber" : 2,
+      "pageCount" : 5,
+      "timestamp" : 1518874208640.0,
+      "leadTime" : "LongTerm",
+      "leadSaleType" : "NewVehicleSale",
+      "leadKnowVehicle" : "noButKnowModele",
+      "leadModels" : {
+        "first" : {
+          "model" : "McLaren"
+        },
+        "second" : {
+          "model" : "Ferrari"
+        },
+        "third" : {
+          "model" : "Tesla Motors"
+        }
+      },
+      "leadBodyType" : [
+        "berline",
+        "break"
+      ],
+      "leadEnergyType" : [
+        "fuel",
+        "electric"
+      ],
+      "leadTradeIn" : "No",
+      "leadFunding" : "cash"
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "10",
+      "title" : "Monsieur",
+      "fullName" : "Richard",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "comment" : "hello comment ",
+      "leadType" : "Interested",
+      "isComplete" : false,
+      "pageNumber" : 3,
+      "pageCount" : 5,
+      "timestamp" : 1518874212284.0,
+      "leadTime" : "LongTerm",
+      "leadSaleType" : "NewVehicleSale",
+      "leadKnowVehicle" : "noButKnowModele",
+      "leadModels" : {
+        "first" : {
+          "model" : "McLaren"
+        },
+        "second" : {
+          "model" : "Ferrari"
+        },
+        "third" : {
+          "model" : "Tesla Motors"
+        }
+      },
+      "leadBodyType" : [
+        "berline",
+        "break"
+      ],
+      "leadEnergyType" : [
+        "fuel",
+        "electric"
+      ],
+      "leadTradeIn" : "No",
+      "leadFunding" : "cash"
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "10",
+      "title" : "Monsieur",
+      "fullName" : "Richard",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "comment" : "hello comment ",
+      "leadType" : "Interested",
+      "isComplete" : false,
+      "pageNumber" : -1,
+      "pageCount" : 0,
+      "timestamp" : 1518874351641.0,
+      "leadTime" : "LongTerm",
+      "leadSaleType" : "NewVehicleSale",
+      "leadKnowVehicle" : "noButKnowModele",
+      "leadModels" : {
+        "first" : {
+          "model" : "McLaren"
+        },
+        "second" : {
+          "model" : "Ferrari"
+        },
+        "third" : {
+          "model" : "Tesla Motors"
+        }
+      },
+      "leadBodyType" : [
+        "berline",
+        "break"
+      ],
+      "leadEnergyType" : [
+        "fuel",
+        "electric"
+      ],
+      "leadTradeIn" : "No",
+      "leadFunding" : "cash"
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "10",
+      "title" : "Monsieur",
+      "fullName" : "Richard",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "comment" : "hello comment ",
+      "leadType" : "Interested",
+      "isComplete" : false,
+      "pageNumber" : 0,
+      "pageCount" : 5,
+      "timestamp" : 1518874386083.0,
+      "leadTime" : "LongTerm",
+      "leadSaleType" : "NewVehicleSale",
+      "leadKnowVehicle" : "noButKnowModele",
+      "leadModels" : {
+        "first" : {
+          "model" : "McLaren"
+        },
+        "second" : {
+          "model" : "Ferrari"
+        },
+        "third" : {
+          "model" : "Tesla Motors"
+        }
+      },
+      "leadBodyType" : [
+        "berline",
+        "break"
+      ],
+      "leadEnergyType" : [
+        "fuel",
+        "electric"
+      ],
+      "leadTradeIn" : "No",
+      "leadFunding" : "cash"
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "10",
+      "title" : "Monsieur",
+      "fullName" : "Richard",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "comment" : "hello comment ",
+      "leadType" : "Interested",
+      "isComplete" : false,
+      "pageNumber" : 1,
+      "pageCount" : 5,
+      "timestamp" : 1518874390229.0,
+      "leadTime" : "LongTerm",
+      "leadSaleType" : "NewVehicleSale",
+      "leadKnowVehicle" : "noButKnowModele",
+      "leadModels" : {
+        "first" : {
+          "model" : "McLaren"
+        },
+        "second" : {
+          "model" : "Ferrari"
+        },
+        "third" : {
+          "model" : "Tesla Motors"
+        }
+      },
+      "leadBodyType" : [
+        "berline",
+        "break"
+      ],
+      "leadEnergyType" : [
+        "fuel",
+        "electric"
+      ],
+      "leadTradeIn" : "No",
+      "leadFunding" : "cash"
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "10",
+      "title" : "Monsieur",
+      "fullName" : "Richard",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "comment" : "hello comment ",
+      "leadType" : "Interested",
+      "isComplete" : false,
+      "pageNumber" : 2,
+      "pageCount" : 5,
+      "timestamp" : 1518874392680.0,
+      "leadTime" : "LongTerm",
+      "leadSaleType" : "NewVehicleSale",
+      "leadKnowVehicle" : "noButKnowModele",
+      "leadModels" : {
+        "first" : {
+          "model" : "McLaren"
+        },
+        "second" : {
+          "model" : "Ferrari"
+        },
+        "third" : {
+          "model" : "Tesla Motors"
+        }
+      },
+      "leadBodyType" : [
+        "berline",
+        "break"
+      ],
+      "leadEnergyType" : [
+        "fuel",
+        "electric"
+      ],
+      "leadTradeIn" : "No",
+      "leadFunding" : "cash"
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "10",
+      "title" : "Monsieur",
+      "fullName" : "Richard",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "comment" : "hello comment ",
+      "leadType" : "Interested",
+      "isComplete" : false,
+      "pageNumber" : 3,
+      "pageCount" : 5,
+      "timestamp" : 1518874394168.0,
+      "leadTime" : "LongTerm",
+      "leadSaleType" : "NewVehicleSale",
+      "leadKnowVehicle" : "noButKnowModele",
+      "leadModels" : {
+        "first" : {
+          "model" : "McLaren"
+        },
+        "second" : {
+          "model" : "Ferrari"
+        },
+        "third" : {
+          "model" : "Tesla Motors"
+        }
+      },
+      "leadBodyType" : [
+        "berline",
+        "break"
+      ],
+      "leadEnergyType" : [
+        "fuel",
+        "electric"
+      ],
+      "leadTradeIn" : "No",
+      "leadFunding" : "cash"
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "10",
+      "title" : "Monsieur",
+      "fullName" : "Olivier Richard",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "comment" : "hello comment ",
+      "leadType" : "Interested",
+      "isComplete" : false,
+      "pageNumber" : 4,
+      "pageCount" : 5,
+      "timestamp" : 1518874456549.0,
+      "leadTime" : "LongTerm",
+      "leadSaleType" : "NewVehicleSale",
+      "leadKnowVehicle" : "noButKnowModele",
+      "leadModels" : {
+        "first" : {
+          "model" : "McLaren"
+        },
+        "second" : {
+          "model" : "Ferrari"
+        },
+        "third" : {
+          "model" : "Tesla Motors"
+        }
+      },
+      "leadBodyType" : [
+        "berline",
+        "break"
+      ],
+      "leadEnergyType" : [
+        "fuel",
+        "electric"
+      ],
+      "leadTradeIn" : "No",
+      "leadFunding" : "cash",
+      "email" : "oabida@garagescore.com",
+      "mobilePhone" : "0625033300",
+      "customerShareWithGarage" : [
+        "J'accepte d'être averti uniquement par mon établissement des prochaines échéances 'd'entretien et d'offres commerciales"
+      ],
+      "serviceCategories" : [
+        "Maintenance3",
+        "Maintenance4"
+      ]
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "date" : "2018-02-17T13:34:23.620Z",
+    "payload" : {
+      "rating" : "10",
+      "title" : "Monsieur",
+      "fullName" : "Olivier Richard",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "comment" : "hello comment ",
+      "leadType" : "Interested",
+      "isComplete" : true,
+      "pageNumber" : 4,
+      "pageCount" : 5,
+      "timestamp" : 1518874459231.0,
+      "leadTime" : "LongTerm",
+      "leadSaleType" : "NewVehicleSale",
+      "leadKnowVehicle" : "noButKnowModele",
+      "leadModels" : {
+        "first" : {
+          "model" : "McLaren"
+        },
+        "second" : {
+          "model" : "Ferrari"
+        },
+        "third" : {
+          "model" : "Tesla Motors"
+        }
+      },
+      "leadBodyType" : [
+        "berline",
+        "break"
+      ],
+      "leadEnergyType" : [
+        "fuel",
+        "electric"
+      ],
+      "leadTradeIn" : "No",
+      "leadFunding" : "cash",
+      "email" : "oabida@garagescore.com",
+      "mobilePhone" : "0625033300",
+      "serviceMiddleMans": [
+        "price",
+        "vicinity"
+      ],
+      "customerShareWithGarage" : [
+        "J'accepte d'être averti uniquement par mon établissement des prochaines échéances 'd'entretien et d'offres commerciales"
+      ],
+      "serviceCategories" : [
+        "Maintenance3",
+        "Maintenance4"
+      ],
+      "shareWithPartners" : "Non"
+    }
+  }
+]

@@ -1,0 +1,86 @@
+{
+  "CANCELED_LEAD": {
+    "value": "CanceledLead",
+    "properties": {
+      "leadSaleTypes": ["NewVehicleSale", "UsedVehicleSale", "Unknown"]
+    }
+  },
+  "UNACQUIRED_FUNDING": {
+    "value": "UnacquiredFunding",
+    "properties": {
+      "leadSaleTypes": ["NewVehicleSale", "UsedVehicleSale", "Unknown"]
+    }
+  },
+  "LOW_TRADE_IN": {
+    "value": "LowTradeIn",
+    "properties": {
+      "leadSaleTypes": ["NewVehicleSale", "UsedVehicleSale", "Unknown"]
+    }
+  },
+  "UNATTRACTIVE_OFFER": {
+    "value": "UnattractiveOffer",
+    "properties": {
+      "leadSaleTypes": ["NewVehicleSale", "UsedVehicleSale", "Unknown"]
+    }
+  },
+  "AVAILABILITY_PROBLEM": {
+    "value": "AvailabilityProblem",
+    "properties": {
+      "leadSaleTypes": ["NewVehicleSale", "UsedVehicleSale", "Unknown"]
+    }
+  },
+  "UNSUITABLE_VEHICLE_CATEGORY": {
+    "value": "UnsuitableVehicleCategory",
+    "properties": {
+      "leadSaleTypes": ["NewVehicleSale", "UsedVehicleSale", "Unknown"]
+    }
+  },
+  "NOT_SERIOUS_CUSTOMER": {
+    "value": "NotSeriousCustomer",
+    "properties": {
+      "leadSaleTypes": ["NewVehicleSale", "UsedVehicleSale", "Unknown"]
+    }
+  },
+  "VEHICLE_ALREADY_SOLD": {
+    "value": "VehicleAlreadySold",
+    "properties": {
+      "leadSaleTypes": ["NewVehicleSale", "UsedVehicleSale", "Unknown"]
+    }
+  },
+  "UNRELATED_REQUEST": {
+    "value": "UnrelatedRequest",
+    "properties": {
+      "leadSaleTypes": ["NewVehicleSale", "UsedVehicleSale", "Unknown"]
+    }
+  },
+  "APV_RDV_NOT_WANTED": {
+    "value": "APV_RdvNotWanted",
+    "properties": {
+      "leadSaleTypes": ["Maintenance"]
+    }
+  },
+  "APV_AVAILABILITY_TOO_FAR": {
+    "value": "APV_AvailabilityTooFar",
+    "properties": {
+      "leadSaleTypes": ["Maintenance"]
+    }
+  },
+  "APV_ALREADY_DONE": {
+    "value": "APV_AlreadyDone",
+    "properties": {
+      "leadSaleTypes": ["Maintenance"]
+    }
+  },
+  "APV_ALREADY_DONE_IN_A_OTHER_GARAGE": {
+    "value": "APV_AlreadyDoneInAOtherGarage",
+    "properties": {
+      "leadSaleTypes": ["Maintenance"]
+    }
+  },
+  "APV_OTHERS": {
+    "value": "APV_Others",
+    "properties": {
+      "leadSaleTypes": ["Maintenance"]
+    }
+  }
+}

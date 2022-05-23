@@ -1,0 +1,66 @@
+{
+  "MAINTENANCE_CAT_1": {
+    "value": "Maintenance1",
+    "properties": {
+      "shortName": "Révision",
+      "kpiByPeriodKey": "satisfactionCountServiceCategoryMaintenance1",
+      "exportColumnKey": "BG_SAT__SERVICE_CATEGORY_MAINTENANCE1"
+    }
+  },
+  "MAINTENANCE_CAT_2": {
+    "value": "Maintenance2",
+    "properties": {
+      "shortName": "Freinage",
+      "kpiByPeriodKey": "satisfactionCountServiceCategoryMaintenance2",
+      "exportColumnKey": "BG_SAT__SERVICE_CATEGORY_MAINTENANCE2"
+    }
+  },
+  "MAINTENANCE_CAT_3": {
+    "value": "Maintenance3",
+    "properties": {
+      "shortName": "Démarrage",
+      "kpiByPeriodKey": "satisfactionCountServiceCategoryMaintenance3",
+      "exportColumnKey": "BG_SAT__SERVICE_CATEGORY_MAINTENANCE3"
+    }
+  },
+  "MAINTENANCE_CAT_4": {
+    "value": "Maintenance4",
+    "properties": {
+      "shortName": "Pneumatique",
+      "kpiByPeriodKey": "satisfactionCountServiceCategoryMaintenance4",
+      "exportColumnKey": "BG_SAT__SERVICE_CATEGORY_MAINTENANCE4"
+    }
+  },
+  "MAINTENANCE_CAT_5": {
+    "value": "Maintenance5",
+    "properties": {
+      "shortName": "Réparation",
+      "kpiByPeriodKey": "satisfactionCountServiceCategoryMaintenance5",
+      "exportColumnKey": "BG_SAT__SERVICE_CATEGORY_MAINTENANCE5"
+    }
+  },
+  "MAINTENANCE_CAT_6": {
+    "value": "Maintenance6",
+    "properties": {
+      "shortName": "Pare-brise",
+      "kpiByPeriodKey": "satisfactionCountServiceCategoryMaintenance6",
+      "exportColumnKey": "BG_SAT__SERVICE_CATEGORY_MAINTENANCE6"
+    }
+  },
+  "MAINTENANCE_CAT_7": {
+    "value": "Maintenance7",
+    "properties": {
+      "shortName": "Carrosserie",
+      "kpiByPeriodKey": "satisfactionCountServiceCategoryMaintenance7",
+      "exportColumnKey": "BG_SAT__SERVICE_CATEGORY_MAINTENANCE7"
+    }
+  },
+  "MAINTENANCE_CAT_8": {
+    "value": "Maintenance8",
+    "properties": {
+      "shortName": "Autre",
+      "kpiByPeriodKey": "satisfactionCountServiceCategoryMaintenance8",
+      "exportColumnKey": "BG_SAT__SERVICE_CATEGORY_MAINTENANCE8"
+    }
+  }
+}

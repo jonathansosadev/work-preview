@@ -1,0 +1,17 @@
+{% extends "./_master.nunjucks" %}
+{% block title %}Site web{% endblock %}
+{% block questions %}
+  <a class="row question" id="q_1" href="#a_1">Quelles sont les signification des codes d'erreurs de réinitialisation du mot de passe ?</a>
+{% endblock %}
+
+{% block answers %}
+  <div class="row answer" id="a_1"  data-date="en Juin 2017">
+    <br>
+    <p>
+      - code 580: Demande introuvable en BDD<br>
+      - code 581: Demande trouvée en BDD mais problème inconnu, à voir avec le staff technique<br>
+      - code 582: Token introuvable en BBD (généralement une tentative d’accès à une ancienne demande qui a été remplacée par une autre)<br>
+      - code 583: Absence du token dans l'URL de la requête<br>
+    </p>
+  </div>
+{% endblock %}

@@ -1,0 +1,178 @@
+/*
+ * Global Bootstrap Overrides
+ */
+
+body {
+  background-color: #333;
+  color: #fff;
+}
+
+.btn-primary {
+  background-color: #64b7cb; /* GarageScore Light Blue */
+  border-color: #219ab5; /* GarageScore Dark Blue */
+}
+
+.btn-primary.focus, .btn-primary:focus {
+  background-color: #219ab5;
+  border-color: #219ab5;
+}
+
+.form-horizontal .form-group:last-child {
+  margin-bottom: 0;
+}
+
+h1 {
+  font-family: 'Roboto', sans-serif;
+}
+
+/*
+ * GarageScore Components
+ */
+
+.garagescore-main {
+  padding-left: 115px;
+}
+.garagescore-header {
+  display: block;
+  height: 35px;
+  width: 100%;
+  position: absolute;
+  background: #64b7cb;
+  z-index: 2;
+}
+
+.garagescore-logo {
+  display: block;
+  position: absolute;
+  left: 20px;
+  top: 5px;
+  height: 25px;
+}
+
+.garagescore-nav {
+  background-color: #333; /* GarageScore Dark Grey */
+  color: #fff;
+  left: 0;
+  min-height: 100vh;
+  position: absolute;
+  top: 0;
+  padding-top: 40px;
+  width: 115px;
+}
+
+.garagescore-nav-tab-list {
+  list-style: none;
+  padding: 0;
+}
+.garagescore-nav-tab-list li {
+  margin-bottom: 10px;
+}
+
+.garagescore-nav-tab-list-item:hover {
+  background: #808080;
+  cursor: pointer;
+}
+
+.garagescore-nav-tab-list-item a {
+  color: #808080;
+  display: block;
+  padding: 8px;
+}
+
+.garagescore-nav-tab-list-item a:hover {
+  color: #eee;
+  text-decoration: none;
+}
+
+.garagescore-nav-tab-list-item a:focus {
+  color: #fff;
+  outline: 0;
+  text-decoration: none;
+}
+
+.garagescore-nav-tab-list-item a:visited {
+  text-decoration: none;
+}
+
+.garagescore-nav-tab-list-item.current {
+  background: #64b7cb;
+  color: #fff;
+}
+
+
+.garagescore-nav-tab-list-item.current a {
+  color: #fff;
+}
+
+.garagescore-nav-tab-list-item.current a:hover {
+  color: #fff;
+}
+
+.garagescore-nav-tab-title {
+  font-family: 'Roboto', sans-serif;
+}
+
+.garagescore-nav-tab-icon {
+  display: block;
+  font-size: 26px;
+}
+
+.garagescore-nav-info {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: auto;
+}
+
+.garagescore-nav-info .garagescore-logo {
+  padding: 0.25em;
+}
+
+.garagescore-signinbox {
+  background-color: #111; /* GarageScore Dark Black */
+  border: 1px solid;
+  border-color: #575757; /* GarageScore Light Black */
+  color: #fff;
+  padding: 16px;
+  margin-top: 60px;
+}
+
+.garagescore-panel {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.bime-dashboard {
+  border: 0;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  padding-top: 40px;
+  width: 100%;
+}
+.garagescore-nav-info-copyright {
+  position: absolute;
+  left: 10px;
+  bottom: 15px;
+  color: #eee;
+  font-size: 10px;
+}
+button:disabled,
+button[disabled] {
+  border: 1px solid #999999 !important;
+  background-color: #cccccc !important;
+  color: #666666 !important;
+}
+
+/* Absolute Center Spinner 
+https://codepen.io/MattIn4D/pen/LiKFC
+<div class="overlay-loading"><div class="centered-loading"></div></div>
+*/
+.overlay-loading {position: fixed;top: 0;left: 0;height: 100%;width: 100%;z-index: 10;background-color: rgba(255,255,255,0.5);}
+.centered-loading{position:fixed;z-index:999;height:2em;width:2em;overflow:show;margin:auto;top:0;left:0;bottom:0;right:0}
+.centered-loading:before{content:'';display:block;position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,.3)}
+.centered-loading:not(:required){font:0/0 a;color:transparent;text-shadow:none;background-color:transparent;border:0}
+.centered-loading:not(:required):after{content:'';display:block;font-size:10px;width:1em;height:1em;margin-top:-.5em;-webkit-animation:spinner 1.5s infinite linear;-moz-animation:spinner 1.5s infinite linear;-ms-animation:spinner 1.5s infinite linear;-o-animation:spinner 1.5s infinite linear;animation:spinner 1.5s infinite linear;border-radius:.5em;-webkit-box-shadow:rgba(0,0,0,.75) 1.5em 0 0 0,rgba(0,0,0,.75) 1.1em 1.1em 0 0,rgba(0,0,0,.75) 0 1.5em 0 0,rgba(0,0,0,.75) -1.1em 1.1em 0 0,rgba(0,0,0,.5) -1.5em 0 0 0,rgba(0,0,0,.5) -1.1em -1.1em 0 0,rgba(0,0,0,.75) 0 -1.5em 0 0,rgba(0,0,0,.75) 1.1em -1.1em 0 0;box-shadow:rgba(0,0,0,.75) 1.5em 0 0 0,rgba(0,0,0,.75) 1.1em 1.1em 0 0,rgba(0,0,0,.75) 0 1.5em 0 0,rgba(0,0,0,.75) -1.1em 1.1em 0 0,rgba(0,0,0,.75) -1.5em 0 0 0,rgba(0,0,0,.75) -1.1em -1.1em 0 0,rgba(0,0,0,.75) 0 -1.5em 0 0,rgba(0,0,0,.75) 1.1em -1.1em 0 0}@-webkit-keyframes spinner{0%{-webkit-transform:rotate(0);-moz-transform:rotate(0);-ms-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-moz-keyframes spinner{0%{-webkit-transform:rotate(0);-moz-transform:rotate(0);-ms-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-o-keyframes spinner{0%{-webkit-transform:rotate(0);-moz-transform:rotate(0);-ms-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes spinner{0%{-webkit-transform:rotate(0);-moz-transform:rotate(0);-ms-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}

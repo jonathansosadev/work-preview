@@ -1,0 +1,218 @@
+
+{% extends "_master.nunjucks" %}
+{% block content %}
+<style type="text/css">
+
+#banner {
+{% if css.background == 'false' %}
+{% if type == 'group' %}
+  background-image: url("{{ lib.client.latestStaticUrl(svgPath) }}");
+{% else %}
+  background-image: url("{{ lib.client.latestStaticUrl(svgPath) }}");
+{% endif %}
+{% else %}
+{% if type == 'group' %}
+  background-image: url("{{ lib.client.latestStaticUrl(svgPath) }}");
+{% else %}
+  background-image: url("{{ lib.client.latestStaticUrl(svgPath) }}");
+{% endif %}
+{% endif %}
+
+{%- if size == 'xsmall' %} background-size: 105px 212px;
+  -o-background-size: 105px 212px;
+  -webkit-background-size: 105px 212px;
+  width: 105px;
+  height: 212px;
+
+{%- elif size == 'small' %} background-size: 125px 252px;
+  -o-background-size: 125px 252px;
+  -webkit-background-size: 125px 252px;
+  width: 125px;
+  height: 252px;
+
+{%- elif size == 'large' %} background-size: 175px 353px;
+  -o-background-size: 175px 353px;
+  -webkit-background-size: 175px 353px;
+  width: 175px;
+  height: 353px;
+
+{%- elif size == 'xlarge' %} background-size: 195px 393px;
+  -o-background-size: 195px 393px;
+  -webkit-background-size: 195px 393px;
+  width: 195px;
+  height: 393px;
+
+{%- else %} background-size: 155px 313px;
+  -o-background-size: 155px 313px;
+  -webkit-background-size: 155px 313px;
+  width: 155px;
+  height: 313px;
+{%- endif %}
+{% if css.background == 'false' %}
+  background-size: cover;
+  background-position: top;
+{% endif %}
+}
+#rating {
+	position: relative;
+	display: block;
+	text-align: center;
+	padding-top: 85%;
+	width: 100%;
+	height: 16%;
+	font-weight: bolder;
+  {% if css.background == 'false' %}
+    color: #666;
+  {% endif %}
+
+  {%- if size == 'xsmall' %}
+  font-size: 14px;
+  {%- elif size == 'small' %}
+  font-size: 18px;
+  {%- elif size == 'large' %}
+  font-size: 26px;
+  {%- elif size == 'xlarge' %}
+  font-size: 29px;
+  {%- else %}
+  font-size: 23px;
+  {%- endif %}
+
+}
+#rating span {
+  {%- if size == 'xsmall' %}
+  font-size: 22px;
+  {%- elif size == 'small' %}
+  font-size: 29px;
+  {%- elif size == 'medium' %}
+  font-size: 34px;
+  {%- elif size == 'xlarge' %}
+  font-size: 50px;
+  {%- else %}
+  font-size: 43px;
+  {%- endif %}
+}
+#stars {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 10%;
+	padding-top: 3%;
+}
+#stars img {
+	display: inline-block;
+	margin-right: 1%;
+	width: 12%;
+}
+#star1 {
+	margin-left: 12%;
+}
+#detailText {
+  position: absolute;
+  height: 100%;
+  color: black;
+  margin: 0;
+  {%- if size == 'xsmall' %}
+    top: 39px;
+    font-size: 8px;
+    text-align: center;
+    width: 100%;
+  {%- elif size == 'small' %}
+    top: 46px;
+    font-size: 9px;
+    text-align: center;
+    width: 100%;
+  {%- elif size == 'medium' %}
+    top: 55px;
+    font-size: 11px;
+    text-align: center;
+    width: 100%;
+  {%- elif size == 'large' %}
+    top: 65px;
+    font-size: 13px;
+    text-align: center;
+    width: 100%;
+  {%- elif size == 'xlarge' %}
+    top: 74px;
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
+  {%- else %}
+    top: 59px;
+    font-size: 11px;
+    text-align: center;
+    width: 100%;
+  {%- endif %}
+}
+#respondentsCount {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 15%;
+	padding-top: 8%;
+}
+#respondentsCount a {
+	display: block;
+	margin: auto;
+	width: 90%;
+	color: black;
+	text-decoration: underline;
+	text-align: center;
+{% if not type == 'group' %}
+  cursor: pointer;
+{% endif %}
+	line-height: 20px;
+	font-weight: bold;
+	{%- if size == 'xsmall' %}
+	line-height: 14px;
+	font-size: 12px;
+{%- if locale == 'es' %}
+  font-size: 8px;
+{%- endif %}
+	{%- elif size == 'small' %}
+	line-height: 14px;
+	font-size: 14px;
+{%- if locale == 'es' %}
+  font-size: 10px;
+{%- endif %}
+	{%- elif size == 'large' %}
+	font-size: 18px;
+{%- if locale == 'es' %}
+  font-size: 14px;
+{%- endif %}
+	{%- elif size == 'xlarge' %}
+	font-size: 20px;
+{%- if locale == 'es' %}
+  font-size: 16px;
+{%- endif %}
+	{%- else %}
+	font-size: 16px;
+{%- if locale == 'es' %}
+  font-size: 12px;
+{%- endif %}
+	{%- endif %}
+}
+@media only screen and (min-width: 658px) {
+
+}
+</style>
+<div id="banner">
+<div id="rating"><span>{{ frenchRating }}</span>/10</div>
+{% include "_stars.nunjucks" %}
+<div id="respondentsCount">
+  {% if type == 'group' %}
+    <a>
+      {{ reviewsText }}
+    </a>
+  {% else %}
+    <a target="_blank" {%- if url %}href="{{ url }}" onclick="{{onclick}}"{%- endif %}>
+      {{ reviewsText }}
+    </a>
+  {% endif %}
+  <p id="detailText">
+    {{ detailTextOne }}
+    <br>
+    {{ detailTextTwo }}
+  </p>
+</div>
+</div>
+{% endblock %}

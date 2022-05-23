@@ -1,0 +1,300 @@
+{
+  "M_M":  {
+    "value": "M_M",
+    "properties": {
+      "active": true,
+      "dataTypeSource": "Maintenance",
+      "checkLastEvent": {"name": "lastLeadAt", "delay": 90},
+      "leadDataType": "AUTOMATION_MAINTENANCE",
+      "historicNeededInMonth": ["Maintenance", 11],
+      "subscriptionsNeeded": [["Maintenance", "AutomationApv"]],
+      "frequency": "DAILY"
+    }
+  },
+  "M_NVS": {
+    "value": "M_NVS",
+    "properties": {
+      "active": false,
+      "dataTypeSource": "NewVehicleSale",
+      "checkLastEvent": {"name": "lastLeadAt", "delay": 90},
+      "leadDataType": "AUTOMATION_MAINTENANCE",
+      "historicNeededInMonth": ["NewVehicleSale", 11],
+      "subscriptionsNeeded": [["Maintenance", "AutomationApv"], ["NewVehicleSale", "AutomationVn"]],
+      "frequency": "DAILY"
+    }
+  },
+  "M_UVS": {
+    "value": "M_UVS",
+    "properties": {
+      "active": true,
+      "dataTypeSource": "UsedVehicleSale",
+      "checkLastEvent": {"name": "lastLeadAt", "delay": 90},
+      "leadDataType": "AUTOMATION_MAINTENANCE",
+      "historicNeededInMonth": ["UsedVehicleSale", 11],
+      "subscriptionsNeeded": [["Maintenance", "AutomationApv"], ["UsedVehicleSale", "AutomationVo"]],
+      "frequency": "DAILY"
+    }
+  },
+  "VS_M_6":  {
+    "value": "VS_M_6",
+    "properties": {
+      "active": true,
+      "dataTypeSource": "Maintenance",
+      "checkLastEvent": {"name": "lastLeadAt", "delay": 365},
+      "leadDataType": "AUTOMATION_VEHICLE_SALE",
+      "historicNeededInMonth": ["Maintenance", 6],
+      "subscriptionsNeeded": [["UsedVehicleSale", "AutomationVo", "NewVehicleSale", "AutomationVn"], ["Maintenance", "AutomationApv"]],
+      "frequency": "DAILY"
+    }
+  },
+  "VS_NVS_18": {
+    "value": "VS_NVS_18",
+    "properties": {
+      "active": false,
+      "dataTypeSource": "NewVehicleSale",
+      "checkLastEvent": {"name": "lastLeadAt", "delay": 365},
+      "leadDataType": "AUTOMATION_VEHICLE_SALE",
+      "historicNeededInMonth": ["NewVehicleSale", 18],
+      "subscriptionsNeeded": [["NewVehicleSale", "AutomationVn"]],
+      "frequency": "DAILY"
+    }
+  },
+  "VS_UVS_18": {
+    "value": "VS_UVS_18",
+    "properties": {
+      "active": true,
+      "dataTypeSource": "UsedVehicleSale",
+      "checkLastEvent": {"name": "lastLeadAt", "delay": 365},
+      "leadDataType": "AUTOMATION_VEHICLE_SALE",
+      "historicNeededInMonth": ["UsedVehicleSale", 18],
+      "subscriptionsNeeded": [["UsedVehicleSale", "AutomationVo"]],
+      "frequency": "DAILY"
+    }
+  },
+  "M_M_14":  {
+    "value": "M_M_14",
+    "properties": {
+      "active": true,
+      "dataTypeSource": "Maintenance",
+      "checkLastEvent": {"name": "lastConvertedAt", "delay": 90},
+      "leadDataType": "AUTOMATION_MAINTENANCE",
+      "historicNeededInMonth": ["Maintenance", 14],
+      "subscriptionsNeeded": [["Maintenance", "AutomationApv"]],
+      "frequency": "DAILY"
+    }
+  },
+  "M_NVS_14": {
+    "value": "M_NVS_14",
+    "properties": {
+      "active": false,
+      "dataTypeSource": "NewVehicleSale",
+      "checkLastEvent": {"name": "lastConvertedAt", "delay": 90},
+      "leadDataType": "AUTOMATION_MAINTENANCE",
+      "historicNeededInMonth": ["NewVehicleSale", 14],
+      "subscriptionsNeeded": [["Maintenance", "AutomationApv"], ["NewVehicleSale", "AutomationVn"]],
+      "frequency": "DAILY"
+    }
+  },
+  "M_UVS_14": {
+    "value": "M_UVS_14",
+    "properties": {
+      "active": true,
+      "dataTypeSource": "UsedVehicleSale",
+      "checkLastEvent": {"name": "lastConvertedAt", "delay": 90},
+      "leadDataType": "AUTOMATION_MAINTENANCE",
+      "historicNeededInMonth": ["UsedVehicleSale", 14],
+      "subscriptionsNeeded": [["Maintenance", "AutomationApv"], ["UsedVehicleSale", "AutomationVo"]],
+      "frequency": "DAILY"
+    }
+  },
+  "M_M_23":  {
+    "value": "M_M_23",
+    "properties": {
+      "active": true,
+      "dataTypeSource": "Maintenance",
+      "checkLastEvent": {"name": "lastLeadAt", "delay": 90},
+      "leadDataType": "AUTOMATION_MAINTENANCE",
+      "historicNeededInMonth": ["Maintenance", 23],
+      "subscriptionsNeeded": [["Maintenance", "AutomationApv"]],
+      "frequency": "DAILY"
+    }
+  },
+  "M_NVS_23": {
+    "value": "M_NVS_23",
+    "properties": {
+      "active": false,
+      "dataTypeSource": "NewVehicleSale",
+      "checkLastEvent": {"name": "lastLeadAt", "delay": 90},
+      "leadDataType": "AUTOMATION_MAINTENANCE",
+      "historicNeededInMonth": ["NewVehicleSale", 23],
+      "subscriptionsNeeded": [["Maintenance", "AutomationApv"], ["NewVehicleSale", "AutomationVn"]],
+      "frequency": "DAILY"
+    }
+  },
+  "M_UVS_23": {
+    "value": "M_UVS_23",
+    "properties": {
+      "active": true,
+      "dataTypeSource": "UsedVehicleSale",
+      "checkLastEvent": {"name": "lastLeadAt", "delay": 90},
+      "leadDataType": "AUTOMATION_MAINTENANCE",
+      "historicNeededInMonth": ["UsedVehicleSale", 23],
+      "subscriptionsNeeded": [["Maintenance", "AutomationApv"], ["UsedVehicleSale", "AutomationVo"]],
+      "frequency": "DAILY"
+    }
+  },
+  "VS_M_12":  {
+    "value": "VS_M_12",
+    "properties": {
+      "active": true,
+      "dataTypeSource": "Maintenance",
+      "checkLastEvent": {"name": "lastLeadAt", "delay": 365},
+      "leadDataType": "AUTOMATION_VEHICLE_SALE",
+      "historicNeededInMonth": ["Maintenance", 12],
+      "subscriptionsNeeded": [["UsedVehicleSale", "AutomationVo", "NewVehicleSale", "AutomationVn"], ["Maintenance", "AutomationApv"]],
+      "frequency": "DAILY"
+    }
+  },
+  "VS_NVS_24": {
+    "value": "VS_NVS_24",
+    "properties": {
+      "active": false,
+      "dataTypeSource": "NewVehicleSale",
+      "checkLastEvent": {"name": "lastLeadAt", "delay": 365},
+      "leadDataType": "AUTOMATION_VEHICLE_SALE",
+      "historicNeededInMonth": ["NewVehicleSale", 24],
+      "subscriptionsNeeded": [["NewVehicleSale", "AutomationVn"]],
+      "frequency": "DAILY"
+    }
+  },
+  "VS_UVS_24": {
+    "value": "VS_UVS_24",
+    "properties": {
+      "active": true,
+      "dataTypeSource": "UsedVehicleSale",
+      "checkLastEvent": {"name": "lastLeadAt", "delay": 365},
+      "leadDataType": "AUTOMATION_VEHICLE_SALE",
+      "historicNeededInMonth": ["UsedVehicleSale", 24],
+      "subscriptionsNeeded": [["UsedVehicleSale", "AutomationVo"]],
+      "frequency": "DAILY"
+    }
+  },
+  "M_M_26":  {
+    "value": "M_M_26",
+    "properties": {
+      "active": true,
+      "dataTypeSource": "Maintenance",
+      "checkLastEvent": {"name": "lastConvertedAt", "delay": 90},
+      "leadDataType": "AUTOMATION_MAINTENANCE",
+      "historicNeededInMonth": ["Maintenance", 26],
+      "subscriptionsNeeded": [["Maintenance", "AutomationApv"]],
+      "frequency": "DAILY"
+    }
+  },
+  "M_NVS_26": {
+    "value": "M_NVS_26",
+    "properties": {
+      "active": false,
+      "dataTypeSource": "NewVehicleSale",
+      "checkLastEvent": {"name": "lastConvertedAt", "delay": 90},
+      "leadDataType": "AUTOMATION_MAINTENANCE",
+      "historicNeededInMonth": ["NewVehicleSale", 26],
+      "subscriptionsNeeded": [["Maintenance", "AutomationApv"], ["NewVehicleSale", "AutomationVn"]],
+      "frequency": "DAILY"
+    }
+  },
+  "M_UVS_26": {
+    "value": "M_UVS_26",
+    "properties": {
+      "active": true,
+      "dataTypeSource": "UsedVehicleSale",
+      "checkLastEvent": {"name": "lastConvertedAt", "delay": 90},
+      "leadDataType": "AUTOMATION_MAINTENANCE",
+      "historicNeededInMonth": ["UsedVehicleSale", 26],
+      "subscriptionsNeeded": [["Maintenance", "AutomationApv"], ["UsedVehicleSale", "AutomationVo"]],
+      "frequency": "DAILY"
+    }
+  },
+  "M_M_35":  {
+    "value": "M_M_35",
+    "properties": {
+      "active": true,
+      "dataTypeSource": "Maintenance",
+      "checkLastEvent": {"name": "lastLeadAt", "delay": 90},
+      "leadDataType": "AUTOMATION_MAINTENANCE",
+      "historicNeededInMonth": ["Maintenance", 35],
+      "subscriptionsNeeded": [["Maintenance", "AutomationApv"]],
+      "frequency": "DAILY"
+    }
+  },
+  "M_NVS_35": {
+    "value": "M_NVS_35",
+    "properties": {
+      "active": false,
+      "dataTypeSource": "NewVehicleSale",
+      "checkLastEvent": {"name": "lastLeadAt", "delay": 90},
+      "leadDataType": "AUTOMATION_MAINTENANCE",
+      "historicNeededInMonth": ["NewVehicleSale", 35],
+      "subscriptionsNeeded": [["Maintenance", "AutomationApv"], ["NewVehicleSale", "AutomationVn"]],
+      "frequency": "DAILY"
+    }
+  },
+  "M_UVS_35": {
+    "value": "M_UVS_35",
+    "properties": {
+      "active": true,
+      "dataTypeSource": "UsedVehicleSale",
+      "checkLastEvent": {"name": "lastLeadAt", "delay": 90},
+      "leadDataType": "AUTOMATION_MAINTENANCE",
+      "historicNeededInMonth": ["UsedVehicleSale", 35],
+      "subscriptionsNeeded": [["Maintenance", "AutomationApv"], ["UsedVehicleSale", "AutomationVo"]],
+      "frequency": "DAILY"
+    }
+  },
+  "VS_M_11": {
+    "value": "VS_M_11",
+    "properties": {
+      "active": true,
+      "dataTypeSource": "Maintenance",
+      "checkLastEvent": {"name": "lastLeadAt", "delay": 365},
+      "leadDataType": "AUTOMATION_VEHICLE_SALE",
+      "historicNeededInMonth": [],
+      "subscriptionsNeeded": [["UsedVehicleSale", "AutomationVo", "NewVehicleSale", "AutomationVn"],["Maintenance", "AutomationApv"]],
+      "frequency": "DAILY"
+    }
+  },
+  "COVID":  {
+    "value": "COVID",
+    "properties": {
+      "active": false,
+      "dataTypeSource": "Maintenance",
+      "checkLastEvent": [],
+      "leadDataType": "AUTOMATION_VEHICLE_SALE",
+      "historicNeededInMonth": [],
+      "subscriptionsNeeded": [["NewVehicleSale", "AutomationVn", "UsedVehicleSale", "AutomationVo"]],
+      "frequency": "ONESHOT"
+    }
+  },
+  "COVID1": {
+    "value": "COVID1",
+    "properties": {
+      "active": false,
+      "dataTypeSource": "Maintenance",
+      "checkLastEvent": [],
+      "leadDataType": "AUTOMATION_VEHICLE_SALE",
+      "historicNeededInMonth": [],
+      "frequency": "ONESHOT"
+    }
+  },
+  "COVID2":  {
+    "value": "COVID2",
+    "properties": {
+      "active": false,
+      "dataTypeSource": "Maintenance",
+      "checkLastEvent": [],
+      "leadDataType": "AUTOMATION_VEHICLE_SALE",
+      "historicNeededInMonth": [],
+      "frequency": "ONESHOT"
+    }
+  }
+}

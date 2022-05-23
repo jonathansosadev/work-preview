@@ -1,0 +1,28 @@
+{
+  "initial:before": {},
+  "initial": {
+    "compression": {},
+    "cors": {
+      "params": {
+        "origin": true,
+        "credentials": true,
+        "maxAge": 86400
+      }
+    }
+  },
+  "session": {},
+  "auth": {
+    "./users-access-handler": {}
+  },
+  "parse": {
+    "body-parser#json": {
+      "params" : {
+        "limit" : "50mb"
+      }
+    }
+  },
+  "routes": {},
+  "final:after": {
+    "./error-handler.js": {}
+  }
+}

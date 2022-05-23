@@ -1,0 +1,220 @@
+{% extends "../common/layouts/darkbo.nunjucks" %} 
+{% block css %}
+<style type="text/css">
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+  select, button {
+    color: black;
+  }
+  * {
+    box-sizing: border-box;
+  }
+
+  .garages-list {
+    margin-top: 0;
+    margin-botom: 0;
+    width: 60%;
+  }
+
+  table {
+    border-collapse: collapse;
+    text-align: left;
+    width: 100%;
+  }
+  table tr {
+    border-bottom: 1px solid
+  }
+  table th, table td {
+    padding: 10px 20px;
+  }
+  .colleft {
+    background: #545454;
+    color:white;
+  }
+  .rowtop {
+    background: #444;
+    color:white;
+  }
+  .percentage {
+    font-size: 16px;
+    margin-right: 5px;
+  }
+  .danger {
+    color: red;
+  }
+  .success {
+    color: green;
+  }
+  .warning {
+    color: orange;
+  }
+</style>
+{% endblock %} {% block page %}{% raw %}
+<div class="page-header">
+  <h1>List des derniers jobs</h1>
+  <h2>☢ destiné à être utilisé pour les recettes ☢</h2>
+</div>
+<div class="col-md-12" id="app">
+ 
+  <div>
+    <label for="jobId">Rechercher et executer ASAP par un jobId</label>
+    <input type="text" id="jobId" v-model="jobId" placeholder="ex: AUTOMATION_CREATE_TICKET_ccc4dc134fdb91ddf1cc36775f9e51b541bf59ba">
+    <button class="btn btn-danger" type="button" :disabled="jobId === ''" @click="execute(jobId)">Execute</button>
+  </div>
+
+  <div>
+    <label>Afficher les jobs par type</label>
+    <select v-model="selectType" @change="onChange($event)">
+      <option v-for="(type, index) in types" :value="type" :key="index">{{ type }}</option>
+    </select>
+  </div>
+            
+  <h4>jobs</h4>
+  <table class="table table-condensed" style="border: white 1px solid">
+    <thead>
+      <tr>
+        <td>type</td>
+        <td>extra infos</td>
+        <td>status</td>
+        <td>scheduledAt</td>
+        <td>Action</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(job, index) in jobList">
+        <td>
+          {{ job.type }}  
+        </td>
+        <td>
+          <!--display more infos here-->
+          <span>
+            jobId: {{ job._id }}<br />
+          </span>
+          <span v-if="job.payload && job.payload.customerId">
+            customerId: {{ job.payload && job.payload.customerId }}<br />
+          </span>
+          <span v-if="job.payload && job.payload.emailList && job.payload.emailList.length > 0">
+            email: {{ job.payload && job.payload.emailList.join(', ') }}<br />
+          </span>
+          <span v-if="job.payload && job.payload.phoneList && job.payload.phoneList.length > 0">
+            phone: {{ job.payload && job.payload.phoneList.join(', ') }}<br />
+          </span>
+          <span v-if="job.type === 'START_EXPORT' && job.payload ">
+            <span v-if="job.createdAt">
+              createdAt: {{ job.createdAt }}<br />
+            </span>
+            <span v-if="job.payload.exportType">
+              exportType: {{ job.payload.exportType }}<br />
+            </span>
+            <span v-if="job.payload.periodId">
+              periodId: {{ job.payload.periodId }}<br />
+            </span>
+            <span v-if="job.payload.startPeriodId && job.payload.endPeriodId">
+              periodInterval: {{ job.payload.startPeriodId }} - {{ job.payload.endPeriodId }} <br />
+            </span>
+            <span v-if="job.payload.exportName">
+              exportName: {{ job.payload.exportName }}<br />
+            </span>
+            <span v-if="job.payload.recipients">
+              recipients: {{ job.payload.recipients.join(', ')}}<br />
+            </span>
+            <span v-if="job.payload.dataTypes">
+              dataTypes: {{ job.payload.dataTypes.join(', ')}}<br />
+            </span>
+          </span>
+        </td>
+        <td>
+          <span :class="{ 'success': job.status === 'DONE', 'warning': job.status === 'WAITING' }" >
+            {{ job.status }}
+          </span>
+        </td>
+        <td>
+          {{ job.scheduledAtAsDate }}  
+        </td>
+        <td>
+          <button class="btn btn-danger" :disabled="job.status !== 'WAITING'" type="button" @click="execute(job._id)">Execute</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    <button v-if="!loading" class="btn btn-default" type="button" @click="more()">Afficher plus</button>
+    <button v-else class="btn btn-default" type="button" disabled>Récupération en cours...</button>
+  </div>
+
+</div>
+{% endraw %}{% endblock %} {% block scripts %}
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+
+  document.addEventListener("DOMContentLoaded", function () {
+
+    new Vue({
+      el: '#app',
+      data: {
+        jobList: [],
+        types: [],
+        selectType: null,
+        jobId: "",
+        loading: false,
+      },
+      async mounted() {
+        await this.retrieveJobs();
+        await this.getTypes();
+      },
+
+      methods: {
+        async onChange(event) {
+            await this.retrieveJobs(event.target.value);
+        },
+        async retrieveJobs(type, jobId) {
+          try {
+            const res = await axios.post('{{ lib.client.url.getUrl('ADMIN_JOBS_LIST') }}', {type, jobId});
+            this.jobList = res.data;
+          } catch (e) {
+            console.log(e);
+          }
+        },
+        async getTypes() {
+          try {
+            const res = await axios.get('{{ lib.client.url.getUrl('ADMIN_JOBS_TYPES') }}');
+            this.types = res.data;
+          } catch (e) {
+            console.log(e);
+          }
+        },
+        async execute(jobId) {
+          try {
+            const res = await axios.post('{{ lib.client.url.getUrl('ADMIN_JOBS_EXECUTE') }}', { jobId });
+            this.jobId = "";
+            await this.retrieveJobs(this.selectType);
+            alert(res.data);
+          } catch (e) {
+            console.log(e);
+          }
+        },
+        async more() {
+          if (this.jobList.length && this.jobList.length > 0) {
+            this.loading = true;
+            const lastJobId = this.jobList[this.jobList.length - 1];
+            const res = await axios.post('{{ lib.client.url.getUrl('ADMIN_JOBS_MORE') }}', { type: this.selectType, scheduledAt: lastJobId.scheduledAt });
+            this.jobList = [...this.jobList, ...res.data]
+            this.loading = false;
+          }
+        },
+      }
+    });
+  });
+
+</script>
+
+{% endblock %}

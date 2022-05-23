@@ -1,0 +1,251 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+  <style type="text/css">
+    #app {
+      align-item: center;
+    }
+    div.section {
+      margin-top: 20px;
+    }
+
+    .modal-mask {
+      position: fixed;
+      z-index: 9998;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, .5);
+      display: table;
+      transition: opacity .3s ease;
+    }
+    .modal-wrapper {
+      display: table-cell;
+      vertical-align: middle;
+    }
+    .modal-container {
+      width: 300px;
+      margin: 0px auto;
+      padding: 20px 30px;
+      background-color: #fff;
+      border-radius: 2px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+      transition: all .3s ease;
+      font-family: Helvetica, Arial, sans-serif;
+    }
+    .modal-header h3 {
+      margin-top: 0;
+      color: #42b983;
+    }
+    .modal-body {
+      margin: 0;
+      padding: 0;
+    }
+    .modal-default-button {
+      float: right;
+    }
+    .center-col {
+      text-align: center;
+    }
+    .modal-email .modal-body {
+      margin: 0;
+    }
+    .modal-email .modal-header {
+      padding: 0;
+      border: 0;
+    }
+    .modal-email .modal-container {
+      padding: 0;
+    }
+    .modal-email .row {
+      margin: 0;
+      padding-right: 6px;
+    }
+    .modal-enter, .modal-leave {
+      opacity: 0;
+    }
+    .modal-enter .modal-container,
+    .modal-leave .modal-container {
+      -webkit-transform: scale(1.1);
+      transform: scale(1.1);
+    }
+
+    iframe {
+      border: 0;
+      width: 100%;
+      margin: auto;
+      height: auto;
+      display: block;
+      background: none;
+      background: white;
+    }
+    #subjectFrame {
+      display: none;
+      background: white;
+      color: black;
+      text-align: left;
+      padding: 0 8px;
+      /*border: 1px solid grey;*/
+      width: 100%;
+      margin: auto;
+      /*border-top: 5px solid white;*/
+      border-bottom: 1px solid black;
+    }
+    th, td {
+      padding: 5px;
+    }
+  </style>
+{% endblock %}
+{% block page %}
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="page-header col-md-8">
+      {% block pageTitle %}
+        <h1>Monitoring et validation des synthèses mensuelles</h1>
+      {% endblock %}
+    </div>
+  </div>
+  <div class="col-md-2"></div>
+  <div id="app" class="col-md-8">
+    {% raw %}
+      <div class="overlay-loading" v-if="loading"><div class="centered-loading"></div></div>
+    {% endraw %}
+    <div class="row">
+      {% raw %}
+        Dernière synthèse mensuelle envoyée pour le mois de {{ dateLastSend }} à {{ nSummariesSent }} Users
+      {% endraw %}
+    </div>
+    {% raw %}
+      <div class="row section" v-if="sentSummariesList.length">
+        <table class="table-bordered">
+          <tr>
+            <th>reportId</th>
+            <th>Email user</th>
+            <th>user id</th>
+            <th>Email envoyé</th>
+            <th>SMS envoyé</th>
+            <th>Lien vers le rapport</th>
+          </tr>
+          <tr v-for="sentSummary in sentSummariesList">
+            <td>{{ sentSummary.reportId }}</td>
+            <td>{{ sentSummary.userEmail }}</td>
+            <td>{{ sentSummary.userId }}</td>
+            <td>
+              <button v-if="sentSummary.sentEmail" class="btn btn-primary" @click="viewContact(sentSummary.sentEmail)">Voir l'Email</button>
+            </td>
+            <td>
+              <button v-if="sentSummary.sentSMS" class="btn btn-primary" @click="viewContact(sentSummary.sentSMS)">Voir le SMS</button>
+            </td>
+            <td><a :href="sentSummary.reportLink" target="_blank">Voir le rapport</a></td>
+          </tr>
+        </table>
+      </div>
+      <div class="row section">
+        <button class="btn btn-success pull-right" v-if="!isValidated" @click="validateMonthlySummary">GO !!!! {{ dateLastSend }} </button>
+        <span v-else>La synthèse mensuelle de {{ dateLastSend }} est déjà validée</span>
+      </div>
+    {% endraw %}
+
+    <modal :show.boolean="showContact" :close-modal="closeContact" :modal-width="900" class="modal-email">
+      <div slot="body">
+        <div id="subjectFrame"><b>Sujet : </b><span id="emailSubject"></span></div>
+        <iframe id="emailFrame" style="height: 550px;"></iframe>
+      </div>
+    </modal>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  {% include "../common/components/_vue-modal.nunjucks" %}
+  <script type="text/javascript">
+    function escapeHtml(unsafe) {
+      if(!unsafe) return;
+      return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      /* global Vue:true */
+      // init Vue
+      new Vue({
+        el: '#app',
+        data: {
+          showContact: false,
+          loading: false,
+          month: {{ month | safe }},
+          year: {{ year | safe }},
+          nSummariesSent: {{ nSummariesSent | safe }},
+          sentSummariesList: {{ sentSummariesList | safe }},
+          isValidated: {{ isValidated | safe }},
+        },
+        computed: {
+          dateLastSend() {
+            const months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+            return `${months[this.month]} ${this.year}`;
+          }
+        },
+        methods: {
+          async validateMonthlySummary() {
+            const baseUrl = '{{ lib.client.url.getShortUrl('ADMIN_MONITORING_MONTHLY_SUMMARY_VALIDATE') }}';
+            const queryString = `?month=${this.month}&year=${this.year}`;
+            try {
+              const res = await axios.get(baseUrl + queryString);
+              if (res && res.status === 200) {
+                alert(`Le go est donné pour les synthèses de ${this.dateLastSend}`);
+              } else {
+                const message = res && res.errorMsg || 'Unknown error';
+                alert(message);
+              }
+            } catch (err) {
+              console.error(err);
+              alert('Erreur, regarder la console pour voir le détail');
+            }
+          },
+          viewContact(contactId, type) {
+            var request = new XMLHttpRequest();
+            var url = '{{ lib.client.url.getShortUrl('ADMIN_CONTACT_RENDERER') }}' + contactId;
+            request.open('GET', url, true);
+            request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+            request.send();
+            this.loading = true;
+            request.onload = function () {
+              this.loading = false;
+              if (request.status !== 200 && request.status !== 304) {
+                this.errorMsg = "Erreur sur le serveur";
+              } else {
+                var res = JSON.parse(request.responseText);
+                this.showContent(res, type);
+                this.showContact = true;
+              }
+            }.bind(this);
+          },
+          showContent(content, type) {
+            if (!type) {
+              type = 'html'
+            }
+            var iframeEle = document.getElementById("emailFrame");
+            var iframeDoc = iframeEle.contentWindow.document;
+            iframeDoc.open();
+            iframeDoc.write(content.body || content.htmlBody);
+            iframeDoc.close();
+            document.getElementById("emailSubject").innerHTML = escapeHtml(content.subject);
+            document.getElementById("subjectFrame").style.display = content.subject ? 'block' : 'none';
+          },
+          closeContact() {
+            this.showContact = false;
+            var iframeEle = document.getElementById("emailFrame");
+            var iframeDoc = iframeEle.contentWindow.document;
+            iframeDoc.open();
+            iframeDoc.write('');
+            iframeDoc.close();
+            document.getElementById("emailSubject").innerHTML = "";
+          },
+        }
+      });
+    });
+  </script>
+{% endblock %}

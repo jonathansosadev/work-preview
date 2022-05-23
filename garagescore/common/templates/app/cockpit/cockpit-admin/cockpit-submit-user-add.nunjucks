@@ -1,0 +1,36 @@
+<html>
+<head>
+  <style>
+    .success {
+      margin-top: 20px;
+      width: 100%;
+      text-align: center;
+      color: #969696;
+    }
+    a.link, a.link:hover {
+      margin-top: 20px;
+      width: 100%;
+      text-align: center;
+      color: #219AB5;
+      text-decoration: none;
+      display: inline-block;
+    }
+    a.link:hover {
+      color: #1a5f77;
+    }
+  </style>
+</head>
+<body>
+{% if err %}
+  <div class="error"> Une erreur s'est produite : {{ err }}</div>
+{% else %}
+  <div class="success"> L'utilisateur vient d'être ajouté avec succès, vous allez être redirigé vers la page d'édition</div>
+  <a class="link" href="{{ lib.client.url.getShortUrl('ADMIN') }}/user?id={{ user.getId() }}">
+    Cliquez ici si vous n'êtes pas redirigé
+  </a>
+{% endif %}
+<script>
+  window.location = "{{ lib.client.url.getShortUrl('ADMIN') }}/user?id={{ user.getId() }}";
+</script>
+</body>
+</html>

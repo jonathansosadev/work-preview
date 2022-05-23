@@ -1,0 +1,25 @@
+{
+  "name": "WidgetGroup",
+  "plural": "WidgetGroups",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "mongodb": {
+    "collection": "widgetGroups"
+  },
+  "http": {
+    "path": "widgetGroup"
+  },
+  "mixins": {
+    "EventEmitter": true,
+    "SmartSort": true
+  },
+  "properties": {
+    "garageIds": {
+      "type": "array",
+      "required": true
+    }
+  },
+  "validations": [],
+  "methods": {}
+}

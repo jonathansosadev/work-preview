@@ -1,0 +1,44 @@
+{
+  "FR_FR": {
+    "value": "fr_FR",
+    "properties": {
+      "language" : "fr"
+    }
+  },
+  "FR_BE": {
+    "value": "fr_BE",
+    "properties": {
+      "language" : "fr"
+    }
+  },
+  "FR_NC": {
+    "value": "fr_NC",
+    "properties": {
+      "language" : "fr"
+    }
+  },
+  "EN_US": {
+    "value": "en_US",
+    "properties": {
+      "language" : "en"
+    }
+  },
+  "ES_ES": {
+    "value": "es_ES",
+    "properties": {
+      "language" : "es"
+    }
+  },
+  "CA_ES": {
+    "value": "ca_ES",
+    "properties": {
+      "language" : "ca"
+    }
+  },
+  "NL_BE": {
+    "value": "nl_BE",
+    "properties": {
+      "language" : "nl"
+    }
+  }
+}

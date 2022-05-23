@@ -1,0 +1,18 @@
+{
+  "NEW_VEHICLE_SALE": {
+    "value": "NewVehicleSale",
+    "properties": {}
+  },
+  "USED_VEHICLE_SALE": {
+    "value": "UsedVehicleSale",
+    "properties": {}
+  },
+  "MAINTENANCE": {
+    "value": "Maintenance",
+    "properties": {}
+  },
+  "UNKNOWN": {
+    "value": "Unknown",
+    "properties": {}
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "name": "DataFile",
+  "plural": "DataFiles",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "mongodb": {
+    "collection": "dataFiles"
+  },
+  "http": {
+    "path": "data-file"
+  },
+  "mixins": {
+    "EventEmitter": true,
+    "Status": true,
+    "Stream": true,
+    "SmartSort": true,
+    "FindWithProjection": true
+  },
+  "properties": {
+    "dataType": {
+      "type": "string"
+    },
+    "beginDate": {
+      "type": "date"
+    },
+    "endDate": {
+      "type": "date"
+    },
+    "fileStore": {
+      "type": "string",
+      "required": true
+    },
+    "filePath": {
+      "type": "string",
+      "required": true
+    },
+    "fileBuffer": {
+      "type": "buffer"
+    },
+    "archived": {
+      "type": "boolean",
+      "default": false
+    },
+    "importSchemaName": {
+      "type": "string",
+      "required": true
+    },
+    "importOptions": {
+      "type": {
+        "filter" : {
+          "type" : "string"
+        }
+      }
+    },
+    "importStatus": {
+      "type": "string"
+    },
+    "importedAt": {
+      "type": "date"
+    },
+    "foreign": {
+      "type": "object"
+    },
+    "noContactableData": {
+      "type": "boolean",
+      "default": false
+    },
+    "hasAutomationData": {
+      "type": "boolean"
+    }
+  },
+  "indexes": {
+    "createdAt_index": {"createdAt": 1}
+  },
+  "validations": [],
+  "relations": {
+    "garage": {
+      "type": "belongsTo",
+      "model": "Garage",
+      "foreignKey": ""
+    }
+  },
+  "acls": [
+  ],
+  "methods": {
+  }
+}

@@ -1,0 +1,31 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block page %}
+  <div class="page-header">
+    <h1>Generation d'accès à l'API</h1>
+  </div>
+  <div class="col-md-12" id="app">
+    <div class="row">
+      <u class="col-md-12">Instructions</u>
+      <p class="col-md-12">F5, c'est tout.</p>
+    </div>
+    <br/>
+    <div style="background-color: whitesmoke; color: #0e0e0e; padding: 20px; width: 50%">
+      <div class="row">
+        <label class="col-xs-4" for="appId">appId</label>
+        <input class="col-xs-7 text-center" id="appId" onClick="this.select();" value="{{ generated.appId }}" />
+      </div>
+      <br/>
+      <div class="row">
+        <label class="col-xs-4" for="appSecret">appSecret</label>
+        <input class="col-xs-7 text-center" id="appSecret" onClick="this.select();" value="{{ generated.appSecret }}" />
+      </div>
+    </div>
+
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script type="text/javascript">
+  </script>
+
+{% endblock %}

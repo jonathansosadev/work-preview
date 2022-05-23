@@ -1,0 +1,65 @@
+$blue: #219ab5;
+$black: #000000;
+$white: #ffffff;
+$very-light-grey: #f8f8f8;
+$grey: #bcbcbc;
+$light-grey: #e0e0e0;
+$dark-grey: #757575;
+$black-grey: lighten($black, 50);
+$green: #00ad6d;
+$bright-green: #00b050;
+$yellow: #f6cc55;
+$yellow-darker: #e9b32f;
+$red: #d04331;
+$light-red: #cb9a9f;
+$orange: #ec5601;
+$golden: #e7b22f;
+$erep-gold: #e9b330;
+$automation-orange: #f36233;
+$xleads-red: #f1334e;
+$mac-n-cheese: #e9b32f; // Was called like that in zeplin
+$greyish-brown: #484848;
+$link-blue: #1155cc;
+$extra-light-grey: #efefef;
+$blue-light: #8fccd9;
+
+$custeedBrandColor: #152543;
+$gsBrandColor: #43b9ad;
+
+$aside-size: 13.7rem;
+$aside-tiny-size: 5rem;
+$aside-mobile-size: 75vw;
+
+$active-cell-color: #f2f2f2;
+
+// --------------
+// @TODO
+// Remove all following variable or rework
+
+// this file is not for all variables project, but variables shared across component.
+// Don't redefine variable.... $light-grey for example...
+
+$separator: 1rem;
+
+$bg-grey: #f5f5f5;
+$light-grey: #d6d6d6;
+$red-light: #f2cac5;
+$dark-orange: #9b3801;
+$gold: #c9984f;
+$gold-light: #f9f4ed;
+$medium-grey: #aaaaaa;
+$light-blue: #e9f5f7;
+
+$KPI-title-size: 1.2rem;
+$KPI-value-size: 2.5rem;
+$KPI-subtitle-size: 0.8rem;
+
+// Smallest size 320px -> iPhone 5/SE
+$breakpoint-max-xs: 479px;
+$breakpoint-min-sm: 480px; // Mobile start
+$breakpoint-max-sm: 767px; // Mobile end
+$breakpoint-min-md: 768px; // Tablet start
+$breakpoint-max-md: 959px; // Tablet end
+$breakpoint-min-lg: 960px; // Desktop start
+$breakpoint-max-lg: 1280px;
+$breakpoint-min-xl: 1281px;

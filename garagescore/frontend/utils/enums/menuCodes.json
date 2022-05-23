@@ -1,0 +1,29 @@
+{
+  "WELCOME": {
+    "value": "menu_welcome"
+  },
+  "SATISFACTION": {
+    "value": "menu_satisfaction"
+  },
+  "UNSATISFIED": {
+    "value": "menu_unsatisfied"
+  },
+  "LEADS": {
+    "value": "menu_leads"
+  },
+  "AUTOMATION": {
+    "value": "menu_automation"
+  },
+  "CONTACTS": {
+    "value": "menu_contacts"
+  },
+  "EREP": {
+    "value": "menu_erep"
+  },
+  "XLEADS": {
+    "value": "menu_cross-leads"
+  },
+  "ADMIN": {
+    "value": "menu_admin"
+  }
+}

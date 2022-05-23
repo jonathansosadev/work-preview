@@ -1,0 +1,444 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+<link rel="stylesheet" type="text/css" href="{{ lib.client.staticUrl('/external-lib/bootstrap.min.css') }}">
+  {% block css %}
+    <style type="text/css">
+      tbody tr {
+        color: black;
+      }
+    </style>
+  {% endblock %}
+  {% block page %}
+    {% raw %}
+      <div id="ovh" class="container">
+        <h3>Gestion des numéros OVH</h3>
+        <div style="border: white 1px solid; padding: 10px">
+          <b style="color: red">/!\ Pour acheter de nouveaux numéros sur OVH:</b><br/>
+          <div style="color: grey">
+            - Allez sur
+            <a
+              target="_blank"
+              href="https://www.ovhtelecom.fr/manager/index.html#/telephony/db151912-ovh-3/orderAlias/geographical">
+            https://www.ovhtelecom.fr/manager/index.html#/telephony/db151912-ovh-3/orderAlias/geographical</a>
+            <br>
+              - Complétez:<br>
+                <b>> Nombre:
+                </b>
+                Commandez 10 numéros<br>
+                  <b>> Zone:
+                  </b>
+                  Paris (<b>01</b>), Nantes (<b>02</b>), Reims (<b>03</b>), Marseille (<b>04</b>), Bordeaux (<b>05</b>)<br/>
+                  <b>> Identité:
+                  </b>
+                  Particulier<br/>
+                  <b>> Numéro de rue:
+                  </b>
+                  Ne rien mettre<br/>
+                  <b>> Rue:
+                  </b>
+                  Hôtel de Ville<br/>
+                  <b>> Code postal & Ville:
+                  </b>
+                  75000 (Paris: 01), 44000 (Nantes: 02), 51100 (Reims: 03), 13000 (Marseille: 04), 33000 (Bordeaux: 05)<br/>
+                  - Commandez !<br/> - Payez la facture !<br/> - Attendez quelques minutes (5-10min) pour que OVH valide la transaction et
+                  nous donne les numéros.<br/>
+                  - Sur la facture final, vous trouverez les numéros qui ont été achetés, sous la forme "0033285522890-99", copiez le !<br/> - Coller dans le dans le champs ci-dessous puis cliquez sur "ajouter" !
+                </div>
+              </div>
+              <div>
+                <h5>Ajouter des numéros: (10 numéros '0033285522890-99' ou 1 seul '0033422146234' (Numéro de test))</h5>
+                <div class="input-group input-group-sm">
+                  <span class="input-group-addon" id="sizing-addon3">
+                    <span class="fa fa-phone" aria-hidden="true"></span>
+                  </span>
+                  <input type="text" class="form-control" placeholder="Numéro..." aria-describedby="sizing-addon3" v-model="phoneNumber">
+                    <span class="input-group-btn">
+                      <button class="btn btn-success" type="button" @click="addPhoneNumber">Ajouter</button>
+                    </span>
+                  </div>
+                </div>
+                <br>
+                  <h5>
+                    <strong>
+                      <u v-if="availablePhonesSorted">
+                        {{ availablePhonesSorted.length }} Numéros disponibles</u>
+                      :</strong>
+                  </h5>
+                  <div style="max-height: 300px; overflow-y: scroll;">
+                    <table class="table table-condensed" style="border: white 1px solid">
+                      <thead>
+                        <tr>
+                          <td>Indicatif</td>
+                          <td>Numéro</td>
+                          <td>Status</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="active" v-for="phone in availablePhonesSorted">
+                          <td>{{ phone.area }}</td>
+                          <td>{{ phone.value }}</td>
+                          <td>{{ phone.status }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <br>
+                    <div>
+                      <button class="btn btn-primary" type="button" @click="getNewPhones">Récupérer les numéros sur OVH (DEV ONLY)</button>
+                      <button class="btn btn-danger" style="float: right" type="button" @click="cleanBucket">Reset du bucket (DEV ONLY)</button>
+                    </div>
+                    <div>
+                      <br>
+                        <div v-if="newPhones">
+                          {{ newPhones.length }} nouveaux téléphones détéctés !</div>
+                        <table class="table table-condensed" style="border: white 1px solid" v-if="newPhones && newPhones.length">
+                          <thead>
+                            <tr>
+                              <td>Indicatif</td>
+                              <td>Numéro</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="active" v-for="phone in newPhones">
+                              <td>{{ phone.area }}</td>
+                              <td>{{ phone.value }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div>
+                          <button class="btn btn-danger" type="button" @click="insert" v-if="newPhones && newPhones.length">Charger dans
+                            garageScore !</button>
+                        </div>
+                        <br>
+                          <br>
+                            <h3>Téléphone & email pour les simulations. (F5 pour maj des données)</h3>
+                            <div class="input-group input-group-sm">
+                              <span class="input-group-addon" id="sizing-addon3">
+                                <span class="fa fa-phone" aria-hidden="true"></span>
+                              </span>
+                              <input type="text" class="form-control" placeholder="Numéro..." aria-describedby="sizing-addon3" v-model="raw.phone">
+                                <span class="input-group-addon" id="sizing-addon3">
+                                  <span class="fa fa-at" aria-hidden="true"></span>
+                                </span>
+                                <input type="text" class="form-control" placeholder="Email..." aria-describedby="sizing-addon3" v-model="raw.email"></div>
+                                <h3>Simulation de reception d'email:</h3>
+                                <div>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('LaCentrale.LaCentrale')">LA_CENTRALE</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('LaCentrale.NewFormat')">
+                                  LA_CENTRALE_NEW_FORMAT</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('LeBonCoin')">LE_BON_COIN</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('Largus')">L_ARGUS</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('ParuVendu')">PARU_VENDU</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('Promoneuve')">PROMONEUVE</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('OuestFranceAuto')">OUEST_FRANCE_AUTO</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('OuestFranceAutoLeadWithoutBodyHtml')">OUEST_FRANCE_AUTO_2</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('OuestFranceAutoNewFormat')">OUEST_FRANCE_AUTO_NEW_FORMAT</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('CustomVo.MotorK')">CUSTOM_VO_MOTOR_K</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('CustomVo.AutoThivolle')">
+                                  CUSTOM_VO_AUTOTHIVOLLE</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('Zoomcar')">ZOOMCAR</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('LaCentrale.LaCentraleSlackTest')">TEST
+                                    SLACK</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('CustomVo.AlhenaVo')">CUSTOM_VO_ALHENA</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('CustomVn.AlhenaVn')">CUSTOM_VN_ALHENA</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('CustomApv.AlhenaApv')">
+                                  CUSTOM_APV_ALHENA</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('CustomVn.SnDiffusionVn')">CUSTOM_VN_SNDIFFUSION</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('CustomVn.SnDiffusionVnNewFormat')">CUSTOM_VN_SNDIFFUSION_2</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('CustomVo.SnDiffusionVo')">CUSTOM_VO_SNDIFFUSION</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('CustomVo.SnDiffusionVoNewFormat')">CUSTOM_VO_SNDIFFUSION_2</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('EkonsilioVo')">EKONSILIO_VO</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('EkonsilioVn')">EKONSILIO_VN</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('CustomVo.ChanoineVo')">CHANOINE_VO</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('CustomVo.ChanoineVoCustomSearch')">CHANOINE_VO_CUSTOM_SEARCH</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('CustomApv.ChanoineApv')">CHANOINE_APV</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('CustomVn.ChanoineVn')">CHANOINE_VN</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('CustomVn.AutoDefiVn')">AUTO_DEFI_VN</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('CustomVo.AutoDefiVo')">AUTO_DEFI_VO</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('CustomApv.AutoDefiApv')">AUTO_DEFI_APV</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('CustomVn.VulcainVn')">VULCAIN_VN</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('CustomVo.VulcainVo')">VULCAIN_VO</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('CustomApv.VulcainApv')">VULCAIN_APV</button>
+                                </div>
+                                <h3>Simulation de reception d'appel:</h3>
+                                <div>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('LaCentrale', 'CALL')">LA_CENTRALE
+                                    Répondu</button>
+                                  <button class="btn btn-default" type="button" @click="simulateIncomingCrossLeads('LaCentrale', 'MISSED_CALL')">
+                                  LA_CENTRALE Non répondu</button>
+                                </div>
+                                <br>
+                                  <br>
+                                    <!-- <h3>Simulation de job sur les heures ouvrées:</h3> <div class="input-group input-group-sm"> <input type="text"
+                                    class="form-control" placeholder="heures..." v-model="job.hours"> <input type="datetime-local" class="form-control"
+                                    placeholder="Il est..." :value="job.date" @input="updateDate($event.target.value)"> <button class="btn btn-default"
+                                    type="button" @click="simulateJobProgramming()">Tester !</button> <div>
+                                        <xmp v-if="job.result">{{ job.result }}</xmp>
+                                    </div> </div> <br><br> -->
+                                    <h3>filtre Phrase/Email/Téléphone</h3>
+                                    <!-- emails list -->
+                                    <div style="max-height: 300px; overflow-y: scroll;">
+                                      <table class="table table-condensed" style="border: white 1px solid">
+                                        <thead>
+                                          <tr>
+                                            <td>email/phrase</td>
+                                            <td>status</td>
+                                            <td>action</td>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr class="active" v-for="email in emails">
+                                            <td>{{ email.value }}</td>
+                                            <td>
+                                              <span v-if="email.enabled" class="text-success">Active</span>
+                                              <span v-else class="text-danger">disabled</span>
+                                            </td>
+                                            <td>
+                                              <button class="btn btn-danger" type="button" @click="deleteXLeadsFilters('email', email.value)">Supprimer</button>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                    <!-- phones list -->
+                                    <div style="max-height: 300px; overflow-y: scroll;">
+                                      <table class="table table-condensed" style="border: white 1px solid">
+                                        <thead>
+                                          <tr>
+                                            <td>Téléphone</td>
+                                            <td>status</td>
+                                            <td>action</td>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr class="active" v-for="phone in phones">
+                                            <td>{{ phone.value }}</td>
+                                            <td>
+                                              <span v-if="phone.enabled" class="text-success">Active</span>
+                                              <span v-else class="text-danger">disabled</span>
+                                            </td>
+                                            <td>
+                                              <button class="btn btn-danger" type="button" @click="deleteXLeadsFilters('phone', phone.value)">Supprimer</button>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                    <h5>Ajouter un Email ou téléphone</h5>
+                                    <div class="input-group input-group-sm">
+                                      <span class="input-group-addon" id="sizing-addon3">
+                                        <span class="fa fa-phone" aria-hidden="true"></span>
+                                      </span>
+                                      <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Numéro..."
+                                        aria-describedby="sizing-addon3"
+                                        v-model="filters.phone">
+                                        <span class="input-group-addon" id="sizing-addon3">
+                                          <span class="fa fa-at" aria-hidden="true"></span>
+                                        </span>
+                                        <input
+                                          type="text"
+                                          class="form-control"
+                                          placeholder="Email ou phrase..."
+                                          aria-describedby="sizing-addon3"
+                                          v-model="filters.email"></div>
+                                        <button style="margin-bottom: 50px" class="btn btn-default" type="button" @click="addXLeadsFilters()">Ajouter</button>
+                                      </div>
+                                    {% endraw %}
+                                    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+                                    <script type="text/javascript">
+                                      var availablePhones = {{ availablePhones|safe }};
+                                      var censoredWord = "{{ censoredWord|safe }}";
+                                      new Vue({
+                                        el: '#ovh',
+                                        data: function () {
+                                          return {
+                                            availablePhones,
+                                            phoneNumber: '',
+                                            newPhones: null,
+                                            raw: {
+                                              phone: ("06" + (
+                                              Math.floor(Math.random() * 90000000) + 10000000)).replace(/([0-9]{2})/g, '$1 '),
+                                              email: `${censoredWord}@xlead.fr`
+                                            },
+                                            job: {
+                                              date: '',
+                                              hours: '',
+                                              programmedAt: '',
+                                              garageFieldName: 'id',
+                                              garageFieldValue: '577a30d774616c1a0056c263',
+                                              result: null
+                                            },
+                                            emails: [],
+                                            phones: [],
+                                            filters: {
+                                              email: '',
+                                              phone: ''
+                                            }
+                                          };
+                                        },
+                                        async mounted() {
+                                          this.job.date = (new Date()).toISOString().slice(0, '2020-05-12T00:01'.length);
+                                          await this.getXLeadsFilters();
+                                        },
+                                        computed: {
+                                          availablePhonesSorted() {
+                                            return this.availablePhones.sort(
+                                              (p1, p2) => (parseInt(p1.area) > parseInt(p2.area))
+                                              ? 1
+                                              : -1);
+                                          }
+                                        },
+                                        methods: {
+                                          updateDate: function (value) {
+                                            this.job.date = value;
+                                            this.$emit('input', value);
+                                          },
+                                          getDeepFieldValue(srcObject, fieldName) {
+                                            let result = srcObject;
+                                            const fieldParts = fieldName.split('.');
+                                            for (let i = 0; i < fieldParts.length; i++) {
+                                              if (typeof result !== 'object' || result === null) {
+                                                return null;
+                                              }
+                                              result = result[fieldParts[i]];
+                                            }
+                                            return result;
+                                          },
+                                          formatDate(date) {
+                                            let d = new Date(date),
+                                              month = '' + (
+                                                d.getMonth() + 1
+                                              ),
+                                              day = '' + d.getDate(),
+                                              year = d.getFullYear();
+                                            if (month.length < 2)
+                                              month = '0' + month;
+
+                                            if (day.length < 2)
+                                              day = '0' + day;
+
+                                            return [day, month, year].join('/');
+                                          },
+                                          handleError(data) {
+                                            if (data && data.errors && data.errors.length)
+                                              alert(data.errors.join('\n'));
+
+                                            return(data && data.errors && data.errors.length);
+                                          },
+                                          async cleanBucket() {
+                                            if (confirm('☢ ATTENTION, dev only ou pour faire une recette !! ☢')) {
+                                              let res = await axios.get('{{ lib.client.url.getUrl('ADMIN_GARAGE_CROSS_LEADS_CLEAN_BUCKET') }}');
+                                              if (this.handleError(res.data))
+                                                return null;
+
+                                              this.availablePhones = [];
+                                            }
+                                          },
+                                          async addPhoneNumber() {
+                                            let res = await axios.post('{{ lib.client.url.getUrl('ADMIN_GARAGE_CROSS_LEADS_ADD') }}', {phoneNumber: this.phoneNumber});
+                                            if (this.handleError(res.data))
+                                              return null;
+
+                                            this.availablePhones.push(... res.data.added);
+                                            alert(
+                                              res
+                                              .data
+                                              .added
+                                              .map(p => (p.value))
+                                              .join(', ') + ' ajoutés avec succès ! (' + res
+                                              .data
+                                              .added
+                                              .length + ')'
+                                            );
+                                            this.phoneNumber = '';
+                                          },
+                                          async simulateIncomingCrossLeads(sourceType, type = 'EMAIL') {
+                                            if (confirm('☢ ATTENTION, cliquez sur annuler si vous êtes en production !! ☢')) {
+                                              let res = await axios.post('{{ lib.client.url.getUrl('ADMIN_GARAGE_CROSS_LEADS_SIMULATION') }}', {
+                                                sourceType,
+                                                raw: this.raw,
+                                                type
+                                              });
+                                              if (this.handleError(res.data))
+                                                return null;
+
+                                              alert('Succès !');
+                                            }
+                                          },
+                                          async simulateJobProgramming() {
+                                            let res = await axios.post('{{ lib.client.url.getUrl('ADMIN_GARAGE_CROSS_LEADS_JOB_SIMULATION') }}', {
+                                              job: {
+                                                date: new Date(this.job.date),
+                                                hours: this.job.hours
+                                              }
+                                            });
+                                            if (this.handleError(res.data))
+                                              return null;
+
+                                            this.job.result = res.data;
+                                          },
+                                          async getNewPhones() {
+                                            if (confirm('☢ ATTENTION, dev only ou pour faire une recette !! ☢')) {
+                                              let res = await axios.get('{{ lib.client.url.getUrl('ADMIN_GARAGE_CROSS_LEADS_OVH_NEW_PHONES') }}');
+                                              if (this.handleError(res.data))
+                                                return null;
+
+                                              this.newPhones = res.data.phones;
+                                            }
+                                          },
+                                          async insert() {
+                                            let res = await axios.post('{{ lib.client.url.getUrl('ADMIN_GARAGE_CROSS_LEADS_ADD') }}', {
+                                              phoneNumber: this
+                                                .newPhones
+                                                .map(p => p.value)
+                                                .join(',')
+                                            });
+                                            if (this.handleError(res.data))
+                                              return null;
+
+                                            alert('Succès !');
+                                            this.availablePhones.push(... res.data.added);
+                                            this.phoneNumber = '';
+                                            this.newPhones = null;
+                                          },
+                                          async getXLeadsFilters() {
+                                            const res = await axios.get('{{ lib.client.url.getUrl('ADMIN_GARAGE_CROSS_LEADS_GET_FILTERS') }}');
+                                            this.emails = res.data.emails;
+                                            this.phones = res.data.phones;
+                                          },
+                                          async addXLeadsFilters() {
+                                            let res = await axios.post('{{ lib.client.url.getUrl('ADMIN_GARAGE_CROSS_LEADS_ADD_FILTERS') }}', {
+                                              filters: {
+                                                email: this
+                                                  .filters
+                                                  .email
+                                                  .trim(),
+                                                phone: this
+                                                  .filters
+                                                  .phone
+                                                  .trim()
+                                              }
+                                            });
+                                            if (this.handleError(res.data))
+                                              return null;
+
+                                            // refresh list
+                                            this.filters.email = '';
+                                            this.filters.phone = '';
+                                            await this.getXLeadsFilters();
+                                          },
+                                          async deleteXLeadsFilters(type, value) {
+                                            console.log(type, value)
+                                            let res = await axios.post('{{ lib.client.url.getUrl('ADMIN_GARAGE_CROSS_LEADS_DELETE_FILTERS') }}', {type, value: value});
+                                            if (this.handleError(res.data))
+                                              return null;
+
+                                            // refresh list
+                                            await this.getXLeadsFilters();
+                                          }
+                                        }
+                                      });
+                                    </script>
+                                  {% endblock %}

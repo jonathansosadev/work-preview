@@ -1,0 +1,34 @@
+{
+    "name": "SubscriptionsQueue",
+    "plural": "SubscriptionsQueues",
+    "base": "GarageScoreBaseModel",
+    "options": {},
+    "mongodb": {
+        "collection": "subscriptionsQueue"
+    },
+    "http": {
+        "path": "subscriptionsQueue"
+    },
+    "mixins": {
+        "SmartSort": true
+    },
+    "properties": {
+        "user": {
+            "type": "string",
+            "required": true
+        },
+        "sponsor": {
+            "type": "string"
+        },
+        "recontact": {
+            "type": "boolean"
+        },
+        "data": {
+            "type": "object",
+            "required": true
+        }
+    },
+    "validations": [],
+    "relations": {},
+    "methods": {}
+}

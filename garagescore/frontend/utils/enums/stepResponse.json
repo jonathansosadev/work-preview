@@ -1,0 +1,26 @@
+{
+    "NAME" : {
+        "value": "name",
+        "properties": {}
+    },
+    "TYPE_RESPONSE" : {
+        "value": "typeResponse",
+        "properties": {}
+    },
+    "GARAGES" : {
+        "value": "garages",
+        "properties": {}
+    },
+    "CONTENT_RESPONSE" : {
+        "value": "contentResponse",
+        "properties": {}
+    },
+    "TYPE_REVISION" : {
+        "value": "typeRevision",
+        "properties": {}
+    },
+    "SOCIAL_MEDIAS" : {
+        "value": "socialMedias",
+        "properties": {}
+    }
+}

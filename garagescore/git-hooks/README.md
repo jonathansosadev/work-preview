@@ -1,0 +1,1 @@
+Activate the hooks by copying them to your .git/hooks directory

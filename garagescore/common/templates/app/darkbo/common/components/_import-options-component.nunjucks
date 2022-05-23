@@ -1,0 +1,88 @@
+<!--
+import option form element.
+
+You need to include '_vue-modal.nunucks' before in your code (as an html block)
+
+
+-->
+
+<script type="x/template" id="import-options-template">
+<div>
+  <button id="show-modal" @click="showModal = true" style="color:black" type="button">Options</button>
+  <modal :show="showModal" :close-modal="closeModal" style="color:black" :error="!!parseError">
+    <h3 slot="header">Modifier les options d'import</h3>
+    <div slot="body">
+      <textarea class="form-control" v-model="filter" placeholder="Ecrire un filtre..." @keyup="notify" cols="50" style="margin: 0; width: 812px; height: 171px;"> </textarea>
+      <div class="parse-error" v-show="parseError">{{ "{{ parseError }}" }}</div>
+      <div style="color:grey">
+        <xmp>
+Example :
+- <code>(["Nom Affaire"] = "GIDAB" or ["Compte Affaire"] = "VNVOB") and !["Nom Complet"] in ("Jean-phil", "Tsamère")</code>
+- See <a href="/backoffice/imports/shared-options">import partagées</a> for more details
+        </xmp>
+      </div>
+    </div>
+  </modal>
+</div>
+</script>
+
+<script type="text/javascript">
+/* global Vue:true */
+  var ImportOptions = Vue.extend({
+    template: '#import-options-template',
+    data: function () {
+      return {
+        showModal: false,
+        parseError:false,
+        filter: '',
+        oneCallAtTheTime: null
+      };
+    },
+    props: {
+      json: Object
+    },
+    created: function () {
+    },
+    watch: {
+      'showModal': function(newValue) {
+        if (newValue) this.filter = this.json.filter;
+      }
+    },
+    methods: {
+      // check options syntax
+      isValid : function (cb) {
+        var filter = this.filter && this.filter.toString();
+        var request = new XMLHttpRequest();
+        var url = '{{ lib.client.url.getShortUrl('ADMIN_IMPORTS_FILTER_TEST') }}?t=' + new Date().getTime();
+        request.open('POST', url, true);
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        this.loading = true;
+        request.onload = function () {
+          this.loading = false;
+          var res = JSON.parse(request.responseText);
+          if (!res) { cb('Empty response.'); return; }
+          if (res.status === 'ok') {cb(); return;}
+          cb(res.error || 'Unknown error');
+        }.bind(this);
+        request.send(JSON.stringify({ filter }));
+      },
+      notify: function () {
+        if (this.oneCallAtTheTime) clearTimeout(this.oneCallAtTheTime);
+        this.oneCallAtTheTime = setTimeout(function(){
+          this.isValid((err) => {
+            this.parseError = err;
+            this.$emit('importOptions-change', this.json, !err);
+          });
+        }.bind(this), 500);
+      },
+      closeModal: function (ok) {
+        if(ok) {
+          if (this.parseError) return;
+          this.json.filter = this.filter;
+        }
+        this.showModal = false;
+      }
+    }
+  });
+  Vue.component('import-options', ImportOptions);
+</script>

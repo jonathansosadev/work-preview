@@ -1,0 +1,72 @@
+{
+  "ALREADY_CUSTOMER": {
+    "value": "alreadyCustomer",
+    "properties": {
+      "kpiByPeriodKey": "satisfactionCountServiceMiddleManAlreadyCustomer",
+      "exportColumnKey": "BG_SAT__MIDDLEMANS_ALREADY_CUSTOMER"
+    }
+  },
+  "MAKE_WEBSITE": {
+    "value": "factoryWebsite",
+    "properties": {
+      "kpiByPeriodKey": "satisfactionCountServiceMiddleManFactoryWebsite",
+      "exportColumnKey": "BG_SAT__MIDDLEMANS_FACTORY_WEBSITE"
+    }
+  },
+  "GARAGE_WEBSITE": {
+    "value": "garageWebsite",
+    "properties": {
+      "kpiByPeriodKey": "satisfactionCountServiceMiddleManGarageWebsite",
+      "exportColumnKey": "BG_SAT__MIDDLEMANS_GARAGE_WEBSITE"
+    }
+  },
+  "LEBONCOIN_WEBSITE": {
+    "value": "leboncoinWebsite",
+    "properties": {
+      "kpiByPeriodKey": "satisfactionCountServiceMiddleManLeboncoinWebsite",
+      "exportColumnKey": "BG_SAT__MIDDLEMANS_LEBONCOIN_WEBSITE"
+    }
+  },
+  "LACENTRALE_WEBSITE": {
+    "value": "lacentraleWebsite",
+    "properties": {
+      "kpiByPeriodKey": "satisfactionCountServiceMiddleManLacentraleWebsite",
+      "exportColumnKey": "BG_SAT__MIDDLEMANS_LACENTRALE_WEBSITE"
+    }
+  },
+  "ADVERTISING_WEBSITE": {
+    "value": "advertingWebsite",
+    "properties": {
+      "kpiByPeriodKey": "satisfactionCountServiceMiddleManAdvertingWebsite",
+      "exportColumnKey": "BG_SAT__MIDDLEMANS_ADVERTING_WEBSITE"
+    }
+  },
+  "DISCOUNT_COMMUNICATION": {
+    "value": "discountCommunication",
+    "properties": {
+      "kpiByPeriodKey": "satisfactionCountServiceMiddleManDiscountCommunication",
+      "exportColumnKey": "BG_SAT__MIDDLEMANS_DISCOUNT_COMMUNICATION"
+    }
+  },
+  "PROXIMITY": {
+    "value": "proximity",
+    "properties": {
+      "kpiByPeriodKey": "satisfactionCountServiceMiddleManProximity",
+      "exportColumnKey": "BG_SAT__MIDDLEMANS_PROXIMITY"
+    }
+  },
+  "THIRD_PARTY_RECOMMENDATION": {
+    "value": "thirdPartyRecommendation",
+    "properties": {
+      "kpiByPeriodKey": "satisfactionCountServiceMiddleManThirdPartyRecommendation",
+      "exportColumnKey": "BG_SAT__MIDDLEMANS_THIRD_PARTY_RECOMMENDATION"
+    }
+  },
+  "SOCIAL_NETWORKS": {
+    "value": "socialNetworks",
+    "properties": {
+      "kpiByPeriodKey": "satisfactionCountServiceMiddleManSocialNetworks",
+      "exportColumnKey": "BG_SAT__MIDDLEMANS_SOCIAL_NETWORKS"
+    }
+  }
+}

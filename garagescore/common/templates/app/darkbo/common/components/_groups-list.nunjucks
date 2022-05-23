@@ -1,0 +1,81 @@
+{% raw %}
+
+<!--
+groupe list autocomplete
+Usage:
+
+ <groups-list :garages="garages" :updated="updated" ></groups-list>
+
+-->
+
+<script type="x/template" id="groups-list">
+  <div class="autocomplete-form">
+    <div class="stretch">
+      <input :id="inputId" type="text" name="garage-list-group" :placeholder="gsLabel" style="max-width:600px;outline:0" v-model="gsModel" />
+    </div>
+  </div>
+</script>
+
+<script type="text/javascript">
+  function normalize(s) {
+    return s.toLowerCase().replace(/[éè]/g, 'e').replace(/[à]/g, 'a');
+  }
+
+
+  Vue.component('groups-list', {
+    template: '#groups-list',
+    data: function() {
+      return {
+        groupName: '',
+        inputId: 'GLGROUP' + Math.floor(Math.random() * 10000),
+        gsModel: ''
+      };
+    },
+    props: {
+      garages: Array,
+      gsLabel: {
+        type: String,
+        default: 'Groups list'
+      },
+      updated: {
+        type: Function,
+        required: true
+      }
+    },
+    mounted: function() {
+      var self = this;
+      var acGroup = new autoComplete({
+        selector: '#' + this.inputId,
+        minChars: 0,
+        cache: false, // important or the filters will not work on focus
+        onSelect: function (event, item) {
+          event.preventDefault();
+          self.updated(item);
+        },
+        source: function(termO, suggest) {
+          var term = normalize(termO);
+          var choices = this.garages;
+          var matches = [];
+
+          for (var i = 0; i < choices.length; ++i) {
+            if (choices[i].group) {
+              var groupName = normalize(choices[i].group);
+              if (matches.indexOf(groupName) === -1 && groupName.indexOf(term) != -1) {
+                matches.push(groupName);
+              }
+            }
+          }
+          suggest(matches);
+        }.bind(this)
+      });
+    },
+    watch: {
+      'gsModel': function (val) {
+        this.updated(val);
+      }
+    },
+    methods: {}
+  });
+</script>
+
+{% endraw %}

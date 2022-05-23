@@ -1,0 +1,76 @@
+{
+  "name": "KpiEvent",
+  "plural": "KpiEvents",
+  "base": "GarageScoreBaseModel",
+  "options": {},
+  "http": { "path": "kpiEvent" },
+  "description": "KPIs Events Saved By LogDrain",
+  "mongodb": { "collection": "kpiEvents", "settings": { "mongodb": { "allowExtendedOperators": true } } },
+  "mixins": {
+    "EventEmitter": true,
+    "Stream": true,
+    "FindWithProjection": true,
+    "MongoDirect": { "whereBuildAddons": true },
+    "SmartSort": true
+  },
+  "properties": {
+    "token": {
+      "type": "string",
+      "required": true
+    },
+    "dataId": {
+      "type": "boolean",
+      "required": true
+    },
+    "garageId": {
+      "type": "string",
+      "required": true
+    },
+    "ticketType": {
+      "type": "string",
+      "required": true
+    },
+    "origin": {
+      "type": "string",
+      "required": true
+    },
+    "date": {
+      "type": "date",
+      "required": true
+    },
+    "events": {
+      "type": "array",
+      "required": true
+    }
+  },
+  "indexes": {
+    "dataId": {
+      "keys": {
+        "dataId": 1
+      },
+      "options": {
+        "unique": false
+      }
+    },
+    "garageId": {
+      "keys": {
+        "garageId": 1
+      },
+      "options": {
+        "unique": false
+      }
+    },
+    "dataId_date": {
+      "keys": {
+        "dataId": 1,
+        "date": 1
+      },
+      "options": {
+        "unique": false
+      }
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "methods": {}
+}

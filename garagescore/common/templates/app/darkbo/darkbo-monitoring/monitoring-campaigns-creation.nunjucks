@@ -1,0 +1,251 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+    <style type="text/css">
+        .page-header select {
+          margin-top: 25px;
+        }
+
+        .axis .domain,
+        .tick line {
+          stroke: white;
+        }
+
+        text {
+          fill: white;
+        }
+
+        .garage {
+          padding: 2px 5px;
+          margin-right: 10px;
+          background: #eee;
+          color: #333333;
+          border-radius: 5px;
+          margin-bottom: 5px;
+          cursor: pointer;
+          display: inline-block;
+        }
+
+        .garage.active {
+          color: red;
+        }
+
+        h4.col-md-12 {
+          margin-top: 50px;
+          text-decoration: underline;
+        }
+    </style>
+{% endblock %}
+
+{% block page %}
+
+{% raw %}
+<div id="campaign">
+  <div class="container-fluid">
+  <!--title-->
+    <div class="col-md-12">
+      <div class="page-header row">
+        <h1 class="col-md-10">Monitoring des campagnes créées (au moins un datarecord valide + garage avec une fréquence d'update)</h1>
+      </div>
+    </div>
+    <!--loading-->
+    <div v-if="loading" class="col-md-12" id="loader">
+      Chargement...
+    </div>
+    <!--content-->
+    <div else="loading" class="col-md-12" id="content">
+        <div class="row">
+            <h4 class="col-md-12">Garages avec un abonnement APV mais sans campagne APV</h4>
+
+            <div class="col-md-12"><b>Aujourd'hui</b></div>
+            <ul class="col-md-12" id="errorLastDayMaintenances">
+              <a class="garage" v-for="garageLastDay in errorLastDayGarages" :href="'/backoffice/garages#' + garageLastDay.id" target="_blank">
+              {{ garageLastDay.publicDisplayName }}
+              </a>
+            </ul>
+
+            <div class="col-md-12"><b>Depuis une semaine</b></div>
+            <ul class="col-md-12" id="errorPeriodMaintenances">
+              <a class="garage" v-for="garagePeriod in errorPeriodGarages" :href="'/backoffice/garages#' + garagePeriod.id" target="_blank">
+                {{ garagePeriod.publicDisplayName }}
+              </a>
+            </ul>
+
+            <h4 class="col-md-12">Garages avec un abonnement VN et/ou VO mais sans campagne Ventes</h4>
+            <div class="col-md-12"><b>Aujourd'hui</b></div>
+            <ul class="col-md-12" id="errorLastDaySales">
+              <a class="garage" v-for="garageLastDay in errorLastDaySales" :href="'/backoffice/garages#' + garageLastDay.id" target="_blank">
+                  {{ garageLastDay.publicDisplayName }}
+              </a>
+            </ul>
+            
+            <div class="col-md-12"><b>Depuis une semaine</b></div>
+            <ul class="col-md-12" id="errorPeriodSales">
+              <a class="garage" v-for="garagePeriod in errorPeriodSales" :href="'/backoffice/garages#' + garagePeriod.id" target="_blank">
+                  {{ garagePeriod.publicDisplayName }}
+              </a>
+            </ul>
+        </div>
+      </div>
+
+  </div>
+</div>
+{% endraw %}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+  const DATA_URL = '{{ getData|safe }}';
+  const DATA_IMPORT_URL = `/backoffice/monitoring/datafiles-imports/data?date=${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`;
+  new Vue({
+    el: '#campaign',
+    mounted: function () {
+      this.getRequest(DATA_IMPORT_URL);
+      this.getRequest(DATA_URL);
+    },
+    data: function () {
+      return {
+        loading: false,
+        data: null,
+        garageCampaign: null,
+        dataImportFtp: null,
+        garageImportFtp: null,
+        errorPeriodGarages: [],
+        errorLastDayGarages: [],
+        errorPeriodSales: [],
+        errorLastDaySales: [],
+        garageImportFtpDuplicate: [],
+      };
+    },
+    computed: {
+
+    },
+    methods: {
+      getRequest (url) {
+        this.loading = true;
+        const request = new XMLHttpRequest();
+        request.open('GET', url, true);
+        request.send();
+        request.onload = () => {
+          if (request.status !== 200) alert('Aïe ! Quelque chose a mal tourné :/');
+          else this.listenToWebSocket(request.responseText, url);
+        }
+      },
+      listenToWebSocket (socketName, url) {
+        const resSocket = JSON.parse(socketName);
+        const protocol = document.location.protocol.indexOf('https') > -1 ? 'wss' : 'ws';
+        const HOST = protocol + '://' + document.location.host + resSocket.websocket;
+        const ws = new WebSocket(HOST);
+        ws.onmessage = (event) => {
+          let res = event.data && JSON.parse(event.data);
+          if (res && res.status === 'ok' && !/imports/.test(url)) {       // Check if url are from campaign
+            console.log("campaign: ", res);
+            this.data = res.details.data;
+            this.garageCampaign = res.details.data.garagesData;
+            this.showErrorsGarage();
+          } else if (res && res.status === 'ok' && /imports/.test(url)){  // Check if url are from import
+            console.log("import FTP: ", res);
+            this.dataImportFtp = res.details.data;
+            this.garageImportFtp = res.details.data.garagesData;
+            this.showErrorsFromDataFtp();
+          } else {
+            alert('Aïe ! Quelque chose a mal tourné :/');
+          }
+          this.loading = false;
+          ws.close();
+        };
+      },
+      /** show garages with errors*/
+      showErrorsGarage() {
+        const divs = ["apv", "sales"];
+        for (let type of divs) {  // garage errors period
+          let missings = this.data.missingCampaign.period[type];
+          for (let gId in missings) {
+            if (gId && this.garageCampaign[gId] && type === "apv") {
+              this.errorPeriodGarages.push({id: gId, publicDisplayName: this.garageCampaign[gId].publicDisplayName});
+            }
+            if (gId && this.garageCampaign[gId] && type === "sales") {
+              this.errorPeriodSales.push({id: gId, publicDisplayName: this.garageCampaign[gId].publicDisplayName});
+            }
+          }
+        }
+        for (let type of divs) {  // garage error last day
+          let missings = this.data.missingCampaign.lastDay[type];
+          for (var gId in missings) {
+            if (gId && this.garageCampaign[gId] && type === "apv") {
+              this.errorLastDayGarages.push({id: gId, publicDisplayName: this.garageCampaign[gId].publicDisplayName});
+            }
+            if (gId && this.garageCampaign[gId] && type === "sales") {
+              this.errorLastDaySales.push({id: gId, publicDisplayName: this.garageCampaign[gId].publicDisplayName});
+            }
+          }
+        }
+        this.getRequest(DATA_IMPORT_URL);   // Get garage from FTP
+      },
+      /** show garages with errors for the last day*/
+      showErrorsFromDataFtp() {
+        const divs = [
+          "all",
+          "apv",
+          "vn",
+          "vo",
+          "mixedsales",
+          "mixed"
+        ];
+        // Get garage ID from FTP last day
+        for (let type of divs) {
+          const count = this.dataImportFtp.errorsCountPerGarage.lastDay[type];
+          for (var gId in count) {
+            if (gId && this.garageImportFtp[gId] && count[gId]) {
+              this.garageImportFtpDuplicate.push({id: gId, publicDisplayName: this.garageImportFtp[gId].publicDisplayName});
+            }
+          }
+        }
+        // Get garage ID from FTP perdiod
+        let daysCount = Object.keys(this.dataImportFtp.perDay).length;
+        for (let type of divs) {
+          const count = this.dataImportFtp.errorsCountPerGarage.period[type];
+          for (var gId in count) {
+            if (gId && this.garageImportFtp[gId] && count[gId] >= daysCount) {
+              this.garageImportFtpDuplicate.push({id: gId, publicDisplayName: this.garageImportFtp[gId].publicDisplayName});
+            }
+          }
+        }
+        this.removeDuplicateGarage();
+      },
+      /** Remove duplicate garage */
+      removeDuplicateGarage () {
+        for( let i=0 ; i<this.errorLastDayGarages.length ; i++ ) {  // Remove garage Last Day Garages
+          for ( let importId of this.garageImportFtpDuplicate) {
+            if(importId.id === this.errorLastDayGarages[i].id) {
+              this.errorLastDayGarages.splice(i, 1);
+            }
+          }
+        }
+        for( let i=0 ; i<this.errorLastDaySales.length ; i++ ) {  // Remove garage Last Day Sales
+          for ( let importId of this.garageImportFtpDuplicate) {
+            if(importId.id === this.errorLastDaySales[i].id) {
+              this.errorLastDaySales.splice(i, 1);
+            }
+          }
+        }
+        for( let i=0 ; i<this.errorPeriodGarages.length ; i++ ) {   // Remove garage Period Garages
+          for ( let importId of this.garageImportFtpDuplicate) {
+            if(importId.id === this.errorPeriodGarages[i].id) {
+              this.errorPeriodGarages.splice(i, 1);
+            }
+          }
+        }
+        for( let i=0 ; i<this.errorPeriodSales.length ; i++ ) {   // Remove garage Period Sales
+          for ( let importId of this.garageImportFtpDuplicate) {
+            if(importId.id === this.errorPeriodSales[i].id) {
+              this.errorPeriodSales.splice(i, 1);
+            }
+          }
+        }
+      }
+    }
+  });
+</script>
+{% endblock %}

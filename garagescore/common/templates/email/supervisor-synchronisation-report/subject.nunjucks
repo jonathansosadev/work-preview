@@ -1,0 +1,1 @@
+Rapport de synchronisation du {{ formatDates(contact.createdAt, 'dddd D MMMM YYYY') }}

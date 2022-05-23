@@ -1,0 +1,71 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+  <style type="text/css">
+
+  </style>
+{% endblock %}
+{% block page %}
+  <div class="col-md-12" id="app-manager">
+    <div class="overlay-loading" v-if="loading"><div class="centered-loading"></div></div>
+    <div class="row text-center" style="margin: 50px">
+      <div class="col-md-12">
+        Gestion des paramètres de l'application
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3 text-right">Activer Mode Maintenance</div>
+      <div class="col-xs-3 text-left">
+        <switch-button
+          :value.boolean="maintenanceMode"
+          @change="toggleMaintenanceMode">
+        </switch-button>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  {% include "../common/components/switch-button.nunjucks" %}
+  <script type="text/javascript">
+
+    var app = new Vue({
+      el: '#app-manager',
+      data: {
+        loading: false,
+        maintenanceMode: false,
+        error: ''
+      },
+      created: function (){
+        this.loadMaintenanceMode();
+      },
+      methods: {
+        toggleMaintenanceMode: function () {
+          var url = '{{ lib.client.url.getShortUrl('ADMIN_APPLICATION_MAINTENANCE_CONFIG') }}';
+          this.loading = true;
+          this.maintenanceMode = !this.maintenanceMode;
+          gsTools.putRequest(url, {maintenanceMode : this.maintenanceMode }, function (err, result) {
+            this.loading = false;
+            if (err || result.status == 'ko') {
+              this.error = err || result.error;
+              return;
+            }
+            this.config = result.config;
+          }.bind(this));
+        },
+        loadMaintenanceMode: function () {
+          var url = '{{ lib.client.url.getShortUrl('ADMIN_APPLICATION_MAINTENANCE_CONFIG') }}';
+          this.loading = true;
+          gsTools.getRequest(url, {}, function (err, result) {
+            this.loading = false;
+            if (err || result.status == 'ko') {
+              this.error = err || result.error;
+              return;
+            }
+            this.maintenanceMode = result.maintenanceMode;
+          }.bind(this));
+        }
+      }
+    });
+
+  </script>
+{% endblock %}

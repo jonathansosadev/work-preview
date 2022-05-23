@@ -1,0 +1,598 @@
+<html>
+  <head>
+    <title>
+      {% if garage.name %}Votre avis sur {{ garage.name }}{% else %}Une enquête Custeed{% endif %}
+    </title>
+    {% include  "../common_head.nunjucks" -%}
+  </head>
+  <body>
+    <div id="surveyContainer">
+      <survey :survey="survey"></survey>
+    </div>
+    {% include  "../common_top.nunjucks" -%}
+    <script>
+      i18n.loadForSurveyJS('backoffice:survey:vehicle-inspection:vehicle-inspection');
+      survey.title = t('surveyTitle', {
+        garageName: unescapeHTML('{{ garage.name }}')
+      });
+      var score = PARAMS['score'];
+      var getTitleQ1 = function () {
+        if (!PARAMS['score'])
+          return t("noScore");
+
+        if (garage.ratingType === 'rating')
+          return t('currentScore', {
+            garageName: unescapeHTML("{{ garage.name }}"),
+            score: score
+          });
+         else
+          return t('currentStars', {
+            garageName: unescapeHTML("{{ garage.name }}"),
+            stars: Math.floor(score / 2)
+          });
+
+      }
+      var titleQ1 = getTitleQ1();
+      var page1 = {
+        name: '{{ surveyPageTypes.REVIEW_PAGE }}',
+        questions: []
+      };
+      var page2 = {
+        name: '{{ surveyPageTypes.LEAD_PAGE }}',
+        questions: [],
+        visibleIf: "{acceptTermOfSharing} = true"
+      };
+      var page3 = {
+        name: '{{ surveyPageTypes.CONTACT_PAGE }}',
+        questions: []
+      };
+      var page4 = {
+        name: '{{ surveyPageTypes.SHAREWITHPARTNERS_PAGE }}',
+        questions: [],
+        visibleIf: `{recommend} = true and (({rating} >= 9 and '${survey.country}'!='FR') or '${survey.country}'='FR')`
+      };
+      survey.pages.push(page1);
+      survey.pages.push(page2);
+      survey.pages.push(page3);
+      survey.pages.push(page4);
+      if (garage.ratingType === 'stars') {
+        page1.questions.push({
+          type: "starrating",
+          name: "rating",
+          title: titleQ1,
+          isRequired: true,
+          choices: [
+            "2",
+            "4",
+            "6",
+            "8",
+            "10"
+          ],
+          defaultValue: 2 * Math.ceil(score / 2),
+          minRateDescription: t('minRateDescription')[survey.locale],
+          maxRateDescription: t('maxRateDescription')[survey.locale]
+        });
+      } else {
+        page1.questions.push({
+          isRequired: true,
+          type: "rating",
+          name: "rating",
+          defaultValue: score,
+          rateValues: garage.isReverseRating
+            ? [
+              10,
+              9,
+              8,
+              7,
+              6,
+              5,
+              4,
+              3,
+              2,
+              1,
+              0
+            ]
+            : [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+          title: titleQ1,
+          minRateDescription: garage.isReverseRating
+            ? t('maxRateDescription')[survey.locale]
+            : t('minRateDescription')[survey.locale],
+          maxRateDescription: garage.isReverseRating
+            ? t('minRateDescription')[survey.locale]
+            : t('maxRateDescription')[survey.locale]
+        });
+      }
+      var criteriaChoices = [
+        {
+          value: 'VehicleInspectionCriterion_0',
+          text: t('VehicleInspectionCriterion_0')
+        },
+        {
+          value: 'VehicleInspectionCriterion_1',
+          text: t('VehicleInspectionCriterion_1')
+        },
+        {
+          value: 'VehicleInspectionCriterion_2',
+          text: t('VehicleInspectionCriterion_2')
+        },
+        {
+          value: 'VehicleInspectionCriterion_3',
+          text: t('VehicleInspectionCriterion_3')
+        }, {
+          value: 'VehicleInspectionCriterion_4',
+          text: t('VehicleInspectionCriterion_4')
+        }, {
+          value: 'VehicleInspectionCriterion_5',
+          text: t('VehicleInspectionCriterion_5')
+        }
+      ];
+      // visible if rating <= 8 and required if rating <= 6
+      page1.questions.push(generateUnsatisfiedCriteria("unsatisfiedCriteria", false, "{rating} <= 8", criteriaChoices));
+      page1.questions.push({
+        type: "comment",
+        name: "comment",
+        isRequired: true,
+        title: t('comment'),
+        validators: [
+          {
+            type: "comment"
+          }
+        ]
+      });
+      // Optin + renouvellement acceptTermOfSharing
+      page1.questions.push({
+        type: "boolean",
+        name: "acceptTermOfSharing",
+        label: t('acceptTermOfSharing'),
+        isRequired: false,
+        defaultValue: false
+      });
+      page1.questions.push({
+        type: "boolean",
+        name: "acceptTermOfUse",
+        label: ' ', // a html element must be putted after the input element to contain a link
+        isRequired: true,
+        validators: [
+          {
+            type: "termsofusevalidator"
+          }
+        ]
+      });
+      page2.questions.push({
+        type: "html",
+        name: "leadModelsTitle",
+        html: '<h5 class="sv_q_title"><span style="position: static;"><span style="position: static;">' + t('leadModels')[survey.locale] +
+            '</span></span></h5>'
+      })
+      function generateLeadModels() {
+        function generateNotEmpty(i) {
+          return "{leadModels_" + i + "} notempty";
+        };
+        function generateNotEqual(i) {
+          return "{leadModels_" + i + "} != 'noPreference'";
+        };
+        function generateLeadModelsVisibleIf(i) {
+          if (i === 1)
+            return "";
+
+          var result = "";
+          for (var j = 1; j < i; j++) {
+            result += j === 1
+              ? generateNotEmpty(j) + " and " + generateNotEqual(j)
+              : generateNotEmpty(j);
+            if (j < i - 1) {
+              result += " and ";
+            }
+          }
+          return result;
+        };
+        for (var i = 1; i <= 5; i++) {
+          const name = "leadModels_" + i;
+          const title = t(name);
+          const question = {
+            type: "dropdown",
+            name: name,
+            title: title,
+            visibleIf: generateLeadModelsVisibleIf(i),
+            titleLocation: "left",
+            isRequired: i === 1
+              ? true
+              : false,
+            choices: i === 1
+              ? [
+                {
+                  value: "noPreference",
+                  text: t('noPreference')
+                }
+              ].concat({{ brands | safe }})
+              : {{ brands | safe }}
+          }
+          page2.questions.push(question);
+          function generateAsModelpreferenceQuestionIsVisible(i) {
+            var result = "";
+            for (var j = 0; j < i; j++) {
+              result += "{leadModels_" + i + "} notempty and {leadModels_" + i + "} != 'noPreference'";
+              if (j < i - 1) {
+                result += " and ";
+              }
+            }
+            return result;
+          }
+          const modelQuestionName = "leadModels_as_particular_model_" + i
+          const modelQuestionTitle = t("leadModelsAsParticularModel")
+          const subQuestion = {
+            type: "dropdown",
+            name: modelQuestionName,
+            title: modelQuestionTitle,
+            visibleIf: generateAsModelpreferenceQuestionIsVisible(i),
+            titleLocation: "left",
+            isRequired: false,
+            choices: [
+              {
+                value: "yes",
+                text: t('leadModelsAsParticularModelYes')
+              }, {
+                value: "no",
+                text: t('leadModelsAsParticularModelNo')
+              }
+            ]
+          }
+          page2.questions.push(subQuestion);
+          function generateAsModelpreferenceIsVisible(i) {
+            var result = "";
+            for (var j = 0; j < i; j++) {
+              result += "{leadModels_as_particular_model_" + i + "} notempty and {leadModels_as_particular_model_" + i + "} != 'no'";
+              if (j < i - 1) {
+                result += " and ";
+              }
+            }
+            return result;
+          }
+          const modelPreferenceName = "leadModels_particular_model_" + i
+          const modelPreferenceTitle = t("leadModelsParticularModel")
+          const modelPreference = {
+            type: "text",
+            name: modelPreferenceName,
+            title: modelPreferenceTitle,
+            visibleIf: generateAsModelpreferenceQuestionIsVisible(i) + ' and ' + generateAsModelpreferenceIsVisible(i),
+            titleLocation: "left",
+            isRequired: true
+          }
+          page2.questions.push(modelPreference);
+        }
+      }
+      // generate all the leadModels questions
+      generateLeadModels();
+      page2
+        .questions
+        .push({
+          type: "html",
+          name: "projectPanelTitle",
+          html: '<h5 class="sv_q_title" style="margin: 0"><span style="position: static;"><span style="position: static; font-size: 16px"' +
+              '>' + t('projectTitle')[survey.locale] + '</span></span></h5>'
+        })
+        page2
+        .questions
+        .push({
+          type: "radiogroup",
+          choices: [
+            {
+              value: '{{ leadTimings.NOW }}',
+              text: t('now')
+            }, {
+              value: '{{ leadTimings.SHORT_TERM }}',
+              text: t('shortTerm')
+            }, {
+              value: '{{ leadTimings.MID_TERM }}',
+              text: t('midTerm')
+            }, {
+              value: '{{ leadTimings.LONG_TERM }}',
+              text: t('longTerm')
+            }
+          ],
+          isRequired: true,
+          name: "leadTime",
+          title: t('leadTime')[survey.locale] + ' :',
+          colCount: 1
+        })
+      // type of vehicle
+      page2
+      .questions
+      .push({
+        type: "radiogroup",
+        choices: [
+          {
+            value: '{{ leadSaleTypes.NEW_VEHICLE_SALE }}',
+            text: t('NEW_VEHICLE_SALE')
+          }, {
+            value: '{{ leadSaleTypes.USED_VEHICLE_SALE }}',
+            text: t('USED_VEHICLE_SALE')
+          }, {
+            value: '{{ leadSaleTypes.UNKNOWN }}',
+            text: t('UNKNOWN')
+          }
+        ],
+        isRequired: true,
+        name: "leadSaleType",
+        title: t('leadSaleType')[survey.locale] + ' :',
+        colCount: 1
+      })
+    // Category de véhicule
+    page2
+    .questions
+    .push({
+      type: "radiogroup",
+      choices: [
+        {
+          value: '{{ leadSaleCategories.VEHICLE_CATEGORY_1 }}',
+          text: t('vehicleCategory1')
+        }, {
+          value: '{{ leadSaleCategories.VEHICLE_CATEGORY_2 }}',
+          text: t('vehicleCategory2')
+        }, {
+          value: '{{ leadSaleCategories.VEHICLE_CATEGORY_3 }}',
+          text: t('vehicleCategory3')
+        }, {
+          value: '{{ leadSaleCategories.VEHICLE_CATEGORY_4 }}',
+          text: t('vehicleCategory4')
+        }
+      ],
+      isRequired: true,
+      name: "leadSaleCategories",
+      title: t('leadSaleCategories')[survey.locale] + ' :',
+      colCount: 1
+    })
+  page2
+  .questions
+  .push({
+    type: "radiogroup",
+    choices: [
+      {
+        value: '{{ vehicleEnergyTypes.dieselOrFuel }}',
+        text: t('dieselOrFuel')
+      }, {
+        value: '{{ vehicleEnergyTypes.hybridOrPluginHybrid }}',
+        text: t('hybridOrPluginHybrid')
+      }, {
+        value: '{{ vehicleEnergyTypes.electric }}',
+        text: t('electric')
+      }
+    ],
+    isRequired: true,
+    name: "leadEnergyType",
+    title: t('leadEnergyType')[survey.locale] + ' :',
+    colCount: 1
+  })
+page2
+.questions
+.push({
+  type: "radiogroup",
+  choices: [
+    {
+      value: '{{ leadFinancing.cash }}',
+      text: t('cash')
+    }, {
+      value: '{{ leadFinancing.credit }}',
+      text: t('credit')
+    }
+  ],
+  isRequired: true,
+  name: "leadFunding",
+  title: t('leadFunding')[survey.locale] + ' :',
+  colCount: 1
+})
+page2
+.questions
+.push({
+  type: "radiogroup",
+  choices: [
+    {
+      value: '{{ leadFinancingCashVo.LESS_THAN_10K }}',
+      text: t('lessThan10k')
+    },
+    {
+      value: '{{ leadFinancingCashVo.BETWEEN_10K_AND_15K }}',
+      text: t('between10kAnd15k')
+    },
+    {
+      value: '{{ leadFinancingCashVo.BETWEEN_15K_AND_20K }}',
+      text: t('between15kAnd20k')
+    },
+    {
+      value: '{{ leadFinancingCashVo.BETWEEN_20K_AND_25K }}',
+      text: t('between20kAnd25k')
+    }, {
+      value: '{{ leadFinancingCashVo.MORE_THAN_25K }}',
+      text: t('moreThan25k')
+    }, {
+      value: '{{ leadFinancingCashVo.UNKNOWN }}',
+      text: t('unknown')
+    }
+  ],
+  isRequired: true,
+  visibleIf: "{leadFunding} == 'cash' and ( {leadSaleType} == 'UsedVehicleSale' or {leadSaleType} == 'Unknown')",
+  name: "leadFundingQuestionCashBudgetVo",
+  title: t('leadFundingQuestionCashBudget')[survey.locale] + ' :',
+  colCount: 1
+})
+page2
+.questions
+.push({
+  type: "radiogroup",
+  choices: [
+    {
+      value: '{{ leadFinancingCashVn.LESS_THAN_15K }}',
+      text: t('lessThan15k')
+    },
+    {
+      value: '{{ leadFinancingCashVn.BETWEEN_15K_AND_25K }}',
+      text: t('between15kAnd25k')
+    },
+    {
+      value: '{{ leadFinancingCashVn.BETWEEN_25K_AND_35K }}',
+      text: t('between25kAnd35k')
+    },
+    {
+      value: '{{ leadFinancingCashVn.BETWEEN_35K_AND_45K }}',
+      text: t('between35kAnd45k')
+    }, {
+      value: '{{ leadFinancingCashVn.MORE_THAN_45K }}',
+      text: t('moreThan45k')
+    }, {
+      value: '{{ leadFinancingCashVn.UNKNOWN }}',
+      text: t('unknown')
+    }
+  ],
+  isRequired: true,
+  visibleIf: "{leadFunding} == 'cash' and {leadSaleType} == 'NewVehicleSale' ",
+  name: "leadFundingQuestionCashBudgetVn",
+  title: t('leadFundingQuestionCashBudget')[survey.locale] + ' :',
+  colCount: 1
+})
+page2
+.questions
+.push({
+  type: "radiogroup",
+  choices: [
+    {
+      value: '{{ leadFinancingCredit.LESS_THAN_200 }}',
+      text: t('lessThan200')
+    },
+    {
+      value: '{{ leadFinancingCredit.BETWEEN_200_AND_300 }}',
+      text: t('between200And300')
+    },
+    {
+      value: '{{ leadFinancingCredit.BETWEEN_300_AND_500 }}',
+      text: t('between300And500')
+    },
+    {
+      value: '{{ leadFinancingCredit.BETWEEN_500_AND_700 }}',
+      text: t('between500And700')
+    }, {
+      value: '{{ leadFinancingCredit.MORE_THAN_700 }}',
+      text: t('moreThan700')
+    }, {
+      value: '{{ leadFinancingCredit.UNKNOWN }}',
+      text: t('unknown')
+    }
+  ],
+  isRequired: true,
+  visibleIf: "{leadFunding} == 'credit'",
+  name: "leadFundingQuestionCreditBudget",
+  title: t('leadFundingQuestionCreditBudget')[survey.locale] + ' :',
+  colCount: 1
+})
+page2
+.questions
+.push({
+  type: "checkbox",
+  choices: [
+    {
+      value: '{{ leadDesiredServices.TRY_VEHICLE }}',
+      text: t('leadServicesTryVehicle')
+    }, {
+      value: '{{ leadDesiredServices.RECOVERY_OFFER }}',
+      text: t('leadServicesRecoveryOffer')
+    }, {
+      value: '{{ leadDesiredServices.INSURANCE_OFFER }}',
+      text: t('leadServicesInsuranceOffer')
+    }
+  ],
+  choicesCount: 2,
+  isRequired: true,
+  name: "leadDesiredServices",
+  title: t('leadDesiredServices')[survey.locale] + ' :',
+  colCount: 1
+})
+page3
+.questions
+.push({
+  type: "checkbox",
+  choices: [
+    {
+      value: 'AlreadyClient',
+      text: t('AlreadyClient')
+    },
+    {
+      value: 'WebSite',
+      text: t('WebSite')
+    },
+    {
+      value: 'Garage',
+      text: t('Garage')
+    },
+    {
+      value: 'Pub',
+      text: t('Pub')
+    }, {
+      value: 'Offer',
+      text: t('Offer')
+    }, {
+      value: 'Proximity',
+      text: t('Proximity')
+    }, {
+      value: 'Recommendation',
+      text: t('Recommendation')
+    }, {
+      value: 'Other',
+      text: t('Other')
+    }
+  ],
+  isRequired: true,
+  name: "serviceMiddleMan",
+  title: t('serviceMiddleMan')
+});
+commonQuestions.customerInfos.forEach(function (q) {
+  if (q.name === "email") {
+    q.validators[0].text = t('invalidEmail')[survey.locale];
+  }
+  page3.questions.push(q)
+});
+page3.questions.push({
+  type: "radiogroup",
+  choices: [
+    {
+      value: true,
+      text: t('recommendYes')
+    }, {
+      value: false,
+      text: t('recommendNo')
+    }
+  ],
+  isRequired: true,
+  name: "recommend",
+  title: t('recommend')
+});
+// keep "Oui" as value, the update function is shared with other surveys and use "Oui" as value :facepalm:
+page4.questions.push({
+  type: "radiogroup",
+  choices: [
+    {
+      value: 'Oui',
+      text: t('shareWithPartnersYes')
+    }, {
+      value: 'Non',
+      text: t('shareWithPartnersNo')
+    }
+  ],
+  isRequired: true,
+  name: "shareWithPartners",
+  title: t('shareWithPartners')
+})
+    </script>
+    {% include  "../common_footer.nunjucks" -%}
+  </body>
+</html>

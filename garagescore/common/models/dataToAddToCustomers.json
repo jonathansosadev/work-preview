@@ -1,0 +1,75 @@
+{
+  "name": "DataToAddToCustomers",
+  "base": "GarageScoreBaseModel",
+  "options": {
+    "strictObjectIDCoercion": true
+  },
+  "mongodb": {
+    "collection": "dataToAddToCustomers"
+  },
+  "http": {
+    "path": "dataToAddToCustomer"
+  },
+  "mixins": {
+    "EventEmitter": true,
+    "Status": true,
+    "SmartSort": true,
+    "Stream": true,
+    "MongoDirect": {
+      "whereBuildAddons": true
+    }
+  },
+  "properties": {
+    "garageId": {
+      "type": "String"
+    },
+    "customerIdShouldFuse": {
+      "type": "Array"
+    },
+    "email": {
+      "type": "String"
+    },
+    "phone": {
+      "type": "String"
+    },
+    "commonValues": {
+      "type": "Array"
+    },
+    "isCsvCreated": {
+      "type": "Boolean"
+    },
+    "motifs": {
+      "type": "Array"
+    }
+  },
+  "indexes": {
+    "garageId": {
+      "name": "garageId",
+      "keys": {
+        "garageId": -1
+      }
+    },
+    "email": {
+      "name": "email",
+      "keys": {
+        "email": -1
+      }
+    },
+    "phone": {
+      "name": "phone", 
+      "keys": { 
+        "phone": -1 
+      }
+    },
+    "isCsvCreated": {
+      "name": "isCsvCreated", 
+      "keys": { 
+        "isCsvCreated": 1 
+      }
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

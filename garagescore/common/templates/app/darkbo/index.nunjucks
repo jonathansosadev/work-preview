@@ -1,0 +1,58 @@
+{% extends "./common/layouts/darkbo.nunjucks" %}
+{% block css %}
+<style type="text/css">
+body {
+    background-color: #000000;
+    margin: 0;
+    overflow: hidden;
+}
+.centered {
+	  position: fixed;
+	  top: 50%;
+	  left: 50%;
+	  /* bring your own prefixes */
+	  transform: translate(-50%, -50%);
+}
+select {
+  color: #0e0e0e;
+}
+iframe {
+  width: 705px;
+  height: 400px;
+}
+</style>
+{% endblock %}
+{% block page %}
+  {% raw %}
+    <div class="centered" id="backoffice">
+      <div class="row">
+        <div class="col-xs-12 form-group">
+        </div>
+      </div>
+      <!--<div class="row">
+        <iframe src="https://js13kgames.com/games/offline-paradise/index.html" title="description"></iframe>
+      </div>-->
+    </div>
+  {% endraw %}
+{% endblock %}
+{% block scripts %}
+<script src="http://w.soundcloud.com/player/api.js" type="text/javascript"></script>
+<script>
+  new Vue({
+    el: '#backoffice',
+    data: function () {
+      return {
+        sound: false
+      };
+    },
+    watch: {},
+    mounted() {},
+    methods: {},
+    computed: {}
+  });
+</script>
+<script type="text/javascript">
+
+</script>
+
+{% endblock %}

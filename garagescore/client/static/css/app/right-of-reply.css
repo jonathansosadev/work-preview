@@ -1,0 +1,71 @@
+.thumb {
+	color: #64b7cb;
+    font-size: 50px;
+    line-height: 80px;
+}
+.fa-thumbs-o-down {
+	color: #666;	
+}
+.review-comment-left {
+	float: left;
+	margin-right: 20px;
+}
+.review-comment {
+	font-style: italic;
+    color: #b8a778;
+    font-size: 17px;
+    margin-top: 5px;
+}
+.review-author-name, .review-author-address, .review-date {
+	font-weight: bold;
+	color: #aaa;
+	font-size: 14px;
+}
+.review-author-name {
+	font-weight: bold;
+	color: #000;
+}
+.review-author-address, .review-date {
+}
+.review-transaction {
+	font-weight: bold;
+	color: #aaa;
+	font-size: 12px;
+}
+.review-score {
+	font-size: 40px;
+	text-align: center;
+	font-weight: bold;
+}
+.review-score-over {
+	font-size: 10px;
+	text-align: center;
+	font-weight: bold;
+	color: #666;
+	border-top: 3px solid #666;
+}
+
+form {
+	margin-top: 30px;
+}
+
+.note {
+	font-size: 12px;
+	font-style: italic;
+}
+.note-title {
+	text-decoration: underline;
+}
+.send {
+    margin-top: 25px;
+    float: right;
+}
+.reply-sent {
+	font-weight: bold;
+	color: green;
+}
+
+.error { 
+	font-weight: bold;
+	color:red;
+}

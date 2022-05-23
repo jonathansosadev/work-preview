@@ -1,0 +1,120 @@
+{
+  "googlePlaceId" : "ChIJ1SfnIBJx5kcRZS5kijZrH_4",
+  "googlePlace":{
+    "id" : "ChIJ1SfnIBJx5kcRZS5kijZrH_4",
+    "latitude" : 48.80011349999999,
+    "longitude" : 2.3265683,
+    "phone" : "01 84 23 27 17",
+    "rating" : 4.3,
+    "website" : "http://www.custeed.com/",
+    "url" : "https://maps.google.com/?cid=18311472491905953381",
+    "city" : "Cachan",
+    "postalCode" : "94230",
+    "subRegion" : "Val-de-Marne",
+    "region" : "Île-de-France",
+    "streetAddress" : "50 Rue Alphonse Melun",
+    "businessStatus": "OPERATIONAL",
+    "openingHours" : [
+      {
+        "close" : {
+          "day" : 1,
+          "time" : "1230"
+        },
+        "open" : {
+          "day" : 1,
+          "time" : "0830"
+        }
+      },
+      {
+        "close" : {
+          "day" : 1,
+          "time" : "1900"
+        },
+        "open" : {
+          "day" : 1,
+          "time" : "1400"
+        }
+      },
+      {
+        "close" : {
+          "day" : 2,
+          "time" : "1230"
+        },
+        "open" : {
+          "day" : 2,
+          "time" : "0830"
+        }
+      },
+      {
+        "close" : {
+          "day" : 2,
+          "time" : "1900"
+        },
+        "open" : {
+          "day" : 2,
+          "time" : "1400"
+        }
+      },
+      {
+        "close" : {
+          "day" : 3,
+          "time" : "1230"
+        },
+        "open" : {
+          "day" : 3,
+          "time" : "0830"
+        }
+      },
+      {
+        "close" : {
+          "day" : 3,
+          "time" : "1900"
+        },
+        "open" : {
+          "day" : 3,
+          "time" : "1400"
+        }
+      },
+      {
+        "close" : {
+          "day" : 4,
+          "time" : "1230"
+        },
+        "open" : {
+          "day" : 4,
+          "time" : "0830"
+        }
+      },
+      {
+        "close" : {
+          "day" : 4,
+          "time" : "1900"
+        },
+        "open" : {
+          "day" : 4,
+          "time" : "1400"
+        }
+      },
+      {
+        "close" : {
+          "day" : 5,
+          "time" : "1230"
+        },
+        "open" : {
+          "day" : 5,
+          "time" : "0830"
+        }
+      },
+      {
+        "close" : {
+          "day" : 5,
+          "time" : "1900"
+        },
+        "open" : {
+          "day" : 5,
+          "time" : "1400"
+        }
+      }
+    ]
+  }
+}

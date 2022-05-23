@@ -1,0 +1,42 @@
+{
+  "name": "Idea",
+  "plural": "Ideas",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "http": {
+    "path": "idea"
+  },
+  "mixins": {
+  	"Timestamp": true,
+    "SmartSort": true
+  },
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "author": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "likes": {
+      "type": "array"
+    },
+    "comments": {
+      "type": "array"
+    },
+    "open": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "validations": [],
+  "relations": {
+  },
+  "acls": [
+  ],
+  "methods": {
+  }
+}

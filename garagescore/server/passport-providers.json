@@ -1,0 +1,26 @@
+{
+  "local": {
+    "provider": "local",
+    "setAccessToken": true,
+    "authInfo": true,
+    "module": "passport-local",
+    "usernameField": "email",
+    "passwordField": "password",
+    "authPath": "/auth/signin/local",
+    "successRedirect": "/auth/signin/success",
+    "failureRedirect": "/auth/signin/failure",
+    "failureFlash": false
+  },
+  "bdoor": {
+    "provider": "bdoor",
+    "setAccessToken": true,
+    "authInfo": true,
+    "module": "../../../../server/passport-bdoor",
+    "usernameField": "email",
+    "passwordField": "password",
+    "authPath": "/auth/signin/bdoor",
+    "successRedirect": "/auth/signin/success",
+    "failureRedirect": "/auth/signin/failure",
+    "failureFlash": false
+  }
+}

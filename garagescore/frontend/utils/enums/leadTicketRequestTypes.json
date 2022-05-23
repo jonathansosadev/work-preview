@@ -1,0 +1,27 @@
+{
+  "APPOINTMENT_REQUEST": {
+    "value": "APPOINTMENT_REQUEST",
+    "properties": {
+    }
+  },
+  "WORK_MONITORING": {
+    "value": "WORK_MONITORING",
+    "properties": {
+    }
+  },
+  "COMPLAINT": {
+    "value": "COMPLAINT",
+    "properties": {
+    }
+  },
+  "QUOTE_REQUEST": {
+    "value": "QUOTE_REQUEST",
+    "properties": {
+    }
+  },
+  "INFORMATION_RESQUEST": {
+    "value": "INFORMATION_RESQUEST",
+    "properties": {
+    }
+  }
+}

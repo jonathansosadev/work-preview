@@ -1,0 +1,77 @@
+{
+  "name": "Report",
+  "plural": "Reports",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "mongodb": {
+    "collection": "reports"
+  },
+  "http": {
+    "path": "report"
+  },
+  "mixins": {
+    "SmartSort": true
+  },
+  "properties": {
+    "reportConfigId": {
+      "type": "string"
+    },
+    "format": {
+      "type": "string"
+    },
+    "context": {
+      "type": "string"
+    },
+    "sendDate": {
+      "type": "date"
+    },
+    "period": {
+      "type": "string"
+    },
+    "year": {
+      "type": "number"
+    },
+    "month": {
+      "type": "number"
+    },
+    "shortUrl": {
+      "type": "string"
+    },
+    "userEmail": {
+      "type": "string"
+    },
+    "garageHistoriesIds": {
+      "type": "array"
+    },
+    "config": {
+      "enable": "boolean",
+      "generalVue": "boolean",
+      "lead": "boolean",
+      "unsatisfiedApv": "boolean",
+      "unsatisfiedVn": "boolean",
+      "unsatisfiedVo": "boolean"
+    },
+    "erratum": {
+      "type": "Boolean",
+      "default": false
+    }
+  },
+  "indexes": {
+    "period_userEmail_index": {"period": 1, "userEmail": 1 },
+    "generateMonthlySummary_index": { "reportConfigId": 1, "userEmail": 1, "month": 1, "year": 1 },
+    "darkbo_monthly_summary_monitoring": { "reportConfigId": 1, "month": 1, "year": 1 }
+  },
+  "validations": [],
+  "relations": {
+    "user": {
+      "type": "belongsTo",
+      "model": "User",
+      "foreignKey": ""
+    }
+  },
+  "acls": [
+  ],
+  "methods": {
+  }
+}

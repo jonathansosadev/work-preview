@@ -1,0 +1,32 @@
+config,UnsatisfiedMaintenance,EscalationUnsatisfiedMaintenance,UnsatisfiedVn,EscalationUnsatisfiedVn,UnsatisfiedVo,EscalationUnsatisfiedVo,LeadApv,EscalationLeadMaintenance,LeadVn,EscalationLeadVn,LeadVo,EscalationLeadVo
+override,0,1,0,1,0,1,0,1,0,1,0,1
+Actionnaire / Président,0,0,0,0,0,0,0,0,0,0,0,0
+Directeur général,0,0,0,0,0,0,0,0,0,0,0,0
+Direction marketing groupe,0,0,0,0,0,0,0,0,1,1,1,1
+Direction de la communication groupe,0,0,0,0,0,0,0,0,0,0,0,0
+Direction qualité & méthodes groupe,0,1,0,1,0,1,0,0,0,0,0,0
+Direction des ventes groupe,0,0,0,1,0,1,0,0,0,1,0,1
+Direction des ventes VN groupe,0,0,0,1,0,0,0,0,0,1,0,0
+Direction des ventes VO groupe,0,0,0,0,0,1,0,0,0,0,0,1
+Direction atelier groupe,0,1,0,0,0,0,0,1,0,0,0,0
+Directeur de marque,0,0,0,1,0,1,0,0,0,1,0,1
+Directeur de concession,0,1,1,1,1,1,0,1,1,1,1,1
+Chef d'atelier concession,1,1,0,0,0,0,1,1,0,0,0,0
+Responsable carrosserie,0,0,0,0,0,0,0,0,0,0,0,0
+Commercial VN ou VO,0,0,1,0,1,0,0,0,1,0,1,0
+Conseiller services,1,0,0,0,0,0,0,0,0,0,0,0
+Responsable qualité concession,1,1,1,1,1,1,0,0,0,0,0,0
+Responsable des ventes VN & VO concession,0,0,1,1,1,1,0,0,1,1,1,1
+Responsable des ventes VN concession,0,0,1,1,0,0,0,0,1,1,0,0
+Responsable des ventes VO concession,0,0,0,0,1,1,0,0,0,0,1,1
+Responsable marketing concession,1,1,1,1,1,1,1,1,1,1,1,1
+Responsable digital,1,1,1,1,1,1,1,1,1,1,1,1
+Service ressources Humaines,0,0,0,0,0,0,0,0,0,0,0,0
+Service comptabilité et gestion,0,0,0,0,0,0,0,0,0,0,0,0
+Service client,1,0,1,0,1,0,1,0,0,0,0,0
+Secrétariat atelier,1,0,0,0,0,0,1,0,0,0,0,0
+Secrétariat vente,0,0,1,0,1,0,0,0,0,0,0,0
+Secrétariat général,1,0,1,0,1,0,0,0,1,0,1,0
+Service informatique ou technique,0,0,0,0,0,0,0,0,0,0,0,0
+Directeur de centre,0,0,0,0,0,0,0,0,0,0,0,0
+Contrôleur,0,0,0,0,0,0,0,0,0,0,0,0

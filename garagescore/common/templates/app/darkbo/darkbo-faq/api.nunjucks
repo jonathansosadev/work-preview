@@ -1,0 +1,32 @@
+{% extends "./_master.nunjucks" %}
+{% block title %}API{% endblock %}
+{% block questions %}
+<a class="row question" id="q_1" href="#a_1">Liste des méthodes disponibles</a>
+<a class="row question" id="q_2" href="#a_1">Comment accéder à l'API ?</a>
+<a class="row question" id="q_3" href="#a_1">Comment récupérer une clef d'API ?</a>
+{% endblock %}
+
+{% block answers %}
+<div class="row answer" id="a_1"  data-date="en Décembre 2016">
+	<p><xmp>/api.garagescore.com/garage/reviews/[jour]/[mois]/[année]?appId=[appId]</xmp>
+	&nbsp;Renvoie la liste des avis déposés sur chacun des garages du client et publiés lors du jour donné.</p>
+</div>
+
+<div class="row answer" id="a_2"  data-date="en Décembre 2016">
+<p>
+	1) <u>Autoriser l'IP du client</u> <br/>
+	Demande une modification du code source. <br/>
+	Le client nous communique l'ip qu'il utilisera pour se connecter à l'API et nous la rajoutons dans le code.
+</p>
+
+<p>
+	2) <u>Signer les requêtes</u> <br/>
+	À chaque requête, le client calcule une signature en fonction de l'url demandée et d'une clé secrète.
+</p>
+
+</div>
+
+<div class="row answer" id="a_3"  data-date="en Décembre 2016">
+	<p>(TODO) Chaque utilisateur dispose d'une paire [appId;appSecret] unique et liée à tous ces garages.</p>
+</div>
+{% endblock %}

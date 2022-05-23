@@ -1,0 +1,102 @@
+/*
+ * Global Bootstrap Overrides
+ */
+
+a, a:focus, a:hover, a:visited {
+  color: #fff;
+}
+a:hover,
+a:focus {
+  text-decoration: none;
+}
+
+body {
+  background-color: #111;
+}
+
+/*
+ * GarageScore styles
+ */
+
+.garagescore-widget {
+  background-image: url('/images/garagescore-wrench-black.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 150%;
+  border-color: #808080;
+  border-style: solid;
+  border-width: 2px;
+  color: #fff;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.garagescore-widget-background-mask {
+  background-color: rgba(17, 17, 17); /* Fallback */
+  background-color: rgba(17, 17, 17, 0.75);
+  height: 100%;
+}
+
+.garagescore-widget-content-wrapper {
+  position: absolute;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.garagescore-synthesized-at {
+  font-size: 12px;
+  font-style: italic;
+  margin-right: 6px;
+  margin-top: 6px;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+
+.garagescore-recommendation {
+  position: fixed;
+  text-align: center;
+  top: 25%;
+  width: 100%;
+}
+
+.garagescore-recommendation-yes-percentage, /* LEGACY */
+.garagescore-recommendation-yes-ratio {
+  font-size: 24px;
+  letter-spacing: -2px;
+  line-height: 22px;
+}
+
+.garagescore-recommendation-yes-label {
+  font-size: 16px;
+  letter-spacing: -1px;
+}
+
+.garagescore-garage-public-display-name {
+  font-size: 24px;
+  letter-spacing: -2px;
+  line-height: 22px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.garagescore-recommendation-respondents-count {
+  font-size: 16px;
+  letter-spacing: -1px;
+}
+
+.garagescore-powered-by {
+  bottom: 0;
+  font-size: 12px;
+  font-style: italic;
+  left: 0;
+  margin-bottom: 6px;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+}
+
+.garagescore-powered-by img.garagescore-logo {
+  height: 16px;
+  vertical-align: bottom;
+}

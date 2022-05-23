@@ -1,0 +1,75 @@
+{
+    "name": "IncomingCrossLead",
+    "plural": "IncomingCrossLeads",
+    "base": "GarageScoreBaseModel",
+    "options": {
+    },
+    "mongodb": {
+      "collection": "incomingCrossLeads"
+    },
+    "http": {
+      "path": "incomingCrossLead"
+    },
+    "properties": {
+      "externalId": {
+        "type": "String",
+        "required": true,
+        "id": true
+      },
+      "type": {
+        "type": "String",
+        "required": true
+      },
+      "status": {
+        "type": "String",
+        "required": true
+      },
+      "receivedAt": {
+        "type": "Date",
+        "required": true
+      },
+      "garageId": {
+        "type": "Object"
+      },
+      "sourceType": {
+        "type": "String"
+      },
+      "dataId": {
+        "type": "Object"
+      },
+      "error": {
+        "type": "String"
+      },
+      "payload": {
+        "type": {
+          "phone": "String",
+          "duration": "Number",
+          "agentNumber": "Number",
+          "live": "Boolean",
+          "to": "String",
+          "subject": "String",
+          "html": "String",
+          "messageUrl": "String",
+          "attachments": "Array"
+        },
+        "required": true
+      },
+      "raw": {
+        "type": "object",
+        "required": true
+      }
+    },
+    "indexes": {
+      "type_index": { "type": 1 },
+      "status_index": { "status": 1 },
+      "receivedAt_index": { "receivedAt": 1 },
+      "garageId_index": { "garageId": 1 },
+      "sourceType_index": { "sourceType": 1 },
+      "garageId_receivedAt_index": { "garageId": 1, "receivedAt": -1 },
+      "status_receivedAt_index": { "status": 1, "receivedAt": 1 }
+    },
+    "validations": [],
+    "relations": {},
+   "methods": {
+   }
+  }

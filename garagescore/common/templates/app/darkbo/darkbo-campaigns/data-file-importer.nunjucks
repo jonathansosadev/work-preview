@@ -1,0 +1,186 @@
+{% extends "./data-file-base.nunjucks" %}
+
+{% block pageTitle %}
+  <h1>Import de fichiers garages</h1>
+{% endblock %}
+
+{% block Instructions %}
+  <p class="col-md-12">Choisir un garage.</p>
+  <p class="col-md-12">Choisir un fichier à importer (les fichiers doivent être déposés sur s3 dans <b>humanupload/import/todo/[garage-slug]/import-todo</b>).</p>
+  <p class="col-md-12">Demander une validation; corriger les erreurs si besoin</p>
+  <p class="col-md-12">Une fois le fichier validé, vérifier le rapport de validation.</p>
+  <p class="col-md-12">Si le rapport correspond bien aux attentes, lancer l'import.</p>
+  <p class="col-md-12">Les contacts seront envoyés lors de la prochaine campagne.</p>
+{% endblock %}
+
+{% block fileChooseInput %}
+  <select name="filePath" id="filePath" class="form-control" v-model="filePath">
+    <option selected disabled>Choisir</option>
+    <option v-for="availableFile in availableFiles" :value="availableFile.path">{{'{{'}} availableFile.path.replace('humanupload:/', '').replace('import-todo/', '') {{'}}'}}</option>
+  </select>
+  <div v-if="filesListLoading">Chargement des fichiers sur S3...</div>
+  <br/>
+{% endblock %}
+
+{% block onSelectGarage %}
+  <script type="text/javascript">
+    function onSelectGarage(event) {
+      event.preventDefault();
+      try {
+        var garageId = this.garageId;
+        if (!garageId) return;
+        var request = new XMLHttpRequest();
+        var url = '{{ lib.client.url.getShortUrl('ADMIN_DATA_FILE_IMPORTER_LIST') }}' + garageId;
+        request.open('GET', url, true);
+        request.send();
+        this.filesListLoading = true;
+        request.onload = function () {
+          this.loading = false;
+          this.filesListLoading = false;
+          if (request.status !== 200 && request.status !== 304) {
+            this.error_msg = 'Erreur sur le serveur';
+          } else {
+            var res = JSON.parse(request.responseText);
+            if (!res) {
+              this.error_msg = 'Erreur sur le serveur';
+            } else {
+              this.availableFiles = res.files;
+            }
+          }
+        }.bind(this);
+      } catch (e) {
+        console.error(e);
+      }    }
+  </script>
+{% endblock %}
+
+{% block runValidationBody %}
+  <script type="text/javascript">
+    function runValidation() {
+      event.preventDefault();
+      try {
+        var filePath = this.filePath;
+        if (!filePath) return false;
+        var importSchemaName = this.importSchemaName;
+        if (!importSchemaName) return false;
+        var garageId = this.garageId;
+        if (!garageId) return;
+        var importOptions = this.importOptions;
+        if (!importOptions) importOptions = '{}';
+        var dataType = this.dataType;
+        if (!dataType) return false;
+        this.showSample = false;
+        this.loading = true;
+        this.error_msg = null;
+        var request = new XMLHttpRequest();
+        var url = '{{ lib.client.url.getShortUrl('ADMIN_DATA_FILE_IMPORTER_VALIDATE') }}';
+        request.open('POST', url, true);
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        var body = {};
+        body.garageId = garageId;
+        body.filePath = filePath;
+        body.importSchemaName = importSchemaName;
+        body.importOptions = JSON.stringify(importOptions);
+        body.dataType = dataType;
+        request.send(JSON.stringify(body));
+        request.onload = function () {
+          this.import_done = false;
+          if (request.status !== 200 && request.status !== 304) {
+            this.error_msg = 'Erreur serveur';
+          } else {
+            var resSocket = JSON.parse(request.responseText);
+            var protocol = document.location.protocol.indexOf('https') > -1 ? 'wss' : 'ws';
+            var HOST = protocol + '://' + document.location.host + resSocket.websocket;
+            var ws = new WebSocket(HOST);
+
+            ws.onmessage = function (event) {
+              var res = event.data && JSON.parse(event.data);
+              if (res && res.status === 'running') { return; }
+              if (res && res.status === 'ok') {
+                this.loading = false;
+                this.results = formatValidationResults(res.details);
+                if (!this.results.isValid) {
+                  this.error_msg = res.validationDetails;
+                } else {
+                  this.showSample = true;
+                }
+              } else if (res && res.status === 'ko') {
+                this.loading = false;
+                this.error_msg = res.message;
+              } else {
+                this.loading = false;
+                this.error_msg = 'Erreur serveur';
+              }
+              ws.close();
+            }.bind(this);
+          }
+        }.bind(this);
+      } catch (e) {
+        console.error(e);
+      }
+      return false;
+    }
+  </script>
+{% endblock %}
+
+{% block runImportBody %}
+  <script type="text/javascript">
+    function runImport() {
+      event.preventDefault();
+      try {
+        var filePath = this.filePath;
+        if (!filePath) return;
+        var importSchemaName = this.importSchemaName;
+        if (!importSchemaName) return;
+        var garageId = this.garageId;
+        if (!garageId) return;
+        var dataType = this.dataType;
+        if (!dataType) return;
+        var importAutomation = this.importAutomation;
+        this.showSample = false;
+        this.loading = true;
+        this.error_msg = null;
+        var request = new XMLHttpRequest();
+        var url = '{{ lib.client.url.getShortUrl('ADMIN_DATA_FILE_IMPORTER_FROM_FILESTORE') }}'
+          + encodeURIComponent(garageId)
+          + '/' + encodeURIComponent(filePath)
+          + '/' + encodeURIComponent(importSchemaName)
+          + '/' + encodeURIComponent(dataType)
+          + '/' + (importAutomation === true ? encodeURIComponent('automation') : encodeURIComponent('noAutomation'));
+        request.open('POST', url, true);
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        request.send();
+        request.onload = function () {
+          if (request.status !== 200 && request.status !== 304) {
+            this.results = { isValid: false };
+            this.error_msg = 'Erreur sur le serveur';
+          } else {
+            var resSocket = JSON.parse(request.responseText);
+            var protocol = document.location.protocol.indexOf('https') > -1 ? 'wss' : 'ws';
+            var HOST = protocol + '://' + document.location.host + resSocket.websocket;
+            var ws = new WebSocket(HOST);
+
+            ws.onmessage = function (event) {
+              var res = event.data && JSON.parse(event.data);
+              if (res && res.status === 'running') { return; }
+              if (res && res.status === 'ok') {
+                this.loading = false;
+                this.import_done = true;
+                this.importDetails = JSON.stringify(res.details);
+              } else if (res && res.status === 'ko') {
+                this.loading = false;
+                this.error_msg = res.message;
+              } else {
+                this.loading = false;
+                this.error_msg = 'Erreur serveur';
+              }
+              ws.close();
+            }.bind(this);
+          }
+        }.bind(this);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  </script>
+{% endblock %}

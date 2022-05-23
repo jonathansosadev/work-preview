@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="Custeed Application Dashboard"/>
+    <meta name="keywords" content="custeed, application, dashboard"/>
+    <meta name="author" content="Custeed"/>
+    <meta name="robots" content="noindex,nofollow"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="theme-color" content="#ffffff"/>
+    <meta
+      name="google-signin-client_id"
+      content="345785282366-16ets3mo2t3c28q5q4u1giamd6m0hi3h.apps.googleusercontent.com"/>
+    <title>{{ head.title | default('Custeed') }}</title>
+    <!-- STYLES -->
+    <link rel="stylesheet" type="text/css" href="/external-lib/roboto-fontface/css/roboto/roboto-fontface.css"/>
+    <link rel="stylesheet" type="text/css" href="/external-lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{{ lib.client.staticUrl('/external-lib/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ lib.client.staticUrl('/external-lib/flatpickr.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ lib.client.staticUrl('/css/app/backoffice.css') }}"/>
+    <link
+    rel="stylesheet" type="text/css" href="{{ lib.client.staticUrl('/css/app/pagination.css') }}"/>
+    <!-- SCRIPTS -->
+    <script src="{{ lib.client.staticUrl('/external-lib/lodash.js') }}"></script>
+    <script src="{{ lib.client.staticUrl('/external-lib/vue2.6.js') }}"></script>
+    <script src="{{ lib.client.staticUrl('/external-lib/axios.min.js') }}"></script>
+    <script src="{{ lib.client.staticUrl('/external-lib/jquery-1.12.0.min.js') }}"></script>
+    <script src="{{ lib.client.staticUrl('/external-lib/flatpickr.min.js') }}"></script>
+    <script src="{{ lib.client.staticUrl('/external-lib/moment-with-locales.min.js') }}"></script>
+    <script src="{{ lib.client.staticUrl('/external-lib/d3.min.js') }}"></script>
+    <script src="{{ lib.client.staticUrl('/js/app/backoffice/tools.js') }}"></script>
+    <script src="//maps.googleapis.com/maps/api/js?key={{ lib.client.googleApiKey() }}&libraries=places"></script>
+    <style type="text/css">
+      input,
+      option {
+        color: black;
+      }
+      .page-header {
+        margin-top: 20px;
+      }
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+      }
+      li {
+        float: left;
+      }
+      .menu {
+        background: #555;
+      }
+      .menu li a,
+      .dropbtn {
+        display: inline-block;
+        color: white;
+        text-align: center;
+        padding: 7px 11px 10px 8px;
+        text-decoration: none;
+        border-bottom: 3px transparent solid;
+      }
+      .menu li a:hover,
+      .dropli:hover .dropbtn {
+        border-bottom-color: #c5c5c5;
+        text-decoration: none;
+      }
+      li.dropli {
+        display: inline-block;
+      }
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #666;
+        min-width: 160px;
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+      }
+      .menu li .dropdown-content a {
+        color: white;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+      }
+      .menu li .dropdown-content a:hover {
+        background-color: #999;
+        border-bottom-color: transparent;
+      }
+      .menushow {
+        display: block;
+        z-index: 5;
+      }
+      .menu .fa {
+        margin-left: 5px;
+      }
+      .menu li.active {
+        background-color: #aaa;
+      }
+      .menu li.active a,
+      .menu .dropli.active {}
+    </style>
+    {% block css %}{% endblock %}
+  </head>
+  <body>
+    {% block alertsContainer %}
+      {% block alerts %}
+        {% if messages.error %}
+          <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>Error:</strong>
+            {{ messages.error }}
+          </div>
+        {% endif %}
+      {% endblock %}
+    {% endblock %}
+    {% block pageContainer %}
+      <div class="container-fluid">
+        <ul class="menu">
+          <li class="dropli {% if (current_tab == 'garages') %}active{% endif %}">
+            <a href="javascript:void(0)" class="dropbtn" onclick="openMenu('garagesDD')">Garages<i class="fa fa-caret-down" aria-hidden="true"></i>
+            </a>
+            <div class="dropdown-content" id="garagesDD">
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_GARAGES') }}">Configurer</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_GARAGE_INDEXED_LIST') }}">Garages indexés</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_GARAGE_TEST_MECAPLANNING') }}">Test mecaplanning</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_GARAGE_TEST_VMOBILITY') }}">Test V-Mobility</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_GARAGE_TEST_NEXTLANE') }}">Test Nextlane</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_GARAGE_TEST_YUZER') }}">Test Yuzer</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_GARAGE_TEST_WIDGET') }}">Test Widget</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_GARAGE_CROSS_LEADS') }}">X-Leads Config</a>
+            </div>
+          </li>
+          <li class="dropli {% if (current_tab == 'render-contact' or current_tab == 'render-alert' or current_tab == 'blacklist')
+              %}active{% endif %}">
+            <a href="javascript:void(0)" class="dropbtn" onclick="openMenu('campDD2')">Contacts<i class="fa fa-caret-down" aria-hidden="true"></i>
+            </a>
+            <div class="dropdown-content" id="campDD2">
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_CONTACT_PREVIEW_INDEX') }}">Prévisualisation des Emails et SMS</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_CONTACT_PREVIEW_BULK') }}">Prévisualisation de contacts de campagnes par paquet</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_CONTACT_MANAGE') }}">Gestion contacts</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_SCHEDULED_CONTACTS') }}">Calendrier des contacts à venir</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_CUSTOMERS') }}">Liste des clients finaux</a>
+            </div>
+          </li>
+          <li class="dropli {% if (current_tab == 'file-importer' or current_tab == 'string-importer' or current_tab == 'pulls' or
+              current_tab == 'datafile-parsers') %}active{% endif %}">
+            <a href="javascript:void(0)" class="dropbtn" onclick="openMenu('campDD')">Campagnes<i class="fa fa-caret-down" aria-hidden="true"></i>
+            </a>
+            <div class="dropdown-content" id="campDD">
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_CAMPAIGN_LIST') }}">Liste campagnes</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_DATA_FILE_IMPORTER') }}">Validation et Import</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_DATA_FILE_DYNAMIC_PARSERS_CONFIG') }}">Parsers</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_DATA_FILE_DYNAMIC_PARSERS_MAKES') }}">Parsers: Liste des constructeurs</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_DATA_FILE_DYNAMIC_PARSERS_COLUMNS') }}">Parsers: Définition des colonnes</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_DATA_FILE_DYNAMIC_PARSERS_UNDEFINED') }}">Parsers: Gérer les frontDeskUserNames "UNDEFINED"</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_IMPORTS_SHARED_FILTERS') }}">Imports: Filtres partagés</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_GARAGE_PULLS') }}">Gestion des fichiers déposés</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_CAMPAIGN_SCENARIO_INDEX') }}">Campaigns scenarios</a>
+            </div>
+          </li>
+          <li class="dropli {% if (current_tab == 'public-reviews') %}active{% endif %}">
+            <a href="javascript:void(0)" class="dropbtn" onclick="openMenu('avisDD')">Avis<i class="fa fa-caret-down" aria-hidden="true"></i>
+            </a>
+            <div class="dropdown-content" id="avisDD">
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_PUBLIC_REVIEW') }}">Liste des avis déposés</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_REVIEWS_TEST_MODERATION') }}">Gérer la modération</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_REPORT_RENDER') }}">Gestion rapports</a>
+            </div>
+          </li>
+          <li class="dropli {% if (current_tab == 'api') %}active{% endif %}">
+            <a href="javascript:void(0)" class="dropbtn" onclick="openMenu('campDD3')">API<i class="fa fa-caret-down" aria-hidden="true"></i>
+            </a>
+            <div class="dropdown-content" id="campDD3">
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_API_ID_GENERATOR') }}">Générer une clé API</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_API_REQUEST_SIMULATOR') }}">Requêter l'API publique</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_LEADS_EXPORTS_CONFIG') }}">Configurer les exports de leads</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_LEADS_EXPORTS_STATS') }}">Visualiser les statistiques d'execution des exports de leads</a>
+            </div>
+          </li>
+          <li class="dropli {% if (current_tab == 'users') %}active{% endif %}">
+            <a href="javascript:void(0)" class="dropbtn" onclick="openMenu('users')">Gestion des utilisateurs<i class="fa fa-caret-down" aria-hidden="true"></i>
+            </a>
+            <div class="dropdown-content" id="users">
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_USERS') }}">Utilisateurs</a>
+              <a href="{{ lib.client.url.getUrlNamespace('USER_JOBS').FRONT_END }}">Jobs</a>
+              <a href="{{ lib.client.url.getUrlNamespace('ADMIN_DATA_DISPLAY_ROOT') }}">Client final</a>
+            </div>
+          </li>
+          <li class="dropli {% if (current_tab == 'monitoring') %}active{% endif %}">
+            <a href="javascript:void(0)" class="dropbtn" onclick="openMenu('monitoring')">Monitoring<i class="fa fa-caret-down" aria-hidden="true"></i>
+            </a>
+            <div class="dropdown-content" id="monitoring">
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_MONITORING_PROFILER') }}">Performance review</a>
+              <a href="{{ lib.client.url.getUrlNamespace('ADMIN_AUTOMATION_EVENTS') }}">Events automation</a>
+              <a href="{{ lib.client.url.getUrlNamespace('ADMIN_MONITORING_MONTHLY_SUMMARY') }}">Synthèses mensuelles</a>
+            </div>
+          </li>
+          <li class="dropli {% if (current_tab == 'faq') %}active{% endif %}">
+            <a href="javascript:void(0)" class="dropbtn" onclick="openMenu('faq')">FAQ<i class="fa fa-caret-down" aria-hidden="true"></i>
+            </a>
+            <div class="dropdown-content" id="faq">
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_FAQ_SURVEYS') }}">Enquêtes et certificats</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_FAQ_ALERTS') }}">Alertes</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_FAQ_REPORTS') }}">Rapports</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_FAQ_API') }}">API</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_FAQ_WIDGET') }}">Widget</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_FAQ_WWW') }}">Site web</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_FAQ_ADMIN') }}">Admin client</a>
+            </div>
+          </li>
+          <li class="dropli {% if (current_tab == 'application') %}active{% endif %}">
+            <a href="javascript:void(0)" class="dropbtn" onclick="openMenu('application')">Application<i class="fa fa-caret-down" aria-hidden="true"></i>
+            </a>
+            <div class="dropdown-content" id="application">
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_APPLICATION_MAINTENANCE') }}">Mode maintenance</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_APPLICATION_CRON_INFORMATION_INDEX') }}">Info crons</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_APPLICATION_SCHEDULER_MONITORING_INDEX') }}">Monitoring scheduler</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_REPUTYSCORE_MONITORING') }}">Monitoring E-Réputation</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_APPLICATION_MONGO_JOURNAL') }}">Monitoring Mongo</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_EXPORTS_AUTOMATION') }}">Exports Automation M-1</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_EXPORTS') }}">Exports</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_APPLICATION_EMPTYWORDS') }}">Mots vides</a>
+              <a href="{{ lib.client.url.getShortUrl('ADMIN_JOBS_INDEX') }}">Affiche et exécute un jobs immédiatement</a>
+              <a href="/cava" target="_blank">Ça va ?</a>
+            </div>
+          </li>
+          <li class="dropli {% if (current_tab == 'simulators') %}active{% endif %}">
+            <a href="javascript:void(0)" class="dropbtn" onclick="openMenu('simulators')">Simulateurs<i class="fa fa-caret-down" aria-hidden="true"></i>
+            </a>
+            <div class="dropdown-content" id="simulators">
+              <a href="{{ lib.client.url.getUrlNamespace('SIMULATORS').IMPORTER }}">Importer</a>
+              <a href="{{ lib.client.url.getUrlNamespace('SIMULATORS').MAILGUM }}">MailguM</a>
+              <a href="{{ lib.client.url.getUrlNamespace('SIMULATORS').SMSDOCTOR }}">SMS Doctor</a>
+            </div>
+          </li>
+          <li class="dropli">
+            <a href="javascript:void(0)" class="dropbtn" onclick="openMenu('outlinks')">Aller à
+              <i class="fa fa-external-link" aria-hidden="true"></i>
+              <i class="fa fa-caret-down" aria-hidden="true"></i>
+            </a>
+            <div class="dropdown-content" id="outlinks">
+              <a target="_blank" href="{{ lib.client.url.getShortUrl('COCKPIT_HOME') + '/welcome' }}">Cockpit
+                <i class="fa fa-external-link" aria-hidden="true"></i>
+              </a>
+              <a target="_blank" href="{{ lib.client.url.getShortUrl('GREY_BACKOFFICE_BASE') }}">GreyBO
+                <i class="fa fa-external-link" aria-hidden="true"></i>
+              </a>
+              <a target="_blank" href="/graphql">graph<i>i</i>QL
+                <i class="fa fa-external-link" aria-hidden="true"></i>
+              </a>
+              {#<a target="_blank" href="{{ lib.client.getExplorerUrl() }}">Explorer <i class="fa fa-external-link" aria-hidden="true"></i></a>#}
+              {#<a target="_blank" href="{{ lib.client.url.getShortUrl('ANALYTICS_HOME') }}">Analytics <i class="fa fa-external-link" aria-hidden="true"></i></a>#}
+            </div>
+          </li>
+          <li class="" style="float: right">
+            <a href="/auth/signout">Sign-out
+            </a>
+          </li>
+        </ul>
+        <script>
+          window.openMenu = function (id) {
+            setTimeout(function () {
+              document
+                .getElementById(id)
+                .classList
+                .toggle('menushow');
+            }, 0); // this hack is a joke, we wait the window.onclick to finish
+          };
+          // Close the dropdown if the user clicks outside of it
+          window.onclick = function (e) { // if (!e.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName('dropdown-content');
+            for (var d = 0; d < dropdowns.length; d++) {
+              var openDropdown = dropdowns[d];
+              if (openDropdown.classList.contains('menushow')) {
+                openDropdown.classList.remove('menushow');
+              }
+            }
+            // }
+          };
+        </script>
+        <div class="row-fluid">
+          <div class="garagescore-page">
+            {% block page %}{% endblock %}
+          </div>
+        </div>
+      </div>
+    {% endblock %}
+    {% block scriptsContainer %}
+      {% block scripts %}{% endblock %}
+    {% endblock %}
+  </body>
+</html>

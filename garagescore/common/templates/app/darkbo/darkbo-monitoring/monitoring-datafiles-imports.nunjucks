@@ -1,0 +1,236 @@
+{% extends "../common/layouts/darkbo.nunjucks" %} {% block css %}
+<style type="text/css">
+  .page-header select {
+    margin-top: 25px;
+  }
+
+  #content {
+    display: none;
+  }
+
+  .axis .domain,
+  .tick line {
+    stroke: white;
+  }
+
+  text {
+    fill: white;
+  }
+
+  .garage {
+    padding: 2px 5px;
+    margin-right: 10px;
+    background: #eee;
+    color: #333333;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .garage.active {
+    color: red;
+  }
+
+  h4.col-md-12 {
+    margin-top: 50px;
+    text-decoration: underline;
+  }
+</style>
+{% endblock %} {% block page %}
+<div class="col-md-12">
+  <div class="page-header row">
+    <h1 class="col-md-10">Gestion des fichiers déposés (a-t-on trouvé les fichiers sur S3 ?)</h1>
+  </div>
+</div>
+<div class="col-md-12">
+  <div class="row garage active">
+    <span>Attention, la migration de datas après l'import ne modifie pas les données sur le dataFile</span>
+  </div>
+</div>
+<div class="col-md-12">
+  <div class="row">
+    <label for="datePicker">Choisir la date</label>
+    <input id="datePicker" class="form-control" type="date" onchange="app.dateChanged()" />
+  </div>
+</div>
+<div class="col-md-12" id="loader">
+  Chargement...
+</div>
+<div class="col-md-12" id="content">
+    <div class="row">
+        <h4 class="col-md-12">Garages sans fichier APV</h4>
+        <div class="col-md-12"><b>Aujourd'hui</b></div>
+        <ul class="col-md-12" id="errorLastDayMaintenances"></ul>
+        <div class="col-md-12"><b>Depuis une semaine</b></div>
+        <ul class="col-md-12" id="errorPeriodMaintenances"></ul>
+
+        <h4 class="col-md-12">Garages sans fichier VN</h4>
+        <div class="col-md-12"><b>Aujourd'hui</b></div>
+        <ul class="col-md-12" id="errorLastDayVN"></ul>
+        <div class="col-md-12"><b>Depuis une semaine</b></div>
+        <ul class="col-md-12" id="errorPeriodVN"></ul>
+
+        <h4 class="col-md-12">Garages sans fichier VO</h4>
+        <div class="col-md-12"><b>Aujourd'hui</b></div>
+        <ul class="col-md-12" id="errorLastDayVO"></ul>
+        <div class="col-md-12"><b>Depuis une semaine</b></div>
+        <ul class="col-md-12" id="errorPeriodVO"></ul>
+
+        <h4 class="col-md-12">Garages sans fichier MixedSales</h4>
+        <div class="col-md-12"><b>Aujourd'hui</b></div>
+        <ul class="col-md-12" id="errorLastDayMixedSales"></ul>
+        <div class="col-md-12"><b>Depuis une semaine</b></div>
+        <ul class="col-md-12" id="errorPeriodMixedSales"></ul>
+
+        <h4 class="col-md-12">Garages sans fichier Mixed</h4>
+        <div class="col-md-12"><b>Aujourd'hui</b></div>
+        <ul class="col-md-12" id="errorLastDayMixed"></ul>
+        <div class="col-md-12"><b>Depuis une semaine</b></div>
+        <ul class="col-md-12" id="errorPeriodMixed"></ul>
+
+        <h4 class="col-md-12">Garages en erreur quelque soit le type de fichier</h4>
+        <div class="col-md-12"><b>Aujourd'hui</b></div>
+        <ul class="col-md-12" id="errorLastDayAll"></ul>
+        <div class="col-md-12"><b>Depuis une semaine</b></div>
+        <ul class="col-md-12" id="errorPeriodAll"></ul>
+
+
+      </div>
+</div>
+{% endblock %} {% block scripts %}
+<script type="text/javascript">
+  var DATA_URL = '{{ getData|safe }}';
+  class APP {
+    constructor() {
+      this._loading = false;
+      this.data = null;
+      this.date = new Date(Date.now()).toISOString().split('T').shift();
+    }
+
+    dateChanged() {
+      this.date = document.getElementById('datePicker').value;
+      this.loadDataAndGraphs();
+    }
+
+    /** set loading*/
+    loading(isLoading) {
+      this._loading = isLoading;
+      if (this._loading) {
+        document.getElementById('content').style.display = 'none';
+        document.getElementById('loader').style.display = 'block';
+      } else {
+        document.getElementById('content').style.display = 'block';
+        document.getElementById('loader').style.display = 'none';
+      }
+    }
+
+    /** Load data with websocket */
+    loadDataAndGraphs() {
+      if (this._loading) return;
+      this.loading(true);
+      var request = new XMLHttpRequest();
+      request.open('GET', DATA_URL + `?date=${this.date}`, true);
+      request.send();
+      request.onload = function () {
+        if (request.status !== 200 && request.status !== 304) {
+          console.error('Erreur sur le serveur');
+          return;
+        }
+        var resSocket = JSON.parse(request.responseText);
+        var protocol = document.location.protocol.indexOf('https') > -1 ? 'wss' : 'ws';
+        var ws = new WebSocket(protocol + '://' + document.location.host + resSocket.websocket);
+        ws.onmessage = function (event) {
+          var res = event.data && JSON.parse(event.data);
+          if (res && res.status === 'running') { return; }
+          if (res && res.status === 'ok') {
+            console.log(res)
+            this.data = res.details.data;
+            this.garages = res.details.data.garagesData;
+            this.showErrorsForThePeriod();
+            this.showErrorsForTheLastDay();
+            this.loading(false);
+          } else if (res && res.status === 'ko') {
+            this.loading(false);
+            alert('Erreur serveur, voir la console');
+            console.error(res.message);
+          } else {
+            this.loading(false);
+            alert('Erreur serveur');
+          }
+          ws.close();
+        }.bind(this);
+      }.bind(this);
+
+    }
+
+    /** show garages with errors on the period*/
+    showErrorsForThePeriod() {
+      var errorPeriodAll = document.getElementById('errorPeriodAll');
+      var errorPeriodMaintenances = document.getElementById('errorPeriodMaintenances');
+      var errorPeriodVN = document.getElementById('errorPeriodVN');
+      var errorPeriodVO = document.getElementById('errorPeriodVO');
+      var errorPeriodMixedSales = document.getElementById('errorPeriodMixedSales');
+      var errorPeriodMixed = document.getElementById('errorPeriodMixed');
+
+      var divs = {
+        'all' : errorPeriodAll,
+        'apv' : errorPeriodMaintenances,
+        'vn' : errorPeriodVN,
+        'vo' : errorPeriodVO,
+        'mixedsales' : errorPeriodMixedSales,
+        'mixed' : errorPeriodMixed,
+      };
+      var daysCount = Object.keys(this.data.perDay).length;
+      for (var type in divs) {
+        var count = this.data.errorsCountPerGarage.period[type];
+        var list = '';
+        for (var gId in count) {
+          if (gId && this.garages[gId] && count[gId] >= daysCount) {
+            list += '<a class="garage" href="/backoffice/garages#' + gId +'" target="_blank">' + this.garages[gId].publicDisplayName + '</a>';
+          }
+        }
+        divs[type].innerHTML = list || '-';
+      }
+    }
+    /** show garages with errors for the last day*/
+    showErrorsForTheLastDay() {
+      var errorLastDayAll = document.getElementById('errorLastDayAll');
+      var errorLastDayMaintenances = document.getElementById('errorLastDayMaintenances');
+      var errorLastDayVN = document.getElementById('errorLastDayVN');
+      var errorLastDayVO = document.getElementById('errorLastDayVO');
+      var errorLastDayMixedSales = document.getElementById('errorLastDayMixedSales');
+      var errorLastDayMixed = document.getElementById('errorLastDayMixed');
+
+      var divs = {
+        'all' : errorLastDayAll,
+        'apv' : errorLastDayMaintenances,
+        'vn' : errorLastDayVN,
+        'vo' : errorLastDayVO,
+        'mixedsales' : errorLastDayMixedSales,
+        'mixed' : errorLastDayMixed,
+      };
+
+      for (var type in divs) {
+        var count = this.data.errorsCountPerGarage.lastDay[type];
+        var list = '';
+        for (var gId in count) {
+          if (gId && this.garages[gId] && count[gId]) {
+            list += '<a class="garage" href="/backoffice/garages#' + gId +'" target="_blank">' + this.garages[gId].publicDisplayName + '</a>';
+          }
+        }
+        divs[type].innerHTML = list || '-';
+      }
+    }
+    }
+  ;
+
+  var app = new APP();
+  document.getElementById('datePicker').value = app.date;
+  app.loadDataAndGraphs();
+
+  var reload = function () {
+    app.loadDataAndGraphs();
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+    <style></style>
+    <style>
+        .data-container {
+            border: 1px solid #6b6b6b;
+            padding: 1rem 0.5rem;
+            margin: 1rem 0 1.5rem;
+            background: #484848;
+        }
+        .data-details {
+            color: black
+        }
+        #search-dataId {
+            color: black;
+        }
+    </style>
+{% endblock %}
+{% block page %}
+    <div class="container">
+        <h1>Dernier Datas créés</h1>
+        <hr/>
+        {% raw %}
+            <div id="search"></div>
+        {% endraw %}
+        {% include "../common/components/search-data.nunjucks" %}
+        {% if datas %}
+            <div class="col-md-12">
+                {% for data in datas %}
+                    <div class="data-container">
+                        <p>
+                            <span style="font-weight: bold">id</span>
+                            : {{ data._id }}
+                        </p>
+                        <p>
+                            <span style="font-weight: bold">créé le</span>
+                            : {{ data.createdAt }}
+                        </p>
+                        <p>
+                            <span style="font-weight: bold">Nom / Prénom</span>
+                            : {{ data.customer.fullName.value }}
+                        </p>
+                        <p>
+                            <span style="font-weight: bold">email</span>
+                            : {{ data.customer.contact.email.value }}
+                        </p>
+                        <a href="{{ lib.client.url.getShortUrl('ADMIN_DATA_DISPLAY_ROOT') + data._id }}">> détails</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="col-md-12 error">Aucun client trouvé pour {{ dataId }}</div>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block scripts %}{% endblock %}

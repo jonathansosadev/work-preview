@@ -1,0 +1,676 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+  <style type="text/css">
+    .m-xs { margin: 6px; }
+    .mt-xs { margin-top: 6px; }
+    .mb-xs { margin-bottom: 6px; }
+    .p-xs { padding: 6px; }
+    .p-xxs { padding: 4px; }
+    .no-padding { padding: 0 !important; }
+    .no-margin { margin: 0 !important; }
+    .padding-sm { padding: 20px; }
+    .bg-white { background-color: whitesmoke; color: black; }
+    .bg-grey { background-color: lightgrey; color: black; }
+    .bg-thanks { background-color: dimgray; padding-bottom: 0 !important; }
+    .recontacts { background-color: #dfdfdf; color: black; padding: 5px 5px 10px 5px; }
+    .frame { border: solid 1px grey; margin: 2px; padding: 5px }
+
+    table {
+      background-color: white;
+    }
+    .inline {
+      display: inline-block;
+    }
+    .input-hours {
+      padding: 2px 4px;
+      width: 40px;
+      height: 20px;
+    }
+    ul {
+      background-color: unset;
+    }
+
+    .material-switch > input[type="checkbox"] {
+      display: none;
+    }
+
+    .material-switch > label {
+      cursor: pointer;
+      height: 0;
+      position: relative;
+      width: 40px;
+    }
+
+    .material-switch > label::before {
+      background: rgb(0, 0, 0);
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+      border-radius: 8px;
+      content: '';
+      height: 16px;
+      margin-top: -8px;
+      position:absolute;
+      opacity: 0.3;
+      transition: all 0.4s ease-in-out;
+      width: 40px;
+    }
+    .material-switch > label::after {
+      background: rgb(255, 255, 255);
+      border-radius: 16px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      content: '';
+      height: 24px;
+      left: -4px;
+      margin-top: -8px;
+      position: absolute;
+      top: -4px;
+      transition: all 0.3s ease-in-out;
+      width: 24px;
+    }
+    .material-switch > input[type="checkbox"]:checked + label::before {
+      background: inherit;
+      opacity: 0.5;
+    }
+    .material-switch > input[type="checkbox"]:checked + label::after {
+      background: inherit;
+      left: 20px;
+    }
+    .title {
+      font-weight: 500;
+    }
+    .column {
+      width: 180px;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .escalate-valid {
+      border: 1px solid #ccc;
+    }
+
+    .escalate-error {
+      border: solid red;
+    }
+  </style>
+{% endblock %}
+{% block page %}
+  {% raw %}
+    <div id="app">
+      <div class="page-header">
+        <h1>Scenario : {{ selected.name }}</h1>
+      </div>
+      <div class="container">
+        <div class="row padding-sm bg-white">
+          <label class="col-xs-4 control-label p-xs text-right">Chose the scenario</label>
+          <div class="col-xs-5">
+            <select class="form-control" v-model="selectedScenarioId">
+              <option v-for="scenario in scenarios" :value="scenario.id"> {{ `${garageTypesByValue[scenario.type]} - ${scenario.name}` }} </option>
+              <option value="new">::::: Add a new scenario :::::</option>
+            </select>
+          </div>
+        </div>
+        <div v-if="selectedScenarioId">
+          <div class="row padding-sm bg-grey">
+            <div class="row">
+              <label class="col-xs-2 control-label text-right">Type</label>
+              <div class="col-xs-3">
+                <select class="form-control input-sm" v-model="selected.type">
+                  <option v-for="garageType in GarageTypes" :value="garageType.value"> {{ garageType.name }} </option>
+                </select>
+              </div>
+              <label class="col-xs-2 control-label p-xs text-right">Nom du scénario</label>
+              <div class="form-group col-xs-5">
+                <input type="text" id="scenario-name" placeholder="Choisir le nom..." v-model="selected.name" class="form-control input-sm">
+              </div>
+            </div>
+            <div class="row">
+              <label class="col-xs-2 control-label p-xs text-right">Durée de la campagne</label>
+              <div class="form-group col-xs-3">
+                <select class="form-control input-sm" v-model="selected.duration">
+                  <option v-for="period in periods" :value="period"> {{ `${period} days` }} </option>
+                </select>
+              </div>
+              <div class="text-center col-xs-7 p-xs">
+                <button class="btn btn-xs p-xs" v-bind:class="[selected.disableSmsWithValidEmails ? 'btn-success' : 'btn-danger']" v-on:click="selected.disableSmsWithValidEmails = !selected.disableSmsWithValidEmails">
+                  <b>{{ selected.disableSmsWithValidEmails ?  'Enable' : 'Disable' }}</b> SMS when the E-mail is <b>valid</b>
+                </button>
+              </div>
+            </div>
+            <button v-show="!showFollowupAndEscalate" style="margin-top: 9px; margin-left:-6px" class="btn btn-xs p-xs btn-primary" @click="showFollowupAndEscalate = true"> Display Escalate and followup configs <i class="fa fa-chevron-down"></i></button>
+            <div class="row" v-show="showFollowupAndEscalate">
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th><button class="btn btn-xs p-xs btn-primary" @click="showFollowupAndEscalate = false">Hide Escalate and followup configs  <i class="fa fa-chevron-up"></i></button></th>
+                  <th v-for="sourceType in SourceTypes">{{ sourceType.displayName }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="type in ['lead', 'unsatisfied']">
+                  <td><b>{{ type }}</b></td>
+                  <td v-for="sourceType in SourceTypes" class="column">
+                    <div v-if="canHaveIt(sourceType.value, type) && selected.followupAndEscalate[sourceType.value]">
+                      <div>
+                        <div>
+                          <code v-if="warning(selected.followupAndEscalate[sourceType.value][type])">You cannot set the followup (warning the customer) to be sent before the escalate (warning the garage).</code>
+                          <span class="title">Followup</span>
+                          <div class="material-switch pull-right">
+                            <input :id="`${sourceType.value}-${type}-followup`" type="checkbox" v-model="selected.followupAndEscalate[sourceType.value][type].followup.enabled"/>
+                            <label :for="`${sourceType.value}-${type}-followup`" class="label-success"></label>
+                          </div>
+                        </div>
+                        <div v-show="selected.followupAndEscalate[sourceType.value][type].followup.enabled" style="text-align: center; margin-top: 5px">
+                          <input v-model.number="selected.followupAndEscalate[sourceType.value][type].followup.delay" type="number" step="0.01" class="form-control input-group-sm input-hours inline" placeholder="..."/>h
+                          <span>~ {{ inDays(selected.followupAndEscalate[sourceType.value][type].followup.delay) }}j</span>
+                        </div>
+                      </div>
+                      <div style="margin-top: 10px">
+                        <div>
+                          <span class="title">Escalate</span>
+                          <div class="material-switch pull-right">
+                            <input :id="`${sourceType.value}-${type}-escalate`" type="checkbox" v-model="selected.followupAndEscalate[sourceType.value][type].escalate.enabled"/>
+                            <label :for="`${sourceType.value}-${type}-escalate`" class="label-success"></label>
+                          </div>
+                        </div>
+                        <div v-show="selected.followupAndEscalate[sourceType.value][type].escalate.enabled" style="text-align: center; margin-top: 5px">
+                          <span>stage 1</span>
+                          <input v-model.number="selected.followupAndEscalate[sourceType.value][type].escalate.stage_1" :class="setEscalateClass(selected.followupAndEscalate[sourceType.value][type].escalate.stage_1)" type="number" step="0.01" class="form-control input-group-sm input-hours inline" placeholder="..."/>h
+                          <span>~ {{ inDays(selected.followupAndEscalate[sourceType.value][type].escalate.stage_1) }}j</span>
+                        </div>
+                        <div v-show="selected.followupAndEscalate[sourceType.value][type].escalate.enabled" style="text-align: center; margin-top: 3px">
+                          <span>stage 2</span>
+                          <input v-model.number="selected.followupAndEscalate[sourceType.value][type].escalate.stage_2" :class="setEscalateClass(selected.followupAndEscalate[sourceType.value][type].escalate.stage_2)" type="number" step="0.01" class="form-control input-group-sm input-hours inline" placeholder="..."/>h
+                          <span>~ {{ inDays(selected.followupAndEscalate[sourceType.value][type].escalate.stage_2) }}j</span>
+                          <br><i style="font-size: 11px">(after 1)</i>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div v-show="showFollowupAndEscalate">
+              <b>------------------------------- Some crazy rules -------------------------------</b>
+              </br><b>Followup and Escalate:</b> One day is 9 hours, so a followup at D+5, must be set at 9*5 = 45 hours
+              </br><b>Followup</b>Those are the emails whe send to the customers: "hey did the garage called you?"
+              </br><b>Followup</b>The followup ignores all the weekends and work hours, we can send the followup on the weekend or during the night
+              </br><b>Escalate</b>Those are the emails whe send to the garage: "hey did you call the customer?"
+              </br><b>Escalate</b>The followup take into account the weekends and work hours, so some delay can be applied to your original conf if the email would have been sent a sunday or at night
+               </div>
+          </div>
+
+          <div class="row frame" v-if="isScenarioAvailable(selected, chainType)" v-for="(chain, chainType) in selected.chains">
+            <h3 class="no-margin">{{ campaignTypesNames[chainType] }}</h3>
+            <div class="col-xs-10 col-xs-offset-1 text-right">
+              <div class="row" v-for="(contactChain, index) in chain.contacts">
+                <div class="form-group">
+                  <label class="col-xs-2 control-label">{{ ordinals[++index] }} contact</label>
+                  <div class="col-xs-6">
+                    <select title="select_contact_id" class="form-control input-sm" v-model="contactChain.key">
+                      <option v-for="(contact, index) in contactsConfigs.byJob[chainType]" :value="contact.key">
+                        {{ getNameContact(contact.key) }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-xs-3">
+                    <select title="select_contact_delay" class="form-control input-sm" v-model="contactChain.delay">
+                      <option v-for="delay in delays" :value="delay"> {{ delay ? `After ${delay} days` : 'ASAP' }}</option>
+                    </select>
+                  </div>
+                  <div class="col-xs-1 no-padding">
+                    <button v-on:click="chain.contacts.splice(index-1, 1)" class="btn btn-danger btn-xs pull-left m-xs"><i class="fa fa-remove"></i></button>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <button v-on:click="chain.contacts.push({key: null, delay: null})" class="btn btn-sm btn-block btn-primary"> <i class="fa fa-plus"></i> AJOUTER UN CONTACT ({{ campaignTypesNames[chainType] | uppercase }})</button>
+                </div>
+              </div>
+              <div v-if="chain.contacts.length" class="row bg-thanks p-xs mt-xs">
+                <div class="row text-left">
+                  <div class="col-xs-12"><h5 class="mt-xs">Thank you emails :</h5></div>
+                </div>
+                <div v-for="(thanks, index) in chain.thanks">
+                  <label class="col-xs-2 control-label p-xxs">{{ thanksEnglishToNames[index] }}</label>
+                  <div class="col-xs-4">
+                    <select title="select_thanks_key" class="form-control input-sm mb-xs" v-model="chain.thanks[index]">
+                      <option v-for="thank in contactsConfigs.byThanks[index]" :value="thank.key">
+                        {{ thank.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <!------------------------------------------------------------------------------------------------------------------------>
+              <!------------------------------------------------------ RECONTACTS ------------------------------------------------------>
+              <div class="row" v-if="chainType !== 'VehicleInspection'">
+                <div class="text-center col-xs-12" v-bind:class="[chain.recontacts.enabled ? 'recontacts' : '']" style="padding-bottom: 0; padding-top: 3px">
+                  <button v-bind:class="[chain.recontacts.enabled ? 'btn-danger' : 'btn-link']" class="btn btn-xs" v-on:click="chain.recontacts.enabled = !chain.recontacts.enabled">
+                    {{ chain.recontacts.enabled ? 'Disable the recontacts' : 'Enable the recontacts' }}
+                  </button>
+                </div>
+              </div>
+              <div v-if="chain.recontacts.enabled" class="row recontacts">
+                <div class="row text-center m-xs">
+                  Recontacts sent after
+                  <select title="followupDelay" class="form-control input-sm" v-model="chain.recontacts.dayOfNextMonth"
+                          style="display: inline-block; width: 60px;">
+                    <option v-for="day in days" :value="day"> {{ day ? `${day}` : '0' }}</option>
+                  </select> days
+                </div>
+                <div class="row">
+                  <div class="form-group m-xs">
+                    <label class="col-xs-4 control-label">Google <span class="small"> (Recontacts will be sent: {{ chain.recontacts.dayOfNextMonth }} days after the last scenario {{ chainType }})</span></label>
+                    <label class="col-xs-1 control-label p-xxs">email</label>
+                    <div class="col-xs-3">
+                      <select class="form-control input-sm" v-model="chain.recontacts.google.email">
+                        <option v-for="contact in contactsConfigs.recontacts.emails" :value="contact.key"> {{ getNameContact(contact.key) }} </option>
+                      </select>
+                    </div>
+                    <label class="col-xs-1 control-label p-xxs">sms</label>
+                    <div class="col-xs-3">
+                      <select class="form-control input-sm" v-model="chain.recontacts.google.sms">
+                        <option v-for="contact in contactsConfigs.recontacts.sms" :value="contact.key"> {{ getNameContact(contact.key) }} </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group m-xs">
+                    <label class="col-xs-4 control-label">(deprecated) Recontact Mercedes-Benz - répondant à l'enquête <span class="small">(Les recontacts seront envoyé le {{ chain.recontacts.dayOfNextMonth }} ème jour le mois prochain)</span></label>
+                    <label class="col-xs-1 control-label p-xxs">email</label>
+                    <div class="col-xs-3">
+                      <select class="form-control input-sm" v-model="chain.recontacts.respondents.email">
+                        <option v-for="contact in contactsConfigs.recontacts.emails" :value="contact.key"> {{ getNameContact(contact.key) }} </option>
+                      </select>
+                    </div>
+                    <label class="col-xs-1 control-label p-xxs">sms</label>
+                    <div class="col-xs-3">
+                      <select class="form-control input-sm" v-model="chain.recontacts.respondents.sms">
+                        <option v-for="contact in contactsConfigs.recontacts.sms" :value="contact.key"> {{ getNameContact(contact.key) }} </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group m-xs">
+                    <label class="col-xs-4 control-label">(deprecated) Recontact Mercedes-Benz - non-répondant à l'enquête <span class="small">(Les recontacts seront envoyé le {{ chain.recontacts.dayOfNextMonth }} ème jour le mois prochain)</span></label>
+                    <label class="col-xs-1 control-label p-xxs">email</label>
+                    <div class="col-xs-3">
+                      <select class="form-control input-sm" v-model="chain.recontacts.nonRespondents.email">
+                        <option v-for="contact in contactsConfigs.recontacts.emails" :value="contact.key"> {{  getNameContact(contact.key) }} </option>
+                      </select>
+                    </div>
+                    <label class="col-xs-1 control-label p-xxs">sms</label>
+                    <div class="col-xs-3">
+                      <select class="form-control input-sm" v-model="chain.recontacts.nonRespondents.sms">
+                        <option v-for="contact in contactsConfigs.recontacts.sms" :value="contact.key"> {{ getNameContact(contact.key) }} </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!---------------------------------------------------- RECONTACTS END ---------------------------------------------------->
+              <!------------------------------------------------------------------------------------------------------------------------>
+            </div>
+          </div>
+          <br>
+          <div class="row" v-show="selected.oldId !== 'default' && !loading">
+            <div class="col-xs-1">
+              <button class="btn btn-block btn-danger" v-on:click="remove()"><i class="fa fa-trash"></i></button>
+            </div>
+            <div class="col-xs-11">
+              <button class="btn btn-block btn-success" v-on:click="save()">SAVE</button>
+            </div>
+          </div>
+          <div class="row text-center" v-if="loading">
+            <i class="fa fa-cog fa-spin font-18" aria-hidden="true" v-if="loading"></i>
+          </div>
+        </div>
+
+      </div><br><br>
+    </div>
+  {% endraw %}
+{% endblock %}
+{% block scripts %}
+  <script type="text/javascript">
+
+    /** ------------------------------------ Datas ------------------------------------- **/
+    let scenarios = {{ scenarios|safe }};
+    let campaignTypes = {{ campaignTypes|safe }};
+    let contactsConfigs = {{ contactsConfigs|safe }};
+    let GarageTypes = {{ GarageTypes|safe }};
+    let campaignTypesNames = {};
+    let scenariosById = {};
+    let garageTypesByValue = {};
+    let newId = 'new';
+    let thanksEnglishToNames = {
+      complete_satisfied: 'Complete & 😃 #1',
+      complete_unsatisfied: 'Complete & 😡 #2',
+      incomplete_satisfied: 'Incomplete & 😃 #3',
+      incomplete_unsatisfied: 'Incomplete & 😡 #4',
+    };
+
+    /** -------------- Ordering data to quickly find what we need by index -------------- **/
+    Object.values(GarageTypes).forEach((garageType) => {
+      garageTypesByValue[garageType.value] = garageType.name;
+    });
+    Object.values(campaignTypes).forEach((campaignType) => (campaignTypesNames[campaignType.value] = campaignType.name));
+    scenarios.forEach((scenario) => {
+      scenariosById[scenario.id] = scenario;
+    });
+    const cleanUpNewScenario = function () {
+      let newScenario = scenariosById[newId] = {
+        id: newId,
+        type: '',
+        name: '',
+        duration: 30,
+        disableSmsWithValidEmails: true,
+        chains: {},
+        isEmptyScenario: false,
+        followupAndEscalate: {
+          DataFile: {
+            lead: {
+              followup: { enabled: true, delay: 9 * 10 },
+              escalate: { enabled: true, stage_1: 9 * 3, stage_2: 9 * 4 }
+            },
+            unsatisfied: {
+              followup: { enabled: true, delay: 9 * 5 },
+              escalate: { enabled: true, stage_1: 9, stage_2: 9 * 3 }
+            }
+          },
+          Manual: {
+            lead: {
+              followup: { enabled: true, delay: 9 * 10 },
+              escalate: { enabled: true, stage_1: 9 * 3, stage_2: 9 * 4 }
+            },
+            unsatisfied: {
+              followup: { enabled: true, delay: 9 * 5 },
+              escalate: { enabled: true, stage_1: 9, stage_2: 9 * 3 }
+            }
+          },
+          Automation: {
+            lead: {
+              followup: { enabled: true, delay: 9 * 10 },
+              escalate: { enabled: true, stage_1: 9 * 3, stage_2: 9 * 4 }
+            }
+          },
+          XLeads: {
+            lead: {
+              followup: { enabled: true, delay: 9 },
+              escalate: { enabled: true, stage_1: 3, stage_2: 4 },
+            },
+          }
+        }
+      };
+      [campaignTypes.MAINTENANCE,
+        campaignTypes.NEW_VEHICLE_SALE,
+        campaignTypes.USED_VEHICLE_SALE,
+        campaignTypes.VEHICLE_INSPECTION] // Manually
+        .forEach((campaignType) => {
+          newScenario.chains[campaignType.value] = {
+            contacts: [],
+            thanks: {
+              complete_satisfied: null,
+              complete_unsatisfied: null,
+              incomplete_satisfied: null,
+              incomplete_unsatisfied: null
+            },
+            recontacts: {
+              enabled: false,
+              dayOfNextMonth: 0,
+              respondents: {email: '', sms: ''},
+              nonRespondents: {email: '', sms: ''},
+              google: {email: '', sms: ''}
+            }
+          }
+        });
+    };
+    contactsConfigs.recontacts.sms.push({ id: '' }); // Add this to allow empty recontact sms contact
+    contactsConfigs.recontacts.emails.push({ id: '' }); // Add this to allow empty recontact email contact
+    /** -------------------------------------------------------------------------------- **/
+
+
+    /** DO A SIMPLE REQUEST **/
+    const req = function (method, url, json, cb) {
+      let request = new XMLHttpRequest();
+      request.open(method, url, true);
+      request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+      request.onload = (() => {
+        let err = null;
+        let json = {};
+        if (request.status !== 200 && request.status !== 304) err = `Error ${request.status} !`;
+        else {
+          json = JSON.parse(request.responseText);
+          if (json.status === 'ko') err = json.message;
+        }
+        cb(err, json);
+      });
+      request.send(JSON.stringify(json));
+    };
+
+    /** --------------------------- Pages statics parameters --------------------------- **/
+    let ordinals = ['zéro', '1st', '2nd', '3nd', '4th', '5th', '6th', '7th', '8th'];
+    let delays = [...Array(61).keys()]; // array of [0, 1, ... 60]
+    let days = [...Array(28).keys()];
+    let periods = [30, 60, 90, 120];
+    /** -------------------------------------------------------------------------------- **/
+
+    var app = new Vue({
+      el: '#app',
+      data: {
+        defaultWorkingHoursPerDay: 9,
+        showFollowupAndEscalate: false,
+        scenarios: scenarios,
+        selectedScenarioId: '',
+        selected: {},
+        defaultFollowupAndEscalate: {},
+
+        contactsConfigs: contactsConfigs,
+        campaignTypesNames: campaignTypesNames,
+        GarageTypes: GarageTypes,
+        SourceTypes: [
+          { 
+            displayName: 'DMS (DataFile)',
+            value: 'DataFile'
+          }, 
+          { 
+            displayName: 'Manual',
+            value: 'Manual'
+          },
+          { 
+            displayName: 'XLeads',
+            value: 'XLeads'
+          },
+          { 
+            displayName: 'Automation',
+            value: 'Automation'
+          }
+        ],
+        garageTypesByValue: garageTypesByValue,
+        thanksEnglishToNames: thanksEnglishToNames,
+        cleanUpNewScenario: cleanUpNewScenario,
+
+        loading: false,
+
+        delays: delays,
+        days: days,
+        periods: periods,
+        ordinals: ordinals
+      },
+      watch: {
+        selectedScenarioId: function (scenarioId) {
+          if (!scenarioId) {
+            this.selected = null;
+            document.location = document.location.toString().replace(/#.+/,'');
+            return;
+          }
+          this.selected = scenariosById[scenarioId];
+          document.location = document.location.toString().replace(/#.+/,'') + '#' + this.selected.id; // Update URL
+        }
+      },
+      filters: {
+        uppercase: function (value) {
+          if (!value) return '';
+          value = value.toString();
+          return value.toUpperCase();
+        }
+      },
+      mounted: function () {
+        if (document.location.hash) this.selectedScenarioId = document.location.hash.substr(1); // if id URL exists, use it
+        else this.selectedScenarioId = scenarios[0].id; // Else, just take the first one
+        this.cleanUpNewScenario();
+      },
+      methods: {
+        warning(elem) {
+          return elem.followup.enabled && elem.escalate.enabled && (elem.followup.delay < (elem.escalate.stage_1 + elem.escalate.stage_2));
+        },
+        canHaveIt: (sourceType, type) =>
+          !(type === 'unsatisfied' && (['XLeads', 'Automation'].includes(sourceType))),
+        inDays: function (hours) {
+          return Math.round((hours / this.defaultWorkingHoursPerDay)*10) / 10;
+        },
+        isScenarioAvailable: function (selected, chainType) {// Show only Vehicle Inspection for Vehicle Inspection scenario type
+          if (!selected.type) return true;
+          if (selected.type === campaignTypes.VEHICLE_INSPECTION.value && chainType === 'VehicleInspection') return true;
+          else if (selected.type !== campaignTypes.VEHICLE_INSPECTION.value) return ['Maintenance', 'NewVehicleSale', 'UsedVehicleSale'].includes(chainType);
+          return false;
+        },
+        getNameContact: function (key) {
+          return (contactsConfigs[key] && contactsConfigs[key].name) || 'None';
+        },
+        recursiveTestEmptyFields: function(obj, path) {
+          const list = Object.keys(obj);
+          for(let index of list) {
+            if(index === 'thanks' && !obj['contacts'].length) {
+              // If it's a thanks key and there is no contacts, it's okay to let it empty
+            } else if(index === 'oldId') {
+              // If it's a oldId, we don't care
+            } else if(index === 'recontacts' && !obj[index].enabled) {
+              // If it's a recontact kind, we skip cause it's okay if we don't respondent/non-respondent contacts
+            } else if(index === 'dayOfNextMonth' && obj[index] === 0) {
+              // If the recontact is true and dayOfNextMonth is 0, it's a error
+              return 'Ta cru le 0 du mois prochain ça existe ? Nawak toi.';
+            } else if(obj[index] === '' || obj[index] === null) return `Champ manquant : ${path}.${index}`;
+            else if (typeof obj[index] === 'object'){
+              const containEmptyField = this.recursiveTestEmptyFields(obj[index], `${path}.${index}`);
+              if (containEmptyField) return containEmptyField;
+            }
+          }
+          return false;
+        },
+        isThereAtLeastOneContact: function(scenario) { // See if there is at least one contact filled
+          let contactsCount = 0;
+          const keys = Object.keys(scenario.chains);
+          for (let job of keys) contactsCount += scenario.chains[job].contacts.length;
+          return contactsCount;
+        },
+        areTheDelaysValid: function(scenario) {
+          const keys = Object.keys(scenario.chains);
+          for (let job of keys) {
+            let lastDelay = 0;
+            for (let i = 0; i < scenario.chains[job].contacts.length; i++) {
+              if (lastDelay > scenario.chains[job].contacts[i].delay) return `Les délais de ${this.campaignTypesNames[job]} ne sont pas croissant.`;
+              lastDelay = scenario.chains[job].contacts[i].delay;
+            }
+            if (lastDelay > scenario.duration) return `Le delais d'un contact de ${this.campaignTypesNames[job]} dépasse la durée total de la campagne.`;
+          }
+          return null;
+        },
+        isThereDuplications: function(scenario) {
+          const keys = Object.keys(scenario.chains);
+          for (let job of keys) {
+            let contactsKeyList = [];
+            for (let i = 0; i < scenario.chains[job].contacts.length; i++) {
+              const key = scenario.chains[job].contacts[i].key;
+              if (contactsKeyList.includes(key)) return `Dans ${this.campaignTypesNames[job]}, il y a une duplication du contact: ${this.contactsConfigs[key] && this.contactsConfigs[key].name}`;
+              contactsKeyList.push(key);
+            }
+          }
+          return null;
+        },
+        testContactsValidity: function(scenario) {
+          const delaysErrors = this.areTheDelaysValid(scenario);
+          const duplicationErrors = this.isThereDuplications(scenario);
+          if (!this.isThereAtLeastOneContact(scenario)) {
+            const comfirm = confirm('Etes-vous sur de vouloir créer un scénario vide ?');
+            this.isEmptyScenario = comfirm;
+            if (!comfirm) {
+              return 'Il n\'y a aucun contact prévu pour ce scenario. Ajoutez en au moins un plizz.';
+            };
+          }
+          const missingFieldMsg = this.recursiveTestEmptyFields(this.selected, 'scenario');
+          if (delaysErrors || duplicationErrors) return (delaysErrors || duplicationErrors);
+          return null;
+        },
+        isEscalateValueValid: function (value) {
+          return !(isNaN(value) || value <= 0);
+        },
+        getEscalateErrorMessage: function () {
+          return 'Il existe au moins une valeur aberrante pour les escalades du scénario. Veuillez corriger cela.';
+        },
+        testEscalateValidity: function(scenario) {
+          for (const sourceType of this.SourceTypes) {
+            const elem = scenario.followupAndEscalate[sourceType.value];
+            if (elem.lead && elem.lead.escalate.enabled) {
+              const isStage1LeadValid = this.isEscalateValueValid(elem.lead.escalate.stage_1);
+              const isStage2LeadValid = this.isEscalateValueValid(elem.lead.escalate.stage_2);
+              if (!isStage1LeadValid || !isStage2LeadValid) return this.getEscalateErrorMessage();
+            }
+            if (elem.unsatisfied && elem.unsatisfied.escalate.enabled) {
+              const isStage1UnsatValid = this.isEscalateValueValid(elem.unsatisfied.escalate.stage_1);
+              const isStage2UnsatValid = this.isEscalateValueValid(elem.unsatisfied.escalate.stage_2);
+              if (!isStage1UnsatValid || !isStage2UnsatValid) return this.getEscalateErrorMessage();
+            }
+          }
+          return null;
+        },
+        save: function () {
+          const missingFieldMsg = this.recursiveTestEmptyFields(this.selected, 'scenario');
+          const contactErrorMsg = this.testContactsValidity(this.selected);
+          if (contactErrorMsg) return alert(contactErrorMsg);
+          const escalateErrorMsg = this.testEscalateValidity(this.selected);
+          if (escalateErrorMsg) return alert(escalateErrorMsg);
+          const wasNew = (this.selected.id === newId);
+          if (this.selected.id === newId) delete this.selected.id;
+          this.loading = true;
+          if (this.isEmptyScenario) {
+            this.selected.chains = {}
+          }
+          req('POST', '{{ lib.client.url.getShortUrl("ADMIN_CAMPAIGN_SCENARIO_DATA") }}', { scenario: this.selected }, (err, data) => {
+            this.loading = false;
+            if (err) { alert(err); return; }
+            console.log('Scenario saved !');
+            if (!scenariosById[data.scenario.id]) {
+              scenariosById[data.scenario.id] = data.scenario;
+              scenarios.push(data.scenario);
+            }
+            this.selectedScenarioId = data.scenario.id;
+            if (wasNew) this.cleanUpNewScenario();
+            alert(`Le scenario ${this.garageTypesByValue[data.scenario.type]} - ${data.scenario.name} saved !`);
+          });
+        },
+        remove: function () {
+          if (confirm("Etes vous sûr de vouloir supprimer " + this.selected.name + "?")) {
+            this.loading = true;
+            req('DELETE', '{{ lib.client.url.getShortUrl("ADMIN_CAMPAIGN_SCENARIO_DATA") }}', { scenarioId: this.selected.id }, (err) => {
+              this.loading = false;
+              if (err) { alert(err); return; }
+              console.log('Scenario deleted !');
+              delete scenariosById[this.selected.id];
+              scenarios.splice(scenarios.indexOf(this.selected), 1);
+              this.selectedScenarioId = scenarios[0].id;
+            });
+          }
+        },
+        setEscalateClass(value) {
+          return `escalate-${this.isEscalateValueValid(value) ? 'valid' : 'error'}`;
+        },
+      }
+    });
+  </script>
+{% endblock %}

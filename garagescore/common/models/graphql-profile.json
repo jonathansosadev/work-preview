@@ -1,0 +1,50 @@
+{
+  "name": "GraphQLProfile",
+  "plural": "GraphQLProfiles",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "mongodb": {
+    "collection": "graphqlProfile"
+  },
+  "http": {
+    "path": "graphqlProfile"
+  },
+  "mixins": {
+  },
+  "properties": {
+    "namespace": {
+      "type": "string",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "runTime": {
+      "type": "Number",
+      "required": true
+    },
+    "query": {
+      "type": "string",
+      "required": true
+    },
+    "variables": {
+      "type": "string",
+      "required": true
+    },
+    "createdAt": {
+      "type": "Date",
+      "required": true
+    }
+  },
+  "indexes": {
+    "namespace": { "namespace": 1 },
+    "name": { "name": 1 }
+  },
+  "validations": [],
+  "relations": {
+  },
+  "methods": {
+  }
+}

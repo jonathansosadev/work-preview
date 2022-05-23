@@ -1,0 +1,118 @@
+{
+  "TARGETED": {
+    "value": "TARGETED",
+    "properties": {}
+  },
+  "PREPARE_TO_SEND": {
+    "value": "PREPARE_TO_SEND",
+    "properties": {
+      "sendAutomationToCustomerEvent": true
+    }
+  },
+  "SENT": {
+    "value": "SENT",
+    "properties": {}
+  },
+  "PREPARE_TO_SEND_GDPR": {
+    "value": "PREPARE_TO_SEND_GDPR",
+    "properties": {}
+  },
+  "GDPR_SENT": {
+    "value": "GDPR_SENT",
+    "properties": {}
+  },
+  "DROPPED": {
+    "value": "DROPPED",
+    "properties": {}
+  },
+  "PRESSURE_BLOCKED": {
+    "value": "PRESSURE_BLOCKED",
+    "properties": {
+      "sendAutomationToCustomerEvent": true
+    }
+  },
+  "DELAYED_BY_GDPR": {
+    "value": "DELAYED_BY_GDPR",
+    "properties": {
+      "sendAutomationToCustomerEvent": true
+    }
+  },
+  "DELAYED_BY_SMS_CHECKING": {
+    "value": "DELAYED_BY_SMS_CHECKING",
+    "properties": {
+      "sendAutomationToCustomerEvent": true
+    }
+  },
+  "UNSUBSCRIBED": {
+    "value": "UNSUBSCRIBED",
+    "properties": {}
+  },
+  "GDPR_UNSUBSCRIBED": {
+    "value": "GDPR_UNSUBSCRIBED",
+    "properties": {}
+  },
+  "RECEIVED": {
+    "value": "RECEIVED",
+    "properties": {}
+  },
+  "OPENED": {
+    "value": "OPENED",
+    "properties": {}
+  },
+  "GDPR_OPENED": {
+    "value": "GDPR_OPENED",
+    "properties": {}
+  },
+  "CLICKED": {
+    "value": "CLICKED",
+    "properties": {}
+  },
+  "LEAD": {
+    "value": "LEAD",
+    "properties": {}
+  },
+  "LANDING_PAGE_LEAD": {
+    "value": "LANDING_PAGE_LEAD",
+    "properties": {}
+  },
+  "LANDING_OPENED_FROM_SMS": {
+    "value": "LANDING_OPENED_FROM_SMS",
+    "properties": {}
+  },
+  "CONVERTED": {
+    "value": "CONVERTED",
+    "properties": {}
+  },
+  "CROSSED": {
+    "value": "CROSSED",
+    "properties": {}
+  },
+  "FOLLOWUP_ANSWERED": {
+    "value": "FOLLOWUP_ANSWERED",
+    "properties": {}
+  },
+  "FOLLOWUP_HAS_CALLED_BACK": {
+    "value": "FOLLOWUP_HAS_CALLED_BACK",
+    "properties": {}
+  },
+  "FOLLOWUP_HAS_NEW_APPOINTMENT": {
+    "value": "FOLLOWUP_HAS_NEW_APPOINTMENT",
+    "properties": {}
+  },
+  "REACTIVE_LEAD": {
+    "value": "REACTIVE_LEAD",
+    "properties": {}
+  },
+  "CANNOT_SEND_CONTACT_UNSUBSCRIBED": {
+    "value": "CANNOT_SEND_CONTACT_UNSUBSCRIBED",
+    "properties": {
+      "sendAutomationToCustomerEvent": true
+    }
+  },
+  "CANNOT_SEND_CONTACT_NO_CONTACT_DETAILS": {
+    "value": "CANNOT_SEND_CONTACT_NO_CONTACT_DETAILS",
+    "properties": {
+      "sendAutomationToCustomerEvent": true
+    }
+  }
+}

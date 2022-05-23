@@ -1,0 +1,11 @@
+Desactiver toutes les PR en meme temps :
+heroku apps | grep garagescore-pr | sed "s/(eu)//" | while read app ; do heroku ps:scale web=0 -a $app ; done
+
+Desactiver(web=0) ou activer(web=1) une PR
+heroku ps:scale web=0 -a garagescore-pr-2000
+
+Stopper une pr
+heroku restart -a garagescore-pr-696
+
+Logs d'une PR en temps r�el
+heroku logs --tail -a garagescore-pr-456

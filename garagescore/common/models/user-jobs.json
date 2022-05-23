@@ -1,0 +1,36 @@
+{
+  "name": "UserJob",
+  "plural": "UserJobs",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "mongodb": {
+    "collection": "userJobs"
+  },
+  "http": {
+    "path": "userJobs"
+  },
+  "mixins": {
+    "EventEmitter": true,
+    "SmartSort": true
+  },
+  "properties": {
+    "garageType": {
+      "type": "string",
+      "required": false,
+      "default": ""
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "isManager": {
+      "type": "boolean",
+      "required": false,
+      "default": false
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "methods": {}
+}

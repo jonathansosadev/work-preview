@@ -1,0 +1,527 @@
+{
+  "AIXAM": {
+    "value": "Aixam",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "AJS": {
+    "value": "Ajs",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "ARCHIVE": {
+    "value": "Archive",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "AUSTIN": {
+    "value": "Austin",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "AUTOSECURITAS": {
+    "value": "Autosecuritas",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "AUTOSECURITE": {
+    "value": "Autosécurité",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "AUTOSUR": {
+    "value": "Autosur",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "AUTOVISION": {
+    "value": "Autovision",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "AUTO_PRIMO": {
+    "value": "Auto Primo",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "AUTO_STYLE": {
+    "value": "Auto Style",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "AXIAL": {
+    "value": "Axial",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "BELLIER": {
+    "value": "Bellier",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "BENELLI": {
+    "value": "Benelli",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "BOSCH_CAR_SERVICE": {
+    "value": "Bosch car service",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "BULLIT": {
+    "value": "Bullit",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "CAN_AM": {
+    "value": "Can Am",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "CARECO": {
+    "value": "Caréco",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "CF_MOTO": {
+    "value": "CF moto",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "CHATENET": {
+    "value": "Chatenet",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "DAEWOO": {
+    "value": "Daewoo",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "DAS_WELTAUTO": {
+    "value": "Das Weltauto",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "DEKRA": {
+    "value": "Dekra",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "DERBI": {
+    "value": "Derbi",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "ETAPE_AUTO": {
+    "value": "Etape Auto",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "EUROCKA": {
+    "value": "Eurocka",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "EUROMASTER": {
+    "value": "Euromaster",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "EUROREPAR": {
+    "value": "Eurorepar",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "FANTIC": {
+    "value": "Fantic",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "FEUX_VERT": {
+    "value": "Feux Vert",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "GARAGE_AND_CO": {
+    "value": "Garage & Co",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "GARAGE_PREMIER": {
+    "value": "Garage Premier",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "GAS_GAS": {
+    "value": "Gas gas",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "GEOS": {
+    "value": "Geos",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "GROUPAUTO": {
+    "value": "Groupauto",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "GUNSHOT": {
+    "value": "Gunshot",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "HONDA_MOTO": {
+    "value": "Honda Moto",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "LIGIER": {
+    "value": "Ligier",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "LINHAI": {
+    "value": "Linhai",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "LML": {
+    "value": "LML",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "MAGPOWER": {
+    "value": "Magpower",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "MASAI": {
+    "value": "Masai",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "MASH": {
+    "value": "Mash",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "MICROCAR": {
+    "value": "Microcar",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "MIDAS": {
+    "value": "Midas",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "MON_GARAGE": {
+    "value": "Mon Garage",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "MOTRAC": {
+    "value": "Motrac",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "MOTRIO": {
+    "value": "Motrio",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "NORTON": {
+    "value": "Norton",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "ORCAL": {
+    "value": "Orcal",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "ORION": {
+    "value": "Orion",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "PEUGEOT_SCOOTERS": {
+    "value": "Peugeot scooters",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "PIECES_AUTO": {
+    "value": "Pièces Auto",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "POINT_S": {
+    "value": "Point S",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "POLARIS": {
+    "value": "Polaris",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "PRECISIUM": {
+    "value": "Précisium",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "QG": {
+    "value": "Qg",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "QUADRO": {
+    "value": "Quadro",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "QUATTRO": {
+    "value": "Quattro",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "RESEAU_AD_(AUTO_DISTRIBUTION)": {
+    "value": "Réseau AD (Auto Distribution)",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "SECURITEST": {
+    "value": "Sécuritest",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "SHERCO": {
+    "value": "Sherco",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "SKYTEAM": {
+    "value": "Skyteam",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "SOCO": {
+    "value": "Soco",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "SPEEDY": {
+    "value": "Speedy",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "SYM": {
+    "value": "Sym",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "TALBOT": {
+    "value": "Talbot",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "TGB": {
+    "value": "Tgb",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "TOP_CARROSSERIE": {
+    "value": "Top Carrosserie",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "TOP_GARAGE": {
+    "value": "Top Garage",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "VERIFAUTOS": {
+    "value": "VérifAutos",
+    "properties": {
+      "top5": false,
+      "garageType": "Dealership"
+    }
+  },
+  "VESPA": {
+    "value": "Vespa",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "YIYING": {
+    "value": "Yiying",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "ZHENHUA": {
+    "value": "Zhenhua",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "ZONTES": {
+    "value": "Zontes",
+    "properties": {
+      "top5": false,
+      "garageType": "MotorbikeDealership"
+    }
+  },
+  "AUTRE": {
+    "value": "Autre",
+    "properties": {
+      "top5": false,
+      "garageType": "Other"
+    }
+  }
+}

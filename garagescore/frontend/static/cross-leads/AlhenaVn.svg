@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="27" height="27" viewBox="0 0 27 27">
+  <defs>
+    <filter id="Rectangle_2189" x="0" y="0" width="27" height="27" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="1" result="blur"/>
+      <feFlood flood-opacity="0.349"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="CustomVn" transform="translate(-341 -1032)">
+    <g transform="matrix(1, 0, 0, 1, 341, 1032)" filter="url(#Rectangle_2189)">
+      <rect id="Rectangle_2189-2" data-name="Rectangle 2189" width="21" height="21" rx="2" transform="translate(3 3)" fill="#fff"/>
+    </g>
+    <g id="Groupe_7277" data-name="Groupe 7277" transform="translate(-147 220.214)">
+      <path id="Tracé_4975" data-name="Tracé 4975" d="M17,147.939l-2.815-7.971H9.637l-2.41,5.05.931.538,2.111-4.436h3.2l1.545,4.386H10.923v1.267h4.54l.315.886-1.052,1.675H1.082v-1.7L2.424,146.1H6.758v-1.23H1.987L0,147.145v3.417H15.412ZM3.891,151.49a1.189,1.189,0,0,1-1.131,1.285,1.189,1.189,0,0,1-1.133-1.285v-.112H.571v.112a2.35,2.35,0,0,0,2.189,2.478,2.349,2.349,0,0,0,2.186-2.478v-.112H3.891Zm10.516,0a1.142,1.142,0,1,1-2.267,0v-.112H11.087v.112a2.349,2.349,0,0,0,2.188,2.478,2.349,2.349,0,0,0,2.188-2.478v-.112H14.408v.112Z" transform="translate(493 678.818)" fill="#757575"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,84 @@
+{
+  "name": "AutomationCampaign",
+  "base": "GarageScoreBaseModel",
+  "options": {},
+  "mongodb": {
+    "collection": "automationCampaign"
+  },
+  "http": {
+    "path": "automation-campaign"
+  },
+  "properties": {
+    "displayName": {
+      "type": "String"
+    },
+    "type": {
+      "type": "String"
+    },
+    "contactType": {
+      "type": "String"
+    },
+    "garageId": {
+      "type": "String"
+    },
+    "status": {
+      "type": "String"
+    },
+    "frequency": {
+      "type": "String"
+    },
+    "firstRunDayNumber": {
+      "type": "Number"
+    },
+    "lastRunDayNumber": {
+      "type": "Number"
+    },
+    "runDayNumber": {
+      "type": "Number"
+    },
+    "target": {
+      "type": "String"
+    },
+    "lastToggledBy": {
+      "type": "String"
+    },
+    "customContentId": {
+      "type": "String"
+    }
+  },
+  "indexes": {
+    "type": {
+      "name": "type", "keys": { "type": 1 }
+    },
+    "status": {
+      "name": "status", "keys": { "status": 1 }
+    },
+    "target": {
+      "name": "target", "keys": { "target": 1 }
+    },
+    "cockpitCampaignListWithoutAnyFilter1": {
+      "name": "cockpitCampaignListWithoutAnyFilter1",
+      "keys": {
+        "garageId": 1,
+        "frequency": 1
+      }
+    },
+    "customContentSet": {
+      "name": "customContentSet", "keys": { "type": 1,"garageId": 1, "target": 1  }
+    },
+    "customContentId": {
+      "name": "customContentId", "keys": { "customContentId": 1  }
+    },
+    "cockpitCampaignListWithoutAnyFilter2": {
+      "name": "cockpitCampaignListWithoutAnyFilter2",
+      "keys": {
+        "garageId": 1,
+        "runDayNumber": 1
+      }
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

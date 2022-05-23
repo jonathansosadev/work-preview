@@ -1,0 +1,5 @@
+const DEFAULT_MAX_TOTAL_PRICE_FOR_USERS = 30.77;
+
+module.exports = {
+  DEFAULT_MAX_TOTAL_PRICE_FOR_USERS,
+};

@@ -1,0 +1,248 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models",
+      "../common/lib/loopback-component-passport/lib/models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "garagescoreMongoDataSource"
+  },
+  "AccessToken": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": false
+  },
+  "UserIdentity": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": false
+  },
+  "UserCredential": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": false
+  },
+  "Role": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": false
+  },
+  "Garage": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "Configuration": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "ConsolidatedGaragesStatistic": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "DataFile": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "DatasAsyncviewLeadTicket": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": false
+  },
+  "Group": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "GarageHistory": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "GarageImportStatistic": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "Campaign": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "CampaignFilter": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "Event": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "ShortUrl": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "PublicScore": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "Alert": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "Report": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "Contact": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "ParserConfig": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "ParserColumns": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "ParserTypes": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "ParserVehicleMakes": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "SupervisorMessage": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "SupervisorInfo": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "BlackListItem": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "Idea": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "Job": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "UserJob": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "CampaignScenario": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "CronInformation": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "SubscriptionsQueue": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "CensoredWords": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "ExportLeadsStatistic": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "AccessHistory": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "InternalKPI": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "UndefinedDictionary": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "CockpitTopFilter": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "PhoneBucket": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "IncomingCrossLead": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "Customer": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "AutomationCampaignsEvents": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "AutomationCampaign": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "BackupUser": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "XLeadsBlacklist": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "GraphQLProfile": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "AutomationCampaignsCustomContent": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "InternalEvent": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "DataToAddToCustomers": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "Scope": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "CockpitExportConfiguration": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "ReviewReplyTemplate": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "WidgetGroup": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  },
+  "KpiByDailyPeriod": {
+    "dataSource": "garagescoreMongoDataSource",
+    "public": true
+  }
+}

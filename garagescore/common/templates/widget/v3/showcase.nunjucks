@@ -1,0 +1,342 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.5/dialog-polyfill.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.5/dialog-polyfill.min.js"></script>
+<style type="text/css">
+	body	{
+		margin:0;
+	}
+	.top {
+    	display: none;
+    	background: #eee;
+    	vertical-align: top;
+    	width: 100%;
+    	height: 285px;
+	}
+	.mdl-textfield {
+		width: 90%;
+		max-width: 600px;
+	}
+	#form {
+		padding-left: 50px;
+	}
+    #form .leftlabel {
+    	font-size: 15px;
+	    color: rgba(0,0,0,.54);
+	    font-family: "Roboto","Helvetica","Arial",sans-serif;
+	    font-weight: bold;
+	    width: 250px;
+	    display: inline-block;
+	    margin-bottom: 10px;
+    }
+    #form input[type=text] {
+    }
+	#pickers {	
+    }
+	#formats {	
+    	padding-left: 50px;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+	#formats>div {
+		display: inline-block;
+	    margin-right: 10px;
+	}
+
+	#formats a {
+		display: block;
+		font-size: 12px;
+		color: green;
+		cursor: pointer;
+	}
+	iframe {
+		z-index: 0;
+		border: 0;
+		display: inline;
+		pointer-events: none;
+	}
+	.sample {
+		position: absolute;
+		z-index: 2;
+	}
+	.sample * {
+		cursor: move;
+		pointer-events: none;
+	}
+	.mdl-dialog {
+		width: 800px;
+	}
+	#code {
+		background: #f5f2f0;
+	    font-family: Consolas,Monaco,'Andale Mono',monospace;
+	    padding: 5px 15px;
+	    max-width: 700px;
+	    margin-top: 20px;
+	}
+	.moveable {
+		cursor: move;
+	    position: absolute;
+	    z-index:10;
+	    top:300px;
+	    left:10px;
+	    display: none;
+	    -webkit-user-select: none;
+	    -moz-user-select: none;
+	    -ms-user-select: none;
+	    user-select: none;
+	}
+	.overlay {
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  z-index: 1;
+	}
+</style>
+</head>
+<body>
+<div id="top" class="top" class="mdl-layout mdl-js-layout mdl-color--grey-100">
+    <div class="mdl-layout__content mdl-shadow--2dp" style="width:100%">
+    	<form id="form" action="#">
+	           <div class="mdl-textfield mdl-js-textfield">
+	               <input class="mdl-textfield__input" type="text" id="address" size="50" oninput="return askRefresh()" value=""/>
+	                <label class="mdl-textfield__label" for="address">Entrez l'url de votre site</label>
+	            </div>
+			<br/><br/>
+	        <div id="formatsii">
+	        	<div><label class="leftlabel">Sélectionner un type de widget</label></div>
+	        	<table>
+			      <tr><td> 
+			         <label class="mdl-radio mdl-js-radio" for="banner">
+			            <input type="radio" id="banner" name="format" class="mdl-radio__button" onclick="return askRefresh()">
+			            <span class="mdl-radio__label">Banner</span>
+			         </label>
+				  </td>
+				  <td> 
+			         <label class="mdl-radio mdl-js-radio" for="bannersmall">
+			            <input type="radio" id="bannersmall" name="format" class="mdl-radio__button" onclick="return askRefresh()">
+			            <span class="mdl-radio__label">Banner (small)</span>
+			         </label>
+				  </td>
+			       <td>
+			         <label class="mdl-radio mdl-js-radio" for="rectangle">
+			            <input type="radio" id="rectangle" name="format" class="mdl-radio__button" onclick="return askRefresh()">
+			            <span class="mdl-radio__label">Rectangle</span>
+			         </label>      
+				   </td>
+				   <td>
+			         <label class="mdl-radio mdl-js-radio" for="rectanglesmall">
+			            <input type="radio" id="rectanglesmall" name="format" class="mdl-radio__button" onclick="return askRefresh()">
+			            <span class="mdl-radio__label">Rectangle (small)</span>
+			         </label>      
+				   </td>
+			      <td>
+			         <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="vertical">
+			            <input type="radio" id="vertical" name="format" class="mdl-radio__button" onclick="return askRefresh()">
+			            <span class="mdl-radio__label">Vertical</span>
+			         </label>
+				  </td>
+			      </tr>
+			   </table>
+			</div>
+			<br/><br/>
+	        <div id="pickers">
+	        	<div>
+	        	<label class="leftlabel" style="display:none;">Personnaliser la couleur du texte</label><input class="jscolor" value="fff" id="widget_color" onchange="askRefresh()" style="display:none;">
+	        	<label class="leftlabel">Couleur de fond du widget</label><input class="jscolor" value="fff" id="widget_background" onchange="askRefresh()"/>
+	        	<label class="" for="transparent">
+		            <input type="checkbox" id="transparent" class="" onclick="askRefresh()">
+		            <span class="">Transparent</span>
+		         </label>
+	        	</div>
+			</div>
+			<br/>
+			<div class="mdl-button mdl-button--raised mdl-button--colored" id="getCode" style="visibility: hidden"> Obtenir le code d'intégration </div>
+			
+		</form>
+    </div>
+</div>
+<dialog class="mdl-dialog">
+    <h4 class="mdl-dialog__title">Code d'intégration</h4>
+    <div class="mdl-dialog__content">
+    	Intégrer le balise html ci-dessous dans votre propre code pour faire apparaitre le widget sur votre site.
+      <div class="language-markup" id="code">        
+      </div>
+    </div>
+    <div class="mdl-dialog__actions">
+      <button type="button" class="mdl-button close">Fermer</button>
+    </div>
+  </dialog>
+	<iframe src="" id="sitebg" style="width: 100%; height:100%; min-height:2000px"></iframe>
+	
+		<div class="moveable sample" style="width:728px;height:90px" id="bannerSample" >
+			<div class="overlay" style="width:728px;height:90px"></div>
+			<iframe border="0" scrolling="no" src="banner?" style="height:100%" id="bannerFrame"></iframe>
+		</div>
+		<div class="moveable sample" style="width:468px;height:58px" id="bannersmallSample" >
+			<div class="overlay" style="width:468px;height:58px"></div>
+			<iframe border="0" scrolling="no" src="banner?size=small" style="height:100%" id="bannersmallFrame"></iframe>
+		</div>
+		<div class="moveable sample" style="width:350px;height:424px" id="rectangleSample" >
+			<div class="overlay" style="width:350px;height:424px"></div>
+			<iframe border="0" scrolling="no" src="rectangle?" style="height:100%" id="rectangleFrame"></iframe>
+		</div>
+		<div class="moveable sample" style="width:180px;height:218px" id="rectanglesmallSample" >
+			<div class="overlay" style="width:180px;height:218px"></div>
+			<iframe border="0" scrolling="no" src="rectangle?size=small" style="height:100%" id="rectanglesmallFrame"></iframe>
+		</div>
+		<div class="moveable sample" style="width:155px;height:313px" id="verticalSample" >
+			<div class="overlay" style="width:155px;height:313px"></div>
+			<iframe border="0" scrolling="no" src="vertical?" style="height:100%" id="verticalFrame"></iframe>
+		</div>
+
+<script type="text/javascript">
+
+	{% include "jscolor.min.js" %}
+	{% include "displace.min.js" %}
+
+	var el = function(id) { return document.getElementById(id);}	
+	function htmlEncode (html) {
+    	return document.createElement( 'a' ).appendChild(document.createTextNode( html ) ).parentNode.innerHTML;
+	};
+
+	document.addEventListener("DOMContentLoaded", function() {
+  		el('top').style.display = 'inline-block';
+	});
+	
+
+	/** DRAG AND DROP */
+	displace(el('bannerSample'));
+	displace(el('bannersmallSample'));
+	displace(el('rectangleSample'));
+	displace(el('rectanglesmallSample'));
+	displace(el('verticalSample'));
+
+
+	var banner = el('bannerSample');
+	var bannersmall = el('bannersmallSample');
+	var rectangle = el('rectangleSample');
+	var rectanglesmall = el('rectanglesmallSample');
+	var vertical = el('verticalSample');
+	var bannerFrame = el('bannerFrame');
+	var bannersmallFrame = el('bannersmallFrame');
+	var rectangleFrame = el('rectangleFrame');
+	var rectanglesmallFrame = el('rectanglesmallFrame');
+	var verticalFrame = el('verticalFrame');
+	var getCode = el('getCode');
+
+
+	/** generate integration code */
+	function generateCode(sample, frame) {
+		var src = frame.src.replace('showcase.garagescore.com', 'www.garagescore.com')
+		var width = sample.style.width;
+		var height = sample.style.height;
+		var html = '<iframe border="0" scrolling="no" src="' + src + '" style="height:' + height + ';width:' + width + '" id="rectanglesmallFrame"></iframe>';
+		return htmlEncode(html);
+	}
+
+	/** Refresh display */
+	function refresh () {
+		// site in backgound
+		var url = el("address").value;
+		if(url.indexOf('.') > 0) {
+			if ( url.indexOf('http') !== 0) { url = 'http://' + url; }
+			if (url !== window.___lastURL) {
+        		el("sitebg").src = url;
+        		window.___lastURL = url;
+        		window.location.hash = '#' + url;
+			}
+		}
+		// widgets;
+		var backgroundColor = el('widget_background').value;
+		var params = el('transparent').checked ? '' : 'background=' + backgroundColor.replace('#','');
+		if (el('banner').checked) {
+			el('code').innerHTML = generateCode(banner, bannerFrame);
+			if (bannerFrame.src !== 'banner?' + params) { bannerFrame.src = 'banner?' + params }
+			getCode.style.visibility = 'visible';
+			bannersmall.style.display = 'none';
+			rectangle.style.display = 'none';
+			rectanglesmall.style.display = 'none';
+			vertical.style.display = 'none';
+			setTimeout(function() { banner.style.display = 'block' } , 200);
+		}
+		if (el('bannersmall').checked) {
+			el('code').innerHTML = generateCode(bannersmall, bannersmallFrame);
+			if (bannersmallFrame.src !== 'banner?size=small&' + params) { bannersmallFrame.src = 'banner?size=small&' + params }
+			getCode.style.visibility = 'visible';
+			banner.style.display = 'none';
+			rectangle.style.display = 'none';
+			rectanglesmall.style.display = 'none';
+			vertical.style.display = 'none';
+			setTimeout(function() { bannersmall.style.display = 'block' } , 200);
+		}
+		if (el('rectangle').checked) {	
+			if (rectangleFrame.src !== 'rectangle?' + params) { rectangleFrame.src='rectangle?' + params; }
+			el('code').innerHTML = generateCode(rectangle, rectangleFrame);
+			getCode.style.visibility = 'visible';
+			banner.style.display = 'none';
+			bannersmall.style.display = 'none';
+			rectanglesmall.style.display = 'none';
+			vertical.style.display = 'none';
+			setTimeout(function() { rectangle.style.display = 'block' } , 200);
+		}
+		if (el('rectanglesmall').checked) {
+			if (rectanglesmallFrame.src !== 'rectangle?size=small&' + params) { rectanglesmallFrame.src='rectangle?size=small&' + params; }
+			el('code').innerHTML = generateCode(rectanglesmall, rectanglesmallFrame);
+			getCode.style.visibility = 'visible';
+			banner.style.display = 'none';
+			bannersmall.style.display = 'none';
+			rectangle.style.display = 'none';
+			vertical.style.display = 'none';
+			setTimeout(function() { rectanglesmall.style.display = 'block' } , 200);
+		}
+		if (el('vertical').checked) {		
+			if (verticalFrame.src !== 'vertical?' + params) { verticalFrame.src='vertical?' + params; }
+			el('code').innerHTML = generateCode(vertical, verticalFrame);
+			getCode.style.visibility = 'visible';
+			banner.style.display = 'none';
+			bannersmall.style.display = 'none';
+			rectangle.style.display = 'none';
+			rectanglesmall.style.display = 'none';
+			setTimeout(function() { vertical.style.display = 'block' } , 200);
+		}
+	}
+
+	/** Ask a refresh*/
+	function askRefresh () {
+		if (window.___refresh) {
+			clearTimeout(window.___refresh);			
+		}
+		window.___refresh = setTimeout(function() { refresh(); }, 500);
+	}
+
+	// prefill url
+	if (document.location.hash.substring(1)) {
+		el('address').value = document.location.hash.substring(1);
+		askRefresh();
+	}
+
+	// set up modal
+	var dialog = document.querySelector('dialog');
+    var showDialogButton = document.querySelector('#getCode');
+    if (! dialog.showModal) {
+      dialogPolyfill.registerDialog(dialog);
+    }
+    showDialogButton.addEventListener('click', function() {
+      dialog.showModal();
+      return false;
+    });
+    dialog.querySelector('.close').addEventListener('click', function() {
+      dialog.close();
+    });
+</script>
+
+</body>
+</html>

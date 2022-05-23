@@ -1,0 +1,127 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+
+{% block page %}
+
+<div class="page-header">
+  <h1>Test V-Mobility</h1>
+</div>
+<div class="col-md-12">
+  <p>
+    Test la récupération des données V-Mobility pour un jour et un type donné.
+  </p>
+</div>
+
+{% raw %}
+<div id="test-vmobility">
+  <div class="container" style="text-align: center;">
+    <form class="form-inline" style="text-align: center;padding: 80px 20px 20px 20px;">
+      <input type="text" placeholder="Username" v-model="username" class="form-control">
+      <input type="password" placeholder="Password" v-model="password" class="form-control">
+      <select v-model="type" class="form-control">
+        <option value="apv" selected>APV</option>
+        <option value="vn">VN</option>
+        <option value="vo">VO</option>
+      </select>
+      <input class="flatpickr form-control" v-model="date" type="text" placeholder="Choisir une date ...">
+    </form>
+    <div style="padding-bottom: 20px;">
+      L'opération peut s'avérer <strong>très longue</strong>, faites preuve de patience !<br>
+      Au bout de cinq bonnes minutes il devient légitime de s'inquiétier...
+    </div>
+    <button class="btn btn-primary" v-if="!loading" @click="scrap" :disabled="notReadyToScrap">Scrape It!</button>
+    <button class="btn btn-primary" v-else disabled><i class="fa fa-cog fa-spin"></i>&nbsp;Loading</button>
+    <div style="padding: 20px;">
+      <div v-for="step in stepsMessages">{{ step }}</div>
+    </div>
+  </div>
+</div>
+{% endraw %}
+
+{% endblock %}
+
+{% block scripts %}
+
+<script type="text/javascript">
+  new Vue({
+    el: '#test-vmobility',
+    mounted: function () {
+      flatpickr('.flatpickr', {
+        enableTime: false,
+        time_24hr: true,
+        dateFormat: 'm-d-Y',
+        altFormat: 'm-d-Y'
+      });
+    },
+    data: function () {
+      return {
+        username: '',
+        password: '',
+        date: '',
+        type: 'apv',
+        loading: false,
+        stepsMessages: []
+      };
+    },
+    computed: {
+      notReadyToScrap: function() {
+        return !this.username || !this.password || !this.date || !this.type || this.loading;
+      }
+    },
+    methods: {
+      scrap: function() {
+        this.loading = true;
+        const request = new XMLHttpRequest();
+        let url = `{{ lib.client.url.getShortUrl('ADMIN_GARAGE_TEST_VMOBILITY_GETCSV') }}?u=${this.username}&p=${this.password}&m=${this.type}&d=${this.date}`;
+
+        request.open('GET', url, true);
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        request.send();
+        this.loading = true;
+        request.onload = () => {
+          if (request.status !== 200) {
+            alert('Aïe ! Quelque chose a mal tourné :/');
+          } else {
+            this.listenToWebSocket(request.responseText);
+          }
+        }
+      },
+      listenToWebSocket: function (socketName) {
+        const resSocket = JSON.parse(socketName);
+        const protocol = document.location.protocol.indexOf('https') > -1 ? 'wss' : 'ws';
+        const HOST = protocol + '://' + document.location.host + resSocket.websocket;
+        const ws = new WebSocket(HOST);
+
+        ws.onmessage = (event) => {
+          var res = event.data && JSON.parse(event.data);
+          if (res && res.status === 'running') {
+            this.addStepMessage(res.details);
+          } else if (res && res.status === 'ok') {
+            this.loading = false;
+            ws.close();
+            this.downloadCSV(res.details, `vmobility-${this.username}-${this.type}-${this.date}.csv`);
+          } else {
+            this.loading = false;
+            ws.close();
+            alert('Aïe ! Quelque chose a mal tourné :/');
+          }
+        };
+      },
+      addStepMessage: function(step) {
+        // ToDo add details of process
+      },
+      downloadCSV: function(csv, filename) {
+        let csvFile;
+        let downloadLink;
+
+        csvFile = new Blob([csv], {type: "text/csv"});
+        downloadLink = document.createElement("a");
+        downloadLink.download = filename;
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+      }
+    }
+  });
+</script>
+{% endblock %}

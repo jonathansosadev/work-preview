@@ -1,0 +1,104 @@
+{
+    "garage.status.js": {
+      "Waiting": "En attente - Lancement différé",
+      "DataMissing": "DMS non automatisable",
+      "ToCreate": "Abonnement à créer",
+      "ToPlug": "A brancher",
+      "ToConfigure": "A paramétrer",
+      "UsersMissing": "Users à créer",
+      "Ready": "Attente du GO de lancement",
+      "RunningAuto": "Garage lancé en automatique",
+      "RunningManual": "Garage lancé en manuel",
+      "Stopped": "Garage arrêté",
+      "ErepOnly": "E-Réputation uniquement"
+    },
+    "errors": {
+      "UNKNOWN_GARAGE_ID": "Le champ garageId est obligatoire",
+      "AT_LEAST_PHONE_OR_EMAIL": "Il faut renseigner l'email ou le numéro téléphone",
+      "AT_LEAST_MAKE_OR_MODEL": "Il faut renseigner le modéle du véhicule ou bien les marques souhaité"
+    },
+    "garage.type.js": {
+      "Dealership": "Concessionnaire Auto",
+      "MotorbikeDealership": "Concessionnaire Moto",
+      "UtilityCarDealership": "VI-VUL",
+      "Agent": "Agent",
+      "CarRepairer": "Garage",
+      "CarRental": "Location de voiture",
+      "VehicleInspection": "Contrôle technique",
+      "Other": "Autre",
+      "0": "Concessionnaire Auto",
+      "1": "Concessionnaire Moto",
+      "2": "VI-VUL",
+      "3": "Agent",
+      "4": "Garage",
+      "5": "Location de voiture",
+      "6": "Contrôle technique",
+      "7": "Autre",
+      "TICKET": {
+        "Dealership": "en concession",
+        "MotorbikeDealership": "en concession",
+        "UtilityCarDealership": "en concession",
+        "Agent": "en concession",
+        "CarRepairer": "au garage",
+        "CarRental": "en concession",
+        "VehicleInspection": "au centre",
+        "Other": "en concession"
+      }
+    },
+    "garage.subscription.type.js": {
+      "Maintenance": "Maintenance",
+      "NewVehicleSale": "Véhicule neuf",
+      "UsedVehicleSale": "Véhicule d'occasion",
+      "Lead": "Projet d'achat",
+      "EReputation": "E-réputation",
+      "VehicleInspection": "Contrôle technique",
+      "Analytics" : "Analytics",
+      "Coaching": "Coaching",
+      "Connect": "Connect",
+      "BILLING": {
+        "Maintenance": "APV",
+        "NewVehicleSale": "VN",
+        "UsedVehicleSale": "VO",
+        "Lead": "Leads",
+        "EReputation": "E-rép",
+        "VehicleInspection": "C. technique",
+        "Analytics" : "Analytics",
+        "Coaching": "Coaching",
+        "Connect": "Connect",
+        "Escalation": "Escalade"
+      }
+    },
+    "vehicle-bodytypes.js": {
+      "urban": "Citadine",
+      "berline": "Berline",
+      "break": "Break",
+      "suv": "SUV, 4x4",
+      "monospace": "Monospace",
+      "coupe": "Coupé / Cabriolet",
+      "utility_vehicle": "Véhicule utilitaire",
+      "Custom": "Custom",
+      "Roadster": "Roadster",
+      "GT": "GT",
+      "Supermotard": "Supermotard",
+      "Trail": "Trail",
+      "Sportive": "Sportive",
+      "Scooter": "Scooter",
+      "Unknown": "Je ne sais pas"
+    },
+    "cylinder-types.js": {
+      "Small": "De 0 à 125 cm3",
+      "Medium": "Entre 125 cm3 et 600 cm3",
+      "Big": "Entre 600 cm3 et 1000 cm3",
+      "Huge": "Supérieur à 1000 cm3",
+      "Electric": "Electrique",
+      "Unknown": "Je ne sais pas",
+      "SHORT": {
+        "Small": "0-125 cm3",
+        "Medium": "125-600 cm3",
+        "Big": "600-1000 cm3",
+        "Huge": "+1000 cm3",
+        "Electric": "Elec",
+        "Unknown": "Non défini"
+      }
+    }
+  }

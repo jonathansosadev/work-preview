@@ -1,0 +1,117 @@
+<html>
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  <meta charset='utf-8' />
+  <style>
+    label,
+    select,
+    input,
+    button {
+      width: 300px;
+      display: block;
+      margin: auto;
+      font-size: 18px;
+    }
+
+    label {
+      text-align: center;
+      font-weight: bold;
+    }
+
+    select {
+      margin-bottom: 10px;
+    }
+
+    button {
+      margin-top: 20px;
+      font-weight: bolder;
+      background: grey;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    form {
+      max-width: 350px;
+      padding-bottom: 10px;
+      display: block;
+      margin: auto;
+      border: 1px solid black;
+      border-radius: 5px;
+    }
+
+    #queryTime {
+      text-align: right;
+    }
+
+    #intro,
+    #content {
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    #intro {
+      width: 38%;
+      padding-right: 2%;
+    }
+
+    #content {
+      width: 52%;
+      border-left: 1px solid grey;
+      padding-left: 3%;
+    }
+
+    #intro {
+      font-family: appleLogo, sans-serif;
+      font-size: 12px;
+      display: inline-block;
+    }
+
+    #intro br {
+      margin: 5px 0 5px 0;
+    }
+
+    q {
+      font-size: 12px;
+      padding: 2px 3px 1px;
+      border: 1px solid var(--saf-0);
+      border-radius: 3px;
+      background-color: rgba(var(--sk_foreground_min, 29, 28, 29), .04);
+      color: #e01e5a;
+      --saf-0: rgba(var(--sk_foreground_low, 29, 28, 29), 0.13);
+      font-family: Monaco, Menlo, Consolas, Courier New, monospace !important;
+      line-height: 1.50001;
+      font-variant-ligatures: none;
+      white-space: pre;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      word-break: normal;
+      -webkit-tab-size: 4;
+      -moz-tab-size: 4;
+      tab-size: 4;
+    }
+
+    q::before,
+    q::after {
+      content: none;
+    }
+  </style>
+  {% block style %}
+  {% endblock %}
+</head>
+
+<body>
+  <div><a style="text-decoration: none;" href="/labs"><< Labs</a><br/><br/></div>
+  <div id="intro">
+    {% block intro %}
+    {% endblock %}
+  </div>
+  <div id="content">
+    {% block content %}
+    {% endblock %}
+  </div>
+</body>
+{% block script %}
+{% endblock %}
+
+</html>

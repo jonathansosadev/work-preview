@@ -1,0 +1,14 @@
+{
+  "SALESFORCE": {
+    "value": "SalesForce",
+    "properties": {}
+  },
+  "SELECTUP": {
+    "value": "SelectUp",
+    "properties": {}
+  },
+  "DAIMLER": {
+    "value": "Daimler",
+    "properties": {}
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "UNSATISFIED_VI": {
+    "value": "UnsatisfiedVI",
+    "properties": {}
+  },
+  "UNSATISFIED_MAINTENANCE": {
+    "value": "UnsatisfiedMaintenance",
+    "properties": {}
+  },
+  "UNSATISFIED_VN": {
+    "value": "UnsatisfiedVn",
+    "properties": {}
+  },
+  "UNSATISFIED_VO": {
+    "value": "UnsatisfiedVo",
+    "properties": {}
+  },
+  "UNSATISFIED_FOLLOWUP": {
+    "value": "UnsatisfiedFollowup",
+    "properties": {}
+  },
+  "LEAD_APV": {
+    "value": "LeadApv",
+    "properties": {}
+  },
+  "LEAD_VN": {
+    "value": "LeadVn",
+    "properties": {}
+  },
+  "LEAD_VO": {
+    "value": "LeadVo",
+    "properties": {}
+  },
+  "EREPUTATION": {
+    "value": "Ereputation",
+    "properties": {}
+  },
+  "EXOGENOUS_NEW_REVIEW": {
+    "value": "ExogenousNewReview",
+    "properties": {}
+  },
+  "ESCALATION_UNSATISFIED_MAINTENANCE": {
+    "value": "EscalationUnsatisfiedMaintenance",
+    "properties": {}
+  },
+  "ESCALATION_UNSATISFIED_VN": {
+    "value": "EscalationUnsatisfiedVn",
+    "properties": {}
+  },
+  "ESCALATION_UNSATISFIED_VO": {
+    "value": "EscalationUnsatisfiedVo",
+    "properties": {}
+  },
+  "ESCALATION_UNSATISFIED_VI": {
+    "value": "EscalationUnsatisfiedVi",
+    "properties": {}
+  },
+  "ESCALATION_LEAD_MAINTENANCE": {
+    "value": "EscalationLeadMaintenance",
+    "properties": {}
+  },
+  "ESCALATION_LEAD_VN": {
+    "value": "EscalationLeadVn",
+    "properties": {}
+  },
+  "ESCALATION_LEAD_VO": {
+    "value": "EscalationLeadVo",
+    "properties": {}
+  }
+}

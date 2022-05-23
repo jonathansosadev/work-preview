@@ -1,0 +1,124 @@
+{
+  "GeneralStats" : {
+    "top" : {
+      "rate" : 1.78049548131829
+    },
+    "allGarages" : {
+      "rate" : 7.28644088623893
+    }
+  },
+  "AutomationKpis": {
+    "automationCountContactable": 100,
+    "automationCountSent": 60,
+    "automationCountLeads": 20,
+    "automationCountConvertedLeads": 10 
+  },
+  "AutomationGaragesList": [
+    {
+      "garageSlug": "garagescore-example",
+      "hideDirectoryPage": false,
+      "garageId": "577a30d774616c1a0056c263",
+      "garagePublicDisplayName": "Garage Dupont",
+      "garageHasSubscription": true,
+      "automationCountCampaigns": 3,
+      "automationCountActiveCampaigns": 1,
+      "automationCountSent": 100,
+      "automationSentPercentage": 80,
+      "automationCountLeads": 40,
+      "automationLeadsPercentage": 40,
+      "automationCountConvertedLeads": 10,
+      "automationConversionPercentage": 25
+    },
+    {
+      "garageSlug": "kia-montargis",
+      "hideDirectoryPage": false,
+      "garageId": "5bd082a4997a9400144f12ca",
+      "garagePublicDisplayName": "Amplitude Auto 45 (Kia Montargis)",
+      "garageHasSubscription": false,
+      "countCampaigns": 3,
+      "countActiveCampaigns": 1,
+      "countSent": 50,
+      "sentPercentage": 60,
+      "countLeads": 8,
+      "leadsPercentage": 16,
+      "countConversions": 1,
+      "conversionPercentage": 12.5
+    }
+  ],
+  "AutomationCampaignsList": [
+    {
+      "campaignId": "campaign1",
+      "displayName": "Relance APV clients VN",
+      "garagePublicDisplayName": "Garage Dupont",
+      "garageId": "577a30d774616c1a0056c263",
+      "campaignDate": "2020-01-20T00:00:00.000Z",
+      "type": "NEW_VEHICLE_SALE",
+      "contactType": "EMAIL",
+      "automationCountSent": null,
+      "automationSentPercentage": null,
+      "automationCountLeads": null,
+      "automationLeadsPercentage": null,
+      "automationCountConvertedLeads": null,
+      "automationConversionPercentage": null,
+      "status": "IDLE"
+    },
+    {
+      "campaignId": "campaign2",
+      "displayName": "Newsletter Kia Sportage",
+      "garagePublicDisplayName": "Amplitude Auto 45 (Kia Montargis)",
+      "garageId": "5bd082a4997a9400144f12ca",
+      "campaignDate": "2020-01-18T00:00:00.000Z",
+      "type": "MAINTENANCE",
+      "contactType": "MOBILE",
+      "automationCountSent": 452,
+      "automationSentPercentage": 87,
+      "automationCountLeads": 80,
+      "automationLeadsPercentage": 18,
+      "automationCountConvertedLeads": 19,
+      "automationConversionPercentage": 24,
+      "status": "RUNNING"
+    }
+  ],
+  "ErepConnections": [
+    {
+      "garageId": "5bd082a4997a9400144f12ca",
+      "connectedSources": ["Google", "PagesJaunes"],
+      "garagePublicDisplayName": "Garage de l'étoile",
+      "hasSubscription": true
+    }
+  ],
+  "ErepKpis": [
+    {
+      "source": "GarageScore",
+      "countReviews": 453,
+      "rating": 8,
+      "countRecommend": null,
+      "countDetractorsWithResponse": 187,
+      "countDetractors": 77777
+    },
+    {
+      "source": "Google",
+      "countReviews": 33187,
+      "rating": 8.12473508148696,
+      "countRecommend": null,
+      "countDetractorsWithResponse": 7566,
+      "countDetractors": 2181
+    },
+    {
+      "source": "Facebook",
+      "countReviews": 447,
+      "rating": null,
+      "countRecommend": 0,
+      "countDetractorsWithResponse": 106,
+      "countDetractors": 36
+    },
+    {
+      "source": "PagesJaunes",
+      "countReviews": 155,
+      "rating": 6.405852417302799,
+      "countRecommend": null,
+      "countDetractorsWithResponse": 0,
+      "countDetractors": 0
+    }
+  ]
+}

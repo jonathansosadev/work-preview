@@ -1,0 +1,272 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+
+{% block css %}
+<style type="text/css">
+table tbody tr td input {
+  font-size: 12px;
+  width: 50px;
+  text-align: center;
+}
+</style>
+{% endblock %}
+
+{% block page %}
+<div class="page-header">
+	<h1>Importation !</h1>
+</div>
+<div class="col-md-12" id="app">
+	<div class="row">
+		<u class="col-md-12">Instructions</u>
+		<p class="col-md-12">Choisir un <b>garage</b>, puis choisir un type de contenu, puis <b>générer</b> des lignes aléatoires pour lancer l'importation !</p>
+	</div>
+  <div>
+    <gs-garages-list :updated="selectedGarageUpdated"></gs-garages-list>
+    <label>Établissement sélectionné : <span v-if="garageName" style="color:black; background-color: white; padding: 5px; font-size: larger">{{ "{{ garageName }}" }}</span></label>
+    <br>
+    <label>Type de contenu :</label><br>
+    <select v-model="dataFileType" class="form-control">
+      <option value="Maintenances">Maintenances</option>
+      <option value="NewVehicleSales">New VehicleSales</option>
+      <option value="UsedVehicleSales">Used VehicleSales</option>
+      <option value="MixedVehicleSales">Mixed VehicleSales</option>
+      <option value="VehicleInspections">Contrôle techniques</option>
+      <option value="Mixed">Mixed</option>
+    </select>
+  </div>
+  <br><br>
+
+  <button class="btn btn-primary btn-sm" @click="addEmptyRow">Aj. Ligne Vide</button>
+  <button class="btn btn-primary btn-sm" @click="addRandomRow">Aj. Ligne Aléatoire</button>
+
+  <table class="table" style="margin-top:15px;" v-if="rows && rows.length">
+    <thead>
+      <tr>
+        <th>Titre</th>
+        <th>Prénom</th>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Téléphone</th>
+        <th>N° Rue</th>
+        <th>Nom Rue</th>
+        <th>Code Postal</th>
+        <th>Ville</th>
+        <th>Marque Voiture</th>
+        <th>Modèle Voiture</th>
+        <th>Immatriculation</th>
+        <th>VIN</th>
+        <th>Service / Prestation</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="row in rows">
+        <td><input type="text" v-model="row.gender"></td>
+        <td><input type="text" v-model="row.firstName" style="width:80px;"></td>
+        <td><input type="text" v-model="row.lastName" style="width:80px;"></td>
+        <td><input type="text" v-model="row.email" style="width:160px;"></td>
+        <td><input type="text" v-model="row.phone" style="width:120px;"></td>
+        <td><input type="text" v-model="row.streetNumber"></td>
+        <td><input type="text" v-model="row.streetName" style="width:80px;"></td>
+        <td><input type="text" v-model="row.postalCode"></td>
+        <td><input type="text" v-model="row.city" style="width:80px;"></td>
+        <td><input type="text" v-model="row.carMake" style="width:80px;"></td>
+        <td><input type="text" v-model="row.carModel" style="width:80px;"></td>
+        <td><input type="text" v-model="row.plate" style="width:80px;"></td>
+        <td><input type="text" v-model="row.vin" style="width:80px;"></td>
+        <td><input type="text" v-model="row.service"></td>
+        <td><button class="btn btn-danger btn-xs" @click="removeRow(row)"><i class="fa fa-times"></i></button></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="text-center">
+    <button v-if="rows && rows.length" class="btn btn-success btn-sm" @click="startImport" :disabled="garageId === '' || loading"><i v-if="loading" class="fa fa-cog fa-spin"></i>&nbsp;Import This Bad Boy !</button>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  {% include "../common/components/_auto-complete/auto-complete.nunjucks" %}
+  {% include "../common/components/garages-list/garages-list.component.nunjucks" %}
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script type="text/javascript">
+	document.addEventListener("DOMContentLoaded", function() {
+		new Vue({
+			el: '#app',
+			data: function() {
+			  return {
+			    garageId: '',
+          garageName: '',
+          dataFileType: 'Maintenances',
+          rows: [],
+          loading: false
+        };
+      },
+			methods: {
+			  addRandomRow() {
+          this.rows.push({
+            gender: this.randomGender(),
+            firstName: this.randomFirstName(),
+            lastName: this.randomLastName(),
+            email: this.randomEmail(),
+            phone: this.randomPhone(),
+            streetNumber: this.randomStreetNumber(),
+            streetName: this.randomStreetName(),
+            postalCode: this.randomPostalCode(),
+            city: this.randomCity(),
+            carMake: this.randomCarMake(),
+            carModel: this.randomCarModel(),
+            plate: this.randomPlate(),
+            vin: this.randomVin(),
+            service: this.randomService(),
+          });
+        },
+        addEmptyRow() {
+			    this.rows.push({
+            gender: '',
+            firstName: '',
+            lastName: '',
+            email: '',
+            phone: '',
+            streetNumber: '',
+            streetName: '',
+            postalCode: '',
+            city: '',
+            carMake: '',
+            carModel: '',
+            plate: '',
+            vin: '',
+            service: '',
+          });
+        },
+        removeRow(row) {
+			    this.rows.splice(this.rows.indexOf(row), 1);
+        },
+        rdm(n) {
+			    return (Math.floor((Math.random() * 1000) + 1)) % n;
+        },
+        randomGender() {
+          return ['M', 'Mme', 'Mlle'][this.rdm(3)];
+        },
+        randomFirstName() {
+          return ['Jean', 'Jacques', 'Pierre', 'Paul', 'Michel', 'Antoine', 'Gabriel', 'Raphael', 'Noé', 'Philippe', 'George', 'Judas',
+            'Mathilde', 'Emma', 'Juliette', 'Cécile', 'Constance', 'Pauline', 'Sophie', 'Laura', 'Marie', 'Anne', 'Camille', 'Charlotte'][this.rdm(24)];
+        },
+        randomLastName() {
+          return ['Dupont', 'Dubois', 'Duchemin', 'Gaillard', 'Miterrand', 'Chirac', 'Macron', 'De Gaulle', 'Dujardin', 'Pitt', 'Depp', 'Blop',
+            'Jossepin', 'Berne', 'Aznavour', 'Hallyday', 'Hollande', 'Sarkozy', 'Pompidoux', 'Knacki', 'Gargameule', 'Juvamine', 'Salo', 'Gros'][this.rdm(24)];
+        },
+        randomEmail() {
+          return `${this.randomEmailName()}+${this.rdm(1000)}@${this.randomEmailProvider()}.${this.randomEmailExtension()}`;
+        },
+        randomEmailProvider() {
+          const a = 'azertyuiopqsdfghjklmwxcvbn';
+          let result = '';
+
+          for (let i = 0; i < 5; ++i) {
+            result += a[this.rdm(26)];
+          }
+          return result;
+        },
+        randomEmailExtension() {
+          const a = 'azertyuiopqsdfghjklmwxcvbn';
+          let result = '';
+
+          for (let i = 0; i < 3; ++i) {
+            result += a[this.rdm(26)];
+          }
+          return result;
+        },
+        randomEmailName() {
+			    const a = 'azertyuiopqsdfghjklmwxcvbn';
+			    const l = Math.floor((Math.random() * 10) + 4);
+			    let result = '';
+
+			    for (let i = 0; i < l; ++i) {
+			      result += a[this.rdm(26)];
+          }
+			    return result;
+        },
+        randomPhone() {
+          return `+33 6 ${Math.floor((Math.random() * 89) + 10)} ${Math.floor((Math.random() * 89) + 10)} ${Math.floor((Math.random() * 89) + 10)} ${Math.floor((Math.random() * 89) + 10)}`;
+        },
+        randomStreetNumber() {
+          return this.rdm(200).toString();
+        },
+        randomStreetName() {
+          return ['Jean Mermoz', 'Ketanou', 'Des Boulets', 'Mansart', 'Franklyn', 'Leclerc', 'Massenat', 'Cauchy', 'Etoile', 'Reves'][this.rdm(10)];
+        },
+        randomPostalCode() {
+          return (Math.floor((Math.random() * 79000) + 10000)).toString();
+        },
+        randomCity() {
+          return ['Toulouse', 'Paris', 'Nice', 'Montpellier', 'Marseille', 'Versailles', 'Lille', 'Metz', 'Nancy', 'Bordeaux', 'Arcueil'][this.rdm(11)];
+        },
+        randomCarMake() {
+          return ['OPEL', 'PEUGEOT', 'SAAB', 'RENAULT', 'CITROEN', 'AUDI', 'TOYOTA', 'BMW', 'DACIA'][this.rdm(9)];
+        },
+        randomCarModel() {
+          return ['Cooper', 'Lander', 'Megane', 'Clio', 'Estate', 'Rover', 'Yaris', 'Prius', 'Freedom', 'Xantia', 'Dodoche'][this.rdm(11)];
+        },
+        randomPlate() {
+          return [
+            'AK-001-AA',
+            'AL-001-AA',
+            'AM-001-AA',
+            'AN-001-AA',
+            'AP-001-AA',
+            'AQ-001-AA',
+            'AR-001-AA',
+            'AS-001-AA',
+            'AT-001-AA',
+            'AV-001-AA',
+            'AW-001-AA',
+            'AX-001-AA',
+            'AY-001-AA',
+            'AZ-001-AA',
+            'BG-001-AA',
+            'BH-001-AA',
+            'BJ-001-AA',
+            'BK-001-AA',
+            'BL-001-AA',
+            'BM-001-AA',
+            'BN-001-AA',
+            'BP-001-AA',
+            'BQ-001-AA',
+            'BR-001-AA',
+            'BS-001-AA',
+            'BT-001-AA',
+            'BV-001-AA',
+            'BW-001-AA',
+            'BX-001-AA',
+            'BY-001-AA',
+            'BZ-001-AA',
+            'BZ-521-TB'
+          ][this.rdm(31)];
+        },
+        randomVin() {
+			    return ['VF12RFL1H99078422', 'VF12RFL1H99078423', 'VF12RFL1H99078424'][this.rdm(3)];
+        },
+        randomService() {
+          return ['APV', 'VN', 'VO', 'CT'][this.rdm(4)];
+        },
+        selectedGarageUpdated(garage, token) {
+          this.garageId = garage.id;
+          this.garageName = token.split('[')[0];
+        },
+        async startImport() {
+          try {
+            this.loading = true;
+            const data = { rows: this.rows, dataFileType: this.dataFileType, garageId: this.garageId };
+            this.loading = false;
+            // a campaign takes a lot of time, don't wait, otherwise we got a network error !
+            alert("Succès !");
+            let res = await axios.post('{{ lib.client.url.getUrlNamespace('SIMULATORS').IMPORTER }}', data);
+          } catch (err) {
+            alert(err)
+          }
+        }
+      }
+    });
+	});
+</script>
+{% endblock %}

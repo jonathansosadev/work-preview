@@ -1,0 +1,75 @@
+
+<div style="padding-top: 8px;padding-bottom: 18px;width:100%;">
+  <table style="width:100%;">
+    <tr class="price-row">
+      <td class="header-cell"><p>Abonnements</p></td>
+      <td class="header-cell"><p>Prix public</p></td>
+      <td class="header-cell"><p>Remise</p></td>
+      <td class="header-cell"><p>Prix final</p></td>
+    </tr>
+    {% if services.maintenance %}
+    <tr class="price-row">
+      <td class="price-cell"><p>Suivi Atelier</p></td>
+      <td class="price-cell center-cell"><p>{% if config.plans.maintenance.publicPrice == null %} 'offert' {% else %} {{ config.plans.maintenance.publicPrice + '€' }}{% endif %}</p></td>
+      <td class="price-cell center-cell"><p>{% if config.plans.maintenance.discount == null %} 'offert' {% else %} {{ config.plans.maintenance.discount + '%' }}{% endif %}</p></td>
+      <td class="price-cell center-cell"><p>{% if config.plans.maintenance.finalPrice == null %} 'offert' {% else %} {{ config.plans.maintenance.finalPrice + '€' }}{% endif %}</p></td>
+    </tr>
+    {% endif %}
+    {% if services.sales %}
+    <tr class="price-row">
+      <td class="price-cell"><p>Suivi Vn – Vo</td>
+        <td class="price-cell center-cell"><p>{% if config.plans.sales.publicPrice == null %} 'offert' {% else %} {{ config.plans.sales.publicPrice + '€' }}{% endif %}</p></td>
+        <td class="price-cell center-cell"><p>{% if config.plans.sales.discount == null %} 'offert' {% else %} {{ config.plans.sales.discount + '%' }}{% endif %}</p></td>
+        <td class="price-cell center-cell"><p>{% if config.plans.sales.finalPrice == null %} 'offert' {% else %} {{ config.plans.sales.finalPrice + '€' }}{% endif %}</p></td>
+      </tr>
+    {% endif %}
+    {% if services.sales %}
+    <tr class="price-row">
+      <td class="price-cell"><p>Projets Auto</p></td>
+      <td class="price-cell center-cell"><p>{% if config.plans.leads.publicPrice == null %} 'offert' {% else %} {{ config.plans.leads.publicPrice + '€' }}{% endif %}</p></td>
+      <td class="price-cell center-cell"><p>{% if config.plans.leads.discount == null %} 'offert' {% else %} {{ config.plans.leads.discount + '%' }}{% endif %}</p></td>
+      <td class="price-cell center-cell"><p>{% if config.plans.leads.finalPrice == null %} 'offert' {% else %} {{ config.plans.leads.finalPrice + '€' }}{% endif %}</p></td>
+    </tr>
+    {% endif %}
+    {% if services.analytics %}
+    <tr class="price-row">
+      <td class="price-cell"><p>Analytics</p></td>
+      <td class="price-cell center-cell"><p>{% if config.plans.analytics.publicPrice == null %} 'offert' {% else %} {{ config.plans.analytics.publicPrice + '€' }}{% endif %}</p></td>
+      <td class="price-cell center-cell"><p>{% if config.plans.analytics.discount == null %} 'offert' {% else %} {{ config.plans.analytics.discount + '%' }}{% endif %}</p></td>
+      <td class="price-cell center-cell"><p>{% if config.plans.analytics.finalPrice == null %} 'offert' {% else %} {{ config.plans.analytics.finalPrice + '€' }}{% endif %}</p></td>
+    </tr>
+    {% endif %}
+    {% if services.data %}
+    <tr class="price-row">
+      <td class="price-cell"><p>Data transfert</p></td>
+      <td class="price-cell center-cell"><p>{% if config.plans.data.publicPrice == null %} 'offert' {% else %} {{ config.plans.data.publicPrice + '€' }}{% endif %}</p></td>
+      <td class="price-cell center-cell"><p>{% if config.plans.data.discount == null %} 'offert' {% else %} {{ config.plans.data.discount + '%' }}{% endif %}</p></td>
+      <td class="price-cell center-cell"><p>{% if config.plans.data.finalPrice == null %} 'offert' {% else %} {{ config.plans.data.finalPrice + '€' }}{% endif %}</p></td>
+    </tr>
+    {% endif %}
+    {% if services.eReputation %}
+    <tr class="price-row">
+      <td class="price-cell"><p>E-réputation</p></td>
+      <td class="price-cell center-cell"><p>{% if config.plans.eReputation.publicPrice == null %} 'offert' {% else %} {{ config.plans.eReputation.publicPrice + '€' }}{% endif %}</p></td>
+      <td class="price-cell center-cell"><p>{% if config.plans.eReputation.discount == null %} 'offert' {% else %} {{ config.plans.eReputation.discount + '%' }}{% endif %}</p></td>
+      <td class="price-cell center-cell"><p>{% if config.plans.eReputation.finalPrice == null %} 'offert' {% else %} {{ config.plans.eReputation.finalPrice + '€' }}{% endif %}</p></td>
+    </tr>
+    {% endif %}
+    <tr class="price-row">
+      <td colspan="2"></td>
+      <td class="price-cell center-cell grey-cell no-dashed">
+        <p class="bold-txt">
+          TOTAL HT
+        </p>
+      </td>
+      <td class="price-cell center-cell grey-cell no-dashed">
+        <div>
+          <p style="font-size: 17px" class="bold-txt">{{plansFinalPrice}} €</p>
+        </div>
+        <div>
+          <p style="font-size: 11px">au lieu de <span class="bold-txt">{{plansPublicPrice}} €</span></p>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

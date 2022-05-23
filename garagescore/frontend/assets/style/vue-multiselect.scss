@@ -1,0 +1,26 @@
+.multiselect {
+  font-size: 1rem;
+  
+  &--active {
+    z-index: 3;
+  }
+  &__content {
+    width:100%!important;
+  }
+  &__tags {
+    border-radius:3px;
+    border-color:#BABABA;
+  }
+  &__single {
+    font-size:1rem;
+    font-weight:400;
+  }
+  &__input {
+    font-size:1rem;
+    font-weight:400;
+  }
+}
+
+.multiselect__option--disabled {
+  pointer-events: none !important;
+}

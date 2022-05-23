@@ -1,0 +1,331 @@
+
+@font-face {
+  font-family: 'gs-logo';
+  src: url('GsLogo.eot');
+  src: url('GsLogo.eot?#iefix') format('embedded-opentype'),
+url('GsLogo.woff') format('woff'),
+url('GsLogo.ttf') format('truetype'),
+url('GsLogo.svg#Glyphter') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+i.gs-vn-car:before {
+  content: '\0041';
+  font-family: "gs-logo"!important;
+  font-style: normal;
+}
+
+i.gs-steering-wheel:before {
+  content: '\0042';
+  font-family: "gs-logo"!important;
+  position: relative;
+  font-style: normal;
+}
+
+i.gs-apv:before {
+  content: '\0043';
+  font-family: "gs-logo"!important;
+  position: relative;
+  font-style: normal;
+}
+
+i.fa-init-password:before {
+  content: '\0044';
+  font-family: "gs-logo"!important;
+  font-style: normal;
+}
+
+i.gs-search-question:before {
+  content: '\0045';
+  font-family: "gs-logo"!important;
+  font-style: normal;
+}
+
+i.gs-search-question-2:before {
+  content: '\0045';
+  font-family: "gs-logo"!important;
+  font-style: normal;
+}
+
+i.gs-calender:before {
+  content: '\0046';
+  font-family: "gs-logo"!important;
+  font-style: normal;
+}
+
+i.gs-bike:before {
+  content: '\0047';
+  font-family: "gs-logo"!important;
+  font-style: normal;
+}
+
+i.gs-vo-profile:before {
+  content: '\0048';
+  font-family: "gs-logo"!important;
+  font-style: normal;
+}
+
+i.gs-vn-profile:before {
+  content: '\0049';
+  font-family: "gs-logo"!important;
+  font-style: normal;
+}
+
+i.gs-info:before {
+  content: '\004a';
+  font-family: "gs-logo"!important;
+  font-style: normal;
+}
+
+i.gs-localisation:before {
+  content: '\004b';
+  font-family: "gs-logo"!important;
+  font-style: normal;
+}
+
+i.gs-clock:before {
+  content: '\004c';
+  font-family: "gs-logo"!important;
+  font-style: normal;
+}
+
+i.gs-phone-handset:before {
+  content: '\004d';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-help-bub:before {
+  content: '\004e';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-bar-chart:before {
+  content: '\004f';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-phone-bub:before {
+  content: '\0050';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-cog:before {
+  content: '\0051';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-cloud-up:before {
+  content: '\0052';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-note:before {
+  content: '\0053';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-exit:before {
+  content: '\0054';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-make-bub:before {
+  content: '\0055';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-call-bub:before {
+  content: '\0056';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-mail:before {
+  content: '\0057';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-note-bub:before {
+  content: '\0058';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-star:before {
+  content: '\0059';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-download:before {
+  content: '\005a';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-disc-bub:before {
+  content: '\005b';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-disc-bub-ok:before {
+  content: '\005c';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-car-question:before {
+  content: '\005d';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-face-frown:before {
+  content: '\005e';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-mobile-phone:before {
+  content: '\0060';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-bubble:before {
+  content: '\0061';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-chart-2:before {
+  content: '\0062';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-search:before {
+  content: '\0063';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-thumb-up:before {
+  content: '\0064';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-profile:before {
+  content: '\0065';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-lead:before {
+  content: '\0066';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-sheet-euro:before {
+  content: '\0067';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-share:before {
+  content: '\0068';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-calender-bub:before {
+  content: '\0069';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-chrono-bub:before {
+  content: '\006a';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-chrono:before {
+  content: '\006b';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-pencil:before {
+  content: '\006c';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-tachometer:before {
+  content: '\006d';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-bag:before {
+  content: '\006e';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-home:before {
+  content: '\006f';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-hourglass:before {
+  content: '\0070';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-ok-bub:before {
+  content: '\0071';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-search-bub:before {
+  content: '\0072';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-two-profiles:before {
+  content: '\0073';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-key:before {
+  content: '\0074';
+  font-family: "gs-logo";
+  font-style: normal;
+}
+
+i.gs-filled-icon:before {
+  background-color: white;
+  border-radius: 50%;
+}
+

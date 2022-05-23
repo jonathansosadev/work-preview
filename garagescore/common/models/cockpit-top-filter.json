@@ -1,0 +1,49 @@
+{
+  "name": "CockpitTopFilter",
+  "base": "GarageScoreBaseModel",
+  "options": {},
+  "mixins": {
+    "Status": true,
+    "Stream": true
+  },
+  "mongodb": {
+    "collection": "cockpitTopFilters"
+  },
+  "properties": {
+    "garageId": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "frontDeskUserName": {
+      "type": "string"
+    },
+    "leadSaleType": {
+      "type": "string"
+    },
+    "leadTicketManager": {
+      "type": "string"
+    },
+    "unsatisfiedTicketManager": {
+      "type": "string"
+    },
+    "automationCampaignType": {
+      "type": "string"
+    },
+    "index": [{
+        "k": "String",
+        "v": "String"
+      }]
+    },
+    "indexes": {
+      "indexkv": { "index.k": 1, "index.v": 1 }
+    },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

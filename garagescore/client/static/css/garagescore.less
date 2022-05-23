@@ -1,0 +1,99 @@
+@gs-red: #d14836;
+@gs-green: #00b050;
+@gs-lightblue: #6BC1D5;
+@gs-blue: #219ab5;
+@gs-darkblue: #1f85a0;
+@gs-yellow: #e9b330;
+@gs-gold: #c9984f;
+@gs-darkgrey: #757575;
+@gs-grey: #bcbcbc;
+@gs-lightgrey: #e0e0e0;
+@gs-white: #f5f5f5;
+@gs-orange: #ED5600;
+@gs-darkorange: #e44c00;
+@gs-black: #000000;
+@gs-verylight-orange: #FADCCC;
+
+
+.gs-red { color: @gs-red }
+.gs-green { color: @gs-green }
+.gs-blue { color: @gs-blue }
+.gs-yellow { color: @gs-yellow }
+.gs-gold { color: @gs-gold}
+.gs-grey { color:@gs-grey }
+.gs-orange { color:@gs-orange }
+.gs-black { color:@gs-black }
+.gs-light-grey { color:@gs-lightgrey }
+.gs-bg-orange { background-color:@gs-orange }
+.gs-bg-yellow { background-color:@gs-yellow }
+.gs-bg-red { background-color:@gs-red }
+.gs-bg-black { background-color:@gs-black }
+.gs-bg-darkgrey { background-color:@gs-darkgrey }
+.gs-bg-grey { background-color:@gs-grey }
+.gs-bg-blue { background-color:@gs-blue }
+.gs-bg-blue-80 { background-color:fade(@gs-blue, 60%) }
+.gs-bg-lightgrey { background-color:@gs-lightgrey }
+.gs-bg-white { background-color:@gs-white }
+
+ a.gs-orange:hover {
+ color: darken(@gs-orange, 10%);
+ }
+.generate-columns(10, 10);
+.generate-columns(24, 24);
+
+.generate-columns(@n ,@m) when (@n > 0) {
+  @media (max-width: 767px) {
+    .col@{m}-xs-@{n} {
+      width: (@n * 100% / @m);
+      position: relative;
+      min-height: 1px;
+      padding-right: 10px;
+      padding-left: 10px;
+      float: left;
+    }
+  }
+  @media (min-width: 768px) {
+    .col@{m}-sm-@{n} {
+      width: (@n * 100% / @m);
+      position: relative;
+      min-height: 1px;
+      padding-right: 10px;
+      padding-left: 10px;
+      float: left;
+    }
+  }
+  @media (max-width: 480px) {
+    .col@{m}-xs-@{n} {
+      padding-right: 5px;
+      padding-left: 5px;
+    }
+  }
+  /* col-xs-3-5  to take 3.5 column*/
+  @media (max-width: 767px) {
+    .col@{m}-xs-@{n}-5 {
+      width: ((@n + 0.5) * 100% / @m);
+      position: relative;
+      min-height: 1px;
+      padding-right: 10px;
+      padding-left: 10px;
+      float: left;
+    }
+  }
+  @media (min-width: 768px) {
+    .col@{m}-sm-@{n}-5 {
+      width: ((@n + 0.5) * 100% / @m);
+      position: relative;
+      min-height: 1px;
+      padding-right: 10px;
+      padding-left: 10px;
+      float: left;
+    }
+  }
+  @media (max-width: 479px) {
+    .col@{m}-xs-@{n}-5 {
+      padding-right: 5px;
+      padding-left: 5px;
+    }
+  }
+  .generate-columns((@n - 1), @m);
+}

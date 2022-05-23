@@ -1,0 +1,48 @@
+{
+  "name": "AutomationCampaignsEvents",
+  "base": "GarageScoreBaseModel",
+  "options": {},
+  "mongodb": {
+    "collection": "automationCampaignsEvents"
+  },
+  "http": {
+    "path": "automation-campaigns-events"
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {},
+  "indexes": {
+    "campaignId": {
+      "name": "campaignId", "keys": { "campaignId": 1 }
+    },
+    "eventDay": {
+      "name": "eventDay", "keys": { "eventDay": 1 }
+    },
+    "campaignRunDay": {
+      "name": "campaignRunDay", "keys": { "campaignRunDay": 1 }
+    },
+    "garageId": {
+      "name": "garageId", "keys": { "garageId": 1 }
+    },
+    "type": {
+      "name": "type", "keys": { "type": 1 }
+    },
+    "campaignType": {
+      "name": "campaignType", "keys": { "campaignType": 1 }
+    },
+    "nsamples": {
+      "name": "nsamples", "keys": { "nsamples": 1 }
+    },
+    "nsamplesMobile": {
+      "name": "nsamplesMobilev", "keys": { "nsamplesMobilev": 1 }
+    },
+    "nsamplesEmail": {
+      "name": "nsamplesEmail", "keys": { "nsamplesEmail": 1 }
+    },
+    "samples.customerId": {
+      "name": "samples.customerId", "keys": { "samples.customerId": 1 }
+    }
+  }
+}

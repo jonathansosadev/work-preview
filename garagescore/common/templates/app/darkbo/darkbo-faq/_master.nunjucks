@@ -1,0 +1,42 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+<style>
+.question {
+    color: #b3b3f3;
+    font-weight: bold;
+    font-size: 16px;
+}
+.answer {
+	margin-bottom: 50px;
+}
+.question_top_answer {
+	display: block;
+}
+.adate {
+	font-style: italic;
+    font-size: 12px;
+    color: #eee;
+}
+</style>
+{% endblock %}
+{% block page %}<div class="container">
+	<h1> {% block title %} {% endblock %} </h1>
+	<hr/>
+	<div class="col-md-12"> {% block questions %} {% endblock %}</div>
+	<div class="col-md-12"><br/><br/><br/></div>
+	<div class="col-md-12">  {% block answers %} {% endblock %} </div></div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+	// add question and date on top of answers
+	var els = document.getElementsByClassName('answer');
+	for (var e = 0; e < els.length; e++) {
+		var el = els[e];
+		console.log(el);
+		var q = document.getElementById(el.id.replace('a_', 'q_'));
+		var date = '<div class="adate">(Dernière modification de la réponse ' + el.getAttribute('data-date') + ')</div>';
+		el.innerHTML = '<span class="question question_top_answer">' + q.innerHTML + '</span>' + el.innerHTML + date;
+	}
+</script>
+{% endblock %}

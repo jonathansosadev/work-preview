@@ -1,0 +1,47 @@
+{
+  "name": "CronInformation",
+  "plural": "CronInformations",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "mongodb": {
+    "collection": "cronInformations"
+  },
+  "http": {
+    "path": "cron-information"
+  },
+  "mixins": {
+    "SmartSort": true
+  },
+  "properties": {
+    "path": {
+      "type": "string"
+    },
+    "lastStart": {
+      "type": "date"
+    },
+    "lastEnd": {
+      "type": "date"
+    },
+    "currentlyRunning": {
+      "type": "boolean"
+    },
+    "lastError": {
+      "type": "string"
+    },
+    "frequency": {
+      "type": "string"
+    },
+    "supportedCliOptions": {
+      "type": "object"
+    },
+    "options": {
+      "type": "object"
+    }
+  },
+  "validations": [],
+  "acls": [
+  ],
+  "methods": {
+  }
+}

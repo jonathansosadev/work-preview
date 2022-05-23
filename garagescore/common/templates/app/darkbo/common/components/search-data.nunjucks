@@ -1,0 +1,55 @@
+<style type="text/css">
+    #search-dataId {
+        color: black;
+    }
+    .searchbox {
+        padding: 15px 10px;
+        background: #3c3939;
+        margin-bottom: 20px;
+    }
+    .search-error-message {
+        color: red;
+    }
+    .search-input {
+        color: black;
+    }
+</style>
+{% raw %}
+    <template id="search-data-container">
+        <div class="col-md-12 searchbox">
+            <div>
+                <input
+                    id="dataId"
+                    class="search-input"
+                    v-model="dataIdSearched"
+                    size="40"
+                    type="text"
+                    placeholder="dataId (24 chiffres)"/>
+                <button @click="handelClickSearch" id="search-dataId">Chercher</button>
+                <span class="search-error-message" v-if="errorMessage">{{ errorMessage }}</span>
+            </div>
+        </div>
+    </template>
+{% endraw %}
+<script>
+    new Vue({
+        el: '#search',
+        template: '#search-data-container',
+        name: 'searchDataId',
+        props: ['instance'],
+        data() {
+            return {dataIdSearched: '', errorMessage: ''}
+        },
+        methods: {
+            handelClickSearch() {
+                const dataId = this.dataIdSearched.trim()
+                if (dataId.length === 24) {
+                    window.location.href = "{{ lib.client.url.getShortUrl('ADMIN_DATA_DISPLAY_ROOT') }}" + dataId
+                    this.errorMessage = ''
+                } else {
+                    this.errorMessage = 'valeur incorrect (doit contenir 24 caractères)'
+                }
+            }
+        }
+    });
+</script>

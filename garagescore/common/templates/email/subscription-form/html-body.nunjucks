@@ -1,0 +1,249 @@
+{%- extends "./-html-body-base.nunjucks" -%}
+
+{% block header %}
+  <style>
+    .line-spacer{
+      padding-bottom: 4px;
+    }
+    .txt-black{
+      color:#000000;
+    }
+    .bold-txt{
+      font-weight: bold;
+    }
+    .txt-blue{
+      font-weight: bold;
+      color: #00a1c1;
+    }
+    .gs-meet-btn{
+      width:220px;
+      padding-left: 6px;
+      padding-right: 6px;
+      padding-top: 9px;
+      padding-bottom: 9px;
+      background-color: #009cb8;
+      display: inline-block;
+      border-radius:3px;
+    }
+
+    .gs-list-container{
+      margin-left: 10px;
+      padding-bottom: 7px;
+      margin-top: 5px;
+    }
+
+    .gs-list-item{
+      padding-left: 6px;
+      padding-bottom: 8px;
+      list-style-type: none;
+    }
+
+    .header-cell{
+      color:#000000;
+      background-color: #bfbfbf;
+      padding: 14px;
+      border-width: 1px;
+      border-color: #ffffff;
+      border-style: solid;
+      text-align: center;
+      font-weight: bold;
+    }
+    .center-cell{
+      text-align: center;
+    }
+    .price-cell{
+      padding-left: 8px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed #bfbfbf;
+      padding-left: 3px;
+      font-size: 14px;
+    }
+
+    .no-dashed{
+      border-bottom: none;
+    }
+
+    .grey-cell{
+      background-color: #f2f2f2;
+      border-left: 1px solid #ffffff;
+      border-right: 1px solid #ffffff;
+    }
+  </style>
+{% endblock %}
+
+{%- block body -%}
+
+  <div style="text-align: center;padding-top: 6px;padding-bottom: 14px;">
+    <img src="{{ lib.client.frontEndStaticUrl('logo/logo-custeed-long-205px-rgb.png') }}"/>
+  </div>
+
+  <div style="padding-bottom: 12px;">
+    <p>Bonjour {{ user.firstName }} {{ user.name }},</p>
+  </div>
+
+  <div style="padding-bottom: 12px;">
+    <p>Bienvenue chez GarageScore, la solution de Management digital de la satisfaction client leader sur le marché.</p>
+  </div>
+
+  {% if not config.withDealer and not config.hideSubscriptionMessageOnSummaryEmail %}
+    <div style="padding-bottom: 12px;">
+      <p>Pour finaliser votre inscription, prenez rendez-vous avec notre équipe en 3 clics.</p>
+    </div>
+    <div class="gs-list-container">
+      <ul>
+        <li class="gs-list-item"><a class="txt-blue" href="https://calendly.com/idf-djillali/presentation-telephonique-garagescore/" target="_blank">Zone IDF cliquez ici</a></li>
+        <li class="gs-list-item"><a class="txt-blue" href="https://calendly.com/ablay/presentation-telephonique-garagescore/" target="_blank">Zone Nord-Est cliquez ici</a></li>
+        <li class="gs-list-item"><a class="txt-blue" href="https://calendly.com/eguillou/presentation-telephonique-garagescore/" target="_blank">Zone Nord-Ouest cliquez ici</a></li>
+        <li class="gs-list-item"><a class="txt-blue" href="https://calendly.com/abiarneix/presentation-telephonique-garagescore/" target="_blank">Zone Sud-Est cliquez ici</a></li>
+        <li class="gs-list-item"><a class="txt-blue" href="https://calendly.com/moyakouakoukan/presentation-telephonique-garagescore/" target="_blank">Zone Sud-Ouest cliquez ici</a></li>
+      </ul>
+    </div>
+  {% endif %}
+  <div style="padding-bottom: 12px; padding-top: 25px">
+    <p class="txt-black bold-txt">RÉCAPITULATIF DE VOTRE INSCRIPTION :</p>
+    <p style="Margin: 0;margin-top: 5px;color: #000000;font-size: 14px;">
+      Date de démarrage : {{ formatDates(now, 'DD/MM/YYYY') }}
+    </p>
+  </div>
+
+  <div>
+    <p class="txt-blue bold-txt">Abonnements (prix HT mensuel par établissement) :</p>
+  </div>
+  {% include "./components/services.nunjucks" %}
+  {% if not config.hideSubscriptionMessageOnSummaryEmail %}
+    <div>
+      <p style="font-style: italic;"> Coût par client sondé: {{ config.otherPlans.perDataPrice | striptags}} </p>
+      <p style="font-style: italic;"> Formation et paramétrage: {{ config.otherPlans.setupPrice | striptags }} </p>
+    </div>
+    <br/>
+  {% endif %}
+  {% if config.withSecondaryMakes %}
+    <div style="padding-top: 8px;padding-bottom: 24px;width:100%;">
+      <table style="width:100%;">
+        <tr class="price-row">
+          <td class="header-cell"><p>Abonnements</p></td>
+          <td class="header-cell"><p>Prix public</p></td>
+          <td class="header-cell"><p>Remise</p></td>
+          <td class="header-cell"><p>Prix final</p></td>
+        </tr>
+        <tr class="price-row">
+          <td class="price-cell"><p>Etablissement annexe</p></td>
+          <td class="price-cell center-cell"><p>29 €</p></td>
+          <td class="price-cell center-cell"><p>0%</p></td>
+          <td class="price-cell center-cell"><p>29 €</p></td>
+        </tr>
+        <tr class="price-row">
+          <td colspan="2"></td>
+          <td class="price-cell center-cell grey-cell no-dashed">
+            <p class="bold-txt">
+              TOTAL HT
+            </p>
+          </td>
+          <td class="price-cell center-cell grey-cell no-dashed">
+            <p style="font-size: 17px;">29 €</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+  {% endif %}
+  <div>
+    <p>
+      <span class="txt-blue bold-txt"> {{ config.conditions.title }}</span>
+    </p>
+    <div class="gs-list-container">
+      <ul>
+        {% for text in config.conditions.text %}
+          <li class="gs-list-item">
+            <p>{{ text }}</p>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div style="text-align: center;padding-top: 6px;padding-bottom: 14px;">
+    {% set logo = getLogo(config) %}
+    {% if logo %}
+      <img src="{{ lib.client.appUrl() }}/public/subscription-form/dist/{{ logo }}" style="border: 0;width: 120px;">
+    {% endif %}
+  </div>
+  <div>
+    {% if not config.withDealer %}
+      <p class="txt-blue bold-txt">
+        {% if garages.length > 1 %}
+          Vos {{ garages.length }} établissements
+        {% else %}
+          Votre établissement
+        {% endif %}
+        ({{ totalPrimary }} marques{% if totalSecondary > 0%} principales / {{ totalSecondary }}  marques secondaires{% endif %}) :
+      </p>
+    {% endif %}
+  </div>
+
+  {% for i in range(0, garages.length) %}
+    {% if config.withDealer %}
+      <p class="txt-blue bold-txt">
+        Garage {{ i + 1 }}
+      </p>
+    {% endif %}
+    <div style="padding-bottom: 9px;">
+      <p class="line-spacer">
+        {{ garages[i].name }} ({{ garages[i].siret }})
+      </p>
+      <div style="margin-left: 50px;">
+        <p class="line-spacer">
+          Adresse et Code Postal : {{ garages[i].address }} {{ garages[i].postCode }}
+        </p>
+        {% if garages[i].dms and garages[i].dms.length > 0%}
+          <p class="line-spacer">
+            DMS : {{ garages[i].dms }}
+          </p>
+        {% endif %}
+        {% if garages[i].primaryMake and garages[i].primaryMake.length > 0%}
+          <p class="line-spacer">
+            Marque principale : {{ garages[i].primaryMake }}
+          </p>
+        {% endif %}
+        {% if garages[i].secondaryMakes and garages[i].secondaryMakes.length > 0%}
+          <p class="line-spacer">
+            Marques secondaires :
+            {{ garages[i].secondaryMakes.join(', ') }}
+          </p>
+        {% endif %}
+        {% if garages[i].dealer %}
+          <p class="line-spacer">Distributeur : {{ garages[i].dealer }}</p>
+        {% endif %}
+        {% if invoice %}
+          <p class="line-spacer">
+            Facturation :
+            {% if invoice.type != 'customized'  %}
+              {{ frInvoice[invoice.type] }}
+            {% else %}
+              {{ getGroup(invoice.groups, garages[i].name) }}
+            {% endif %}
+          </p>
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+
+  <div>
+    <p class="txt-blue bold-txt">Vos coordonnées :</p>
+  </div>
+
+  <div>
+    <p>Nom: {{ user.name }}</p>
+    <p>Prénom : {{ user.firstName }}</p>
+    <p>Email : {{ user.email }}</p>
+    <p>Téléphone : {{ user.phoneNumber }}</p>
+    {% if config.config.contacts.role %}<p>Fonction : {{ user.occupation }}</p>{% endif %}
+    {% if config.contacts.groupeName %}<p>Groupe : {{ user.group }}</p>{% endif %}
+    {% if user.phoneNumberTechnicalManager %}<p>N° resp. technique : {{ user.phoneNumberTechnicalManager }}</p>{% endif %}
+    {% if user.phoneNumberBillingManager  %}<p>N° resp. facturation : {{ user.phoneNumberBillingManager }}</p>{% endif %}
+    {% if user.sponsor %}<p>Email parrain : {{ user.sponsor }}</p>{% endif %}
+  </div>
+
+
+  {% include "./components/signature.nunjucks" %}
+
+{%- endblock -%}

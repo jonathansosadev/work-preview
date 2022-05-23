@@ -1,0 +1,81 @@
+{% extends "../common/layouts/darkbo.nunjucks" %} {% block css %}
+<style type="text/css">
+.option-emptyWord {
+  margin-bottom: 10px;
+  padding: 2px 5px;
+  float: none;
+}
+</style>
+{% endblock %} {% block page %}{% raw %}
+<div class="page-header">
+  <h1>Mots vides (suppression des mots vides de sens dans l'interface opinion)</h1>
+</div>
+<div class="col-md-12" id="app">
+  <div class="row">
+    <u class="col-md-12">Instructions</u>
+    <p class="col-md-12">Insérer un mot par ligne.</p>
+    <div class="col-md-12">
+    </div>
+  </div>
+  <br/><br/>
+  <div class="row">
+    <ul class="col-md-12">
+      <li v-for="(emptyWord, i) in emptyWords" class="row option-emptyWord">
+        <input type="text" size="100" v-model="emptyWords[i]" v-on:change="queueChange">
+        <span v-on:click="removeEmptyWord(i)" style="cursor:pointer" >X</span>
+      </li>
+    </ul>
+  </div>
+  <div class="row">
+      <br/><br/>
+    <button class="btn btn-success" v-on:click="addemptyWord">Ajouter un mot</button>
+  </div>
+</div>
+{% endraw %}{% endblock %} {% block scripts %}
+
+<script type="text/javascript">
+  var emptyWords = {{ emptyWords|safe }};
+  document.addEventListener("DOMContentLoaded", function () {
+
+    new Vue({
+      el: '#app',
+      data: { emptyWords: emptyWords, saveTimeout: null },
+      created: function () { },
+      methods: {
+        addemptyWord: function () {
+          this.emptyWords.push('');
+        },
+        removeEmptyWord: function (i) {
+          this.emptyWords.splice(i, 1);
+          this.queueChange();
+        },
+        save: function () {
+          var url = '{{ lib.client.url.getShortUrl('ADMIN_APPLICATION_EMPTYWORDS_SAVE') }}';
+          var data = { emptyWords: this.emptyWords };
+          gsTools.postRequest(url, data, function (err, result) {
+            if (err || result.status == 'ko') {
+              this.error = err || result.error;
+              return;
+            }
+          }.bind(this));
+        },
+        // ask for an auto save, but we wait some ms before saving in case another change is made
+        queueChange: function () {
+          if (this.saveTimeout) {
+            clearTimeout(this.saveTimeout);
+          }
+          this.saveTimeout = setTimeout(this.save.bind(this), 300);
+        }
+      }
+    });
+
+
+
+
+
+
+  });
+
+</script>
+
+{% endblock %}

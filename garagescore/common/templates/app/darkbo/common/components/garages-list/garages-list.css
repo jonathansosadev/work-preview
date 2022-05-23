@@ -1,0 +1,240 @@
+.gs-garages-list-wrapper {
+  padding: 20px 30px;
+  border: 1px solid #555555;
+  background: #393939;
+  margin: 20px 0;
+  line-height: 32px;
+  color: #EEEEEE;
+}
+
+.gs-garages-list-wrapper div {
+  overflow: visible;
+}
+
+/*
+
+ */
+.gs-garages-list-wrapper .gs-garages-list-title {
+  margin: 0 0 15px 0;
+}
+
+.gs-garages-list-wrapper .gs-garages-list-visible {
+  visibility: visible;
+  opacity: 1;
+  height: auto;
+  overflow: visible;
+  transition: all 1s;
+}
+
+.gs-garages-list-wrapper .gs-garages-list-hidden {
+  visibility: hidden;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: all 0.5s;
+  padding: 0;
+  margin: 0;
+}
+
+.gs-garages-list-wrapper-simple {
+  border: none;
+  padding: 0;
+  background: transparent;
+}
+
+.gs-garages-list-wrapper .gs-garages-list-form-group {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.gs-garages-list-wrapper .gs-garages-list-form .gs-garages-list-filters .gs-garages-list-filters-content {
+  height: 0;
+  overflow: hidden;
+}
+
+.gs-garages-list-wrapper .gs-garages-list-form .gs-garages-list-schemas .gs-garages-list-schemas-content {
+  height: 0;
+  overflow: hidden;
+}
+
+.gs-garages-list-wrapper .gs-garages-list-form-group .gs-garages-list-label-above-input {
+  font-weight: 300;
+  margin: 0;
+  padding: 0 0 0 10px;
+  line-height: normal;
+  font-size: 13px;
+  font-style: italic;
+  color: #CCCCCC;
+}
+
+.gs-garages-list-wrapper .gs-garages-list-input {
+  border-radius: 2px;
+  background: #454545;
+  border: 1px solid #666;
+  color: white;
+  width: 100%;
+}
+
+.gs-garages-list-wrapper .gs-garages-list-input::placeholder {
+  font-style: italic;
+}
+
+.gs-garages-list-wrapper .gs-garages-list-checkbox {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.gs-garages-list-wrapper .gs-garages-list-checkbox .gs-garages-list-checkbox-inner  {
+  padding: 0;
+}
+
+.gs-garages-list-wrapper .gs-garages-list-checkbox .gs-garages-list-checkbox-inner .gs-garages-list-checkbox-input {
+  display: inline-block;
+  margin: 0;
+  vertical-align: middle;
+  position: static;
+}
+
+.gs-garages-list-wrapper .gs-garages-list-checkbox .gs-garages-list-checkbox-inner .gs-garages-list-checkbox-text {
+  display: inline-block;
+  margin: 0;
+  vertical-align: middle;
+  font-weight: 300;
+  font-size: 13px;
+  color: #DEDEDE;
+}
+
+.gs-garages-list-wrapper .gs-garages-list-advanced-onoff {
+  width: auto;
+}
+
+.gs-garages-list-wrapper  .gs-garages-list-collapse-title {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.gs-garages-list-wrapper  .gs-garages-list-collapse-title .gs-garages-list-collapse-text {
+  color: #EEEEEE;
+}
+
+.gs-garages-list-wrapper  .gs-garages-list-collapse-title .gs-garages-list-collapse-details {
+  font-size: 12px;
+  color: #AAAAAA;
+  font-style: italic;
+}
+
+.gs-garages-list-wrapper  .gs-garages-list-collapse-title .gs-garages-list-collapse-caret {
+  font-size: 12px;
+  color: #AAAAAA;
+  font-style: italic;
+}
+
+.gs-garages-list-wrapper fieldset {
+  border: 1px solid #545454;
+  padding: 0px 20px;
+  margin: 0;
+}
+
+.gs-garages-list-wrapper fieldset legend {
+  color: #BBB;
+  font-size: 16px;
+  border: none;
+  width: auto;
+  padding: 0 10px;
+  margin: 0;
+}
+
+.gs-garages-list-wrapper .gs-garages-list-last-fieldset {
+  margin: 20px 0 0 0;
+}
+
+.gs-garages-list-wrapper .gs-garages-list-actions {
+  color: #EEEEEE;
+}
+
+.gs-garages-list-wrapper .gs-garages-list-actions .gs-garages-list-actions-resume {
+  border-bottom: 1px solid #444;
+  line-height: 1.7;
+  font-size: 13px;
+  padding: 10px 0 15px 0;
+  margin: 0 0 10px 0;
+  color: #DEDEDE;
+  font-style: italic;
+  text-indent: 20px;
+}
+
+.gs-garages-list-wrapper .gs-garages-list-highlight {
+  color: #219ab5;
+}
+
+.gs-garages-list-wrapper .gs-garages-btn-primary {
+  background: #219ab5;
+  border: none;
+  transition: all 0.5s;
+}
+
+.gs-garages-list-wrapper .gs-garages-btn-primary:hover {
+  background: #286090;
+  transition: all 0.5s;
+}
+
+.gs-garages-list-wrapper .gs-garages-list-filters .gs-garages-list-filters-mode-wrapper {
+  border-bottom: 1px solid #444444;
+  padding: 0 0 5px 0;
+  margin: 0 0 5px 0;
+}
+
+.gs-garages-list-wrapper .gs-garages-list-filters-content-inner, .gs-garages-list-wrapper .gs-garages-list-schemas-content-inner {
+  padding: 5px 10px;
+}
+
+.gs-garages-list-suggestions-menu {
+  background: #555555;
+  border: none;
+}
+
+.gs-garages-list-suggestions-menu .autocomplete-suggestion {
+  color: #CCCCCC;
+  font-size: 13px;
+  line-height: 1.7;
+  font-style: italic;
+  background: transparent;
+}
+
+.gs-garages-list-suggestions-menu .autocomplete-suggestion.selected {
+  color: #CCCCCC;
+  font-size: 13px;
+  line-height: 1.7;
+  font-style: italic;
+  background: transparent;
+}
+
+.gs-garages-list-suggestions-menu .autocomplete-suggestion:hover {
+  color: #CCCCCC;
+  font-size: 13px;
+  line-height: 1.7;
+  font-style: italic;
+  background: #505050;
+  cursor: pointer;
+}
+
+.gs-garages-list-suggestions-menu::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 10px;
+  background-color: #777777;
+}
+
+.gs-garages-list-suggestions-menu::-webkit-scrollbar
+{
+  width: 10px;
+  background-color: transparent;
+}
+
+.gs-garages-list-suggestions-menu::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #555;
+}

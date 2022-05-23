@@ -1,0 +1,251 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+<style type="text/css">
+.selected-garage {
+  background-color: white;
+  color: red;
+  margin: 0 0 10px 0;
+  padding: 20px;
+}
+</style>
+{% endblock %}
+{% block page %}
+<div class="page-header" style="margin-bottom: 0">
+  <h1>Envoi d'une enquête de test</h1>
+</div>
+<div class="col-md-12" id="app">
+  <div class="row">
+    <h4>A savoir :</h4>
+    <pre class="col-md-12">- Attendre le mail avant de cliquer de nouveau sur le bouton 'Envoyer'.
+- <span style="color: red">Attention</span>, le garage doit avoir un parser (sinon ça ne marchera pas) mais le parser utilisé au final sera `Generic/csv-ddmmyyyy`
+- Changer d'email régulièrement, sinon le contact sera bloqué.</pre>
+  </div>
+  <form  class="form-horizontal" id="form">
+    <div class="form-group">
+      <label class="col-sm-2" for="garageId">Garage:</label>
+      <div class="col-sm-10">
+        <select class="form-control" id="garageId" v-model="garageId">
+          <option value="577a30d774616c1a0056c263">Concession Auto FR</option>
+          <option value="5c0e725a3ce3a100149dfcd0">Concession Moto FR</option>
+          <option value="5bd0c7ab34f3e7001421c563">Contrôle technique FR</option>
+          <option value="5ca1d4b04a7aa10015fc9eba">Concession Auto ES</option>
+          <option value="5ca1d5854a7aa10015fc9ec7">Concession Moto ES</option>
+          <option value="5ca1d8504a7aa10015fc9efb">Contrôle technique ES</option>
+          <option value="5d66e1f030b83300156b5701">Concession Auto CAT</option>
+          <option value="5d66e28a30b83300156b5703">Concession Moto CAT</option>
+          <option value="5d66e28a30b83300156b5702">Contrôle technique CAT</option>
+          <option value="5cdd5cac3d5f8600156bfe84">Concession Auto EN</option>
+          <option value="5cdd5dda3d5f8600156bffac">Concession Moto EN</option>
+          <option value="5cdd5f5c3d5f8600156c0046">Contrôle technique EN</option>
+          <option value="5e18819b73cd42001513969e">Concession Auto BE (Français)</option>
+          <option value="5d8a145816d99e001570f34c">Concession Moto BE (Français)</option>
+          <option value="5d88c2581614fb0015419a64">Contrôle technique BE (Français)</option>
+          <option value="5d8a141616d99e001570f32c">Concession Auto BE (Néérlandais)</option>
+          <option value="5e188bd973cd420015139911">Concession Moto BE (Néérlandais)</option>
+          <option value="5e18901473cd420015139a3a">Contrôle technique BE (Néérlandais)</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2" for="model">Type d'enquête:</label>
+      <div class="col-sm-10">
+        <select name="dataType" id="dataType" class="form-control" v-model="dataType" v-if="garageId === '5bd0c7ab34f3e7001421c563'">
+          <option value="VehicleInspections">Contrôle technique</option>
+        </select>
+        <select name="dataType" id="dataType" class="form-control" v-model="dataType" v-else>
+          <option value="Maintenances">APV</option>
+          <option value="NewVehicleSales">VN</option>
+          <option value="UsedVehicleSales">VO</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2" for="gender">Titre:</label>
+      <div class="col-sm-10">
+        <select class="form-control" id="gender" v-model="gender">
+          <option value="Mr">Mr</option>
+          <option value="Mme">Mme</option>
+          <option value="Mlle">Mlle</option>
+          <option value="Mlle">Mlle</option>
+          <option value="Monsieur et Madame">Monsieur et Madame</option>
+          <option value="Entreprise">Entreprise</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2" for="fullName">Nom Complet:</label>
+      <div class="col-sm-10"><input type="text" class="form-control" id="fullName" v-model="fullName"></div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2" for="firstName">Prénom:</label>
+      <div class="col-sm-10"><input type="text" class="form-control" id="firstName" v-model="firstName"></div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2" for="lastName">Nom:</label>
+      <div class="col-sm-10"><input type="text" class="form-control" id="lastName" v-model="lastName"></div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2" for="email">Email:</label>
+      <div class="col-sm-10"><input type="text" class="form-control" id="email" v-model="email"></div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2" for="email">Téléphone portable:</label>
+      <div class="col-sm-10"><input type="text" class="form-control" id="mobilePhone" v-model="mobilePhone"></div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2" for="streetAddress">rue:</label>
+      <div class="col-sm-10"><input type="text" class="form-control" id="streetAddress" v-model="streetAddress"></div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2" for="postCode">Code postal:</label>
+      <div class="col-sm-10"><input type="text" class="form-control" id="postCode" v-model="postCode"></div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2" for="city">Ville:</label>
+      <div class="col-sm-10"><input type="text" class="form-control" id="city" v-model="city"></div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2" for="model">Marque:</label>
+      <div class="col-sm-10">
+        <select name="vehicleMake" id="vehicleMake" class="form-control" v-model="vehicleMake">
+        {% for k,v in availableBrands %}
+          <option value="{{ k }}">{{ k }}</option>
+        {% endfor %}
+      </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2" for="model">Modèle:</label>
+      <div class="col-sm-10"><input type="text" class="form-control" id="model" v-model="model"></div>
+    </div>
+    <div class="form-group"  v-if="!loading">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default" @click="runImport">Envoyer</button>
+      </div>
+      </div>
+      <div class="form-group"  v-if="loading">
+         <div class="col-sm-offset-2 col-sm-10">Merci de patienter...</div>
+      </div>
+  </form>
+
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+
+{% include "../common/components/_auto-complete/auto-complete.nunjucks" %}
+{% include "../common/components/garages-list/garages-list.component.nunjucks" %}
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function() {
+    var runImport = function(event){
+      event.preventDefault();
+      try{
+        if(this.loading) return;
+        var garageId = this.garageId;
+        if(!garageId) return;
+        var gender = this.gender;
+        if(!gender) return;
+        var fullName = this.fullName;
+        if(!fullName) return;
+        var email = this.email;
+        var mobilePhone = this.mobilePhone;
+        if(!email && !mobilePhone) return;
+        var city = this.city;
+        if(!city) return;
+        var vehicleMake = this.vehicleMake;
+        if(!vehicleMake) return;
+        var model = this.model;
+        if(!model) return;
+        var dataType = this.dataType;
+        if(!dataType) return;
+
+        this.loading = true;
+        this.error_msg = null;
+        var request = new XMLHttpRequest();
+        var data = {
+          city: city,
+          streetAddress: this.streetAddress,
+          postCode: this.postCode,
+          vehicleMake: vehicleMake,
+          model: model,
+          email: email,
+          fullName: fullName,
+          firstName: this.firstName,
+          lastName: this.lastName,
+          gender: gender,
+          mobilePhone: mobilePhone
+        };
+        var url = '{{ lib.client.url.getShortUrl('ADMIN_DATA_FILE_IMPORTER_FROM_STRING') }}'  + encodeURIComponent(garageId)  + '/' + encodeURIComponent(dataType);
+        request.open('POST', url, true);
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        this.loading = true;
+        request.send(JSON.stringify(data));
+        request.onload = function() {
+          this.loading = false;
+          if (request.status !== 200 && request.status !== 304){
+            alert("Erreur sur le serveur");
+          } else {
+            var res = JSON.parse(request.responseText);
+            if(!res.status){
+              alert('Erreur sur le serveur');
+            }else if(res.status === 'error'){
+              alert(res.message);
+            }else{
+              this.import_done = true;
+              console.log(res.details);
+            }
+          }
+        }.bind(this);
+      }catch(e){
+        alert(e);
+      }
+    };
+
+    var MAINTENANCES = [];
+    var randomLetter = function() { return String.fromCharCode(65 + Math.floor(Math.random() * 26)) };
+    var randomLowerLetter = function() { return String.fromCharCode(97 + Math.floor(Math.random() * 26)) };
+    var randomModel = () => randomLetter() + randomLetter() + randomLetter();
+    var randomName = () => randomLetter() + randomLowerLetter() + randomLowerLetter() + randomLowerLetter() + (Math.random()>0.5?'':randomLowerLetter()) + (Math.random()>0.7?'':randomLowerLetter());
+    var firstName = randomName();
+    var lastName = randomName();
+    var data = {
+      selectedGarage: '',
+      garageId: '577a30d774616c1a0056c263',
+      fullName: firstName + ' ' + lastName,
+      firstName: firstName,
+      lastName: lastName,
+      gender: 'Mr',
+      email: null,
+      mobilePhone: null,
+      city: 'Toulon',
+      postCode: '83200',
+      streetAddress: 'ketanou',
+      vehicleMake: '{{randomMake}}',
+      model: randomModel(),
+      dataType: 'Maintenances',
+      loading: false,
+      import_done: false,
+      error_msg: null,
+      results: null,
+      importDetails: null
+    };
+    new Vue({
+      el: '#app',
+      data: data,
+      methods: {
+        runImport: runImport
+      },
+      watch: {
+        garageId(value) {
+          if (value === '5bd0c7ab34f3e7001421c563') this.dataType = 'VehicleInspections';
+          else this.dataType = 'Maintenances';
+        }
+      }
+    });
+  });
+</script>
+
+{% endblock %}

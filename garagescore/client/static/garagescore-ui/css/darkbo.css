@@ -1,0 +1,1109 @@
+/***********Thypography********/
+.darkbo html, html.darkbo { font :   62.5% "Roboto Regular";}
+.darkbo h1, h1.darkbo, .darkbo h2, h2.darkbo, .darkbo h3, h3.darkbo, .darkbo h4, h4.darkbo, .darkbo h5, h5.darkbo, .darkbo h6, h6.darkbo, .darkbo p, p.darkbo, .darkbo a, a.darkbo, .darkbo label, label.darkbo, .darkbo span, span.darkbo, .darkbo small, small.darkbo {font-family: "Roboto Regular" !important;}
+.darkbo body, body.darkbo { font : 1.4rem "Roboto Regular"; } /* =14px */
+.darkbo body {
+    background: #000000; /* Old browsers */
+    background: -moz-linear-gradient(top, #000000 0%, #414968 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #000000 0%,#414968 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #000000 0%,#414968 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#414968',GradientType=0 ); /* IE6-9 */
+    background-repeat:no-repeat;
+    min-height: 100vh;
+    background-size:100% auto;
+}
+.darkbo .form-control, .form-control.darkbo {
+	background-image : linear-gradient(90deg, #272B42, #414968);
+	color :#FFF;
+	font :  1em "Roboto Regular";
+	border : 2px solid #272B42;
+    -moz-border-radius : 5px;
+	-webkit-border-radius : 5px;
+	-o-border-radius : 5px;
+}
+.darkbo .input-group-addon, .input-group-addon.darkbo {
+	padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #FFF;
+    text-align: center;
+    background-image : linear-gradient(90deg, #414968, #272B42);
+    border : 2px solid #272B42;
+    border-radius: 4px 0 0 4px;
+}
+.darkbo .form-control:focus, .form-control.darkbo:focus {
+	background-image: linear-gradient(0deg, #FFF, #FFF);
+    color: #A1A9BF;
+}
+.darkbo select:focus {
+    background-image : linear-gradient(90deg, #272B42, #414968)!important;
+    color: #FFF !important;
+}
+.darkbo input:focus::-webkit-input-placeholder {
+    color : #A1A9BF !important;
+}
+.darkbo input:focus:-moz-placeholder {
+    color : #A1A9BF !important;  
+}
+.darkbo input:focus::-moz-placeholder {
+    color : #A1A9BF !important;  
+} 
+.darkbo input:focus:-ms-input-placeholder {  
+    color : #A1A9BF !important;  
+}
+.darkbo input::-webkit-input-placeholder {
+    color : white !important;
+}
+.darkbo input:-moz-placeholder {
+    color : white !important;  
+}
+.darkbo input::-moz-placeholder {
+    color : white !important;  
+} 
+.darkbo input:-ms-input-placeholder {  
+    color : white !important;  
+}
+#focusedInput {
+    outline: 0;
+    border-color: rgba(82,168,236,.8);
+    box-shadow: 0 0 8px rgba(82,168,236,.6);
+    background-image : linear-gradient(90deg, #FFF, #FFF)!important;
+    color: #A1A9BF;
+}
+.darkbo .form-group.list, .form-group .list.darkbo {
+	padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #FFF;
+    text-align: left;
+    background-image : linear-gradient(90deg, #414968, #272B42);
+    border : 2px solid #414968;
+    border-radius: 4px;
+}
+.darkbo .form-group.list .btn-primary-3d, .form-group .list.darkbo .btn-primary-3d {
+    display: block;
+}
+.darkbo .form-horizontal.scroll, .form-horizontal.darkbo.scroll {
+    height: 200px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+.darkbo .form-horizontal.scroll a:hover, .form-horizontal.darkbo.scroll a:hover {
+    text-decoration: none;
+    color: #488abc;
+}
+.darkbo .box .form-control, .box .form-control.darkbo {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+.darkbo .box .form-control + label, .box .form-control.darkbo + label {
+    max-width: 80%;
+    font-size: 1.25rem;
+    font-weight: 700;
+    font :  1em "Roboto Regular";
+    color: #414968;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+}
+.darkbo .box .form-control:focus, .box .form-control.darkbo:focus + label,
+.darkbo .box .form-control.has-focus + label, .box .form-control.darkbo.has-focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+.darkbo .form-control + label svg, .box .form-control.darkbo + label svg {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    fill: currentColor;
+    margin-top: -0.25em;
+    margin-right: 0.25em;
+}
+.darkbo .box .form-control:focus + label, .box .form-control.darkbo:focus + label
+.darkbo .box .form-control.has-focus + label, .box .form-control.darkbo.has-focus + label
+.darkbo .box .form-control + label:hover, .box .form-control.darkbo + label:hover {
+    color: #414968;
+}
+
+/*********************Bouttons**********************/
+
+.darkbo .btn, .btn.darkbo {
+	cursor: pointer;
+	letter-spacing: 1px;
+	font-weight: 400;
+	position: relative;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+.darkbo .btn-3d, .btn-3d.darkbo {
+	outline: 1px solid transparent;
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+.darkbo .btn-3d:active, .btn-3d.darkbo:active {
+	background: #219ab5;
+}
+.darkbo .btn-3d-1, .btn-3d-1.darkbo {
+	background: #CCC;
+	color: #FFF;
+}
+.darkbo .btn-3d-1:active, .btn-3d-1.darkbo:active {
+	background: #fff;
+}
+.darkbo .btn-3d-1:after, .btn-3d-1.darkbo:after, 
+.darkbo .btn-3d-1:before, .btn-3d-1.darkbo:before {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+}
+.darkbo .btn-3d-1:after, .btn-3d-1.darkbo:after {
+	top: -100%;
+	background: #219ab5;
+	color: #FFF;
+    font :  1em "Roboto Regular";
+    line-height: 32px;
+    letter-spacing: 1px;
+    font-weight: 400;
+	content: 'Click !';
+    border-radius: 4px;
+	-webkit-transform-origin: 0% 100%;
+	-webkit-transform: rotateX(90deg);
+	-moz-transform-origin: 0% 100%;
+	-moz-transform: rotateX(90deg);
+	-ms-transform-origin: 0% 100%;
+	-ms-transform: rotateX(180deg);
+	transform-origin: 0% 100%;
+	transform: rotateX(90deg);
+}
+.darkbo .btn-3d-1.btn-primary-3d:hover, .btn-3d-1.btn-primary-3d.darkbo:hover {
+	background: #999;
+    color: #FFF;
+	-webkit-transform-origin: 50% 100%;
+	-webkit-transform: rotateX(-90deg) translateY(100%);
+	-moz-transform-origin: 50% 100%;
+	-moz-transform: rotateX(-90deg) translateY(100%);
+	-ms-transform-origin: 50% 100%;
+	-ms-transform: rotateX(-90deg) translateY(100%);
+	transform-origin: 50% 100%;
+	transform: rotateX(-90deg) translateY(100%);
+}
+.darkbo .btn-primary, .btn-primary.darkbo {
+	font :  1em "Roboto Regular";
+	color: #FFF;
+	background-color: #32c4c4;
+	border: 2px solid #32c4c4;
+    overflow: hidden;
+    position: relative;
+    transition-duration: 0.4s;
+}
+.darkbo .btn-primary:hover, .btn-primary.darkbo:hover {
+	background-color: #21a39f;
+	color: #FFF;
+	font :  1em "Roboto Regular";
+    border: 2px solid #21a39f;
+}
+.darkbo .btn-primary:after, .btn-primary.darkbo:after {
+	content: "";
+    background: #f1f1f1;
+    display: block;
+    position: absolute;
+    margin-left: -1.5em !important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s;
+}
+.darkbo .btn-primary:active:after, .btn-primary.darkbo:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+}
+.darkbo .btn-primary:focus, .btn-primary.darkbo:focus {
+	background-color: #32c4c4;
+	color: #FFF;
+}
+.darkbo .btn-info, .btn-info.darkbo {
+	font :  1em "Roboto Regular";
+	color: #FFF;
+	background-color: #219ab5;
+	border: solid 2px #219ab5;
+    transition-duration: 0.4s;
+}
+.darkbo .btn-info:hover, .btn-info.darkbo:hover {
+	background: rgba( 33, 154, 181, 0);
+	border: solid 2px #219ab5;
+	color: #219ab5;
+}
+.darkbo .btn-info:focus, .btn-info.darkbo:focus {
+	background-color: #219ab5;
+	border: solid 2px #219ab5;
+	color: #FFF;
+}
+.darkbo .btn-info:after, .btn-info.darkbo:after {
+    transition: all 0.8s;
+}
+.darkbo .btn-warning, .btn-warning.darkbo {
+	background: rgba( 164, 72, 82, 0);
+	color: #A44852;
+	border: solid 2px #A44852;
+    transition-duration: 0.4s;
+}
+.darkbo .btn-warning, .btn-warning.darkbo {
+  	font :  1em "Roboto Regular";
+  	display: inline-block;
+  	position: relative;
+}
+.darkbo .btn-warning:after, .btn-warning.darkbo:after {
+  	position: absolute;
+  	opacity: 0;
+  	top: 0;	
+    transition: all 0.8s;
+}
+.darkbo .btn-warning:hover, .btn-warning.darkbo:hover {
+	background: rgba( 164, 72, 82, 1);
+	border: solid 2px #A44852;
+}
+.darkbo .btn-warning:hover, .btn-warning.darkbo:hover {
+  	color: #FFF;
+}
+.darkbo .btn-warning:hover:after, .btn-warning.darkbo:hover:after {
+  	opacity: 1;
+  	right: 0;
+}
+.darkbo .btn-warning:focus, .btn-warning.darkbo:focus {
+	background: rgba( 164, 72, 82, 1);
+	border: solid 2px #A44852;
+	color: #FFF;
+}
+.darkbo .btn-warning:focus:active, .btn-warning.darkbo:focus:active {
+	background: rgba( 164, 72, 82, 1);
+	border: solid 2px #A44852;
+    color: #A44852;
+}
+.darkbo .btn-success, .btn-success.darkbo {
+	background: rgba( 13, 110, 178, 1);
+	font :  1em "Roboto Regular";
+	border: solid 2px #0d6eb2;
+    color: #FFF;
+    transition-duration: 0.4s;
+}
+.darkbo .btn-success:hover, .btn-success.darkbo:hover {
+	background: rgba( 13, 110, 178, 0);
+	border: solid 2px #0d6eb2;
+	color: #0d6eb2;
+}
+.darkbo .btn-success:focus:active, .btn-success.darkbo:focus:active {
+	background-color: #0d6eb2;
+	color: #FFF;
+}
+.darkbo .btn-success:focus, .btn-success.darkbo:focus {
+	background-color: #0d6eb2;
+	color: #FFF;
+}
+.darkbo .btn-danger, .btn-danger.darkbo {
+	font :  1em "Roboto Regular";
+	color: #FFF;
+	background-color: #D60000;
+	border : 2px solid #D60000;
+    overflow: hidden;
+    position: relative;
+    transition-duration: 0.4s;
+}
+.darkbo .btn-danger:hover, .btn-danger.darkbo:hover {
+	background-color: #A82720;
+	color: #FFF;
+	font :  1em "Roboto Regular";
+    border : 2px solid #A82720;
+}
+.darkbo .btn-danger:after, .btn-danger.darkbo:after {
+	content: "";
+    background: #f1f1f1;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -1.5em !important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s;
+}
+.darkbo .btn-danger:active:after, .btn-danger.darkbo:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s;
+}
+.darkbo .btn-danger:focus, .btn-danger.darkbo:focus {
+	background-color: #D60000;
+	color: #FFF;
+}
+.darkbo input[type="radio"], input[type="radio"].darkbo, .darkbo input[type="radio"]:after, input[type="radio"].darkbo:after {
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+   border-radius: 100%;
+}
+.darkbo .toggle, .toggle.darkbo {
+  float:left;
+  width: 20px;
+  height: 20px;
+  padding: 4px;
+    margin-right: 5px !important;
+  text-align: center;
+  background: #191919;
+  background: -webkit-linear-gradient(top, #414968 0%, #272b42 100%);
+  background: -moz-linear-gradient(top, #414968 0%, #272b42 100%);
+  background: -o-linear-gradient(top, #414968 0%, #272b42 100%);
+  background: -ms-linear-gradient(top, #414968 0%, #272b42 100%);
+  background: linear-gradient(top, #414968 0%, #272b42 100%);
+  -webkit-border-radius: 20%;
+  -moz-border-radius: 20%;
+  border-radius: 20%;
+  margin: auto 10px;
+  border: 1px solid #219ab5; 
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  outline:none;
+  box-shadow: 0px 0px 4px 4px rgba(33, 154, 181, 0.2);
+    
+}
+
+.darkbo .toggle:hover, .toggle.darkbo:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 4px 4px rgba(33, 154, 181, 0.3);
+}
+.darkbo .toggle:disabled, .toggle.darkbo:disabled {
+    box-shadow: 0px 0px 4px 4px rgba(33, 154, 181, 0.1);
+    cursor: not-allowed;
+    opacity: 0.9;
+}
+.darkbo .btn[disabled] {
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: .65;
+}
+.darkbo .toggle:checked, .toggle.darkbo:checked {
+    box-shadow: 0px 0px 4px 4px rgba(33, 154, 181, 0.4);
+}
+.darkbo .toggle:after, .toggle.darkbo:after {
+    content: '';
+    text-shadow: 0 -1px 0 #bfbfbf;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    float: left;
+    margin: auto;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+}
+
+.darkbo .toggle:checked:after, .toggle.darkbo:checked:after {
+    color: #85ada7;
+    text-shadow: 0 1px 0 #669991;
+    box-shadow: 0px 0px 4px 4px rgba(33, 154, 181, 0.2);
+    background: #FFF;
+    border: solid 1px #219ab5;
+}
+
+
+.darkbo .badge, .badge.darkbo {
+	background-color: #FFF !important;
+	color: #219ab5 !important;
+	font-weight: 600;
+}
+
+.darkbo select.form-control:focus option, select.form-control.darkbo:focus option {
+	color: #219ab5;
+	font :  1em "Roboto Regular";
+}
+.darkbo pre.pre-scrollable, pre.pre-scrollable.darkbo {
+	max-height: 200px;
+	color: #219ab5;
+    overflow: auto;
+    padding-bottom: 0;
+}
+.darkbo pre.pre-scrollable.pre-bg, pre.pre-scrollable.pre-bg.darkbo {
+    background-image : linear-gradient(90deg, #272B42, #414968);
+}
+.darkbo .pagination a, .pagination.darkbo a {
+	background-image : linear-gradient(90deg, #272B42, #414968);
+	margin: 2px;
+}
+.darkbo .nav-tabs, .nav-tabs.darkbo {
+	background-color: #000;
+	font :  1em "Roboto Regular";
+	line-height: 1;
+	border-bottom: 2px solid #FFF;
+    box-sizing: border-box;
+}
+.darkbo .dropdown-toggle, .dropdown-toggle.darkbo {
+	transition: all 0.4s;
+	color: #0d6eb2;
+	font :  1em "Roboto Regular";
+	line-height: 1.4;
+	font-weight: 800;
+	border: none;
+  	padding: 18px 10px;
+  	margin: 0 10px; 	
+}
+.darkbo .dropdown-toggle:hover, .dropdown-toggle.darkbo:hover {
+	background-color: #272b42;
+	color: #FFF;
+	border: none;
+	border-radius: 0px;
+	padding: 18px 10px;
+}
+.darkbo .dropdown-toggle:focus, .dropdown-toggle.darkbo:focus {
+	background-color: #FFF;
+	border: none;
+	border-radius: 0px;
+}
+.darkbo .dropdown-toggle:active, .dropdown-toggle.darkbo:active {
+	background-color: #219ab5;
+	border: none;
+	border-radius: 0px;
+}
+.darkbo .dropdown-toggle:focus:hover, .dropdown-toggle.darkbo:focus:hover {
+	color: #219ab5;
+	border: none;
+	border-radius: 0px;
+}
+.darkbo .dropdown-menu li a, .dropdown-menu.darkbo li a {
+	padding: 8px;
+	color: #0d6eb2;
+	font :  1em "Roboto Regular";
+	font-weight: 600;
+	border: none;
+}
+.darkbo .dropdown-menu li a:hover, .dropdown-menu.darkbo li a:hover {
+	color: #219ab5;
+}
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    z-index: 1;
+}
+.dropdown-menu a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown:hover .dropdown-menu {
+    display: block !important;
+}
+
+.dropdown input[type="checkbox"]:checked + ul {
+    display: block !important;
+}
+.darkbo [class="switch"]:not(:checked), .darkbo [class="switch"]:checked, [class="switch darkbo"]:not(:checked),
+[class="switch darkbo"]:checked {
+    position: absolute;
+    opacity: 0.01;
+}
+.darkbo [class="switch"]:not(:checked) + label, .darkbo [class="switch"]:checked + label, [class="switch darkbo"]:not(:checked) + label,
+[class="switch darkbo"]:checked + label {
+    position: relative;
+    padding-left: 4.5em;
+    cursor: pointer;
+    line-height: 2.5rem;
+}
+.darkbo [class="switch"]:not(:checked) + label:before, [class="switch darkbo"]:not(:checked) + label:before,
+.darkbo [class="switch"]:checked + label:before, [class="switch darkbo"]:checked + label:before,
+.darkbo [class="switch"]:not(:checked) + label:after, [class="switch darkbo"]:not(:checked) + label:after,
+.darkbo [class="switch"]:checked + label:after, [class="switch darkbo"]:checked + label:after {
+    content: '';
+    position: absolute;
+}
+.darkbo [class="switch"]:not(:checked) + label:before, [class="switch darkbo"]:not(:checked) + label:before,
+.darkbo [class="switch"]:checked + label:before, [class="switch darkbo"]:checked + label:before {
+    left: 0; top: -.1em;
+    width: 4em; height: 1.85em;
+    border-radius: 1em;
+    transition: background-color .2s;
+    background: -webkit-linear-gradient(top, #414968 0%, #272b42 100%);
+    background: -moz-linear-gradient(top, #414968 0%, #272b42 100%);
+    background: -o-linear-gradient(top, #414968 0%, #272b42 100%);
+    background: -ms-linear-gradient(top, #414968 0%, #272b42 100%);
+    background: linear-gradient(top, #414968 0%, #272b42 100%);
+}
+.darkbo [class="switch"]:not(:checked) + label:after, [class="switch darkbo"]:not(:checked) + label:after,
+.darkbo [class="switch"]:checked + label:after, [class="switch darkbo"]:checked + label:after {
+    width: 1.4em; height: 1.4em;
+    transition: all .2s;
+    border-radius: 50%;
+    background: #A44852;
+    top: .12em; left: .24em;
+}
+.darkbo [class="switch"]:checked + label:before, [class="switch darkbo"]:checked + label:before {
+    box-shadow: 0px 0px 2px 2px rgba(33, 154, 181, 0.4);
+}
+[class="switch"]:not(:checked) + label:before, [class="switch darkbo"]:not(:checked) + label:before {
+    box-shadow: 0px 0px 2px 2px rgba(164, 72, 82, 0.4);
+}
+.darkbo [class="switch"]:checked + label:after, [class="switch darkbo"]:checked + label:after {
+    background: #FFF;
+    left: 2.4em;
+}
+.darkbo [class="switch"]:checked + label .ui, [class="switch darkbo"]:checked + label .ui,
+.darkbo [class="switch"]:not(:checked) + label .ui:before, [class="switch darkbo"]:not(:checked) + label .ui:before,
+.darkbo [class="switch"]:checked + label .ui:after, [class="switch darkbo"]:checked + label .ui:after {
+    position: absolute;
+    left: .6em;
+    width: 6em;
+    border-radius: 1em;
+    font-size: .875em;
+    font-weight: bold;
+    transition: all .2s;
+}
+.darkbo [class="switch"]:not(:checked) + label .ui:before, [class="switch darkbo"]:not(:checked) + label .ui:before {
+    left: 2.35em;
+    top: .2em;
+    color: #FFF;
+}
+.darkbo [class="switch"]:checked + label .ui:after, [class="switch darkbo"]:checked + label .ui:after {
+    top: .2em;
+    left: .2em;
+    color: #FFF;
+    line-height: 1.5;
+}
+.darkbo [class="switch"]:focus + label:before, [class="switch darkbo"]:focus + label:before {
+    box-sizing: border-box;
+    margin-top: -1px;
+}
+.darkbo .form-inline .form-group, .form-inline.darkbo .form-group {
+	padding: 10px;
+}
+.darkbo .form-horizontal .form-group {
+    margin-right: 0;
+}
+.darkbo .input-group-addon.add, .input-group-addon.add.darkbo {
+    background-image : linear-gradient(90deg, #FFF, #FFF);
+    color: #A1A9BF;
+    border-radius: 20px 0 0 20px;
+    padding: 0 .5rem 0 1rem;
+    border-right: 2px;
+}
+.darkbo .form-inline .form-group .control-label {
+    margin-right: 10px;
+}
+.darkbo .input-group-addon.remove, .input-group-addon.remove.darkbo {
+    background-image : linear-gradient(90deg, #FFF, #FFF);
+    color: #414968;
+    border-radius: 0 20px 20px 0;
+    padding: .5rem 1rem 0.5rem 1rem;
+    border-left: 0px;
+    cursor: pointer;
+}
+.darkbo .form-control.add, .form-control.add.darkbo {
+    background-image : linear-gradient(90deg, #FFF, #FFF);
+    color: #A1A9BF;
+    border-radius: 0;
+    border-right: 0;
+    padding: 1rem 0 1rem 1rem;
+}
+.darkbo input.form-control.add:focus, input.form-control.add.darkbo:focus {
+	border: 2px solid #414968;
+    border-right: 0;
+}
+.darkbo .form-control.marques, .form-control.marques.darkbo {
+    border-radius: 20px 0 0 20px;   
+}
+.darkbo .social, .social.darkbo {
+    width: 100%;
+    height: auto;
+    padding: 1rem 0;
+}
+.darkbo .fa-twitter, .fa-twitter.darkbo {
+    color: #4099FF;
+}
+.darkbo .fa-facebook, .fa-facebook.darkbo {
+    color: #3B5998;
+}
+
+.darkbo .fa-youtube-play, .fa-youtube-play.darkbo {
+    color: #e52d27;
+}
+.darkbo .fa-rss, .fa-rss.darkbo {
+    color: #FF6600;
+}
+.darkbo .fa-linkedin, .fa-linkedin.darkbo {
+    color: #007bb6;
+}
+.darkbo .fa, .fa.darkbo {
+    opacity: 0.7;
+    transition: 1s;
+    -webkit-transition: 1s;
+}
+.darkbo .fa:hover, .fa.darkbo:hover{
+    opacity: 1;
+    transition: 1s;
+    -webkit-transition: 1s;
+}
+.darkbo .sticky, .sticky-social.darkbo {
+    right: 0;
+    position: fixed;
+    top: 45vh;
+    z-index: 1000;
+}
+.darkbo .sticky li, .sticky.darkbo li {
+    margin-bottom: 15px;
+}
+.darkbo .sticky a, .sticky.darkbo a {
+    color: #fff;
+    display: block;
+    position: relative;
+    text-align: center;
+    line-height: 45px;
+    width: 45px;
+    height: 45px;
+}
+.darkbo .sticky a span, .sticky.darkbo a span {
+    line-height: 18px;
+    left: 120px;
+    position: absolute;
+    text-align: left;
+    text-decoration: underline;
+    width: 350px;
+    height: 45px;
+    font-size: 14px;
+    padding: 5px 0 5px 15px;
+    transition: all .2s;
+    z-index: -1;
+}
+.darkbo .sticky ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.darkbo .sticky a:hover span, .sticky.darkbo a:hover span {
+    left: -345px;
+}
+.darkbo .sticky a[class="widget"], .sticky.darkbo a[class="widget"],
+.darkbo .sticky a[class="widget"]:hover, .sticky.darkbo a[class="widget"]:hover,
+.darkbo .sticky a[class="widget"] span, .sticky.darkbo a[class="widget"] span { 
+    background: #A44852;
+    border-radius: 5px 0 0 5px;
+}
+
+.darkbo .sticky a[class="certificat"], .sticky.darkbo a[class="certificat"],
+.darkbo .sticky a[class="certificat"]:hover, .sticky.darkbo a[class="certificat"]:hover,
+.darkbo .sticky a[class="certificat"] span, .sticky.darkbo a[class="certificat"] span { 
+    background: #A44852; 
+    border-radius: 5px 0 0 5px;
+}
+
+/* Effect 3 */
+.darkbo .icon .effet-1, .icon .effet-1.darkbo {
+    box-shadow: 0 0 0 2px #CCC;
+	-webkit-transition: color 0.1s;
+	-moz-transition: color 0.1s;
+	transition: color 0.1s;
+}
+
+.darkbo .icon .effet-1:after, .icon .effet-1.darkbo:after {
+	top: -2px;
+	left: -2px;
+	padding: 2px;
+	z-index: -1;
+	background: #ccc;
+	-webkit-transition: -webkit-transform 0.2s, opacity 0.3s;
+	-moz-transition: -moz-transform 0.2s, opacity 0.3s;
+	transition: transform 0.2s, opacity 0.3s;
+}
+.darkbo .icon-information i:before, .icon-information.darkbo i:before {
+	content: "\f129";
+}
+.darkbo .icon-branchement i:before, .icon-branchement.darkbo i:before {
+	content: "\f20e";
+}
+.darkbo .icon-parametrage i:before, .icon-parametrage.darkbo i:before {
+	content: "\f013";
+}
+.darkbo .icon-information i, .darkbo .icon-branchement i, .darkbo .icon-parametrage i, 
+.icon-information.darkbo i, .icon-branchement.darkbo i, .icon-parametrage.darkbo i {
+    padding: 1rem .7rem;
+}
+/*Icon*/
+
+.darkbo .icon-1 .effet-1, .icon-1 .effet-1.darkbo {
+	color: #999;
+}
+.darkbo .icon-1 .effet-1:hover, .icon-1 .effet-1.darkbo:hover {
+	color: #FFF;
+}
+.darkbo .icon-1 .effet-1:after, .icon-1 .effet-1.darkbo:after {
+	-webkit-transform: scale(1.3);
+	-moz-transform: scale(1.3);
+	-ms-transform: scale(1.3);
+	transform: scale(1.3);
+	opacity: 0;
+}
+
+.darkbo .icon-1 .effet-1:hover:after, .icon-1 .effet-1.darkbo:hover:after {
+	-webkit-transform: scale(.9);
+	-moz-transform: scale(.9);
+	-ms-transform: scale(.9);
+	transform: scale(.9);
+	opacity: 1;
+}
+.darkbo .effet-1, .effet-1.darkbo {
+	display: inline-block;
+	font-size: 25px;
+	cursor: pointer;
+	width: 45px;
+	height: 45px;
+	border-radius: 50%;
+	text-align: center;
+	position: relative;
+	z-index: 33;
+	color: green;
+    margin-right: 10px;
+}
+
+.darkbo .effet-1:after, .effet-1.darkbo:after {
+	pointer-events: none;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	content: '';
+	-webkit-box-sizing: content-box; 
+	-moz-box-sizing: content-box; 
+	box-sizing: content-box;
+}
+
+.darkbo .effet-1:before, .effet-1.darkbo:before {
+	speak: none;
+	font-size: 40px;
+	line-height: 22px;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	display: block;
+	-webkit-font-smoothing: antialiased;
+}
+.darkbo mark, mark.darkbo {
+    background-color: rgba(32, 154, 181, 0.3);
+}
+.darkbo strong, strong.darkbo {
+    font-weight: 900;
+}
+/* Acordeon styles */
+.darkbo .acordeon, .acordeon.darkbo {
+    position: relative;
+    margin-bottom: 1px;
+    width: 100%;
+    color: #414968;
+    overflow: hidden;
+}
+.darkbo .inp-acordeon, .inp-acordeon.darkbo {
+    position: absolute;
+    opacity: 0;
+    z-index: -1;
+}
+
+.darkbo .lab-acordeon, .lab-acordeon.darkbo {
+    position: relative;
+    display: block;
+    padding: 0 0 0 1em;
+    background: #FFF;
+    border-top: 5px solid #414968;
+    font-weight: bold;
+    line-height: 3;
+    cursor: pointer;
+    padding-right: 1rem;
+    margin: 0;
+}
+.darkbo .acordeon-content, .acordeon-content.darkbo {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    background-color: #eee;
+    color: #A1A9BF;
+    -webkit-transition: max-height 1s;
+    -o-transition: max-height 1s;
+    transition: max-height 1s;
+    -webkit-transition: opacity .7s;
+    -o-transition: opacity .7s;
+    transition: opacity .7s;
+   
+}
+.darkbo .acordeon-content p, .acordeon-content.darkbo p {
+    margin: 1em;
+}
+/* :checked */
+.darkbo .inp-acordeon:checked ~ .acordeon-content, .inp-acordeon.darkbo:checked ~ .acordeon-content  {
+    max-height: 30em;
+    overflow: auto;
+    opacity: 1;
+}
+/* Icon */
+.darkbo .lab-acordeon::after, .lab-acordeon.darkbo::after {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: block;
+    width: 3em;
+    height: 3em;
+    line-height: 3;
+    text-align: center;
+    -webkit-transition: all .5s;
+    -o-transition: all .5s;
+    transition: all .5s;
+}
+.darkbo .inp-acordeon[type=checkbox] + label::after, .inp-acordeon[type=checkbox].darkbo + label::after {
+    content: "+";
+}
+.darkbo .inp-acordeon[type=radio] + label::after, .inp-acordeon[type=radio].darkbo + label::after {
+    content: "\25BC";
+}
+.darkbo .inp-acordeon[type=checkbox]:checked + label::after, .inp-acordeon[type=checkbox].darkbo:checked + label::after {
+    transform: rotate(315deg);
+}
+.darkbo .inp-acordeon[type=radio]:checked + label::after, .inp-acordeon[type=radio].darkbo:checked + label::after {
+    transform: rotateX(180deg);
+}
+/************** MODAL/POPUP **************/
+.darkbo .overlay, .overlay.darkbo {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 100000;
+}
+.darkbo .overlay:target, .overlay.darkbo:target {
+    visibility: visible;
+    opacity: 1;
+}
+.darkbo .popup, .popup.darkbo {
+    margin: 70px auto;
+    padding: 20px;
+    border-radius: 5px;
+    background-image : linear-gradient(90deg, #272B42, #414968);
+    width: 40%;
+    position: relative;
+    transition: all .5s ease-in-out;
+}
+
+.darkbo .popup h2, .popup.darkbo h2 {
+    margin-top: 0;
+    color: #FFF;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    padding: 0;
+}
+.darkbo .popup .close, .popup.darkbo .close {
+    position: absolute;
+    top: 20px;
+    right: 2rem;
+    transition: all 200ms;
+    font-size: 3rem;
+    text-decoration: none;
+    color: #FFF;
+}
+.darkbo .popup .close:hover, .popup.darkbo .close.darkbo:hover {
+    color: #F1F1F1;
+}
+.darkbo .popup .content, .popup.darkbo .content.darkbo {
+    max-height: 30vh;
+    overflow: auto;
+    color: #FFF;
+    padding: 1rem;
+    border-top: 1pt solid #CCC;
+}
+.darkbo .action-block, .action-block.darkbo {
+    widows: 90%;
+    background: #FFF;
+    color: red;
+    border-radius: 5px;
+    padding: 2rem;
+    margin-top: 2rem;
+    text-align: right;
+}
+.darkbo .overlay:target .popup, .overlay.darkbo:target .popup.darkbo {
+  animation: popup 1s;
+}
+@keyframes popup {
+  0%{
+      transform: scale(1);
+      transform:  rotate(0deg) ;
+      opacity:0;
+      transform:  translate(-1500px,0px)  ;
+  }
+  50%{
+      transform: scale(1.4);
+      transform:  rotate(60deg) ;
+      opacity:1;
+      transform:  translate(30px,0px)  ;
+  }
+  60%{
+      transform: scale(1.1);
+      transform:  rotate(40deg) ;
+      transform:  translate(-10px,0px)  ;
+  }
+  70%{
+      transform: scale(1.2);
+      transform:  rotate(54deg) ;
+      opacity:1;
+      transform:  translate(0px,0px)  ;
+  }
+  80%{
+      transform: scale(1);
+      transform:  rotate(42deg) ;
+  }
+  90%{
+      transform: scale(1.1);
+      transform:  rotate(46deg) ;
+  }
+  100%{
+      transform: scale(1);
+      transform:  rotate(0deg) ;
+  }
+}
+/*******ADDDS**********/
+
+
+#content {
+    padding: 2rem;
+    background: #FFF;
+    color: #A1A9BF !important;
+    border-radius: 5px;
+}
+.darkbo .page-header + div > div > h3 {
+    color: #CCC;
+    padding-left: 2rem;
+    font-weight: 600;
+}
+.gs-darkbo-billing-main-wrapper {
+    padding: 2rem;
+    background: #FFF;
+    height: auto;
+    margin-top: 5vh;
+    border-radius: 5px;  
+}
+.darkbo .page-header + div, .darkbo .page-header + .instructions + div {
+    padding: 2rem;
+    background: #FFF;
+    color: #A1A9BF !important;
+    border-radius: 5px;
+}
+.darkbo .table-responsive {
+    padding: 4rem;
+    background: #FFF;
+    color: #A1A9BF !important;
+    border-radius: 5px;
+}
+#app > .col-md-9 {
+    background: #FFF;
+    color: #A1A9BF !important;
+    border-radius: 5px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+.gs-darkbo-billing-top-show-nonbillable {
+    padding-left: 0 !important;
+}
+.tab-selector + div {
+    background: #FFF;
+    border-radius: 5px; 
+    padding: 2rem; 
+    margin-bottom: 2rem;
+    color: #A1A9BF !important;
+}
+.tab-selector + div label {
+    color: #A1A9BF;
+}
+.darkbo .form-group input, .darkbo select, .darkbo .form-control input, .darkbo textarea {
+	background-image : linear-gradient(90deg, #272B42, #414968) !important;
+	color : #FFF !important;
+	font :  1em "Roboto Regular";
+	border : 2px solid #272B42;
+    -moz-border-radius : 5px ;
+	-webkit-border-radius : 5px ;
+	-o-border-radius : 5px;;
+}
+.darkbo .form-group input:focus, .darkbo textarea:focus {
+	background-image: linear-gradient(0deg, #eee, #eee) !important;
+    color: #A1A9BF !important;
+}
+.darkbo #garage-edit > .toprow {
+    color: #FFF;
+}
+.darkbo #garage-edit > .toprow input, .darkbo #garage-edit > .toprow select, .darkbo .page-header select, darkbo .page-header input {
+    background-image: linear-gradient(0deg, #eee, #eee) !important;
+    color: #A1A9BF !important;   
+}
+.darkbo .table{
+    border-collapse:collapse;
+    width:100%;
+    border:2px solid #414968;
+}
+.darkbo .table thead{
+    background: #414968;
+    color:white;
+}
+.darkbo .table th,.darkbo .table td{
+    text-align: left;
+    padding: 5px;
+}
+
+.darkbo .table tbody tr:nth-child(even){
+    background: #ECF0F1;
+}
+
+.darkbo .table tbody tr:hover{
+    background: #CCC;
+    color: #FFFFFF;
+}
+
+.darkbo h1 {
+    color: #A1A9BF;
+}
+.darkbo .btn-success[disabled]:active {
+    background: red;
+}
+.darkbo table input, .darkbo table select {
+    background-image: linear-gradient(0deg, #eee, #eee) !important;
+    color: #A1A9BF !important;
+}
+.darkbo .container-block, .container-block.darkbo  {
+    background: #FFF;
+    color: #A1A9BF;
+    padding: 2rem; 
+    border-radius: 5px;
+}
+::-webkit-scrollbar {
+    width: 12px;
+    -webkit-box-shadow: inset 0 0 10px rgba(204,204,204,1); 
+    border-radius: 10px;
+}
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 10px rgba(204,204,204,1); 
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 10px rgba(204,204,204,1);
+}

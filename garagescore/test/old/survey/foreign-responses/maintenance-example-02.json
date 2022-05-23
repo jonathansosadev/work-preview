@@ -1,0 +1,251 @@
+[
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "4",
+      "title" : "Monsieur",
+      "fullName" : "Benjamin Martin",
+      "email" : "oabida@garagescore.com",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "isComplete" : false,
+      "pageNumber" : 0,
+      "pageCount" : 5,
+      "timestamp" : 1518875772118.0
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "4",
+      "title" : "Monsieur",
+      "fullName" : "Benjamin Martin",
+      "email" : "oabida@garagescore.com",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "unsatisfiedCriteria" : [
+        "maintenance1",
+        "maintenance2",
+        "maintenance3",
+        "maintenance4",
+        "maintenance5"
+      ],
+      "leadType" : "NotInterested",
+      "comment" : "hello world !",
+      "isComplete" : false,
+      "pageNumber" : 1,
+      "pageCount" : 5,
+      "timestamp" : 1518875801153.0
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "4",
+      "title" : "Monsieur",
+      "fullName" : "Benjamin Martin",
+      "email" : "oabida@garagescore.com",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "unsatisfiedCriteria" : [
+        "maintenance1",
+        "maintenance2",
+        "maintenance3",
+        "maintenance4",
+        "maintenance5"
+      ],
+      "leadType" : "NotInterested",
+      "comment" : "hello world !",
+      "isComplete" : false,
+      "pageNumber" : 1,
+      "pageCount" : 5,
+      "timestamp" : 1518876017336.0
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "4",
+      "title" : "Monsieur",
+      "fullName" : "Benjamin Martin",
+      "email" : "oabida@garagescore.com",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "unsatisfiedCriteria" : [
+        "maintenance1",
+        "maintenance2",
+        "maintenance3",
+        "maintenance4",
+        "maintenance5"
+      ],
+      "leadType" : "NotInterested",
+      "comment" : "hello world !",
+      "isComplete" : false,
+      "pageNumber" : 2,
+      "pageCount" : 5,
+      "timestamp" : 1518876032563.0,
+      "unsatisfiedCriteria1" : [
+        "Maintenance1",
+        "Maintenance2",
+        "Maintenance3",
+        "Maintenance4"
+      ],
+      "unsatisfiedCriteria2" : [
+        "Maintenance5",
+        "Maintenance6",
+        "Maintenance7",
+        "Maintenance8"
+      ],
+      "unsatisfiedCriteria3" : [
+        "Maintenance10",
+        "Maintenance11",
+        "Maintenance12",
+        "Maintenance13"
+      ],
+      "unsatisfiedCriteria4" : [
+        "Maintenance15",
+        "Maintenance16",
+        "Maintenance17",
+        "Maintenance18"
+      ],
+      "unsatisfiedCriteria5" : [
+        "Maintenance20",
+        "Maintenance21",
+        "Maintenance22",
+        "Maintenance23"
+      ]
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "4",
+      "title" : "Monsieur",
+      "fullName" : "Benjamin Martin",
+      "email" : "oabida@garagescore.com",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "unsatisfiedCriteria" : [
+        "maintenance1",
+        "maintenance2",
+        "maintenance3",
+        "maintenance4",
+        "maintenance5"
+      ],
+      "leadType" : "NotInterested",
+      "comment" : "hello world !",
+      "isComplete" : false,
+      "pageNumber" : 3,
+      "pageCount" : 5,
+      "timestamp" : 1518876044285.0,
+      "unsatisfiedCriteria1" : [
+        "Maintenance1",
+        "Maintenance2",
+        "Maintenance3",
+        "Maintenance4"
+      ],
+      "unsatisfiedCriteria2" : [
+        "Maintenance5",
+        "Maintenance6",
+        "Maintenance7",
+        "Maintenance8"
+      ],
+      "unsatisfiedCriteria3" : [
+        "Maintenance10",
+        "Maintenance11",
+        "Maintenance12",
+        "Maintenance13"
+      ],
+      "unsatisfiedCriteria4" : [
+        "Maintenance15",
+        "Maintenance16",
+        "Maintenance17",
+        "Maintenance18"
+      ],
+      "unsatisfiedCriteria5" : [
+        "Maintenance20",
+        "Maintenance21",
+        "Maintenance22",
+        "Maintenance23"
+      ],
+      "serviceCategories" : [
+        "Maintenance1",
+        "Maintenance3"
+      ],
+      "mobilePhone" : "0625033300",
+      "customerShareWithGarage" : [
+        "J'accepte d'être averti uniquement par mon établissement des prochaines échéances 'd'entretien et d'offres commerciales"
+      ]
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "4",
+      "title" : "Monsieur",
+      "fullName" : "Benjamin Martin",
+      "email" : "oabida@garagescore.com",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "unsatisfiedCriteria" : [
+        "maintenance1",
+        "maintenance2",
+        "maintenance3",
+        "maintenance4",
+        "maintenance5"
+      ],
+      "leadType" : "NotInterested",
+      "comment" : "hello world !",
+      "isComplete" : true,
+      "pageNumber" : 3,
+      "pageCount" : 5,
+      "timestamp" : 1518876046963.0,
+      "unsatisfiedCriteria1" : [
+        "Maintenance1",
+        "Maintenance2",
+        "Maintenance3",
+        "Maintenance4"
+      ],
+      "unsatisfiedCriteria2" : [
+        "Maintenance5",
+        "Maintenance6",
+        "Maintenance7",
+        "Maintenance8"
+      ],
+      "unsatisfiedCriteria3" : [
+        "Maintenance10",
+        "Maintenance11",
+        "Maintenance12",
+        "Maintenance13"
+      ],
+      "unsatisfiedCriteria4" : [
+        "Maintenance15",
+        "Maintenance16",
+        "Maintenance17",
+        "Maintenance18"
+      ],
+      "unsatisfiedCriteria5" : [
+        "Maintenance20",
+        "Maintenance21",
+        "Maintenance22",
+        "Maintenance23"
+      ],
+      "serviceCategories" : [
+        "Maintenance1",
+        "Maintenance3"
+      ],
+      "mobilePhone" : "0625033300",
+      "customerShareWithGarage" : [
+        "J'accepte d'être averti uniquement par mon établissement des prochaines échéances 'd'entretien et d'offres commerciales"
+      ],
+      "shareWithPartners" : "Oui",
+      "sharedOnGoogleClicked" : true
+    }
+  }
+]

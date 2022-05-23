@@ -1,0 +1,19 @@
+{
+  "hangupNature" : "",
+  "designation" : "france ",
+  "destinationType" : "landline",
+  "duration" : 393,
+  "dialed" : "0033468422900",
+  "calling" : "0033anonymous",
+  "called" : "0033468422900",
+  "consumptionId" : 8562457597.0,
+  "wayType" : "transfer",
+  "countrySuffix" : "fr",
+  "creationDatetime" : "2020-06-15T14:25:20+02:00",
+  "priceWithoutTax" : {
+    "currencyCode" : "EUR",
+    "value" : 0.0655,
+    "text" : "0.07 €"
+  },
+  "planType" : "outplan"
+}

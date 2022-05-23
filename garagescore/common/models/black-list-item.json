@@ -1,0 +1,33 @@
+{
+  "name": "BlackListItem",
+  "base": "GarageScoreBaseModel",
+  "options": {},
+  "mixins": {
+    "EventEmitter": true,
+    "Status": true,
+    "Stream": true
+  },
+  "mongodb": {
+    "collection": "blackListItems"
+  },
+  "http": {
+    "path": "black-list-item"
+  },
+  "properties": {
+    "to": {
+      "type": "string"
+    },
+    "reason": {
+      "type": "string"
+    }
+  },
+  "indexes": {
+    "email_index": {"email": 1},
+    "type_garage_to_index": { "contactType": 1, "foreign.garageId": 1, "to": 1 },
+    "to": { "to": 1 }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

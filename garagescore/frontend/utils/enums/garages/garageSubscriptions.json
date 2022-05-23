@@ -1,0 +1,42 @@
+{
+  "MAINTENANCE": {
+    "value": "Maintenance",
+    "properties": {}
+  },
+  "NEW_VEHICLE_SALE":{
+    "value": "NewVehicleSale",
+    "properties": {}
+  },
+  "USED_VEHICLE_SALE": {
+    "value": "UsedVehicleSale",
+    "properties": {}
+  },
+  "VEHICLE_INSPECTION":{
+    "value": "VehicleInspection",
+    "properties": {}
+  },
+  "LEAD": {
+    "value": "Lead",
+    "properties": {}
+  },
+  "ANALYTICS": {
+    "value": "Analytics",
+    "properties": {}
+  },
+  "E_REPUTATION": {
+    "value": "EReputation",
+    "properties": {}
+  },
+  "AUTOMATION": {
+    "value": "Automation",
+    "properties": {}
+  },
+  "CROSS_LEADS": {
+    "value": "CrossLeads",
+    "properties": {}
+  },
+  "COACHING": {
+    "value": "Coaching",
+    "properties": {}
+  }
+}

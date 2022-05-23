@@ -1,0 +1,70 @@
+{
+  "name": "Contact",
+  "base": "GarageScoreBaseModel",
+  "options": {
+    "strictObjectIDCoercion": true
+  },
+  "mixins": {
+    "EventEmitter": true,
+    "Status": true,
+    "Stream": true,
+    "FindWithProjection": true,
+    "MongoDirect": {
+      "whereBuildAddons": true
+    },
+    "SmartSort": true
+  },
+  "mongodb": {
+    "collection": "contacts"
+  },
+  "http": {
+    "path": "contact"
+  },
+  "properties": {
+    "type": {
+      "type": "string",
+      "required": true
+    },
+    "from": {
+      "type": "string"
+    },
+    "sender": {
+      "type": "string"
+    },
+    "to": {
+      "type": "string"
+    },
+    "overrideTo": {
+      "type": "string"
+    },
+    "recipient": {
+      "type": "string"
+    },
+    "payload": {
+      "type": "object"
+    },
+    "sendDate": {
+      "type": "date"
+    },
+    "failureDescription": {
+      "type": "string"
+    }
+  },
+  "indexes": {
+    "payloadDataId_index": {"payload.dataId": 1},
+    "type_updatedAt_index": {"type": 1, "updatedAt": 1},
+    "payloadAddresseeId_index": {"payload.addresseeId": 1, "type": 1},
+    "leadTicket_notification_send": {"payload.dayNumber": -1, "payload.addresseeId": 1},
+    "createdAt_index": {"createdAt": -1},
+    "createdAt_to_index": {"to": 1, "createdAt": -1},
+    "type_key": {"type": 1, "payload.key": 1, "updatedAt": -1},
+    "status": {"status": 1},
+    "payload_alertType": {"payload.alertType": 1},
+    "moniscore_type_sendDate": {"type": 1, "sendDate": -1 },
+    "darkbo_monthly_summary_monitoring": { "to": 1, "type": 1, "payload.reportId": 1 }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

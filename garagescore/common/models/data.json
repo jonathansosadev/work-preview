@@ -1,0 +1,271 @@
+{
+  "name": "Data",
+  "plural": "Datas",
+  "base": "GarageScoreBaseModel",
+  "description": "Our main collection. Do not add it to model-config.json because we create it on the fly (see data.js)",
+  "options": {
+    "strictObjectIDCoercion": true
+  },
+  "mongodb": {
+    "collection": "datas"
+  },
+  "http": {
+    "path": "data"
+  },
+  "mixins": {
+    "notabene": "We have a bug when a mixin is exclusively used with Data (and in no other model), it is not loaded",
+    "EventEmitter": true,
+    "Stream": true,
+    "FindWithProjection": true,
+    "MongoDirect": {
+      "whereBuildAddons": true
+    },
+    "SmartSort": true
+  },
+  "properties": {
+    "garageId": {
+      "type": "string",
+      "required": true
+    },
+    "type": {
+      "type": "string",
+      "required": true
+    },
+    "garageType": {
+      "type": "string",
+      "required": true,
+      "default": "Dealership"
+    },
+    "shouldSurfaceInStatistics": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "scopes": {
+      "type": "array"
+    }
+  },
+  "indexes": {
+    "createdAt": { "createdAt": -1 },
+    "frontDeskUserName": { "service.frontDeskUserName": 1 },
+    "frontDeskUserNameGarageId": {
+      "garageId": 1,
+      "service.frontDeskUserName": 1
+    },
+    "updatedAtWithId": { "updatedAt": -1, "_id": 1 },
+    "alert_checkAlertHour": { "alert.checkAlertHour": -1, "updatedAt": -1 },
+    "source_sourceId": { "source.sourceId": 1, "_id": 1 },
+    "campaign_filter_customer_already_contacted": {
+      "garageId": 1,
+      "campaign.contactScenario.firstContactedAt": 1
+    },
+    "nextCampaignContact": {
+      "campaign.contactScenario.nextCampaignContactDay": 1,
+      "campaign.contactScenario.nextCampaignContact": 1
+    },
+    "nextCheckSurveyUpdatesDecaminute": {
+      "campaign.contactScenario.nextCheckSurveyUpdatesDecaminute": 1
+    },
+    "nextCampaignReContactDay": {
+      "campaign.contactScenario.nextCampaignReContactDay": 1
+    },
+    "campaignCampaignId": { "campaign.campaignId": 1 },
+    "reviewCreatedAtAndOthers": {
+      "garageId": 1,
+      "type": 1,
+      "review.comment.status": 1,
+      "review.createdAt": 1
+    },
+    "reviewsByDate": {
+      "garageId": 1,
+      "type": 1,
+      "updatedAt": 1,
+      "shouldSurfaceInStatistics": 1,
+      "review.comment.status": 1,
+      "review.shareWithPartners": 1
+    },
+    "leadsByDate": { "garageId": 1, "lead.reportedAt": -1, "lead.saleType": 1 },
+    "allReview": {
+      "garageId": 1,
+      "review.comment.status": 1,
+      "shouldSurfaceInStatistics": 1,
+      "review.createdAt": -1
+    },
+    "reviewRating": { "review.rating.value": 1 },
+    "conversionIsConvertedFromLeadWithSaleDate": {
+      "conversion.isConvertedFromLead": 1,
+      "conversion.leadSourceManagerId": 1,
+      "service.providedAt": 1,
+      "garageId": 1
+    },
+    "conversionIsConvertedFromTradeInWithSaleDate": {
+      "conversion.isConvertedFromTradeIn": 1,
+      "conversion.tradeInSourceManagerId": 1,
+      "service.providedAt": 1,
+      "garageId": 1
+    },
+    "leadPotentialSale": { "lead.potentialSale": 1 },
+    "leadPotentialSaleWithDate": {
+      "garageId": 1,
+      "lead.potentialSale": 1,
+      "service.providedAt": 1
+    },
+    "leadIsConverted": { "lead.isConverted": 1 },
+    "leadIsConvertedToSale": { "lead.isConvertedToSale": 1 },
+    "leadConvertedToSaleAt": { "lead.convertedToSaleAt": 1 },
+    "lead.convertedToSaleAt_1_garageId_1": {
+      "lead.convertedToSaleAt": 1,
+      "garageId": 1
+    },
+    "leadConvertedToTradeInAt": { "lead.convertedToTradeInAt": 1 },
+    "cockpit_main_group": {
+      "keys": {
+        "review.createdAt": -1,
+        "service.providedAt": -1,
+        "garageId": 1
+      }
+    },
+    "cockpit_main_group2": {
+      "keys": {
+        "shouldSurfaceInStatistics": 1,
+        "review.rating.value": 1,
+        "service.providedAt": 1
+      }
+    },
+    "cockpit_main_garage": {
+      "keys": {
+        "garageId": 1,
+        "review.createdAt": -1,
+        "service.providedAt": -1,
+        "review.rating.value": -1
+      }
+    },
+    "cockpit_contact_qualification_group": {
+      "keys": {
+        "service.providedAt": -1,
+        "campaign.contactStatus.status": 1,
+        "campaign.status": 1
+      }
+    },
+    "cockpit_contact_qualification_garage": {
+      "keys": {
+        "garageId": 1,
+        "service.providedAt": -1,
+        "review.rating.value": -1,
+        "campaign.status": 1,
+        "shouldSurfaceInStatistics": 1
+      }
+    },
+    "cockpit_lead_ticket_status": {
+      "keys": {
+        "leadTicket.status": -1,
+        "lead.reportedAt": -1
+      }
+    },
+    "cockpit_lead_ticket_manager": {
+      "keys": {
+        "leadTicket.manager": -1,
+        "lead.reportedAt": -1
+      }
+    },
+    "cockpit_lead_ticket_created_garage": {
+      "keys": {
+        "garageId": 1,
+        "shouldSurfaceInStatistics": 1,
+        "leadTicket.referenceDate": -1
+      }
+    },
+    "cockpit_lead_ticket_followed_garage": {
+      "keys": {
+        "source.garageId": 1,
+        "leadTicket.referenceDate": -1
+      }
+    },
+    "cockpit_unsatisfied_ticket_created_garage": {
+      "keys": {
+        "garageId": 1,
+        "shouldSurfaceInStatistics": 1,
+        "unsatisfiedTicket.referenceDate": -1
+      }
+    },
+    "exports_lead_ticket_created_garage": {
+      "keys": {
+        "garageId": 1,
+        "shouldSurfaceInStatistics": 1,
+        "leadTicket.createdAt": -1
+      }
+    },
+    "exports_unsatisfied_ticket_created_garage": {
+      "keys": {
+        "garageId": 1,
+        "shouldSurfaceInStatistics": 1,
+        "unsatisfiedTicket.createdAt": -1
+      }
+    },
+    "cockpit_lead_garage": {
+      "keys": {
+        "garageId": -1,
+        "lead.reportedAt": -1
+      }
+    },
+    "cockpit_unsatisfied_type_filter": {
+      "keys": {
+        "type": -1,
+        "unsatisfiedTicket.createdAt": -1,
+        "review.createdAt": -1
+      }
+    },
+    "cockpit_unsatisfied_manager_filter": {
+      "keys": {
+        "unsatisfiedTicket.manager": -1,
+        "unsatisfiedTicket.createdAt": -1,
+        "review.createdAt": -1
+      }
+    },
+    "cockpit_unsatisfied_garage": {
+      "keys": {
+        "garageId": -1,
+        "review.createdAt": -1
+      }
+    },
+    "lead_ticket_send_notification": { "leadTicket.checkNotificationDay": -1 },
+    "unsatisfied_ticket_send_notification": {
+      "unsatisfiedTicket.checkNotificationDay": -1
+    },
+    "cockpit-e-rep-garage-history": {
+      "garageId": 1,
+      "type": 1,
+      "service.providedAt": 1
+    },
+    "review-status-should-garage-id-type-share-with-partners": {
+      "review.comment.status": -1,
+      "shouldSurfaceInStatistics": -1,
+      "garageId": -1,
+      "type": -1,
+      "review.shareWithPartners": 1
+    },
+    "cockpit_lead_ticket_created_garage-scopes": {
+      "scopes" : 1,
+      "shouldSurfaceInStatistics" : 1,
+      "leadTicket.referenceDate" : -1
+    },
+    "cockpit_contact_qualification_garage-scopes": {
+      "scopes" : 1,
+      "service.providedAt" : -1,
+      "review.rating.value" : -1,
+      "campaign.status" : 1,
+      "shouldSurfaceInStatistics" : 1
+    },
+    "cockpit_erep_filter_source-type": {
+      "garageType": 1,
+      "source.type": 1,
+      "type": 1,
+      "shouldSurfaceInStatistics": 1,
+      "service.providedAt": -1
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

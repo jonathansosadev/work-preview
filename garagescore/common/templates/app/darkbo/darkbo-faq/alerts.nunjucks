@@ -1,0 +1,20 @@
+{% extends "./_master.nunjucks" %}
+{% block title %}Alertes{% endblock %}
+
+{% block questions %}
+<a class="row question" id="q_1" href="#a_1">Quel est le délai entre la détection d'un lead/instatisfait et la recéption de l'email d'alerte?</a>
+<a class="row question" id="q_2" href="#a_1">Comment l'alerte est elle détécté ?</a>
+{% endblock %}
+
+{% block answers %}
+<div class="row answer" id="a_1" data-date="en Janvier 2017">
+	<p>L'alerte une fois détectée, sera envoyée après un délai d'une à deux heures pour laisser le temps au client de finir de répondre au questionnaire ou modifier son avis</p>
+</div>
+<div class="row answer" id="a_2" data-date="en Février 2017">
+	<p>L'application lance une vérification en boucle sur les derniers enquêtes répondu pour chercher des alertes tous les heures</p>
+	<p><a href="/backoffice/faq/surveys#a_2">les enquêtes incohérente </a> sont exclu de la détéction des alertes mécontent.</p>
+	<p>Seule <a href="/backoffice/faq/surveys#a_7">la date de réponse</a> du client va être prise en considération
+		pour tester un survey à contenir des alertes
+	</p>
+</div>
+{% endblock %}

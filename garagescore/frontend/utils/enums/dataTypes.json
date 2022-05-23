@@ -1,0 +1,51 @@
+{
+  "MAINTENANCE": {
+    "value": "Maintenance",
+    "properties": {
+      "acronym": "Apv"
+    }
+  },
+  "NEW_VEHICLE_SALE": {
+    "value": "NewVehicleSale",
+    "properties": {
+      "acronym": "Vn"
+    }
+  },
+  "USED_VEHICLE_SALE": {
+    "value": "UsedVehicleSale",
+    "properties": {
+      "acronym": "Vo"
+    }
+  },
+  "VEHICLE_INSPECTION": {
+    "value": "VehicleInspection",
+    "properties": {
+      "acronym": "Vi"
+    }
+    
+  },
+  "EXOGENOUS_REVIEW": {
+    "value": "ExogenousReview",
+    "properties": {}
+  },
+  "MANUAL_LEAD": {
+    "value": "ManualLead",
+    "properties": {}
+  },
+  "MANUAL_UNSATISFIED": {
+    "value": "ManualUnsatisfied",
+    "properties": {}
+  },
+  "AUTOMATION_CAMPAIGN": {
+    "value": "AutomationCampaign",
+    "properties": {}
+  },
+  "UNKNOWN": {
+    "value": "Unknown",
+    "properties": {}
+  },
+  "VEHICLE_SALE": {
+    "value": "VehicleSale",
+    "properties": {}
+  }
+}

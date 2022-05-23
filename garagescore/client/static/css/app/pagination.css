@@ -1,0 +1,28 @@
+
+.back-icon {
+  -ms-transform: rotate(180deg); /* IE 9 */
+  -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+  transform: rotate(180deg);
+}
+.pagination-button-right-container, .pagination-button-left-container {
+  display: inline-block;
+  width: calc(50% - 30px);
+}
+.pagination-button-right-container{
+  text-align: left;
+}
+.pagination-button-left-container{
+  text-align: right;
+}
+.pagination-btn {
+  margin: 3px;
+}
+.pagination-btn:focus, .pagination-btn:hover {
+  outline:none;
+}
+.current-page, .current-page:hover{
+  color: white;
+  background-color: #219ab5;
+  display: inline-block;
+  cursor:default;
+}

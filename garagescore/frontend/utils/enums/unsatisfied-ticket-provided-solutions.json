@@ -1,0 +1,18 @@
+{
+  "CUSTOMER_CALL": {
+    "value": "CustomerCall",
+    "properties": {}
+  },
+  "GARAGE_SECOND_VISIT": {
+    "value": "GarageSecondVisit",
+    "properties": {}
+  },
+  "VOUCHER": {
+    "value": "Voucher",
+    "properties": {}
+  },
+  "OTHER": {
+    "value": "Other",
+    "properties": {}
+  }
+}

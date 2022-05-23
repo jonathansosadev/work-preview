@@ -1,0 +1,63 @@
+{
+  "name": "Alert",
+  "base": "GarageScoreBaseModel",
+  "options": {},
+  "mixins": {
+    "EventEmitter": true,
+    "Status": true,
+    "SmartSort": true,
+    "Stream": true,
+    "MongoDirect": {
+      "whereBuildAddons": true
+    }
+  },
+  "mongodb": {
+    "collection": "alerts"
+  },
+  "http": {
+    "path": "alert"
+  },
+  "properties": {
+    "type": {
+      "type": "string",
+      "required": true
+    },
+    "dataId": {
+      "type": "string"
+    },
+    "isDeferred": {
+      "type": "boolean"
+    },
+    "executionDate": {
+      "type": "Date"
+    },
+    "configId": {
+      "type": "number"
+    },
+    "foreign": {
+      "customerId": "string",
+      "userIds": "array"
+    },
+    "createdInRealTime": {
+      "type": "boolean",
+      "default": false,
+      "required": false
+    }
+  },
+  "validations": [],
+  "relations": {
+    "survey": {
+      "type": "belongsTo",
+      "model": "Survey",
+      "foreignKey": ""
+    }
+  },
+  "indexes": {
+    "alert_dataId_type": { "dataId": -1, "type": -1 },
+    "alert_send_deferred": { "status": 1, "executionDate": -1 },
+    "alert_send_deferred_status": { "isDeferred":1, "status": 1 },
+    "alert_send_deferred_status_executionDate": { "isDeferred":1, "status": 1, "executionDate": -1 }
+  },
+  "acls": [],
+  "methods": {}
+}

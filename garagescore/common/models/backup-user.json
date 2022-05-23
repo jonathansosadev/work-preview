@@ -1,0 +1,31 @@
+{
+  "name": "BackupUser",
+  "plural": "BackupUsers",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "mongodb": {
+    "collection": "backupUser"
+  },
+  "http": {
+    "path": "backupUser"
+  },
+  "properties": {
+    "date": {
+      "type": "Date",
+      "required": true
+    },
+    "user": {
+      "type": "Object"
+    }
+  },
+  "indexes": {
+    "userIdIndex": { "user._id": 1 },
+    "dateIndex": { "date": 1 },
+    "UserDatrIndex": { "user._id": 1, "date": 1 }
+  },
+  "validations": [],
+  "relations": {},
+ "methods": {
+ }
+}

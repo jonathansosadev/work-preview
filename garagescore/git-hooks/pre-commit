@@ -1,0 +1,20 @@
+#!/bin/sh
+# run eslint on modified files
+
+RED='\033[0;31m'
+NOCOLOR='\033[0m'
+
+files=$(git diff --cached --name-only --diff-filter=ACM | grep -e "\.js$")
+pass=true
+for file in ${files}; do
+    result="$(node node_modules/eslint/bin/eslint $file)"
+    if [ "$result" != "" ]; then
+    	echo -e "${RED}>> Lint failed: node node_modules/eslint/bin/eslint $file ${NOCOLOR}"
+        pass=false
+    fi
+done
+if ! $pass; then
+    echo "Commit refused."
+    exit 1
+fi
+exit 0

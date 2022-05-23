@@ -1,0 +1,191 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+  <style type="text/css">
+    table td, table th {
+      padding: 5px;
+    }
+    .red-line {
+      color: red;
+    }
+    .worning {
+      border: 1px solid #9a0000;
+      background-color: #cd231a;
+      color: white;
+      display: inline-block;
+      border-radius: 5px;
+      padding: 5px;
+    }
+    .row {
+      display: flex;
+    }
+    .column {
+      flex: 50%;
+    }
+    #dateToStepNumber {
+      color: black;
+    }
+  </style>
+{% endblock %}
+{% block page %}
+  {% raw %}
+  <div class="col-md-12" id="cron-informations">
+    <div class="overlay-loading" v-if="loading"><div class="centered-loading"></div></div>
+    <div class="row text-center" style="margin: 50px">
+      <div class="col-md-12">
+        Information d'execution des crons
+      </div>
+    </div>
+    <div class="row">
+      <div class="column">
+        <table class="table-bordered">
+          <tr>
+            <th>Référence</th>
+            <th>Valeur actuelle</th>
+          </tr>
+          <tr v-for="(value, key) in currentDateReferences">
+            <td>{{ key }}</td>
+            <td>{{ value }}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="column">
+        <table class="table-bordered">
+          <caption>Convertir une date en StepNumber :</caption>
+          <tr>
+            <th>Date</th>
+            <th>Equivalent en StepNumber</th>
+          </tr>
+          <tr>
+            <td>          
+              <input type="date" id="dateToStepNumber" name="dateToStepNumber" v-model="converterSelectedDate">
+            </td>
+            <td>
+              {{converterStepNumber}}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <br>
+    <br>
+    <div class="row">
+      <table style="width: 100%;" class="table-bordered">
+        <tr>
+          <th>Script</th>
+          <th>Description</th>
+          <th style="width: 90px">Fréquence</th>
+          <th style="width: 90px">En cours ?</th>
+          <th style="width: 165px">Dernière execution</th>
+          <th>Error</th>
+        </tr>
+        <tr v-for="cronInformation in cronInformations">
+          <td>{{ cronInformation.path }}</td>
+          <td>{{ cronInformation.description }}</td>
+          <td>{{ getFrequencyName(cronInformation.frequency) }}</td>
+          <td>{{ cronInformation.currentlyRunning ? 'Oui' : 'Non' }}</td>
+          <td>
+            <span v-if="cronInformation.lastEnd">
+              <strong>{{ cronInformation.lastExecutedStepNumber }}</strong><br>
+              le {{ cronInformation.lastEnd | dateFormat }}<br>
+              <span v-if="!isRecentlyExecuted(cronInformation)" class="worning">Ce cron n'est pas éxecuté depuis longtemps !</span>
+            </span>
+            <span v-else>-</span>
+          </td>
+          <td>
+            <span v-if="cronInformation.lastError">
+              {{ cronInformation.lastError }}
+              le {{ cronInformation.lastStart | dateFormat }}
+            </span>
+            <span v-else>-</span>
+            <br>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+{% endraw %}
+{% endblock %}
+
+{% block scripts %}
+  {% include "../common/components/switch-button.nunjucks" %}
+  <script type="text/javascript">
+    var cronInformations = {{ cronInformations|safe }};
+    var frequencies = {{ frequencies | safe }};
+    var currentDateReferences = JSON.parse(JSON.stringify(frequencies));
+    currentDateReferences.now = null;
+    function FormatNumberLength(num, length) {
+      var r = "" + num;
+      while (r.length < length) {
+        r = "0" + r;
+      }
+      return r;
+    }
+    function formatDate(value) {
+      var date = new Date(value);
+      var day = date.getDate();
+      var monthIndex = date.getMonth();
+      var year = date.getFullYear();
+      var hours = date.getHours();
+      var minutes = date.getMinutes();
+      var seconds = date.getSeconds();
+
+      return FormatNumberLength(day, 2) + '/' + FormatNumberLength(monthIndex + 1, 2) + '/' + year + ' '
+        + FormatNumberLength(hours, 2) + ':' + FormatNumberLength(minutes, 2) + ':' + FormatNumberLength(seconds, 2);
+    }
+    Vue.filter('dateFormat', formatDate);
+
+    var app = new Vue({
+      el: '#cron-informations',
+      data: {
+        loading: false,
+        frequencies: frequencies,
+        cronInformations: cronInformations,
+        currentDateReferences: currentDateReferences,
+        converterSelectedDate: null,
+      },
+      created: function (){
+        this.refreshCurrentDateReferences();
+        setInterval(function () {
+          this.refreshCurrentDateReferences();
+        }.bind(this), 1000)
+      },
+      methods: {
+        getFrequencyName: function(frequency) {
+          for (key in frequencies) {
+            if (frequencies[key] == frequency) {
+              return key;
+            }
+          }
+          return '*';
+        },
+        isRecentlyExecuted: function(cronInfo) {
+          return currentDateReferences[this.getFrequencyName(cronInfo.frequency)] < (cronInfo.lastExecutedStepNumber + 2)
+        },
+        refreshCurrentDateReferences: function () {
+          this.currentDateReferences.now = formatDate(new Date());
+          for (key in frequencies) {
+            this.currentDateReferences[key] = Math.floor(Date.now() / frequencies[key]);
+          }
+        }
+      },
+      computed: {
+        selectedDate : {
+          get() {
+            return this.converterSelectedDate;
+          },
+          set(value) {
+            this.converterSelectedDate = value;
+          }
+        },
+        converterStepNumber() {
+          if(this.converterSelectedDate) {
+            return Math.floor(new Date(this.converterSelectedDate).getTime() / 8.64e7);
+          }
+          return '-';
+        }
+      }
+    });
+
+  </script>
+{% endblock %}

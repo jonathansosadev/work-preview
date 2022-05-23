@@ -1,0 +1,48 @@
+{
+  "name": "CampaignScenario",
+  "base": "GarageScoreBaseModel",
+  "options": {
+    "strictObjectIDCoercion": true
+  },
+  "mixins": {
+    "SmartSort": true
+  },
+  "mongodb": {
+    "collection": "campaignScenarios"
+  },
+  "http": {
+    "path": "campaign-scenario"
+  },
+  "properties": {
+    "oldId" : {
+      "type": "string",
+      "default": ""
+    },
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "duration": {
+      "type": "number"
+    },
+    "disableSmsWithValidEmails": {
+      "type": "boolean",
+      "default": false
+    },
+    "followupUnsatisfied": {
+      "type": "object"
+    },
+    "followupLead": {
+      "type": "object"
+    },
+    "chains": {
+      "type": "object"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

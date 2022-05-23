@@ -1,0 +1,500 @@
+{% extends "../common/layouts/darkbo.nunjucks" %} {% block css %}
+<style type="text/css">
+  select, button {
+    color: black;
+  }
+  * {
+    box-sizing: border-box;
+  }
+
+  .garages-list {
+    margin-top: 0;
+    margin-botom: 0;
+    width: 60%;
+  }
+
+  table {
+    border-collapse: collapse;
+    text-align: left;
+    width: 100%;
+  }
+  table tr {
+    border-bottom: 1px solid
+  }
+  table th, table td {
+    padding: 10px 20px;
+  }
+  .colleft {
+    background: #545454;
+    color:white;
+  }
+  .rowtop {
+    background: #444;
+    color:white;
+  }
+  .percentage {
+    font-size: 16px;
+    margin-right: 5px;
+  }
+  .danger {
+    color: red;
+  }
+</style>
+{% endblock %} {% block page %}{% raw %}
+<div class="page-header">
+  <h1>Monitoring des évènements Automation</h1>
+</div>
+<div class="col-md-12" id="app">
+  <p>
+    Période:
+   <input type="number" min="1" max="30"v-model="period" style="width: 40px; text-align: right;"></input>
+   <span v-if="period>1"> derniers jours</span>
+   <span v-else> (aujourd'hui)</span>
+  </p>
+  <p>
+    <label>Garage</label>
+    <gs-garages-list :updated="garageIdUpdated" class="garages-list"></gs-garages-list>
+  </p>
+  <p>
+    <label>Type de campagne (ciblage)</label>
+    <select v-model="selectedTarget">
+      <option v-for="campaignTarget in campaignTargets" :value="campaignTarget">{{ campaignTarget || 'Tous' }}</option>
+    </select>
+  </p>
+  <!-- <p>
+    <label>Type de contact</label>
+    <select v-model="selectedContactType">
+      <option v-for="contactType in contactTypes" :value="contactType">{{ contactType || 'Tous' }}</option>
+    </select>
+  </p> -->
+  <p>
+    <button @click="loadGarage">Voir les évènements de {{ selectedGarageName }}</button>
+    ou
+    <button @click="loadAll">Voir les évènements de tous les garages</button>
+  </p>
+  <p>
+    <label class="only-margin-left">Contact par Email</label>
+    <switch-button value="false" :value.boolean="!!(mobileMode)" @change="toggleContactType()"></switch-button>
+    <label class="only-margin-left">Contact par SMS</label>
+  </p>
+  <p>
+    <label class="only-margin-left">Events Automation</label>
+    <switch-button value="false" :value.boolean="!!(gdprMode)" @change="toggleGdprMode()"></switch-button>
+    <label class="only-margin-left">Events RGPD</label>
+  </p>
+  <p>
+    Dans les tableaux ci-dessous on prend en considération les events des campagnes automation
+    {{ !gdprMode ? ' (Events Automation) ' : ' (Events RGPD) '}}
+    {{ selectedTarget ? `qui ont pour ciblage ${selectedTarget}, ` : '' }}
+    {{ selectedContactType ? `qui ont pour type de contact ${selectedContactType}, ` : '' }}
+    exécutées {{ period > 1 ? ('les ' + period + " derniers jours") : "aujourd'hui"}}
+  </p>
+  <!--définir les min max automation çavapastrop-->
+  <hr>
+  <div>
+    <h4>Définir les min-max pour le channel <b>çavapastrop</b></h4>
+    <h4>Lead</h4>
+      <table v-if="automationMonitoringSettings" class="table table-condensed" style="border: white 1px solid">
+        <thead>
+          <tr>
+            <td>Jour</td>
+            <td>Min</td>
+            <td>Max</td>
+            <td>Action</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="active" v-for="(setting, index) in Object.keys(automationMonitoringSettings.lead)">
+            <td>{{ automationMonitoringSettings.lead[setting].day }}</td>
+            <td>
+              <input type="number" min="0" v-model="setAutomationMonitoringSettings.lead[setting].min" :placeholder="automationMonitoringSettings.lead[setting].min"></input>
+            </td>
+            <td>
+              <input type="number" min="0" v-model="setAutomationMonitoringSettings.lead[setting].max" :placeholder="automationMonitoringSettings.lead[setting].max"></input>
+            </td>
+            <td>
+              <button class="btn btn-default" type="button" @click="updateautomationMonitoringSettings('lead', index, setAutomationMonitoringSettings.lead[setting])">Save</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <h4>Open</h4>
+      <table v-if="automationMonitoringSettings" class="table table-condensed" style="border: white 1px solid">
+        <thead>
+          <tr>
+            <td>Jour</td>
+            <td>Min</td>
+            <td>Max</td>
+            <td>Action</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="active" v-for="(setting, index) in Object.keys(automationMonitoringSettings.open)">
+            <td>{{ automationMonitoringSettings.open[setting].day }}</td>
+            <td>
+              <input type="number" min="0" v-model="setAutomationMonitoringSettings.open[setting].min" :placeholder="automationMonitoringSettings.open[setting].min"></input>
+            </td>
+            <td>
+              <input type="number" min="0" v-model="setAutomationMonitoringSettings.open[setting].max" :placeholder="automationMonitoringSettings.open[setting].max"></input>
+            </td>
+            <td>
+              <button class="btn btn-default" type="button" @click="updateautomationMonitoringSettings('open', index, setAutomationMonitoringSettings.open[setting])">Save</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <h4>Sent</h4>
+      <table v-if="automationMonitoringSettings" class="table table-condensed" style="border: white 1px solid">
+        <thead>
+          <tr>
+            <td>Jour</td>
+            <td>Min</td>
+            <td>Max</td>
+            <td>Action</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="active" v-for="(setting, index) in Object.keys(automationMonitoringSettings.sent)">
+            <td>{{ automationMonitoringSettings.sent[setting].day }}</td>
+            <td>
+              <input type="number" min="0" v-model="setAutomationMonitoringSettings.sent[setting].min" :placeholder="automationMonitoringSettings.sent[setting].min"></input>
+            </td>
+            <td>
+              <input type="number" min="0" v-model="setAutomationMonitoringSettings.sent[setting].max" :placeholder="automationMonitoringSettings.sent[setting].max"></input>
+            </td>
+            <td>
+              <button class="btn btn-default" type="button" @click="updateautomationMonitoringSettings('sent', index, setAutomationMonitoringSettings.sent[setting])">Save</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <h4>Targeted</h4>
+      <table v-if="automationMonitoringSettings" class="table table-condensed" style="border: white 1px solid">
+        <thead>
+          <tr>
+            <td>Jour</td>
+            <td>Min</td>
+            <td>Max</td>
+            <td>Action</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="active" v-for="(setting, index) in Object.keys(automationMonitoringSettings.targeted)">
+            <td>{{ automationMonitoringSettings.targeted[setting].day }}</td>
+            <td>
+              <input type="number" min="0" v-model="setAutomationMonitoringSettings.targeted[setting].min" :placeholder="automationMonitoringSettings.targeted[setting].min"></input>
+            </td>
+            <td>
+              <input type="number" min="0" v-model="setAutomationMonitoringSettings.targeted[setting].max" :placeholder="automationMonitoringSettings.targeted[setting].max"></input>
+            </td>
+            <td>
+              <button class="btn btn-default" type="button" @click="updateautomationMonitoringSettings('targeted', index, setAutomationMonitoringSettings.targeted[setting])">Save</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+
+  <div v-if= "res && res.status === 'ko'">
+    Server error: {{res.error}}
+  </div>
+  <div v-if= "res && res.status === 'ok'" style="margin-top: 30px;">
+    <i>Taux calculés</i>
+    <table>
+      <thead>
+        <tr class="rowtop">
+          <th>Taux</th>
+          <th>Valeur %</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="row in tableRatesRows">
+          <td class="colleft">{{ row.title }}</td>
+          <td>
+            <span>
+              <span>{{ percentage(eventCountForVersion(row.num, gdprMode), eventCountForVersion(row.den, gdprMode)) }}%</span>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="margin-bottom: 30px;"></p>
+
+    <i>Nombres d'events</i>
+    <table>
+      <thead>
+        <tr class="rowtop">
+          <th>Event</th>
+          <th>Valeur</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="row in tableNumbersRows">
+          <td class="colleft">{{ row.title }}</td>
+          <td>
+            <span>
+              <span class="percentage">{{ row.columns }}</span>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endraw %}{% endblock %} {% block scripts %}
+
+{% include "../common/components/_auto-complete/auto-complete.nunjucks" %}
+{% include "../common/components/garages-list/garages-list.component.nunjucks" %}
+{% include "../common/components/switch-button.nunjucks" %}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+
+  var garages = {{ garages|safe }};
+  var campaignTargets = {{ campaignTargets|safe }};
+  var contactTypes = {{ contactTypes|safe }};
+  var ADMIN_AUTOMATION_EVENTSFETCH = '{{ lib.client.url.getShortUrl('ADMIN_AUTOMATION_EVENTSFETCH') }}';
+  document.addEventListener("DOMContentLoaded", function () {
+
+    new Vue({
+      el: '#app',
+      data: {
+        res: {},
+        mobileMode: false,
+        gdprMode: false,
+        period: 7,
+        garages: garages,
+        campaignTargets: campaignTargets,
+        contactTypes: contactTypes,
+        selectedGarage: garages.find(g => g.id === '577a30d774616c1a0056c263') && garages.find(g => g.id === '577a30d774616c1a0056c263').id,
+        selectedTarget: null,
+        selectedContactType: 'EMAIL',
+        lastContactType: null,
+        automationMonitoringSettings: null,
+        setAutomationMonitoringSettings: null
+      },
+      async mounted() {
+        await this.getAutomationMonitoringSettings();
+      },
+      computed: {
+        selectedGarageName() {
+          return garages.find(g => g.id === this.selectedGarage) && garages.find(g => g.id === this.selectedGarage).publicDisplayName;
+        },
+        versions() {
+          return (!this.gdprMode) ? this.res.versions : this.res.gdprVersions;
+        },
+        eventCountForVersion() {
+          return (eventType, gdpr = false) => {
+            const counts = this.res && (gdpr ? this.res.gdprCounts : this.res.counts);
+            return counts && (counts[eventType] || 0);
+          };
+        },
+        // Computing the data that will be used for the first table
+        tableRatesRows() {
+          // Returns the rows of the rates table (1st table), with the labels and the keys that will be used
+          // For Emails 
+          if (this.lastContactType === 'EMAIL') {
+            return (!this.gdprMode) ?
+              [
+                { 
+                  title: 'Taux d\'emails distribués', num: 'RECEIVED', den: 'SENT',
+                  columns: this.rates('RECEIVED', 'SENT')
+                },
+                { 
+                  title: 'Taux d\'ouverture', num: 'OPENED', den: 'RECEIVED',
+                  columns: this.rates('OPENED', 'RECEIVED')
+                },
+                { 
+                  title: 'Taux de leads', num: 'LEAD', den: 'OPENED',
+                  columns: this.rates('LEAD', 'OPENED')
+                },
+                { 
+                  title: 'Pourcentage de leads traités', num: 'WAITING_FOR_MEETING', den: 'LEAD',
+                  columns: this.rates('WAITING_FOR_MEETING', 'LEAD')
+                },
+                { 
+                  title: 'Pourcentage de leads réactifs', num: 'REACTIVE_LEAD', den: 'LEAD',
+                  columns: this.rates('REACTIVE_LEAD', 'LEAD')
+                },
+                { 
+                  title: 'Taux de conversion de leads', num: 'CLOSED_WITH_SALE', den: 'LEAD',
+                  columns: this.rates('CLOSED_WITH_SALE', 'LEAD')
+                },
+              ] : 
+              [
+                { 
+                  title: 'Taux de désinscription (RGPD)', num: 'GDPR_UNSUBSCRIBED', den: 'GDPR_SENT',
+                  columns: this.rates('GDPR_UNSUBSCRIBED', 'GDPR_SENT', true)
+                },
+                { 
+                  title: 'Taux d\'emails RGPD ouverts', num: 'GDPR_OPENED', den: 'GDPR_SENT',
+                  columns: this.rates('GDPR_OPENED', 'GDPR_SENT', true)
+                }
+              ];
+          }
+          // For SMS
+          if (this.lastContactType === 'MOBILE') {
+            return (!this.gdprMode) ?
+              [
+                { 
+                  title: 'Taux de SMS envoyés', num: 'SENT', den: 'TARGETED',
+                  columns: this.rates('SENT', 'TARGETED')
+                },
+                { 
+                  title: 'Taux de leads', num: 'LEAD', den: 'SENT',
+                  columns: this.rates('LEAD', 'SENT')
+                },
+                { 
+                  title: 'Pourcentage de leads traités', num: 'WAITING_FOR_MEETING', den: 'LEAD',
+                  columns: this.rates('WAITING_FOR_MEETING', 'LEAD')
+                },
+                { 
+                  title: 'Pourcentage de leads réactifs', num: 'REACTIVE_LEAD', den: 'LEAD',
+                  columns: this.rates('REACTIVE_LEAD', 'LEAD')
+                },
+                { 
+                  title: 'Taux de conversion de leads', num: 'CLOSED_WITH_SALE', den: 'LEAD',
+                  columns: this.rates('CLOSED_WITH_SALE', 'LEAD')
+                },
+              ] : 
+              [
+                { 
+                  title: 'Taux de désinscription (RGPD)', num: 'GDPR_UNSUBSCRIBED', den: 'GDPR_SENT',
+                  columns: this.rates('GDPR_UNSUBSCRIBED', 'GDPR_SENT', true)
+                }
+              ];
+          }
+        },
+        rates() {
+          /* This function gets one rate from the events for all versions */
+          return (numKey, denKey, gdpr = false) => {
+            const counts = gdpr ? this.res.gdprCounts : this.res.counts;
+            const versions = gdpr ? this.res.gdprVersions : this.res.versions;
+            if (!counts || !versions) return {};
+            const res = {}
+            for (const version of versions) {
+              const num = this.eventCountForVersion(numKey, gdpr);
+              const den = this.eventCountForVersion(denKey, gdpr);
+              res[version] = den > 0 ? 100 * (num / den) : null;
+            }
+            return res;
+          };
+        },
+        isCellConsistent() {
+          // Determines the coherence of the number displayed in a cell
+          return (row, version, gdpr = false) => {
+            const num = this.eventCountForVersion(row.num, gdpr);
+            const den = this.eventCountForVersion(row.den, gdpr);
+            return (num && den && num > 0 && den > 0 && den >= num) ||
+              (!num && !den) || (!num && den > 0);
+          };
+        },
+        cellClass() {
+          // Determines the classes applied to the cell according the its consistency
+          return (row, version, gdpr) => {
+            return {
+              danger: !this.isCellConsistent(row, version, gdpr)
+            };
+          };
+        },
+        // Computing the data that will be used for the first table
+        tableNumbersRows() {
+          const eventsType = this.res && ((!this.gdprMode) ? this.res.eventsType : this.res.gdprEventsType) || [];
+          const counts = this.res.counts;
+          return eventsType.map(eventType => ({ title: eventType, columns: counts[eventType] }));
+        },
+        numbers() {
+          return (key, gdpr = false) => {
+            const counts = gdpr ? this.res.gdprCounts : this.res.counts;
+            const versions = gdpr ? this.res.gdprVersions : this.res.versions;
+            if (!counts || !versions) return {};
+            return counts;
+          };
+        }
+      },
+      methods: {
+        _load: function(garage, campaignTarget, contactType) {
+          var url = ADMIN_AUTOMATION_EVENTSFETCH;
+          // Apply the filters
+          const filters = { period: this.period };
+          if (garage) filters.garage = garage;
+          if (campaignTarget) filters.campaignTarget = campaignTarget;
+          if (contactType) filters.contactType = contactType;
+          if (Object.keys(filters).length) {
+            url += '?' + Object.keys(filters).map(key => `${key}=${filters[key]}`).join('&');
+          }
+
+    		  var request = new XMLHttpRequest();
+          request.open('GET', url , true);
+          request.onload = function onload() {
+            if (request.status !== 200 && request.status !== 304) {
+              console.log('[load] Erreur sur le serveur');
+            } else {
+              var res = JSON.parse(request.responseText);
+              if (!res) {
+                console.log('[load] Erreur sur le serveur (json error)');
+              } else {
+                this.$set(this.res, 'status', res.status);
+                this.$set(this.res, 'error', res.error);
+                this.$set(this.res, 'today', res.data && res.data.today);
+                this.$set(this.res, 'period', res.data && res.data.period);
+                this.$set(this.res, 'garage', res.data && res.data.garage);
+                this.$set(this.res, 'counts', res.data && res.data.counts);
+                this.$set(this.res, 'gdprCounts', res.data && res.data.gdprCounts);
+                this.$set(this.res, 'eventsType', res.data && res.data.eventsType);
+                this.$set(this.res, 'gdprEventsType', res.data && res.data.gdprEventsType);
+                this.$set(this.res, 'versions', res.data && res.data.versions);
+                this.$set(this.res, 'gdprVersions', res.data && res.data.gdprVersions);
+                this.lastContactType = contactType;
+                // this.$set(this.res, 'days', res.data && res.data.days); // that was here before
+              }
+            }
+          }.bind(this);
+          request.send();
+        },
+        loadAll: function() {
+          this._load(null, this.selectedTarget, this.selectedContactType);
+        },
+        loadGarage: function () {
+          this._load(this.selectedGarage, this.selectedTarget, this.selectedContactType);
+        },
+        garageIdUpdated: function (garage, cancelAutocomplete) {
+          this.selectedGarage = garage.id;
+        },
+        toggleContactType: function () {
+          this.mobileMode = !this.mobileMode;
+          this.selectedContactType = this.mobileMode ? 'MOBILE' : 'EMAIL';
+        },
+        toggleGdprMode: function () {
+          this.gdprMode = !this.gdprMode;
+        },
+        percentage(numerator, denominator) {
+          return isNaN(numerator/denominator) ? '--' : (numerator/denominator).toFixed(3) * 100;
+        },
+        async getAutomationMonitoringSettings() {
+          try {
+            const res = await axios.get('{{ lib.client.url.getUrl('ADMIN_AUTOMATION_FETCH_MONITORING_SETTINGS') }}');
+            this.automationMonitoringSettings = res.data;
+            this.setAutomationMonitoringSettings = res.data;
+          } catch (e) {
+            console.log(e);
+          }
+        },
+        async updateautomationMonitoringSettings(type, day, setting) {
+          try {
+            const res = await axios.post('{{ lib.client.url.getUrl('ADMIN_AUTOMATION_UPDATE_MONITORING_SETTINGS') }}', {
+              type, day, setting
+            });
+            await this.getAutomationMonitoringSettings();
+            alert('Succès !');
+          } catch (e) {
+            console.log(e);
+          }
+        }
+      }
+    });
+  });
+
+</script>
+
+{% endblock %}

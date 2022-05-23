@@ -1,0 +1,76 @@
+{
+  "name": "AutomationCampaignsCustomContent",
+  "base": "GarageScoreBaseModel",
+  "options": {},
+  "mongodb": {
+  "collection": "automationCampaignsCustomContent"
+  },
+  "http": {
+    "path": "automation-campaigns-custom-content"
+  },
+  "properties": {
+    "displayName": {
+      "type": "String"
+    },
+    "target": {
+      "type": "String"
+    },
+    "promotionalMessage": {
+      "type": "String"
+    },
+    "themeColor": {
+      "type": "String"
+    },
+    "dayNumberStart": {
+      "type": "Number"
+    },
+    "dayNumberEnd": {
+      "type": "Number"
+    },
+    "noExpirationDate": {
+      "type": "Boolean"
+    },
+    "createdBy": {
+      "type": "String"
+    },
+    "lastModifiedBy": {
+      "type": "Date"
+    },
+    "lastModifiedAt": {
+      "type": "Date"
+    },
+    "activeGarageIds": {
+      "type": "String"
+    },
+    "allTimeGarageIds": {
+      "type": "String"
+    },
+    "customUrl": {
+      "type": "String"
+    },
+    "customButtonText": {
+      "type": "String"
+    }
+  },
+  "indexes": {
+    "dayNumberEnd": {
+      "name": "type", "keys": { "type": 1 }
+    },
+    "targetGarageIds": {
+      "name": "targetGarageIds", "keys": {
+        "target": 1,
+        "allTimeGarageIds": 1
+      }
+    },
+    "activeGarageIds": {
+      "name": "activeGarageIds", "keys": { "activeGarageIds": 1 }
+    },
+    "allTimeGarageIds": {
+      "name": "allTimeGarageIds", "keys": { "allTimeGarageIds": 1 }
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

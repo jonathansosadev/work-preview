@@ -1,0 +1,40 @@
+{
+  "name": "DatasAsyncviewLeadTicket",
+  "plural": "DatasAsyncviewLeadTickets",
+  "base": "GarageScoreBaseModel",
+  "description": "Read-only collection containing the datas with a leadTicket. Datas automatically inserted & updated",
+  "options": {
+    "strictObjectIDCoercion": true
+  },
+  "mongodb": {
+    "collection": "datas_asyncview_leadTicket"
+  },
+  "http": {
+    "path": "datas_asyncview_leadTicket"
+  },
+  "mixins": {
+    "FindWithProjection": true,
+    "MongoDirect": {
+      "whereBuildAddons": true
+    }
+  },
+  "properties": {},
+  "indexes": {
+    "cockpitManualLeadSources": { "garageId": 1, "source.type": 1 },
+    "garageId_-1_lead.isConverted_-1": { "garageId" : -1.0, "lead.isConverted" : -1.0 },
+    "garageId_-1_lead.isConverted_-1_lead.convertedToSaleAt_-1": {
+      "garageId" : -1.0,
+      "lead.isConverted" : -1.0,
+      "lead.convertedToSaleAt" : -1.0
+    },
+    "garageId_-1_lead.isConverted_-1_lead.convertedToTradeInAt_-1": {
+      "garageId" : -1.0,
+      "lead.isConverted" : -1.0,
+      "lead.convertedToTradeInAt" : -1.0
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

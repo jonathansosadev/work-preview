@@ -1,0 +1,44 @@
+{
+    "externalId" : "<606c6ff18f604f3cb9df3d7695caaa5b@albi.sndiffusion.fr>",
+    "type" : "Email",
+    "status" : "New",
+    "sourceType" : "CustomVn",
+    "payload" : {
+        "to" : "customvn.577a30d774616c1a0056c263@discuss.garagescore.com",
+        "subject" : "Nouvelle demande d'informations véhicule",
+        "html" : "<p>Bonjour,\r\n\r\nUn internaute a effectuée une nouvelle demande d'information concernant un véhicule.\r\nMerci de reprendre au plus vite contact auprès du client rapidement pour lui apporter une réponse.\r\n\r\nPrénom : \r\nNom : Bernard GUIRAL\r\nE-mail : bernard.guiral@sfr.fr\r\nTéléphone : 0698804184\r\n-------------------------------------------\r\nMarque : CITROEN\r\nModèle : C5 AIRCROSS\r\nVersion : Puretech 180 EAT8 SHINE Toit Ouvrant Hayon\r\nPrix : 31450\r\n\r\nMessage de l'internaute :\r\nJe suis intéressé(e) par ce véhicule et souhaite obtenir des informations complémentaires sur sa vente Bonsoir Pourriez vous m'indiquer votre proposition de reprise d'une mercedes classe a blanche essence 200 163cv de jjuillet 2018 ,18000kms avec option toit panoramique ouvrant ,pack black(jantes noires de 19 pouces,retros noirs,toit noir ) premiére main ,état irréprochable,grand écran. cordialement BERNARD GUIRAL (déjà client chez sn diffusion albi lors achat q3 en 2012)\r\n\r\nVous pouvez retrouver cette demande dans le back office.\r\n\r\nCordialement.</p>",
+        "attachments" : []
+    },
+    "raw" : {
+        "timestamp" : "1617719282",
+        "token" : "cefae7d2cf78e1baa3d24b0b60c0218ed4214a2b565792b650",
+        "signature" : "202651553351215f56cd68f66377a4893f61d66091c0891ddfca068f7d88f525",
+        "recipient" : "customvn.577a30d774616c1a0056c263@discuss.garagescore.com",
+        "Received" : [ 
+            "from sn.netfpn.net (sn.netfpn.net [149.202.170.91]) by mxa.mailgun.org with ESMTP id 606c6ff1.7f6f582ed458-smtp-in-n01; Tue, 06 Apr 2021 14:28:01 -0000 (UTC)", 
+            "from sn.netfpn.net (localhost [127.0.0.1])\tby sn.netfpn.net (8.15.2/8.15.2/Debian-10) with ESMTP id 136ES1Q2015744\tfor <customvn.577a30d774616c1a0056c263@discuss.garagescore.com>; Tue, 6 Apr 2021 16:28:01 +0200", 
+            "(from www-data@localhost)\tby sn.netfpn.net (8.15.2/8.15.2/Submit) id 136ES13x015743;\tTue, 6 Apr 2021 16:28:01 +0200"
+        ],
+        "domain" : "discuss.garagescore.com",
+        "from" : "\"sndiffusion.fr\" <noreply@sndiffusion.fr>",
+        "sender" : "www-data@sn.netfpn.net",
+        "Subject" : "Nouvelle demande d'informations véhicule",
+        "Content-Transfer-Encoding" : "8bit",
+        "X-Mailgun-Incoming" : "Yes",
+        "subject" : "Nouvelle demande d'informations véhicule",
+        "message-url" : "https://storage.eu.mailgun.net/v3/domains/discuss.garagescore.com/messages/AgEFTc5mOZE17KhmaZtGwL_NrksY7n_LZA==",
+        "X-Mailer" : "CakePHP Email",
+        "To" : "customvn.577a30d774616c1a0056c263@discuss.garagescore.com",
+        "X-Envelope-From" : "<www-data@sn.netfpn.net>",
+        "message-headers" : "[[\"X-Mailgun-Incoming\", \"Yes\"], [\"X-Envelope-From\", \"<www-data@sn.netfpn.net>\"], [\"Received\", \"from sn.netfpn.net (sn.netfpn.net [149.202.170.91]) by mxa.mailgun.org with ESMTP id 606c6ff1.7f6f582ed458-smtp-in-n01; Tue, 06 Apr 2021 14:28:01 -0000 (UTC)\"], [\"Received\", \"from sn.netfpn.net (localhost [127.0.0.1])\\tby sn.netfpn.net (8.15.2/8.15.2/Debian-10) with ESMTP id 136ES1Q2015744\\tfor <customvn.577a30d774616c1a0056c263@discuss.garagescore.com>; Tue, 6 Apr 2021 16:28:01 +0200\"], [\"Received\", \"(from www-data@localhost)\\tby sn.netfpn.net (8.15.2/8.15.2/Submit) id 136ES13x015743;\\tTue, 6 Apr 2021 16:28:01 +0200\"], [\"To\", \"customvn.577a30d774616c1a0056c263@discuss.garagescore.com\"], [\"Subject\", \"Nouvelle demande d'informations v\\u00e9hicule\"], [\"From\", \"\\\"sndiffusion.fr\\\" <noreply@sndiffusion.fr>\"], [\"Reply-To\", \"bernard.guiral@sfr.fr\"], [\"X-Mailer\", \"CakePHP Email\"], [\"Date\", \"Tue, 06 Apr 2021 16:28:01 +0200\"], [\"Message-Id\", \"<606c6ff18f604f3cb9df3d7695caaa5b@albi.sndiffusion.fr>\"], [\"Mime-Version\", \"1.0\"], [\"Content-Type\", \"text/plain; charset=\\\"UTF-8\\\"\"], [\"Content-Transfer-Encoding\", \"8bit\"]]",
+        "Date" : "Tue, 06 Apr 2021 16:28:01 +0200",
+        "From" : "\"sndiffusion.fr\" <noreply@sndiffusion.fr>",
+        "Reply-To" : "bernard.guiral@sfr.fr",
+        "Message-Id" : "<606c6ff18f604f3cb9df3d7695caaa5b@albi.sndiffusion.fr>",
+        "Content-Type" : "text/plain; charset=\"UTF-8\"",
+        "Mime-Version" : "1.0",
+        "body-plain" : "Bonjour,\r\n\r\nUn internaute a effectuée une nouvelle demande d'information concernant un véhicule.\r\nMerci de reprendre au plus vite contact auprès du client rapidement pour lui apporter une réponse.\r\n\r\nPrénom : \r\nNom : Bernard GUIRAL\r\nE-mail : bernard.guiral@sfr.fr\r\nTéléphone : 0698804184\r\n-------------------------------------------\r\nMarque : CITROEN\r\nModèle : C5 AIRCROSS\r\nVersion : Puretech 180 EAT8 SHINE Toit Ouvrant Hayon\r\nPrix : 31450\r\n\r\nMessage de l'internaute :\r\nJe suis intéressé(e) par ce véhicule et souhaite obtenir des informations complémentaires sur sa vente Bonsoir Pourriez vous m'indiquer votre proposition de reprise d'une mercedes classe a blanche essence 200 163cv de jjuillet 2018 ,18000kms avec option toit panoramique ouvrant ,pack black(jantes noires de 19 pouces,retros noirs,toit noir ) premiére main ,état irréprochable,grand écran. cordialement BERNARD GUIRAL (déjà client chez sn diffusion albi lors achat q3 en 2012)\r\n\r\nVous pouvez retrouver cette demande dans le back office.\r\n\r\nCordialement.\r\n\r\n",
+        "stripped-text" : "Bonjour,\r\n\r\nUn internaute a effectuée une nouvelle demande d'information concernant un véhicule.\r\nMerci de reprendre au plus vite contact auprès du client rapidement pour lui apporter une réponse.\r\n\r\nPrénom : \r\nNom : Bernard GUIRAL\r\nE-mail : bernard.guiral@sfr.fr\r\nTéléphone : 0698804184\r\n-------------------------------------------\r\nMarque : CITROEN\r\nModèle : C5 AIRCROSS\r\nVersion : Puretech 180 EAT8 SHINE Toit Ouvrant Hayon\r\nPrix : 31450\r\n\r\nMessage de l'internaute :\r\nJe suis intéressé(e) par ce véhicule et souhaite obtenir des informations complémentaires sur sa vente Bonsoir Pourriez vous m'indiquer votre proposition de reprise d'une mercedes classe a blanche essence 200 163cv de jjuillet 2018 ,18000kms avec option toit panoramique ouvrant ,pack black(jantes noires de 19 pouces,retros noirs,toit noir ) premiére main ,état irréprochable,grand écran. cordialement BERNARD GUIRAL (déjà client chez sn diffusion albi lors achat q3 en 2012)\r\n\r\nVous pouvez retrouver cette demande dans le back office.\r\n\r\nCordialement.",
+        "stripped-html" : "<p>Bonjour,\r\n\r\nUn internaute a effectuée une nouvelle demande d'information concernant un véhicule.\r\nMerci de reprendre au plus vite contact auprès du client rapidement pour lui apporter une réponse.\r\n\r\nPrénom : \r\nNom : Bernard GUIRAL\r\nE-mail : bernard.guiral@sfr.fr\r\nTéléphone : 0698804184\r\n-------------------------------------------\r\nMarque : CITROEN\r\nModèle : C5 AIRCROSS\r\nVersion : Puretech 180 EAT8 SHINE Toit Ouvrant Hayon\r\nPrix : 31450\r\n\r\nMessage de l'internaute :\r\nJe suis intéressé(e) par ce véhicule et souhaite obtenir des informations complémentaires sur sa vente Bonsoir Pourriez vous m'indiquer votre proposition de reprise d'une mercedes classe a blanche essence 200 163cv de jjuillet 2018 ,18000kms avec option toit panoramique ouvrant ,pack black(jantes noires de 19 pouces,retros noirs,toit noir ) premiére main ,état irréprochable,grand écran. cordialement BERNARD GUIRAL (déjà client chez sn diffusion albi lors achat q3 en 2012)\r\n\r\nVous pouvez retrouver cette demande dans le back office.\r\n\r\nCordialement.</p>"
+    }
+}

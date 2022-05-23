@@ -1,0 +1,48 @@
+{
+  "name": "Event",
+  "plural": "Events",
+  "base": "PersistedModel",
+  "options": {
+  },
+  "http": {
+    "path": "event"
+  },
+  "mixins": {
+    "Stream": true,
+    "SmartSort": true
+  },
+  "indexes": {
+    "garage_id_complet_at_index": {
+      "keys": {
+        "emitterModel": 1,
+        "emitterId": 1
+      }
+    }
+  },
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "emitterModel": {
+      "type": "string"
+    },
+    "emitterId": {
+      "type": "string",
+      "index": "true"
+    },
+    "date": {
+      "type": "date",
+      "default": "$now"
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "validations": [],
+  "relations": {
+  },
+  "acls": [
+  ],
+  "methods": {
+  }
+}

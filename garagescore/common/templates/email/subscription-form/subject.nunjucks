@@ -1,0 +1,5 @@
+{% if config.withDealer %}
+Votre inscription GarageScore du garage {{ garages[0].name }} est finalisée
+{% else %}
+Récapitulatif de votre inscription sur GarageScore
+{% endif %}

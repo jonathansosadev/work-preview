@@ -1,0 +1,44 @@
+{
+    "externalId" : "<606c25ce50904315a1b27ab895caaa5b@www.sndiffusion.fr>",
+    "type" : "Email",
+    "status" : "New",
+    "sourceType" : "CustomVo",
+    "payload" : {
+        "to" : "customvo.577a30d774616c1a0056c263@discuss.garagescore.com",
+        "subject" : "Nouvelle demande d'informations véhicule",
+        "html" : "<p>Bonjour,\r\n\r\nUn internaute a effectuée une nouvelle demande d'information concernant un véhicule.\r\nMerci de reprendre au plus vite contact auprès du client rapidement pour lui apporter une réponse.\r\n\r\nPrénom : \r\nNom : dominique guimera\r\nE-mail : guimeradominique@club-internet.fr\r\nTéléphone : 0626860352\r\n-------------------------------------------\r\nMarque : PEUGEOT\r\nModèle : 2008\r\nVersion : PureTech 110 BV6 CROSSWAY Toit Pano Pack Confort\r\nPrix : 17490\r\n\r\nMessage de l'internaute :\r\nJe suis intéressé(e) par ce véhicule et souhaite obtenir des informations complémentaires sur sa vente, est-il toujours dispo, lieu ou nous pouvons le voir, garantie, kms actuel, votre meilleur offre sachant que l'achat est pour le mois à venir. Merci de votre réponse. Cdlt\r\n\r\nVous pouvez retrouver cette demande dans le back office.\r\n\r\nCordialement.</p>",
+        "attachments" : []
+    },
+    "raw" : {
+        "timestamp" : "1617700303",
+        "token" : "faf06e0433b6bf193420fea85737f6483b5da61b0f75b2a208",
+        "signature" : "a5382c7a33dc51328b197e993f1e0eeb72b0e87288c46ff6a787e7f4a952051f",
+        "recipient" : "customvo.577a30d774616c1a0056c263@discuss.garagescore.com",
+        "Received" : [ 
+            "from sn.netfpn.net (sn.netfpn.net [149.202.170.91]) by mxa.mailgun.org with ESMTP id 606c25cf.7f3fccb30ae8-smtp-in-n02; Tue, 06 Apr 2021 09:11:43 -0000 (UTC)", 
+            "from sn.netfpn.net (localhost [127.0.0.1])\tby sn.netfpn.net (8.15.2/8.15.2/Debian-10) with ESMTP id 1369BgOV031549\tfor <customvo.577a30d774616c1a0056c263@discuss.garagescore.com>; Tue, 6 Apr 2021 11:11:42 +0200", 
+            "(from www-data@localhost)\tby sn.netfpn.net (8.15.2/8.15.2/Submit) id 1369BgGE031548;\tTue, 6 Apr 2021 11:11:42 +0200"
+        ],
+        "domain" : "discuss.garagescore.com",
+        "from" : "\"sndiffusion.fr\" <noreply@sndiffusion.fr>",
+        "sender" : "www-data@sn.netfpn.net",
+        "Subject" : "Nouvelle demande d'informations véhicule",
+        "Content-Transfer-Encoding" : "8bit",
+        "X-Mailgun-Incoming" : "Yes",
+        "subject" : "Nouvelle demande d'informations véhicule",
+        "message-url" : "https://storage.eu.mailgun.net/v3/domains/discuss.garagescore.com/messages/AgEFtB6NipCqaPIUC8JDH7C9wzH3YjYSZA==",
+        "X-Mailer" : "CakePHP Email",
+        "To" : "customvo.577a30d774616c1a0056c263@discuss.garagescore.com",
+        "X-Envelope-From" : "<www-data@sn.netfpn.net>",
+        "message-headers" : "[[\"X-Mailgun-Incoming\", \"Yes\"], [\"X-Envelope-From\", \"<www-data@sn.netfpn.net>\"], [\"Received\", \"from sn.netfpn.net (sn.netfpn.net [149.202.170.91]) by mxa.mailgun.org with ESMTP id 606c25cf.7f3fccb30ae8-smtp-in-n02; Tue, 06 Apr 2021 09:11:43 -0000 (UTC)\"], [\"Received\", \"from sn.netfpn.net (localhost [127.0.0.1])\\tby sn.netfpn.net (8.15.2/8.15.2/Debian-10) with ESMTP id 1369BgOV031549\\tfor <customvo.577a30d774616c1a0056c263@discuss.garagescore.com>; Tue, 6 Apr 2021 11:11:42 +0200\"], [\"Received\", \"(from www-data@localhost)\\tby sn.netfpn.net (8.15.2/8.15.2/Submit) id 1369BgGE031548;\\tTue, 6 Apr 2021 11:11:42 +0200\"], [\"To\", \"customvo.577a30d774616c1a0056c263@discuss.garagescore.com\"], [\"Subject\", \"Nouvelle demande d'informations v\\u00e9hicule\"], [\"From\", \"\\\"sndiffusion.fr\\\" <noreply@sndiffusion.fr>\"], [\"Reply-To\", \"guimeradominique@club-internet.fr\"], [\"X-Mailer\", \"CakePHP Email\"], [\"Date\", \"Tue, 06 Apr 2021 11:11:42 +0200\"], [\"Message-Id\", \"<606c25ce50904315a1b27ab895caaa5b@www.sndiffusion.fr>\"], [\"Mime-Version\", \"1.0\"], [\"Content-Type\", \"text/plain; charset=\\\"UTF-8\\\"\"], [\"Content-Transfer-Encoding\", \"8bit\"]]",
+        "Date" : "Tue, 06 Apr 2021 11:11:42 +0200",
+        "From" : "\"sndiffusion.fr\" <noreply@sndiffusion.fr>",
+        "Reply-To" : "guimeradominique@club-internet.fr",
+        "Message-Id" : "<606c25ce50904315a1b27ab895caaa5b@www.sndiffusion.fr>",
+        "Content-Type" : "text/plain; charset=\"UTF-8\"",
+        "Mime-Version" : "1.0",
+        "body-plain" : "Bonjour,\r\n\r\nUn internaute a effectuée une nouvelle demande d'information concernant un véhicule.\r\nMerci de reprendre au plus vite contact auprès du client rapidement pour lui apporter une réponse.\r\n\r\nPrénom : \r\nNom : dominique guimera\r\nE-mail : guimeradominique@club-internet.fr\r\nTéléphone : 0626860352\r\n-------------------------------------------\r\nMarque : PEUGEOT\r\nModèle : 2008\r\nVersion : PureTech 110 BV6 CROSSWAY Toit Pano Pack Confort\r\nPrix : 17490\r\n\r\nMessage de l'internaute :\r\nJe suis intéressé(e) par ce véhicule et souhaite obtenir des informations complémentaires sur sa vente, est-il toujours dispo, lieu ou nous pouvons le voir, garantie, kms actuel, votre meilleur offre sachant que l'achat est pour le mois à venir. Merci de votre réponse. Cdlt\r\n\r\nVous pouvez retrouver cette demande dans le back office.\r\n\r\nCordialement.\r\n\r\n",
+        "stripped-text" : "Bonjour,\r\n\r\nUn internaute a effectuée une nouvelle demande d'information concernant un véhicule.\r\nMerci de reprendre au plus vite contact auprès du client rapidement pour lui apporter une réponse.\r\n\r\nPrénom : \r\nNom : dominique guimera\r\nE-mail : guimeradominique@club-internet.fr\r\nTéléphone : 0626860352\r\n-------------------------------------------\r\nMarque : PEUGEOT\r\nModèle : 2008\r\nVersion : PureTech 110 BV6 CROSSWAY Toit Pano Pack Confort\r\nPrix : 17490\r\n\r\nMessage de l'internaute :\r\nJe suis intéressé(e) par ce véhicule et souhaite obtenir des informations complémentaires sur sa vente, est-il toujours dispo, lieu ou nous pouvons le voir, garantie, kms actuel, votre meilleur offre sachant que l'achat est pour le mois à venir. Merci de votre réponse. Cdlt\r\n\r\nVous pouvez retrouver cette demande dans le back office.\r\n\r\nCordialement.",
+        "stripped-html" : "<p>Bonjour,\r\n\r\nUn internaute a effectuée une nouvelle demande d'information concernant un véhicule.\r\nMerci de reprendre au plus vite contact auprès du client rapidement pour lui apporter une réponse.\r\n\r\nPrénom : \r\nNom : dominique guimera\r\nE-mail : guimeradominique@club-internet.fr\r\nTéléphone : 0626860352\r\n-------------------------------------------\r\nMarque : PEUGEOT\r\nModèle : 2008\r\nVersion : PureTech 110 BV6 CROSSWAY Toit Pano Pack Confort\r\nPrix : 17490\r\n\r\nMessage de l'internaute :\r\nJe suis intéressé(e) par ce véhicule et souhaite obtenir des informations complémentaires sur sa vente, est-il toujours dispo, lieu ou nous pouvons le voir, garantie, kms actuel, votre meilleur offre sachant que l'achat est pour le mois à venir. Merci de votre réponse. Cdlt\r\n\r\nVous pouvez retrouver cette demande dans le back office.\r\n\r\nCordialement.</p>"
+    }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "AccessHistory",
+  "plural": "AccessHistories",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "http": {
+    "path": "access-history"
+  },
+  "mixins": {
+    "Stream": true,
+    "SmartSort": true
+  },
+  "mongodb": {
+    "collection": "accessHistory"
+  },
+  "indexes": {
+    "userId_section": { "userId": -1, "section": -1 }
+  },
+  "properties": {
+  },
+  "validations": [],
+  "relations": {
+  },
+  "acls": [
+  ],
+  "methods": {
+  }
+}

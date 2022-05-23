@@ -1,0 +1,32 @@
+{
+  "UNREACHABLE_CUSTOMER": {
+    "value": "UnreachableCustomer",
+    "properties": {
+      "cockpitTypes": ["Dealership", "MotorbikeDealership", "VehicleInspection"]
+    }
+  },
+  "REJECTED_SOLUTION": {
+    "value": "RejectedSolution",
+    "properties": {
+      "cockpitTypes": ["Dealership", "MotorbikeDealership", "VehicleInspection"]
+    }
+  },
+  "CONSTRUCTOR_PROBLEM": {
+    "value": "ConstructorProblem",
+    "properties": {
+      "cockpitTypes": ["VehicleInspection"]
+    }
+  },
+  "UNJUSTIFIED_CLAIM": {
+    "value": "UnjustifiedClaim",
+    "properties": {
+      "cockpitTypes": ["Dealership", "MotorbikeDealership", "VehicleInspection"]
+    }
+  },
+  "OTHER_SERVICE_PROBLEM": {
+    "value": "OtherServiceProblem",
+    "properties": {
+      "cockpitTypes": ["MotorbikeDealership", "VehicleInspection"]
+    }
+  }
+}

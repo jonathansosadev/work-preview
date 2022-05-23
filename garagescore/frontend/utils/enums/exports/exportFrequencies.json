@@ -1,0 +1,22 @@
+{
+  "NONE": {
+    "value": "NONE",
+    "properties": {
+    }
+  },
+  "EVERY_DAY": {
+    "value": "EVERY_DAY",
+    "properties": {
+    }
+  },
+  "EVERY_WEEK_ON_MONDAY": {
+    "value": "EVERY_WEEK_ON_MONDAY",
+    "properties": {
+    }
+  },
+  "EVERY_MONTH_ON_10": {
+    "value": "EVERY_MONTH_ON_10",
+    "properties": {
+    }
+  }
+}

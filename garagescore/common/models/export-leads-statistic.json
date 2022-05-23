@@ -1,0 +1,38 @@
+{
+  "name": "ExportLeadsStatistic",
+  "plural": "ExportLeadsStatistics",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "http": {
+    "path": "export-leads-statistic"
+  },
+  "mixins": {
+    "Stream": true,
+    "SmartSort": true
+  },
+  "mongodb": {
+    "collection": "exportLeadsStatistics"
+  },
+  "indexes": {
+    "date": { "date": -1 },
+    "executionStep": { "executionStepNumber": -1 }
+  },
+  "properties": {
+    "executionDate":{ 
+      "type": "string",
+      "required": "true"
+    },
+    "executionStepNumber":{ 
+      "type": "number",
+      "required": "true"
+    }
+  },
+  "validations": [],
+  "relations": {
+  },
+  "acls": [
+  ],
+  "methods": {
+  }
+}

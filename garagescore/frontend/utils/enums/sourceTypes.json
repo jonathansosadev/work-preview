@@ -1,0 +1,403 @@
+{
+  "DATAFILE": {
+    "value": "DataFile",
+    "properties": {
+      "intValue": 2,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": false,
+      "category": "DEFAULT",
+      "saleType": null,
+      "automaticRepliesSupported": true,
+      "isDealership": true
+    }
+  },
+  "GOOGLE": {
+    "value": "Google",
+    "properties": {
+      "intValue": 11,
+      "isExogenous": true,
+      "canHaveALeadOrUnsatisfiedTicket": false,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": false,
+      "manualLeadSource": true,
+      "category": "DEFAULT",
+      "saleType": ["Maintenance", "NewVehicleSale", "UsedVehicleSale"],
+      "automaticRepliesSupported": true
+    }
+  },
+  "FACEBOOK": {
+    "value": "Facebook",
+    "properties": {
+      "intValue": 12,
+      "isExogenous": true,
+      "canHaveALeadOrUnsatisfiedTicket": false,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": false,
+      "manualLeadSource": true,
+      "category": "DEFAULT",
+      "saleType": ["Maintenance", "NewVehicleSale", "UsedVehicleSale"],
+      "automaticRepliesSupported": true
+    }
+  },
+  "PAGESJAUNES": {
+    "value": "PagesJaunes",
+    "properties": {
+      "intValue": 13,
+      "isExogenous": true,
+      "canHaveALeadOrUnsatisfiedTicket": false,
+      "supportedCrossLeadsSources": false,
+      "category": "DEFAULT",
+      "saleType": null
+    }
+  },
+  "AGENT": {
+    "value": "Agent",
+    "properties": {
+      "intValue": 3,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": false,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": false,
+      "category": "DEFAULT",
+      "saleType": null,
+      "isDealership": true
+    }
+  },
+  "MANUAL_LEAD": {
+    "value": "ManualLead",
+    "properties": {
+      "intValue": 1,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": false,
+      "manualLeadSource": true,
+      "category": "DEFAULT",
+      "saleType": null
+    }
+  },
+  "MANUAL_UNSATISFIED": {
+    "value": "ManualUnsatisfied",
+    "properties": {
+      "intValue": 6,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "supportedCrossLeadsSources": false,
+      "manualLeadSource": true,
+      "category": "DEFAULT",
+      "saleType": null
+    }
+  },
+  "AUTOMATION": {
+    "value": "Automation",
+    "properties": {
+      "intValue": 300,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": false,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": false,
+      "category": "AUTOMATION",
+      "saleType": null
+    }
+  },
+  "CUSTOM_VO": {
+    "value": "CustomVo",
+    "properties": {
+      "intValue": 106,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": true,
+      "category": "XLEADS",
+      "saleType": "UsedVehicleSale"
+    }
+  },
+  "LA_CENTRALE": {
+    "value": "LaCentrale",
+    "properties": {
+      "intValue": 101,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": true,
+      "category": "XLEADS",
+      "saleType": "UsedVehicleSale"
+    }
+  },
+  "LE_BON_COIN": {
+    "value": "LeBonCoin",
+    "properties": {
+      "intValue": 102,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": true,
+      "category": "XLEADS",
+      "saleType": "UsedVehicleSale"
+    }
+  },
+  "L_ARGUS": {
+    "value": "Largus",
+    "properties": {
+      "intValue": 103,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": true,
+      "category": "XLEADS",
+      "saleType": "UsedVehicleSale"
+    }
+  },
+  "PARU_VENDU": {
+    "value": "ParuVendu",
+    "properties": {
+      "intValue": 104,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": true,
+      "category": "XLEADS",
+      "saleType": "UsedVehicleSale"
+    }
+  },
+  "PROMONEUVE": {
+    "value": "Promoneuve",
+    "properties": {
+      "intValue": 105,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": true,
+      "category": "XLEADS",
+      "saleType": "NewVehicleSale"
+    }
+  },
+  "OUEST_FRANCE_AUTO": {
+    "value": "OuestFranceAuto",
+    "properties": {
+      "intValue": 107,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": true,
+      "category": "XLEADS",
+      "saleType": "UsedVehicleSale"
+    }
+  },
+  "ZOOMCAR": {
+    "value": "Zoomcar",
+    "properties": {
+      "intValue": 108,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": true,
+      "category": "XLEADS",
+      "saleType": "UsedVehicleSale"
+    }
+  },
+  "CUSTOM_VN": {
+    "value": "CustomVn",
+    "properties": {
+      "intValue": 109,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": true,
+      "category": "XLEADS",
+      "saleType": "NewVehicleSale"
+    }
+  },
+  "CUSTOM_APV": {
+    "value": "CustomApv",
+    "properties": {
+      "intValue": 110,
+      "isExogenous": false,
+      "canHaveLeadTicket": true,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "supportedCrossLeadsSources": true,
+      "category": "XLEADS",
+      "saleType": "Maintenance"
+    }
+  },
+  "EKONSILIO_VO": {
+    "value": "EkonsilioVo",
+    "properties": {
+      "intValue": 111,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": true,
+      "category": "XLEADS",
+      "saleType": "UsedVehicleSale"
+    }
+  },
+  "EKONSILIO_VN": {
+    "value": "EkonsilioVn",
+    "properties": {
+      "intValue": 112,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": true,
+      "category": "XLEADS",
+      "saleType": "NewVehicleSale"
+    }
+  },
+  "C_WAYS": {
+    "value": "Cways",
+    "properties": {
+      "intValue": 900,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "supportedCrossLeadsSources": true,
+      "category": "XLEADS",
+      "saleType": "UsedVehicleSale"
+    }
+  },
+
+  "OCCASIONAL_CUSTOMER": {
+    "value": "OccasionalCustomer",
+    "properties": {
+      "intValue": 201,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": false,
+      "manualLeadSource": true,
+      "category": "DEFAULT",
+      "saleType": ["Maintenance", "NewVehicleSale", "UsedVehicleSale"]
+    }
+  },
+  "MOTOR_SHOW": {
+    "value": "MotorShow",
+    "properties": {
+      "intValue": 202,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": false,
+      "manualLeadSource": true,
+      "category": "DEFAULT",
+      "saleType": ["NewVehicleSale", "UsedVehicleSale"]
+    }
+  },
+  "OPEN_DAYS": {
+    "value": "OpenDays",
+    "properties": {
+      "intValue": 203,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": false,
+      "manualLeadSource": true,
+      "category": "DEFAULT",
+      "saleType": ["NewVehicleSale", "UsedVehicleSale"]
+    }
+  },
+  "MANUFACTURER": {
+    "value": "Manufacturer",
+    "properties": {
+      "intValue": 204,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": false,
+      "manualLeadSource": true,
+      "category": "DEFAULT",
+      "saleType": ["Maintenance", "NewVehicleSale", "UsedVehicleSale"]
+    }
+  },
+  "GROUP_WEBSITE": {
+    "value": "GroupWebsite",
+    "properties": {
+      "intValue": 205,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": false,
+      "manualLeadSource": true,
+      "category": "DEFAULT",
+      "saleType": ["Maintenance", "NewVehicleSale", "UsedVehicleSale"]
+    }
+  },
+  "CHAT": {
+    "value": "Chat",
+    "properties": {
+      "intValue": 207,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": false,
+      "manualLeadSource": true,
+      "category": "DEFAULT",
+      "saleType": ["Maintenance", "NewVehicleSale", "UsedVehicleSale"]
+    }
+  },
+  "CALL_CENTER": {
+    "value": "CallCenter",
+    "properties": {
+      "intValue": 208,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": false,
+      "manualLeadSource": true,
+      "category": "DEFAULT",
+      "saleType": ["Maintenance", "NewVehicleSale", "UsedVehicleSale"]
+    }
+  },
+  "L_ARGUS_REPRISE": {
+    "value": "LArgusReprise",
+    "properties": {
+      "intValue": 209,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": false,
+      "manualLeadSource": true,
+      "category": "DEFAULT",
+      "saleType": ["NewVehicleSale", "UsedVehicleSale"]
+    }
+  },
+  "FACEBOOK_MARKETPLACE": {
+    "value": "FacebookMarketplace",
+    "properties": {
+      "intValue": 210,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": false,
+      "manualLeadSource": true,
+      "category": "DEFAULT",
+      "saleType": ["NewVehicleSale", "UsedVehicleSale"]
+    }
+  },
+  "XLEADS": {
+    "value": "XLeads",
+    "properties": {
+      "intValue": 102,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": true,
+      "category": "XLEADS",
+      "saleType": "UsedVehicleSale"
+    }
+  },
+  "MANUAL": {
+    "value": "Manual",
+    "properties": {
+      "intValue": 1,
+      "isExogenous": false,
+      "canHaveALeadOrUnsatisfiedTicket": true,
+      "canHaveLeadTicket": true,
+      "supportedCrossLeadsSources": false,
+      "manualLeadSource": true,
+      "category": "DEFAULT",
+      "saleType": null
+    }
+  }
+}

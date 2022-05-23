@@ -1,0 +1,63 @@
+{% extends "./_master.nunjucks" %}
+
+{% block title %}Enquêtes{% endblock %}
+{% block questions %}
+<a class="row question" id="q_1" href="#a_1">Quelles sont les conditions pour qu'un avis soit publié sur un certificat ?</a>
+<a class="row question" id="q_2" href="#a_2">Quels sont les critères pour déterminer qu'une note est incohérente ?</a>
+<a class="row question" id="q_3" href="#a_3">Quand partent les emails et sms en fonction des options de campagne ?</a>
+<a class="row question" id="q_4" href="#a_4">Quand partent les emails et sms en fonction des options de campagne ?</a>
+<a class="row question" id="q_5" href="#a_5">Quels sont les scénarios sur le contenu des emails ?</a>
+<a class="row question" id="q_6" href="#a_6">Quels sont les scénarios sur le contenu des sms ?</a>
+<a class="row question" id="q_7" href="#a_7">Quelle valeur prendra la date réponse client </a>
+
+{% endblock %}
+
+{% block answers %}
+<div class="row answer" id="a_1" data-date="en Décembre 2016">
+	<p>Tous les avis et les réponses du garage avec le statut <b>APPROVED</b> sont publiés, quelque soit leur date de publication.</p>
+	<p>Lors de leur dépôt, les avis et réponses du garage sont en <b>PENDING</b>, leur statut doit être modifié depuis le backoffice <a href="{{ lib.client.url.getShortUrl('ADMIN_PUBLIC_REVIEW') }}">{{ lib.client.url.getShortUrl('ADMIN_PUBLIC_REVIEW') }}</a>.</p>
+</div>
+
+<div class="row answer" id="a_2" data-date="en Décembre 2016">
+	<p>Si la note globale est inférieure ou égale à 5 ET la recommandation positive</p>
+	<p>Si la note globale est supérieure ou égale à 8 ET la recommandation négative</p>
+</div>
+
+<div class="row answer" id="a_3" data-date="en Janvier 2017">
+	<p>1) Pendant une campagne, nous allons envoyer jusqu'à 3 emails pour demander au client de répondre à l'enquête :</p>
+	<p>&nbsp;&nbsp;&nbsp;Premier email de contact => Email de relance 1 => Email de relance 2</p>
+	<p>Les <b>emails de relance</b> ne sont envoyés que si le client n'a pas encore répondu à l'enquête, le délai entre chacun est configurable en backoffice, il est aussi possible de désactiver complétement l'envoi.</p>
+	<p>2) Une fois que client à répondu à l'enquête, un email de remerciement va être envoyé. Là aussi, le délai entre la détection de la réponse et l'envoi de l'email peut être configuré, ainsi que la désactivation de l'envoi.</p>
+	<p>3) Si le client répond à une enquête concernant une <b>intervention</b> et laisse un avis avec une note <b>inférieure ou égale à 6</b> ou <b>ne recommande pas le garage</b>, une enquête dite <b>follow up</b>, avec de nouvelles questions, va être envoyée par email. Le délai entre la détection de la réponse et l'envoi de l'email  peut être configuré, ainsi que la désactivation de l'envoi.</p>
+	<p>4) Directement après l'envoi (ou le non-envoi si désactivé) du <b>Premier email de contact</b>, un sms avec un lien vers l'enquête sera envoyé. Le délai entre le premier email et le sms peut être configuré, ainsi que la désactivation de l'envoi.</p>
+</div>
+<div class="row answer" id="a_4" data-date="en Décembre 2016">
+	<p>Une enquête peut-être configurée pour durer 60, 90 ou 120 jours.</p>
+	<p>Passé ce délai, plus aucune réponse ne sera prise en compte.</p>
+	<p>Le délai cumulé entre l'<b>email de premier contact</b> et les <b>emails de relance</b> ne peut dépasser la durée de la campagne.</p>
+</div>
+<div class="row answer" id="a_5" data-date="en Janvier 2017">
+	<p>Tous les emails on un contenu différent.</p>
+	<p>1) Les <b>premiers emails de contact</b> voient leur texte différer si l'enquête concerne une intervention ou une vente de véhicule.</p>
+	<p>2) Les <b>emails de relance</b> sont de legères variations des <b>premiers emails de contact</b>.</p>
+	<p>3) Tous les emails utilisent la 'règle de salutation' suivante:.</p>
+	<p>&nbsp;&nbsp;&nbsp; - Si nous ne connaissons pas le nom du client mais que nous savons que c'est une femme : <b>Cher cliente</b>
+	</p>
+	<p>&nbsp;&nbsp;&nbsp; - Si nous ne connaissons pas le nom du client mais que nous savons que c'est un homme ou que nous ne connaissons pas son genre : <b>Cher client</b>
+	</p>
+	<p>&nbsp;&nbsp;&nbsp; - Si nous ne connaissons le nom du client et sa civilité : <b>Bonjour [civilité] [nom]</b>
+	</p>
+	<p>&nbsp;&nbsp;&nbsp; - Dans les autres cas : <b>Bonjour</b>
+	</p>
+</div>
+
+<div class="row answer" id="a_6" data-date="en Décembre 2016">
+	<p>Les sms contiennent un lien vers l'url de l'enquête et un texte dépendant du type d'enquête (intervention ou vente de véhicule)</p>
+	<p>Pour les ventes, lorsque le nom du garage est suffisament court, il apparait dans le texte.</p>
+	<p>De la même manière, pour les interventions, nous essayons, si il y a assez de place, de mettre en priorité le nom du garage puis si, si il y a toujours assez de place (et que nous disposons de l'information) celui de l'utilisateur.</p>
+</div>
+<div class="row answer" id="a_7" data-date="en Janvier 2017">
+	<p>La date du réponse client ne peut pas prendre la date de fin de l'enquête parcque le client peut ne pas la finir</p>
+	<p>Par conséquence, la date du réponse prend la date de la dernière communication faite avec SurveyGizmo</p>
+</div>
+{% endblock %}

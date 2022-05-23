@@ -1,0 +1,45 @@
+{
+  "name": "PhoneBucket",
+  "base": "GarageScoreBaseModel",
+  "options": {},
+  "mixins": {
+    "SmartSort": true
+  },
+  "mongodb": {
+    "collection": "phoneBucket"
+  },
+  "http": {
+    "path": "phone-bucket"
+  },
+  "properties": {
+    "value": {
+      "type": "String",
+      "required": true
+    },
+    "status": {
+      "type": "String",
+      "required": true
+    },
+    "area": {
+      "type": "String",
+      "required": true
+    },
+    "countryCode": {
+      "type": "String",
+      "required": true
+    },
+    "garageId": {
+      "type": "String"
+    },
+    "sourceType": {
+      "type": "String"
+    },
+    "drawnAt": {
+      "type": "Date"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

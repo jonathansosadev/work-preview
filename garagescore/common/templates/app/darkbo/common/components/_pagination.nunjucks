@@ -1,0 +1,37 @@
+<tr v-if="pageCount > 1" {% if not PaginationDisableStyle %} style="background-color: #e6e6e6" {% endif %}>
+  <td class="container-fluid" {% if PaginationRowSpan %} colspan="{{ PaginationRowSpan }}" {% endif %} style="padding: 10px 0">
+    <div style="display: inline-block;width: 100%">
+      <div class="col-xs-12 text-center">
+        <div class="pagination-button-left-container">
+          <button class="btn pagination-btn" v-bind:disabled="currentPage == 1" v-on:click="goPage(1)">
+            <i class="fa fa-backward" aria-hidden="true"></i>
+          </button>
+          <button class="btn pagination-btn" v-bind:disabled="currentPage == 1" v-on:click="forwardPage()">
+            <i class="fa fa-play back-icon" aria-hidden="true"></i>
+          </button>
+          <button class="btn pagination-btn xs-hide" v-if="currentPage > 2" v-on:click="goPage(currentPage-2)">
+            {{ '{{' }} currentPage-2 {{ '}}' }}
+          </button>
+          <button class="btn pagination-btn xs-hide" v-if="currentPage > 1 " v-on:click="goPage(currentPage-1)">
+            {{ '{{' }} currentPage-1 {{ '}}' }}
+          </button>
+        </div>
+        <div class="btn current-page">{{ '{{' }} currentPage {{ '}}' }}</div>
+        <div class="pagination-button-right-container">
+          <button class="btn pagination-btn xs-hide" v-if="currentPage < (pageCount)" v-on:click="goPage(currentPage+1)">
+            {{ '{{' }} currentPage+1 {{ '}}' }}
+          </button>
+          <button class="btn pagination-btn xs-hide" v-if="currentPage < (pageCount-1)" v-on:click="goPage(currentPage+2)">
+            {{ '{{' }} currentPage+2 {{ '}}' }}
+          </button>
+          <button class="btn pagination-btn" v-bind:disabled="currentPage == pageCount" v-on:click="nextPage()">
+            <i class="fa fa-play" aria-hidden="true"></i>
+          </button>
+          <button class="btn pagination-btn" v-bind:disabled="currentPage == pageCount" v-on:click="goPage(pageCount)">
+            <i class="fa fa-forward" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </td>
+</tr>

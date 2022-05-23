@@ -1,0 +1,459 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+  <style type="text/css">
+    .page-header {
+      margin-top: 20px;
+    }
+    .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th {
+      padding: 5px 10px;
+    }
+    .search-box {
+      margin-bottom: 20px;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 7px;
+    }
+    table.contacts-table th {
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      border: 1px solid black;
+      background: white;
+      color: black;
+    }
+    table.contacts-table td {
+      min-height: 50px;
+      vertical-align: middle;
+      text-align: center;
+      border: 1px solid white;
+    }
+    .btn {
+      cursor: pointer;
+    }
+  </style>
+{% endblock %}
+{% block page %}
+{% raw %}
+  <div id="scheduled-Contacts">
+    <div class="overlay-loading" v-if="loading.contacts || loading.garages || loading.contacts"><div class="centered-loading"></div></div>
+    <div class="page-header">
+      <h1>Calendrier des contacts à venir</h1>
+    </div>
+    <div class="col-md-12 instructions">
+      <p>
+        Voir le nombre de contact en attente d'envoi pour aujourd'hui et les jours suivants.
+      </p>
+      <p>Note: Les jours sont comptés en UTC</p>
+    </div>
+    <div class="col-md-12">
+      <div class="container">
+        <div class="search-box">
+          <div class="row">
+            <div class="col-xs-12">
+              <gs-garages-list :updated="setSelectedGarage" ></gs-garages-list>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12" v-if="selectedGarage" style="color: black">
+              Garage sélectionné: {{ selectedGarage.publicDisplayName || selectedGarage.slug }}
+              <span class="btn" @click="unsetSelectedGarage()">X</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 text-right">
+              <a @click="loadContacts" class="btn btn-success" :disabled="loading.contacts">
+                Rechercher
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <table class="table-bordered contacts-table" style="width: 100%">
+          <tr>
+            <th></th>
+            <th v-for="counter in daysToDisplay">{{ (currentDay + counter -1) | dateFormat }}</th>
+          </tr>
+          <tr v-for="contactKey in contactsKeys">
+            <td class="contact" style="text-align: left !important;">{{ contactsConfigs[contactKey].name }}</td>
+            <td v-for="counter in daysToDisplay" style="width: 11%">
+              <div v-if="scheduledContactsByDay[currentDay + counter -1] && scheduledContactsByDay[currentDay + counter -1][contactKey]">
+                <a @click="displayGarages(contactKey, currentDay + counter -1)"
+                   v-if="!selectedGarageId"
+                   class="btn btn-primary"
+                   :disabled="loading.garages">
+                  {{ scheduledContactsByDay[currentDay + counter -1][contactKey]}} - voir les garages
+                </a>
+                <a @click="displayContacts(contactKey, currentDay + counter -1)"
+                   v-if="selectedGarageId"
+                   class="btn btn-primary"
+                   :disabled="loading.contacts">
+                  {{ scheduledContactsByDay[currentDay + counter -1][contactKey]}} - voir les contacts
+                </a>
+                <a @click="forceSend(contactKey, currentDay + counter -1)" class="btn btn-danger" :disabled="loading[currentDay + counter -1] && loading[currentDay + counter -1].forceSend">
+                  Envoyer
+                </a>
+              </div>
+              <span v-else> 0 </span>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="row" style="margin: 20px 0; ">
+        <div class="col-xs-6 text-left">
+          <a @click="previousPage" class="btn btn-success"> Précédent </a>
+        </div>
+        <div class="col-xs-6 text-right">
+          <a @click="nextPage" class="btn btn-success" :disabled="loading.contacts"> Suivant </a>
+        </div>
+      </div>
+    </div>
+
+
+    <modal :show.boolean="garagesModal.show" :modal-width="700" :close-modal="closeGaragesModal">
+      <h3 slot="header">Liste Garages</h3>
+      <div slot="body" style="height: 300px;overflow: auto">
+        <p style="color: black;">Contact : {{ garagesModal.contactName }}</p>
+        <p style="color: black;">Date : {{ garagesModal.day | dateFormat }}</p>
+        <table class="table" style="color: black; width: 100%" v-if="Object.keys(garagesModal.currentGarages).length > 0">
+          <thead>
+          <tr>
+            <th>Nom</th>
+            <th>nombre</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="(contacts, id) in garagesModal.currentGarages">
+            <td><a :href="'#' + id" target="_blank">{{ getGarageName(id) }} <br> {{ id }}</a></td>
+            <td>{{ contacts[garagesModal.contactName] }}</td>
+          </tr>
+          </tbody>
+        </table>
+        <p v-if="Object.keys(garagesModal.currentGarages).length == 0" style="text-align: center;color: black">pas de garages</p>
+      </div>
+    </modal>
+
+
+    <modal :show.boolean="contactsModal.show" :modal-width="730" :close-modal="closeContactsModal">
+      <h3 slot="header">Liste Contacts</h3>
+      <div slot="body" style="height: 300px;overflow: auto">
+        <p style="color: black;">Contact : {{ contactsModal.contactName }}</p>
+        <p style="color: black;">Date : {{ contactsModal.day | dateFormat }}</p>
+        <table class="table" style="color: black; width: 100%" v-if="contactsModal.currentDatas.length > 0">
+          <thead>
+          <tr>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>dataId</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="data in contactsModal.currentDatas">
+            <td>
+              <span  v-if="data.customer && data.customer.contact && data.customer.contact.email">
+                {{ data.customer.contact.email.value }}
+              </span>
+              <span v-else>-</span>
+            </td>
+            <td>
+              <span  v-if="data.customer && data.customer.contact && data.customer.contact.mobilePhone">
+                {{ data.customer.contact.mobilePhone.value }}
+              </span>
+              <span v-else>-</span>
+            </td>
+            <td>
+              <span>
+                {{ data.id }}
+              </span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <p v-if="contactsModal.currentDatas.length == 0" style="text-align: center;color: black">pas de contacts</p>
+      </div>
+    </modal>
+
+  </div>
+{% endraw %}
+{% endblock %}
+{% block scripts %}
+  {% include "../common/components/_vue-modal.nunjucks" %}
+  {% include "../common/components/_auto-complete/auto-complete.nunjucks" %}
+  {% include "../common/components/garages-list/garages-list.component.nunjucks" %}
+  <script>
+    var contactsKeys = {{ contactsKeys|safe }};
+    var contactsConfigs = {{ contactsConfigs|safe }};
+
+    function FormatNumberLength(num, length) {
+      var r = "" + num;
+      while (r.length < length) {
+        r = "0" + r;
+      }
+      return r;
+    }
+
+    function getHash() {
+      return  document.location.hash ? document.location.hash.substr(1) : null;
+    }
+
+    function setHash(hash) {
+      if(history.pushState) {
+        history.pushState(null, null, '#' + hash);
+      }
+      else {
+        location.hash = '#' + hash;
+      }
+    }
+
+    Vue.filter('dateFormat', function (dayNumber) {
+      var date = new Date(dayNumber * 8.64e7 + ((new Date()).getTimezoneOffset() * 1000 * 60) + (12 * 60 * 1000 * 60)); //add timezone diff, contact are sent at 12pm
+      var day = date.getDate();
+      var monthIndex = date.getMonth();
+      var year = date.getFullYear();
+
+      return FormatNumberLength(day, 2) + '/' + FormatNumberLength(monthIndex + 1, 2) + '/' + year;
+    });
+
+    var v = new Vue({
+      el: '#scheduled-Contacts',
+      data: function () {
+        return {
+//          days: [Math.floor(Date.now() / 8.64e7), Math.floor(Date.now() / 8.64e7) + 1, Math.floor(Date.now() / 8.64e7) + 2, Math.floor(Date.now() / 8.64e7) + 3, Math.floor(Date.now() / 8.64e7) + 4, Math.floor(Date.now() / 8.64e7) + 5, Math.floor(Date.now() / 8.64e7) + 6],
+          scheduledContactsByDay: {},
+          loading: {
+            contacts: false,
+            garages: false
+          },
+          garagesModal: {
+            show: false,
+            currentGarages: {},
+            garages: {},
+            contactName: '',
+            day: null
+          },
+          contactsModal: {
+            show: false,
+            currentDatas: [],
+            contactName: '',
+            day: null
+          },
+          contactsKeys: contactsKeys,
+          contactsConfigs: contactsConfigs,
+          daysToDisplay: 7,
+          selectedGarageId: getHash(),
+          selectedGarage: null,
+          currentDay: Math.floor(Date.now() / 8.64e7)
+        };
+      },
+      mounted : function () {
+        if (this.selectedGarageId) {
+          this.loadContacts();
+          this.refreshCurrentGarage();
+        }
+      },
+      watch: {
+        selectedGarageId: function () {
+          this.loadContacts();
+          this.refreshCurrentGarage();
+        }
+      },
+      methods: {
+        previousPage: function (contactKey, day) {
+          this.currentDay -= this.daysToDisplay;
+          this.loadContacts();
+        },
+        nextPage: function (contactKey, day) {
+          this.currentDay += this.daysToDisplay;
+          this.loadContacts();
+        },
+        setSelectedGarage: function (garage) {
+          this.selectedGarage = garage;
+          this.selectedGarageId = garage.id;
+        },
+        unsetSelectedGarage: function (garage) {
+          this.selectedGarage = null;
+          this.selectedGarageId = null;
+        },
+        refreshCurrentGarage : function () {
+          gsTools.getRequest('{{ lib.client.url.getShortUrl("GARAGE_BY_ID") }}' + this.selectedGarageId, {}, function (err, fetchedGarage) {
+            if (err) {
+              alert('Unable to retrieve garage :(\n' + err);
+            } else {
+              this.selectedGarage = fetchedGarage;
+            }
+          }.bind(this));
+        },
+        getGarageName: function (id) {
+          for (var i=0; i< this.garagesModal.garages.length; i++) {
+            if (this.garagesModal.garages[i].id === id) {
+              return this.garagesModal.garages[i].publicDisplayName;
+            }
+          }
+          return '';
+        },
+        displayGarages: function (contactKey, day) {
+          if (this.selectedGarageId) {
+            alert('pas de garage list pour un seul garage');
+            return;
+          }
+          var filter = { where: {
+            'campaign.contactScenario.nextCampaignContactDay': day,
+            'campaign.contactScenario.nextCampaignContact': contactKey
+          } };
+          if (contactKey.indexOf('recontact_sms') !== -1) {
+            filter = { where: {
+                'campaign.contactScenario.nextCampaignReContactDay': day
+            } }
+          }
+          var request = new XMLHttpRequest();
+          var url = '{{ lib.client.url.getShortUrl('ADMIN_SCHEDULED_CONTACTS_GARAGES') }}?filter=' + encodeURIComponent(JSON.stringify(filter));
+          request.open('GET', url, true);
+          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          request.send();
+          this.loading.garages = true;
+          request.onload = function () {
+            this.loading.garages = false;
+            if (request.status !== 200 && request.status !== 304) {
+              alert('Erreur sur le serveur');
+            } else {
+              var res = JSON.parse(request.responseText);
+              if (!res || res.status === 'ko') {
+                alert((res && res.error) || 'Erreur sur le serveur');
+              } else {
+                this.garagesModal.currentGarages = res.scheduledContactsByGarages;
+                this.garagesModal.garages = res.garages;
+                this.garagesModal.contactName = this.contactsConfigs[contactKey].name;
+                this.garagesModal.day = day;
+                this.garagesModal.show = true;
+              }
+            }
+          }.bind(this);
+        },
+        closeGaragesModal: function () {
+          this.garagesModal.show = false;
+          this.garagesModal.currentGarages = {};
+          this.garagesModal.contactName = '';
+          this.garagesModal.day = null;
+        },
+        displayContacts: function (contactKey, day) {
+          if (!this.selectedGarageId) {
+            alert('la liste des contacts est affichable que pour un seul garage');
+            return;
+          }
+          var filter = { where: {
+            'campaign.contactScenario.nextCampaignContactDay': day,
+            'campaign.contactScenario.nextCampaignContact': contactKey,
+            garageId: this.selectedGarageId
+          } };
+          if (this.contactsConfigs[contactKey].isRecontact) {
+            filter = { where: {
+              'campaign.contactScenario.nextCampaignReContactDay': day,
+              garageId: this.selectedGarageId
+            } }
+          }
+          var request = new XMLHttpRequest();
+          var url = '{{ lib.client.url.getShortUrl('ADMIN_SCHEDULED_CONTACTS_CAMPAIGN_ITEMS') }}?filter=' + encodeURIComponent(JSON.stringify(filter));
+          request.open('GET', url, true);
+          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          request.send();
+          this.loading.contacts = true;
+          request.onload = function () {
+            this.loading.contacts = false;
+            if (request.status !== 200 && request.status !== 304) {
+              alert('Erreur sur le serveur');
+            } else {
+              var res = JSON.parse(request.responseText);
+              if (!res || res.status === 'ko') {
+                alert((res && res.error) || 'Erreur sur le serveur');
+              } else {
+                this.contactsModal.currentDatas = res.datas;
+                this.contactsModal.contactName = this.contactsConfigs[contactKey].name;
+                this.contactsModal.day = day;
+                this.contactsModal.show = true;
+              }
+            }
+          }.bind(this);
+        },
+        closeContactsModal: function () {
+          this.contactsModal.show = false;
+          this.contactsModal.currentDatas = [];
+          this.contactsModal.contactName = '';
+          this.contactsModal.day = null;
+        },
+        forceSend: function (contactKey, day) {
+          if (!day) { return; }
+          var request = new XMLHttpRequest();
+          var filter = {
+            contactKey: contactKey,
+            day: day,
+            garageId: this.selectedGarageId
+          };
+
+          var url = '{{ lib.client.url.getShortUrl('ADMIN_CAMPAIGN_FORCE_SEND_SCHEDULED_BY_DAY') }}?filter=' + encodeURIComponent(JSON.stringify(filter));
+          request.open('GET', url, true);
+          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          request.send();
+          this.loading[day]= {forceSend : true};
+          request.onload = function () {
+            this.loading[day].forceSend = false;
+            if (request.status !== 200 && request.status !== 304) {
+              alert('Erreur sur le serveur');
+            } else {
+              var res = JSON.parse(request.responseText);
+              if (!res || res.status === 'ko') {
+                alert((res && res.error) || 'Erreur sur le serveur');
+              } else {
+                this.scheduledContactsByDay[day][contactKey] = 0;
+              }
+            }
+          }.bind(this);
+        },
+        loadContacts: function () {
+          var filter = {
+            where: {or: [
+              { and: [
+                { 'campaign.contactScenario.nextCampaignContactDay': { lt: this.currentDay + this.daysToDisplay } },
+                { 'campaign.contactScenario.nextCampaignContactDay': { gte: this.currentDay } }
+              ] },
+              { and: [
+                { 'campaign.contactScenario.nextCampaignReContactDay': { lt: this.currentDay + this.daysToDisplay } },
+                { 'campaign.contactScenario.nextCampaignReContactDay': { gte: this.currentDay } }
+              ] }
+            ]}
+          };
+          if (this.selectedGarageId) {
+            filter.where.garageId = this.selectedGarageId;
+            setHash(this.selectedGarageId);
+          }
+          var request = new XMLHttpRequest();
+          var url = '{{ lib.client.url.getShortUrl('ADMIN_SCHEDULED_CONTACTS_LIST') }}?filter=' + encodeURIComponent(JSON.stringify(filter));
+          request.open('GET', url, true);
+          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          request.send();
+          this.loading.contacts = true;
+          request.onload = function () {
+            var resSocket = JSON.parse(request.responseText);
+            var protocol = document.location.protocol.indexOf('https') > -1 ? 'wss' : 'ws';
+            var ws = new WebSocket(protocol + '://' + document.location.host + resSocket.websocket);
+            ws.onmessage = function (event) {
+              var res = event.data && JSON.parse(event.data);
+              if (res && res.status === 'running') { return; }
+              if (res && res.status === 'ok') {
+                this.scheduledContactsByDay = res.details;
+              } else if (res && res.status === 'ko') {
+                alert('Erreur serveur, voir la console');
+                console.error(res.message);
+              } else {
+                alert('Erreur serveur');
+              }
+              this.loading.contacts = false;
+              ws.close();
+            }.bind(this);
+          }.bind(this);
+        }
+      }
+    });
+  </script>
+
+{% endblock %}

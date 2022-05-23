@@ -1,0 +1,217 @@
+const chai = require('chai');
+const emailAutoCorrect = require('../../../../common/lib/util/email-auto-correct');
+
+const expect = chai.expect;
+chai.should();
+
+/**
+ * Test autocorrection of email string and detection of NV (used during datafile import)
+ */
+describe('email-auto-correcter:', () => {
+  it('autoCorrect', () => {
+    expect(emailAutoCorrect.autoCorrect('oabida@garagescore.com')).equal('oabida@garagescore.com');
+    expect(emailAutoCorrect.autoCorrect('bb@garagescore.info')).equal('bb@garagescore.info');
+    expect(emailAutoCorrect.autoCorrect('izabelle,x@gmail,com')).equal('izabelle.x@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('cat.ricard@orange .fr')).equal('cat.ricard@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('abrina.samir41gmail.com')).equal('abrina.samir41@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('jeandominique.mas@sfr.f')).equal('jeandominique.mas@sfr.fr');
+    expect(emailAutoCorrect.autoCorrect('corinne.vautrin@sfr')).equal('corinne.vautrin@sfr.fr');
+    expect(emailAutoCorrect.autoCorrect('guillaume.renaudin1@club-internet')).equal(
+      'guillaume.renaudin1@club-internet.fr'
+    );
+    expect(emailAutoCorrect.autoCorrect('daniel-p.vidale@dgfip.finances-gouv-fr')).equal(
+      'daniel-p.vidale@dgfip.finances-gouv.fr'
+    );
+    expect(emailAutoCorrect.autoCorrect('.mariecotron@hotmail.fr')).equal('mariecotron@hotmail.fr');
+    expect(emailAutoCorrect.autoCorrect('GREGORY.SAUVAGE.@WANADOO.FR')).equal('gregory.sauvage@wanadoo.fr');
+    expect(emailAutoCorrect.autoCorrect('Pharmacie Principale Maurepas <contact@pharmaciemaurepas.fr>')).equal(
+      'contact@pharmaciemaurepas.fr'
+    ); // eslint-disable-line max-len
+    expect(emailAutoCorrect.autoCorrect('mlefebvre@xi-consulting.fr (gérant)')).equal('mlefebvre@xi-consulting.fr');
+    expect(emailAutoCorrect.autoCorrect('europemotors.compta@hotmail.fr RC')).equal('europemotors.compta@hotmail.fr');
+    expect(emailAutoCorrect.autoCorrect('–f.maes@groupe-lempereur.com')).equal('f.maes@groupe-lempereur.com');
+    expect(emailAutoCorrect.autoCorrect('laurent@lesbavarez.frf')).equal('laurent@lesbavarez.fr');
+    expect(emailAutoCorrect.autoCorrect('branle.michele@orange.frRC')).equal('branle.michele@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('victor.alves@groupe-nomblot.frr')).equal('victor.alves@groupe-nomblot.fr');
+    expect(emailAutoCorrect.autoCorrect('magali.fro@bbox.frmont')).equal('magali.fro@bbox.fr');
+    expect(emailAutoCorrect.autoCorrect('titoph@cgtel.nt')).equal('titoph@cgtel.net');
+    expect(emailAutoCorrect.autoCorrect('phiilippe.lemaire059@orange.ffr')).equal('phiilippe.lemaire059@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('rchancelade@axeoservices.fe')).equal('rchancelade@axeoservices.fr');
+    expect(emailAutoCorrect.autoCorrect('e.justis@zonca.frm.cannac')).equal('e.justis@zonca.fr');
+    expect(emailAutoCorrect.autoCorrect('chris.olla@orange.fe')).equal('chris.olla@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('solveg.yvelin@laposte.vnet')).equal('solveg.yvelin@laposte.net');
+    expect(emailAutoCorrect.autoCorrect('eric.lozach@sfr.frRC')).equal('eric.lozach@sfr.fr');
+    expect(emailAutoCorrect.autoCorrect('claude.louarn@cegetel.netRC')).equal('claude.louarn@cegetel.net');
+    expect(emailAutoCorrect.autoCorrect('CHRISTELLEETGEROME@ORANGE.Ff')).equal('christelleetgerome@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('quint.luc@hotmail.fe')).equal('quint.luc@hotmail.fr');
+    expect(emailAutoCorrect.autoCorrect('papin.marcel@orange.frr')).equal('papin.marcel@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('antoinegermain@wanadoo.fru')).equal('antoinegermain@wanadoo.fr');
+    expect(emailAutoCorrect.autoCorrect('vpdeco82@gmail.coml')).equal('vpdeco82@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('romagnelo@veolia.comrainelligaetan')).equal('romagnelo@veolia.com');
+    expect(emailAutoCorrect.autoCorrect('bollietc@d83.ffbatiment')).equal('bollietc@d83.fr');
+    expect(emailAutoCorrect.autoCorrect('celine.herve45@sfr.frRC')).equal('celine.herve45@sfr.fr');
+    expect(emailAutoCorrect.autoCorrect('gmius@gmail.comnc')).equal('gmius@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('ESSD54@GMAIL.COMM')).equal('essd54@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('gaetan.gargiulo@becker-electronique.froujean-paul.leroy')).equal(
+      'gaetan.gargiulo@becker-electronique.fr'
+    ); // eslint-disable-line
+    expect(emailAutoCorrect.autoCorrect('a.vincent@mat-cichy.frr')).equal('a.vincent@mat-cichy.fr');
+    expect(emailAutoCorrect.autoCorrect('gouezp@wanadoo.ff')).equal('gouezp@wanadoo.fr');
+    expect(emailAutoCorrect.autoCorrect('juretrafin@alicedsl.fe')).equal('juretrafin@alicedsl.fr');
+    expect(emailAutoCorrect.autoCorrect('cecilecoste@yahoo.frougerardcoste')).equal('cecilecoste@yahoo.fr');
+    expect(emailAutoCorrect.autoCorrect('christelle5313@gmail.comr')).equal('christelle5313@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('ph.corneau@sport-system.fr-s.gregoire')).equal('ph.corneau@sport-system.fr');
+    expect(emailAutoCorrect.autoCorrect('FREDERIC.GIRAUDON@CGLEC.CON')).equal('frederic.giraudon@cglec.com');
+    expect(emailAutoCorrect.autoCorrect('dufourdavid7740@neuf.fh')).equal('dufourdavid7740@neuf.fr');
+    expect(emailAutoCorrect.autoCorrect('flosalle@icloud.cim')).equal('flosalle@icloud.com');
+    expect(emailAutoCorrect.autoCorrect('nourter65@yahoo.frmailpasbon')).equal('nourter65@yahoo.fr');
+    expect(emailAutoCorrect.autoCorrect('r.kiesele@orange.con')).equal('r.kiesele@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('monpetitchauffeur@gmail.con')).equal('monpetitchauffeur@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('chalom.67000@yahoo.frf')).equal('chalom.67000@yahoo.fr');
+    expect(emailAutoCorrect.autoCorrect('audrey.lachuer@gmail.comm')).equal('audrey.lachuer@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('pascaloseb@yahoo.frii')).equal('pascaloseb@yahoo.fr');
+    expect(emailAutoCorrect.autoCorrect('patrickmalvesin.pm@gmail.comjul')).equal('patrickmalvesin.pm@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('delisledominique@netcourrier.comp')).equal('delisledominique@netcourrier.com');
+    expect(emailAutoCorrect.autoCorrect('sarlece@live.fe')).equal('sarlece@live.fr');
+    expect(emailAutoCorrect.autoCorrect('LEBOUCQ.C@AOL.CcOM')).equal('leboucq.c@aol.com');
+    expect(emailAutoCorrect.autoCorrect('jackie77600@gmail.comi')).equal('jackie77600@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('Thomas.maurice@wandoo.fe')).equal('thomas.maurice@wanadoo.fr');
+    expect(emailAutoCorrect.autoCorrect('renee.gervais@dbmail.frr')).equal('renee.gervais@dbmail.fr');
+    expect(emailAutoCorrect.autoCorrect('JEANRENE.CATTONI@EFR-GROUP.COIM')).equal('jeanrene.cattoni@efr-group.com');
+    expect(emailAutoCorrect.autoCorrect('msaliou@lapaix.orgue')).equal('msaliou@lapaix.org');
+    expect(emailAutoCorrect.autoCorrect('l.gersent@shmse.orgue')).equal('l.gersent@shmse.org');
+    expect(emailAutoCorrect.autoCorrect('couteaupatrick@orange.ff')).equal('couteaupatrick@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('g.miellet@hotmail.ff')).equal('g.miellet@hotmail.fr');
+    expect(emailAutoCorrect.autoCorrect('vavouaja@gmail.coml')).equal('vavouaja@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('bouroufapeinture@hotmail.comm')).equal('bouroufapeinture@hotmail.com');
+    expect(emailAutoCorrect.autoCorrect('dhenkou59@gmail.vom')).equal('dhenkou59@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('ramalhinho@live.frRC')).equal('ramalhinho@live.fr');
+    expect(emailAutoCorrect.autoCorrect('michele.leplumey@gmail.coml')).equal('michele.leplumey@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('osamoal@sfr.sf')).equal('osamoal@sfr.fr');
+    expect(emailAutoCorrect.autoCorrect('taxis.alain@laposte.ney')).equal('taxis.alain@laposte.net');
+    expect(emailAutoCorrect.autoCorrect('andre.heraud9@orange.frb')).equal('andre.heraud9@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('jfcandelier@nordnet.fr.isabelle.holvoote')).equal('jfcandelier@nordnet.fr');
+    expect(emailAutoCorrect.autoCorrect('marie-laure.petit@orange.rf')).equal('marie-laure.petit@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('jacquespianelli@lgmail.cim')).equal('jacquespianelli@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('robert.fournier@modulonet.fre')).equal('robert.fournier@modulonet.fr');
+    expect(emailAutoCorrect.autoCorrect('jylebihan@wanadoo.frRC')).equal('jylebihan@wanadoo.fr');
+    expect(emailAutoCorrect.autoCorrect('eriduver@sfr.sf')).equal('eriduver@sfr.fr');
+    expect(emailAutoCorrect.autoCorrect('o.lamotte@oxialive.frc.herbin')).equal('o.lamotte@oxialive.fr');
+    expect(emailAutoCorrect.autoCorrect('quaios@prodigy.nat')).equal('quaios@prodigy.net');
+    expect(emailAutoCorrect.autoCorrect('info@utpm.frutpmgalva')).equal('info@utpm.fr');
+    expect(emailAutoCorrect.autoCorrect('Gilles-Simon54700@orange.france')).equal('gilles-simon54700@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('musheb@sfr.fe')).equal('musheb@sfr.fr');
+    expect(emailAutoCorrect.autoCorrect('a.dacosta@reseau.renaultfr')).equal('a.dacosta@reseau.renault.fr');
+    expect(emailAutoCorrect.autoCorrect('bihanph@club-internet.frr')).equal('bihanph@club-internet.fr');
+    expect(emailAutoCorrect.autoCorrect('denis.le-toullec@wanadoo.frrc')).equal('denis.le-toullec@wanadoo.fr');
+    expect(emailAutoCorrect.autoCorrect('edwigecomeau@gmail.coml')).equal('edwigecomeau@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('jpbrossier6414@gmail.coma')).equal('jpbrossier6414@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('ecurie.marinefaust@gmail.copm')).equal('ecurie.marinefaust@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('MU.LAURE@LAPOSTE.NT')).equal('mu.laure@laposte.net');
+    expect(emailAutoCorrect.autoCorrect('hhelene56@free.frRC')).equal('hhelene56@free.fr');
+    expect(emailAutoCorrect.autoCorrect('joncour.alan14@gmail.col')).equal('joncour.alan14@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('gilles.deriaud@metenergie.ft')).equal('gilles.deriaud@metenergie.fr');
+    expect(emailAutoCorrect.autoCorrect('pierrelebrozec@gmail.comi')).equal('pierrelebrozec@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('christelle.abassi@laposte.nt')).equal('christelle.abassi@laposte.net');
+    expect(emailAutoCorrect.autoCorrect('fr.menguy@laposte.netRC')).equal('fr.menguy@laposte.net');
+    expect(emailAutoCorrect.autoCorrect('fmcp57@sfr.frr')).equal('fmcp57@sfr.fr');
+    expect(emailAutoCorrect.autoCorrect('yvon.bergot@bicword.comm')).equal('yvon.bergot@bicword.com');
+    expect(emailAutoCorrect.autoCorrect('clarisse_ginet@hotmail.comcampagnead')).equal('clarisse_ginet@hotmail.com');
+    expect(emailAutoCorrect.autoCorrect('famillemaguer@free.frRC')).equal('famillemaguer@free.fr');
+    expect(emailAutoCorrect.autoCorrect('meyblum.remi@gmail.coml')).equal('meyblum.remi@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('tchtte59@hotmail.col')).equal('tchtte59@hotmail.com');
+    expect(emailAutoCorrect.autoCorrect('florent.premel-cabic@hotmail.frRC')).equal('florent.premel-cabic@hotmail.fr');
+    expect(emailAutoCorrect.autoCorrect('frankykezman@live.frvivozuili')).equal('frankykezman@live.fr');
+    expect(emailAutoCorrect.autoCorrect('joseph.josapha@wanadoo.dr')).equal('joseph.josapha@wanadoo.fr');
+    expect(emailAutoCorrect.autoCorrect('bpochot@yahoo.ff')).equal('bpochot@yahoo.fr');
+    expect(emailAutoCorrect.autoCorrect('dany.martel@orange.frp')).equal('dany.martel@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('estelle.buton@hotmail.fe')).equal('estelle.buton@hotmail.fr');
+    expect(emailAutoCorrect.autoCorrect('cjcstau@gmail.como')).equal('cjcstau@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('christophe.machabert@orange.frw')).equal('christophe.machabert@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('noushinebiglari@yahoo.comm')).equal('noushinebiglari@yahoo.com');
+    expect(emailAutoCorrect.autoCorrect('cjanet@aventim.con')).equal('cjanet@aventim.com');
+    expect(emailAutoCorrect.autoCorrect('pierre.longo@orange.pierre')).equal('pierre.longo@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('jygauvrit@gmail.col')).equal('jygauvrit@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('PATRICK.PINSARD1@ORANGE.FRF')).equal('patrick.pinsard1@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('Jacques.boyrie@wanadoo.fro')).equal('jacques.boyrie@wanadoo.fr');
+    expect(emailAutoCorrect.autoCorrect('pierronnet.stephane@aliceadsl.ff')).equal('pierronnet.stephane@aliceadsl.fr');
+    expect(emailAutoCorrect.autoCorrect('dominique.toigo@gmail.copm')).equal('dominique.toigo@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('gilbert.senger@free.fe')).equal('gilbert.senger@free.fr');
+    expect(emailAutoCorrect.autoCorrect('FOUTRYVINCENT@GMAIL.COML')).equal('foutryvincent@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('maelig.tandeo@gmail.comRC')).equal('maelig.tandeo@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('fofibigotte@yahoo.frR')).equal('fofibigotte@yahoo.fr');
+    expect(emailAutoCorrect.autoCorrect('LORANS.JEANYVES@ALICE.ADSL')).equal('lorans.jeanyves@aliceadsl.fr');
+    expect(emailAutoCorrect.autoCorrect('anne33540@hotmail.frp')).equal('anne33540@hotmail.fr');
+    expect(emailAutoCorrect.autoCorrect('mariefrancehuet29@gmail.coml')).equal('mariefrancehuet29@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('n.delfosse@gmail.comr')).equal('n.delfosse@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('sev-gamb@wanadoo.fe')).equal('sev-gamb@wanadoo.fr');
+    expect(emailAutoCorrect.autoCorrect('didierleborne@gmail.xom')).equal('didierleborne@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('braunare@gmail.ocm')).equal('braunare@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('christophe.delcroix@eiffage.comp')).equal('christophe.delcroix@eiffage.com');
+    expect(emailAutoCorrect.autoCorrect('coquillement.votre@laposte.nrt')).equal('coquillement.votre@laposte.net');
+    expect(emailAutoCorrect.autoCorrect('danicourt.alexandre@neuf.frt')).equal('danicourt.alexandre@neuf.fr');
+    expect(emailAutoCorrect.autoCorrect('pupier.adrien@free.fe')).equal('pupier.adrien@free.fr');
+    expect(emailAutoCorrect.autoCorrect('thierry.martel@engie.cum')).equal('thierry.martel@engie.com');
+    expect(emailAutoCorrect.autoCorrect('h-cyrille@hotmail.cfr')).equal('h-cyrille@hotmail.fr');
+    expect(emailAutoCorrect.autoCorrect('CONNIE.MOUN@YAHOO.FRE')).equal('connie.moun@yahoo.fr');
+    expect(emailAutoCorrect.autoCorrect('lberten@crepebroceliande.cim')).equal('lberten@crepebroceliande.com');
+    expect(emailAutoCorrect.autoCorrect('elusue.stanislas@orange.dr')).equal('elusue.stanislas@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('clomolec@orange.ft')).equal('clomolec@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('nicolejouchet@free.frer')).equal('nicolejouchet@free.fr');
+    expect(emailAutoCorrect.autoCorrect('eurl.dugarry@aol.fe')).equal('eurl.dugarry@aol.fr');
+    expect(emailAutoCorrect.autoCorrect('jean-louis.courty@laposte.nett')).equal('jean-louis.courty@laposte.net');
+    expect(emailAutoCorrect.autoCorrect('mblochousse@free.frgi')).equal('mblochousse@free.fr');
+    expect(emailAutoCorrect.autoCorrect('NICOLAS.RAGUENES@GMAIL.COL')).equal('nicolas.raguenes@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('criscialeandro@libero.ite')).equal('criscialeandro@libero.it');
+    expect(emailAutoCorrect.autoCorrect('taxis@alice.adsl')).equal('taxis@aliceadsl.fr');
+    expect(emailAutoCorrect.autoCorrect('jean-caron@orange.frr')).equal('jean-caron@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('emerich.laura@gmail.col')).equal('emerich.laura@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('jodilafitte@gmail.vom')).equal('jodilafitte@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('sebastien@free.frp')).equal('sebastien@free.fr');
+    expect(emailAutoCorrect.autoCorrect('annie.roux1@sfr.comfr')).equal('annie.roux1@sfr.fr');
+    expect(emailAutoCorrect.autoCorrect('pepiotjacques@orange.frf')).equal('pepiotjacques@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('raymondpoisson@orange.frt')).equal('raymondpoisson@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('benjamin.boulet@eaurmc.fc')).equal('benjamin.boulet@eaurmc.fr');
+    expect(emailAutoCorrect.autoCorrect('christian.le-corre@dcnsgroup.com.dcns')).equal(
+      'christian.le-corre@dcnsgroup.com'
+    );
+    expect(emailAutoCorrect.autoCorrect('falhun.christophe@hotmail.frF')).equal('falhun.christophe@hotmail.fr');
+    expect(emailAutoCorrect.autoCorrect('brice.cornillet@laposte.netRC')).equal('brice.cornillet@laposte.net');
+    expect(emailAutoCorrect.autoCorrect('j.berthier7@aliceadsl.frRC')).equal('j.berthier7@aliceadsl.fr');
+    expect(emailAutoCorrect.autoCorrect('gayardfedc@gmail.comm')).equal('gayardfedc@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('thibaud.leblanc0295@orange.ff')).equal('thibaud.leblanc0295@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('alexandra.buirette@laposte.nt')).equal('alexandra.buirette@laposte.net');
+    expect(emailAutoCorrect.autoCorrect('franck.bouille@prestarh.frr')).equal('franck.bouille@prestarh.fr');
+    expect(emailAutoCorrect.autoCorrect('cognard.daniel@orange.ft')).equal('cognard.daniel@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('michou.jackie@orange.frr')).equal('michou.jackie@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('irbregain@gmail.coml')).equal('irbregain@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('fouinette51@live.frr')).equal('fouinette51@live.fr');
+    expect(emailAutoCorrect.autoCorrect('ELODIE.DIERCKS@HOTMAIL.FER')).equal('elodie.diercks@hotmail.fr');
+    expect(emailAutoCorrect.autoCorrect('linetha30@gmail.comm')).equal('linetha30@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('fhogard@gmail.cmo')).equal('fhogard@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('LAURENCE.DUMAZ@GMAIL.CIM')).equal('laurence.dumaz@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('kergoat.chantal@yahoo.fre')).equal('kergoat.chantal@yahoo.fr');
+    expect(emailAutoCorrect.autoCorrect('jldbiker@free.fe')).equal('jldbiker@free.fr');
+    expect(emailAutoCorrect.autoCorrect('christian.bert@orange.fer')).equal('christian.bert@orange.fr');
+    expect(emailAutoCorrect.autoCorrect('tudal.marie@wanadoo.frRC')).equal('tudal.marie@wanadoo.fr');
+    expect(emailAutoCorrect.autoCorrect('paulinemanceau4982@hotmail.fe')).equal('paulinemanceau4982@hotmail.fr');
+    expect(emailAutoCorrect.autoCorrect('vroucal@gmail.comm')).equal('vroucal@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('jp.lisch@wanadoo.fe')).equal('jp.lisch@wanadoo.fr');
+    expect(emailAutoCorrect.autoCorrect('ftimbert@glail.col')).equal('ftimbert@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('nelly.noel13@wanad00.frp')).equal('nelly.noel13@wanadoo.fr');
+    expect(emailAutoCorrect.autoCorrect('justine.lec22@hutlook.frt')).equal('justine.lec22@hotlook.fr');
+    expect(emailAutoCorrect.autoCorrect('marie89petit@gma.comi')).equal('marie89petit@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('royal.transport.75@gmai.lcom')).equal('royal.transport.75@gmail.com');
+    expect(emailAutoCorrect.autoCorrect('ppefrick@aoel.coom')).equal('ppefrick@aol.com');
+  });
+  it('isNCString', () => {
+    // true
+    expect(emailAutoCorrect.isNCString('NC@NCfr')).equal(true);
+    expect(emailAutoCorrect.isNCString('NC@ford.com')).equal(true);
+    expect(emailAutoCorrect.isNCString('pasdemail.com')).equal(true);
+    expect(emailAutoCorrect.isNCString('PAS DE MAIL')).equal(true);
+    expect(emailAutoCorrect.isNCString('pas de mail@ford.com')).equal(true);
+    // false
+    expect(emailAutoCorrect.isNCString('etdonc*@gmail.com')).equal(false);
+  });
+});

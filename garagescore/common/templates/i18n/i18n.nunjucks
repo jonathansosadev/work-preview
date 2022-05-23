@@ -1,0 +1,44 @@
+{# please keep the syntax IE compatible #}<script>
+  function I18N() {
+    this.translations = {{ i18n |safe }};{# a 18n variable must be sent in the render parameters #}
+  }
+  /** Load a translation file, so we can use a function t() in our surveyjs javascript file */
+  I18N.prototype.loadForSurveyJS = function (path) {
+    if (!this.translations.fr[path]) {
+      console.error('No translation file found at ' + path);
+    }
+    const allTranslations = this.translations;
+
+    let translations = {};
+    Object.keys(this.translations.fr[path]).forEach(function (k) {
+      translations[k] = {
+        fr_FR: allTranslations.fr[path][k],
+        fr_BE: allTranslations.fr[path][k],
+        fr_NC: allTranslations.fr[path][k],
+        fr_MC: allTranslations.fr[path][k],
+        nl_BE: allTranslations.nl[path][k],
+        en_US: allTranslations.en[path][k] || 'en(' + allTranslations.fr[path][k] + ')',
+        es_ES: allTranslations.es[path][k] || 'es(' + allTranslations.fr[path][k] + ')',
+        ca_ES: allTranslations.ca[path][k] || 'ca(' + allTranslations.fr[path][k] + ')'
+      }
+    });
+    // translate like with vue18n with 2 last options to surroung our translations (usefull with html)
+    window.t = function (key, variables, textOnTheLeft, textOnTheRight) {
+      if (!variables) { variables = {} }
+      if (!textOnTheLeft) { textOnTheLeft = '' }
+      if (!textOnTheRight) { textOnTheRight = '' }
+      if (!translations[key]) { console.error('No translation found for ' + key);}
+      var s = JSON.parse(JSON.stringify(translations[key] || {}));
+      Object.keys(variables).forEach(function(k) {
+        Object.keys(s).forEach(function (locale) {
+          s[locale] = s[locale].replace(new RegExp('\{'+k+'\}', 'g'), variables[k]);
+        });
+      });
+      Object.keys(s).forEach(function (locale) {
+        s[locale] = textOnTheLeft + s[locale] + textOnTheRight;
+      });
+      return s;
+    }
+  }
+  var i18n = new I18N();
+</script>

@@ -1,0 +1,9 @@
+{
+  "name": "passport-bdoor",
+  "version": "1.0.0",
+  "description": "backdoor authentication strategy for Passport.",
+  "main": "./lib",
+  "dependencies": {
+    "passport-strategy": "1.x.x"
+  }
+}

@@ -1,0 +1,174 @@
+.align-right {
+  text-align: right;
+}
+
+.align-left {
+  text-align: left;
+}
+
+/** Logo and header disposition */
+
+
+.inline-img {
+  vertical-align: middle;
+}
+
+.garascore-logo{
+  color: rgb(51,141,205);
+  font-weight: normal;
+}
+.garascore-logo a {
+  color: rgb(51,141,205);
+  text-decoration: none;
+}
+
+.spacer-after-logos {
+  Margin-bottom: 10px;
+}
+
+/** fcopyright disposition **/
+p.footer-element {
+  font-style: italic;
+  font-size: 12px;
+  color: #999;
+}
+
+h1 {
+  font-size: 20px;
+  margin: 5px;
+}
+
+h2 {
+  font-size: 20px;
+  color: black;
+  margin: 5px;
+}
+
+p, .grey-gs {
+  color: #000000;
+}
+
+.black {
+  color: black;
+}
+
+.blue-gs {
+  color: #219AB5;
+}
+
+.green-gs {
+  color: #00cc33;
+}
+
+.red-gs {
+  color: #ff0000;
+}
+
+.left-margin {
+  margin: 20px 0;
+  margin-left: 30px;
+}
+
+.left-margin2 {
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.one-column .comment-body {
+  margin-left: 20px;
+  font-size: 16px;
+  color: #219AB5;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.bordred-table {
+  border: 1px solid #f7f7f7;
+  border-radius: 3px;
+}
+
+.right-column .score-container {
+  margin-right: 0;
+}
+
+.middle-column .score-container {
+  width: 70px;
+}
+
+.left-column-2 .score-containe,
+.right-column-2 .score-container {
+  width: 83px;
+  padding: 10px 3px;
+  margin-right: 0;
+}
+.middle-column-2 .score-container {
+  width: 80px;
+}
+
+.left-column-2.sp-column,
+.left-column.sp-column {
+  padding-right: 15px;
+}
+
+.score-container {
+  background-color: #219AB5;
+  padding: 10px 6px;
+  text-align: center;
+  width: 75px;
+  margin-right: 4px;
+}
+
+.score-container p {
+  font-size: 12px;
+  color: white;
+}
+
+.sp-column .score-container {
+  background-color: #c9984f;
+  width: 75px;
+  margin-right: 0;
+}
+
+.inner.no-right-pad {
+  padding-right: 0;
+}
+
+.inner.no-left-pad {
+  padding-left: 0;
+}
+
+.score-container .score-number {
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-top: 5px;
+}
+
+/** click to comment */
+
+.inline-img-pencil {
+  vertical-align: middle;
+  width: 30px;
+}
+.clic-comment a,
+.clic-comment a:hover {
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+}
+.bordred-table-black {
+  border: 1px solid #000000;
+  background-color: #e5e5e5;
+  border-radius: 3px;
+}
+.gs-name{
+  font-family: Arial;
+}
+.gs-light-blue{
+  color: #37b0c8;
+}
+
+.customer-name-lead {
+  color: #37b0c8;
+}

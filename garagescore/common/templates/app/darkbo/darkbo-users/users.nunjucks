@@ -1,0 +1,457 @@
+{% extends "../common/layouts/darkbo.nunjucks" %} {% block css %}
+<style type="text/css">
+  #app {
+    margin-top: 20px;
+  }
+
+  li,
+  ul {
+    list-style: none;
+  }
+
+  select,
+  option {
+    color: black;
+  }
+
+  hr {
+    border-top: 1px solid white;
+  }
+
+  #users-add button {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  #userslist ul,
+  #userslist li {
+    margin: 0;
+    padding: 0;
+  }
+
+  #userslist ul {
+    height: 500px;
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+
+  #userslist a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    height: 30px;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 8px 0 8px 16px;
+  }
+
+  #userslist a:hover {
+    background-color: #555;
+    color: white;
+  }
+
+  #userslist a.current {
+    background-color: #337ab7;
+    color: white;
+  }
+
+  .user-editor>.row {
+    margin-bottom: 20px;
+  }
+
+  .users-header {
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .users-header .tab-cell {
+    height: 45px;
+  }
+
+  .alerts-cells .tab-cell {
+    height: 45px;
+    text-align: center;
+  }
+
+  .user-editor div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tab-cell {
+    border: 1px solid white;
+  }
+
+
+  .fa-check-circle, .fa-check {
+    cursor: pointer;
+    color: rgba(0, 128, 0, 0.54);
+  }
+
+  .clickable:hover {
+    cursor: pointer;
+  }
+  .no-padding {
+    padding: 0;
+  }
+  .no-margin {
+    margin: 0;
+  }
+  .frame {
+    border: solid 1px #ccc;
+    padding: 8px;
+  }
+  .bg-white {
+    background-color: #ccc;
+    color: #0e0e0e;
+  }
+  .only-margin-left {
+    margin-left: 6px;
+    margin-bottom: 0;
+    font-size: 16px;
+  }
+  #monitoring-tools table {
+    width: 100%;
+  }
+  #monitoring-tools {
+    border-collapse: collapse;
+  }
+  #monitoring-tools td, #monitoring-tools th {
+    border: 1px solid #ddd;
+    padding: 2px;
+  }
+  #monitoring-tools tr:nth-child(even){
+    background-color: #607d8b;
+  }
+  #monitoring-tools tr:hover {
+    background-color: #2196f3;
+    cursor: pointer;
+  }
+  #monitoring-tools th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+  }
+  #monitoring-tools .button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    width: 100%;
+    font-size: 1.25em;
+    cursor: pointer;
+  }
+</style>
+{% endblock %} {% block page %}
+
+<div class="col-md-12" id="app">
+  <div class="col-md-2 left-col">
+    <div class="row">
+      <div class="userslist col-md-12" id="userslist">
+        <div class="">
+          <ul>
+            <li v-for="user in users">
+              <a @click="loadUser(user.id)" :class="{ 'current': selectedId === user.id}">
+                {{ '{{' }} user.email {{ '}}' }}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div v-if="current_user" class="col-md-10">
+    <user-editor :user-id="selectedId" :users="users" :delete-in-progress="deleteInProgress.boolean" @delete="deleteUser(current_user.id)"></user-editor>
+  </div>
+</div>
+
+{% endblock %} {% block scripts %}
+  {% include "../common/components/switch-button.nunjucks" %}
+  {% raw %}
+<script type="x/template" id="editor-template">
+
+  <div id="editor-template-inner" v-if="user !== null">
+
+    <div class="row">
+      <div class="col-md-12 form-group">
+        <button class="btn btn-success" @click="saveUser" :disabled="(userChanged || updatedPassword)? null : 'disabled'">Save
+          </button>
+        <button class="btn btn-danger pull-right" @click="anonymizeUser()" :disabled="anonymizeInProgress">
+          <i class="fa fa-cog" aria-hidden="true" v-if="anonymizeInProgress"></i> Anonymiser l'utilisateur
+        </button>
+      </div>
+    </div>
+
+    <div class="user-editor">
+      <div class="row">
+        <div class="col-md-2">Email</div>
+        <div class="col-md-10">{{ user.email }}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">Password</div>
+        <div class="col-md-5 form-group">
+          <input type="text" class="form-control" placeholder="Change password" size="20" v-model="updatedPassword">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-10">
+          <switch-button value="false" :value.boolean="!!(user.godMode)" @change="updateGodMode()"></switch-button>
+          <label class="only-margin-left">God Mode</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <switch-button value="false" :value.boolean="!!toggleCockpitAccess('ACCESS_TO_DARKBO')" @change="updateAccess('ACCESS_TO_DARKBO')"></switch-button>
+          <label class="only-margin-left">Accès au BackOffice</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <switch-button value="false" :value.boolean="!!toggleCockpitAccess('ACCESS_TO_GREYBO')" @change="updateAccess('ACCESS_TO_GREYBO')"></switch-button>
+          <label class="only-margin-left">Accès au Grey-BO</label>
+        </div>
+      </div>
+      <div class="row" v-if="!!toggleCockpitAccess('ACCESS_TO_GREYBO')">
+        <div class="col-xs-1"></div>
+        <div class="col-xs-6">
+          <switch-button value="false" :value.boolean="!!toggleCockpitAccess('ACCESS_TO_GREYBO_RGPD')" @change="updateAccess('ACCESS_TO_GREYBO_RGPD')"></switch-button>
+          <label class="only-margin-left">Accès à l'interface RGPD dans le Grey-BO</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+{% endraw %}
+  {% include "../common/components/_auto-complete/auto-complete.nunjucks" %}
+  {% include "../common/components/garages-list/garages-list.component.nunjucks" %}
+  {% include "../common/components/_auto-complete/users.nunjucks" %}
+<script type="text/javascript">
+  if (!gsTools) {
+    throw new Error('tools not found !');
+  }
+  Vue.prototype.$gsTools = gsTools;
+
+  Vue.component('user-editor', {
+    template: '#editor-template',
+    props: {
+      userId: {
+        type: String,
+        required: true
+      },
+      users: {
+        type: Array
+      },
+      deleteInProgress: {
+        type: Boolean
+      },
+      parent: {
+        type: Object
+      }
+    },
+    data: function () {
+      return {
+        updateInProgress: false,
+        anonymizeInProgress: false,
+        updatedPassword: '',
+        userToUpdate: {},
+        user: null,
+        userChanged: false
+      };
+    },
+    watch: {
+      'userId': async function (val) {
+        await this.loadUserEditor(val);
+      }
+    },
+    mounted: async function () {
+      await this.loadUserEditor(this.userId);
+    },
+    methods: {
+      updateGodMode: function () {
+        if(!this.user.email.match(/@garagescore\.com|@custeed\.com/)) return;
+        this.$set(this.user, 'godMode', !!!(this.user.godMode));
+        this.userToUpdate.godMode = this.user.godMode;
+        this.userChanged = true;
+      },
+      updateAccess: function (access, value) {
+        if (!this.user.authorization) this.user.authorization = {};
+        if (typeof value !== 'undefined') this.user.authorization[access] = value;
+        else this.$set(this.user.authorization, access, !!!(this.user.authorization[access]));
+        this.userToUpdate.authorization = this.user.authorization;
+        this.userChanged = true;
+      },
+      toggleCockpitAccess: function (access) {
+        if (access === 'ACCESS_TO_GREYBO') return this.user.authorization['ACCESS_TO_GREYBO'];
+        if (access === 'ACCESS_TO_GREYBO_RGPD') return this.user.authorization['ACCESS_TO_GREYBO_RGPD'];
+        if (access === 'ACCESS_TO_DARKBO') return this.user.authorization['ACCESS_TO_DARKBO'];
+      },
+      loadUserEditor: async function (userId) {
+        if (this.userChanged) {
+          window.alert("Vous devez enregistrer les modifications en cours avant de changer d'utilisateur ");
+        } else {
+          const res = await axios.get('{{ lib.client.url.getShortUrl('ADMIN_GET_ONE_USER') }}' + userId);
+          this.user = res.data;
+        }
+      },
+      _updateUser: async function (command, data) {
+        try {
+          data.user_id = this.user.id;
+          await axios.post('{{ lib.client.url.getShortUrl('ADMIN_USER_EDIT') }}' + command, data);
+          switch (command) {
+            case 'password':
+              delete this.userToUpdate.passwordToUpdate;
+              break;
+          }
+          if (Object.keys(this.userToUpdate).length === 0) {
+            alert("Modification sauvegardée et utilisateur rechargé avec succès.");
+            this.userChanged = false;
+            await this.loadUserEditor(data.user_id)
+          }
+        } catch (err) {
+          alert("Erreur _updateUser(), plus de détails dans la console.");
+          console.log(err)
+        }
+      },
+      deleteUser: function () {
+        var confirmation = confirm('Etes vous sûr de supprimer cet utilisateur ?');
+        if (confirmation) {
+          this.$emit('delete');
+        }
+      },
+      anonymizeUser: function () {
+        if (confirm('Etes vous sûr de vouloir anonymiser cet utilisateur ?')) {
+          const request = new XMLHttpRequest();
+          request.open('GET', '{{ lib.client.url.getShortUrl('ADMIN_USERS_ANONYMIZE') }}' + this.user.id, true);
+          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          this.anonymizeInProgress = true;
+          request.onload = function () {
+            this.anonymizeInProgress = false;
+            if (request.status !== 200 && request.status !== 304) {
+              alert("Erreur ! Plus de détails dans la console");
+              console.error("Update error : ");
+              console.error(request.responseText);
+            } else {
+              alert("L'utilisateur a bien été anonymisé.");
+            }
+          }.bind(this);
+          request.send();
+        }
+      },
+      saveUser: function () {
+        const new_password = this.updatedPassword ? this.updatedPassword.trim() : '';
+        if (new_password.length) {
+          this.userToUpdate.passwordToUpdate = true;
+          this._updateUser('password', { new_password: new_password });
+          this.updatedPassword = '';
+        }
+        if (this.userToUpdate.authorization) {
+          this._updateUser('authorization', { authorization: this.userToUpdate.authorization });
+        }
+        if (this.userToUpdate.hasOwnProperty('godMode')) {
+          this._updateUser('godMode', { godMode: this.userToUpdate.godMode });
+        }
+        this.userChanged = false;
+        return false;
+      }
+    }
+  });
+
+
+  new Vue({
+    el: '#app',
+    data: function () {
+      return {
+        users: [],
+        current_user: null,
+        currentUserId: null,
+        selectedId: '',
+        deleteInProgress: false,
+        enforceInProgress: false,
+      };
+    },
+    mounted: async function () {
+      await this.getAllUsers()
+    },
+    methods: {
+      getAllUsers: async function () {
+        try {
+          const res = await axios.get('{{ lib.client.url.getShortUrl('ADMIN_ALL_USERS') }}');
+          this.users = res.data;
+          this.currentUserId = document.location.hash ? document.location.hash.substr(1) : res.data[0].id;
+          await this.loadUser(this.currentUserId);
+        } catch (err) {
+          alert("Erreur ! Plus de détails dans la console");
+          console.log(err)
+        }
+      },
+      loadUser: async function (userId) {
+        if (this.userChanged) {
+          window.alert("Vous devez enregistrer les modifications en cours avant de changer d'utilisateur ");
+        } else {
+          const res = await axios.get('{{ lib.client.url.getShortUrl('ADMIN_USER') }}' + userId);
+          this.setUserInUrl(userId);
+          if (res.status !== 200) return;
+          this.current_user = res.data;
+          this.selectedId = res.data.id;
+        }
+      },
+      setUserInUrl: function (userId) {
+        document.location = document.location.toString().replace(/#.+/, '') + '#' + userId;
+      },
+      deleteUser: function (id) {
+        const request = new XMLHttpRequest();
+        const posturl = '{{ lib.client.url.getShortUrl('ADMIN_USER_EDIT') }}delete';
+        request.open('POST', posturl, true);
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        this.deleteInProgress = true;
+        request.onload = function () {
+          this.deleteInProgress = false;
+          if (request.status !== 200 && request.status !== 304) {
+            alert("Erreur ! Plus de détails dans la console");
+            console.error("Update error : ");
+            console.error(request.responseText);
+          } else {
+            this.setUserInUrl(this.users[0].id);
+            document.location.reload();
+          }
+        }.bind(this);
+        request.send(JSON.stringify({ id: id }));
+        return false;
+      },
+      enforceDS: function () {
+        if (this.enforceInProgress) return false;
+        const request = new XMLHttpRequest();
+        const posturl = '{{ lib.client.url.getShortUrl('ADMIN_USER_EDIT') }}enforce-data-sources-securities';
+        request.open('POST', posturl, true);
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        this.enforceInProgress = true;
+        request.onload = function () {
+          this.enforceInProgress = false;
+          if (request.status !== 200 && request.status !== 304) {
+            alert("Erreur ! Plus de détails dans la console");
+            console.error("Data securities error : ");
+            console.error(request.responseText);
+          } else {
+            const data = JSON.parse(request.responseText);
+            if (data.warnings && data.warnings.length > 0) {
+              alert('Data securities OK! (' + data.warnings.length + ' alertes, cf console)');
+              data.warnings.forEach(warning => console.log(warning));
+            } else {
+              alert('Data securities OK! ');
+            }
+          }
+        }.bind(this);
+
+        request.send();
+        return false;
+      },
+    }
+  });
+</script>
+{% endblock %}

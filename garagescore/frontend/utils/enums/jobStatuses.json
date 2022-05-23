@@ -1,0 +1,26 @@
+{
+  "WAITING": {
+    "value": "WAITING",
+    "properties": {}
+  },
+  "IMMEDIATE": {
+    "value": "IMMEDIATE",
+    "properties": {}
+  },
+  "INQUEUE": {
+    "value": "INQUEUE",
+    "properties": {}
+  },
+  "CANCELLED": {
+    "value": "CANCELLED",
+    "properties": {}
+  },
+  "ERROR": {
+    "value": "ERROR",
+    "properties": {}
+  },
+  "DONE": {
+    "value": "DONE",
+    "properties": {}
+  }
+}

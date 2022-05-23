@@ -1,0 +1,392 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+  <style type="text/css">
+    select.black-select, select.black-select option {
+      color: black;
+    }
+    td, th {
+      padding: 5px;
+      width: 101px;
+      text-align: center;
+    }
+  </style>
+{% endblock %}
+{% block page %}
+{%  raw %}
+  <div id="user-jobs-app">
+    <h3>Jobs</h3>
+    <div>
+      Cette liste de fonctions représente celle qui sera ensuite disponible sur l'admin cockpit pour le client final<br><br>
+      <div class="row">
+        <div class="col-xs-4">
+          <label for="garageType">Type de garage</label>
+          <select name="garageType" class="form-control" v-model="garageType">
+            <option v-for="gt in GarageTypes" :value="gt.value">{{ gt.name }}</option>
+          </select>
+        </div>
+        <div class="col-xs-5" v-if="started && jobs[garageType]">
+          <label for="garageType">Nom de la fonction</label>
+          <select class="form-control" v-model="selectedJob.id">
+            <option value="" selected disabled>Choisir</option>
+            <option v-for="job in jobs[garageType]" :value="job.id">{{ job.name }}</option>
+          </select>
+        </div>
+        <div class="col-xs-5" v-else>
+          <label for="garageType">Aucune fonction pour l'instant</label>
+        </div>
+        <div class="col-xs-3" style="margin-top: 27px;"><button class="btn btn-sm btn-danger" @click="deleteJob" disabled>Supprimer</button></div>
+      </div><br>
+      <div class="row">
+        <div v-if="addingJob">
+          <div class="col-xs-5 col-xs-offset-4">
+            <input type="text" class="form-control" placeholder="Nouvelle fonction..." v-model="newJob">
+            <div style="margin-top: 5px;">
+              <label>Ce job sera t il "Manager" ?</label>
+              <input style="position: relative; top: 3px;" type="checkbox" class="" v-model="isManager">
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <button class="btn btn-sm btn-primary" @click="saveJob(newJob)">Ajouter dans {{ garageType }}</button>
+          </div>
+        </div>
+        <div v-else>
+          <div class="col-xs-5 col-xs-offset-4">
+            <button class="btn btn-sm btn-success" @click="addingJob = true">+ Nouvelle fonction</button>
+          </div>
+        </div>
+      </div>
+    </div><hr>
+
+    <div v-if="selectedJob.id">
+      <h3>Configuration Rapports et Alertes</h3>
+      <span>Cette configuration ne s'applique qu'au moment de la création de l'utilisateur. En aucun cas elle ne pourra servir à un changement en masse.</span><br>
+      <br>
+      <div class="row col-xs-12" style="text-align: -webkit-center;">
+        <table class="table table-bordered text-center" style="width: 75%">
+          <tr>
+            <th>Fréquence</th>
+            <th colspan="4">Mécontents</th>
+            <th colspan="3"> Projets</th>
+            <th colspan="4">Contacts</th>
+            <th>E-réputation</th>
+          </tr>
+          <tr>
+            <td></td>
+            <td>Atelier</td>
+            <td>Neuf</td>
+            <td>Occasion</td>
+            <td>Contrôle technique</td>
+
+            <td>Atelier</td>
+            <td>Neuf</td>
+            <td>Occasion</td>
+
+            <td>Contacts Apv</td>
+            <td>Contacts Vn</td>
+            <td>Contacts Vo</td>
+            <td>Contacts VI</td>
+
+            <td>Nouvel Avis</td>
+          </tr>
+          <tr>
+            <td>Temps réel</td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.allGaragesAlerts.UnsatisfiedMaintenance"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.allGaragesAlerts.UnsatisfiedVn"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.allGaragesAlerts.UnsatisfiedVo"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.allGaragesAlerts.UnsatisfiedVI"></td>
+
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.allGaragesAlerts.LeadApv"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.allGaragesAlerts.LeadVn"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.allGaragesAlerts.LeadVo"></td>
+
+            <td>.</td>
+            <td>.</td>
+            <td>.</td>
+            <td>.</td>
+
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.allGaragesAlerts.ExogenousNewReview"></td>
+          </tr>
+
+          <tr>
+            <td>Escalades</td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.allGaragesAlerts.EscalationUnsatisfiedMaintenance"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.allGaragesAlerts.EscalationUnsatisfiedVn"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.allGaragesAlerts.EscalationUnsatisfiedVo"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.allGaragesAlerts.EscalationUnsatisfiedVi"></td>
+
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.allGaragesAlerts.EscalationLeadMaintenance"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.allGaragesAlerts.EscalationLeadVn"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.allGaragesAlerts.EscalationLeadVo"></td>
+
+            <td>.</td>
+            <td>.</td>
+            <td>.</td>
+            <td>.</td>
+
+            <td>.</td>
+          </tr>
+
+          <tr>
+            <td>Quotidien</td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.daily.unsatisfiedApv"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.daily.unsatisfiedVn"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.daily.unsatisfiedVo"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.daily.UnsatisfiedVI"></td>
+
+            <td></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.daily.leadVn"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.daily.leadVo"></td>
+
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+
+            <td></td>
+          </tr>
+          <tr>
+            <td>Hebdo</td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.weekly.unsatisfiedApv"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.weekly.unsatisfiedVn"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.weekly.unsatisfiedVo"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.weekly.UnsatisfiedVI"></td>
+
+            <td></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.weekly.leadVn"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.weekly.leadVo"></td>
+
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+
+            <td></td>
+          </tr>
+          <tr>
+            <td>Mensuel</td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.monthly.unsatisfiedApv"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.monthly.unsatisfiedVn"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.monthly.unsatisfiedVo"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.monthly.UnsatisfiedVI"></td>
+
+            <td></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.monthly.leadVn"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.monthly.leadVo"></td>
+
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+
+            <td></td>
+          </tr>
+          <tr v-if="selectedJob.garageType !== 'VehicleInspection'">
+            <td>Nouveaux rapports mensuels</td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.monthlySummary.unsatisfiedApv"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.monthlySummary.unsatisfiedVn"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.monthlySummary.unsatisfiedVo"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.monthlySummary.UnsatisfiedVI"></td>
+
+            <td></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.monthlySummary.leadVn"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.monthlySummary.leadVo"></td>
+
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.monthlySummary.contactsApv"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.monthlySummary.contactsVn"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.monthlySummary.contactsVo"></td>
+            <td><input type="checkbox" id="checkbox" v-model="selectedJob.defaultUserConfig.reportConfigs.monthlySummary.contactsVI"></td>
+
+            <td></td>
+          </tr>
+        </table>
+        <div class="col-xs-12" style="margin-top: 5px;">
+          <label>Ce job est il "Manager" ? </label>
+          <input style="position: relative; top: 3px;" type="checkbox" v-model="selectedJob.isManager">
+        </div>
+        <div class="col-xs-12 text-center">
+          <button class="btn btn-success" @click="saveJob()">Enregistrer les modifications</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endraw %}
+  <script type="text/javascript">
+    let userJobs = {{ userJobs|safe }};
+    let GarageTypes = {{ GarageTypes|safe }};
+    Object.keys(GarageTypes).forEach((gType) => {
+      if (gType.match(/^INT_/g)) delete GarageTypes[gType];
+    });
+
+    function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, '\\$&');
+      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+    function getEmptyUserConfig() {
+      return {
+        allGaragesAlerts: {
+          // Real time alerts
+          "UnsatisfiedMaintenance" : false,
+          "UnsatisfiedVn" : false,
+          "UnsatisfiedVo" : false,
+          "UnsatisfiedVI" : false,
+          "LeadApv" : false,
+          "LeadVn" : false,
+          "LeadVo" : false,
+          // Escalation
+          "EscalationUnsatisfiedMaintenance": false,
+          "EscalationUnsatisfiedVn": false,
+          "EscalationUnsatisfiedVo": false,
+          "EscalationUnsatisfiedVi": false,
+          "EscalationLeadMaintenance": false,
+          "EscalationLeadVn": false,
+          "EscalationLeadVo": false,
+        },
+        reportConfigs: {
+          "daily" : {
+            "lead" : false,
+            "unsatisfiedApv" : false,
+            "unsatisfiedVn" : false,
+            "unsatisfiedVo" : false,
+            "leadVo" : false,
+            "leadVn" : false
+          },
+          "weekly" : {
+            "lead" : false,
+            "unsatisfiedApv" : false,
+            "unsatisfiedVn" : false,
+            "unsatisfiedVo" : false,
+            "leadVn" : false,
+            "leadVo" : false
+          },
+          "monthly" : {
+            "lead" : false,
+            "unsatisfiedApv" : false,
+            "unsatisfiedVn" : false,
+            "unsatisfiedVo" : false,
+            "leadVo" : false,
+            "leadVn" : false,
+            "unsatisfiedFollowup" : true
+          },
+          "monthlySummary" : {
+            "lead" : false,
+            "unsatisfiedApv" : false,
+            "unsatisfiedVn" : false,
+            "unsatisfiedVo" : false,
+            "unsatisfiedVI" : false,
+            "leadVo" : false,
+            "leadVn" : false,
+            "contactsApv": false,
+            "contactsVn": false,
+            "contactsVo": false,
+            "contactsVI": false
+          }
+        }
+      };
+    }
+    new Vue({
+      el: '#user-jobs-app',
+      data: function () {
+        return {
+          changed: false,
+          addingJob: false,
+          GarageTypes: GarageTypes,
+          garageType: 'Dealership',
+          jobs: {},
+          started: false,
+          newJob: '',
+          isManager: false,
+          saving: false,
+          userJobs: userJobs,
+          selectedJob: {
+            id: '',
+            name: '',
+            garageType: 'Dealership',
+            isManager: false,
+            defaultUserConfig: getEmptyUserConfig()
+          }
+        };
+      },
+      mounted() {
+        this.retrieveJobs();
+      },
+      watch: {
+        'selectedJob.id': function() {
+          const find = this.jobs[this.garageType || 'Dealership'].find((j) => j.id === this.selectedJob.id);
+          const emptyConfig = getEmptyUserConfig();
+          this.selectedJob.name = find.name;
+          this.selectedJob.defaultUserConfig = find.defaultUserConfig || emptyConfig;
+          this.selectedJob.defaultUserConfig.allGaragesAlerts = {
+            ...emptyConfig.allGaragesAlerts, ...this.selectedJob.defaultUserConfig.allGaragesAlerts
+          };
+          for (let freq in emptyConfig.reportConfigs) {
+            if (freq !== 'monthlySummary' || this.selectedJob.garageType !== 'VehicleInspection') {
+              this.selectedJob.defaultUserConfig.reportConfigs[freq] = {
+                ...emptyConfig.reportConfigs[freq], ...this.selectedJob.defaultUserConfig.reportConfigs[freq]
+              };
+            }
+          }
+          this.selectedJob.garageType = find.garageType || 'Dealership';
+          this.selectedJob.isManager = find.isManager || false;
+          this.changed = false;
+        },
+        'selectedJob.defaultUserConfig': function () {
+          this.changed = true;
+        },
+        'garageType': function () {
+          this.selectedJob.id = '';
+        }
+      },
+      methods: {
+        getPath: function () {
+
+        },
+        retrieveJobs: function () {
+          gsTools.getRequest('{{ lib.client.url.getUrlNamespace('USER_JOBS').GET_ALL }}', {}, (errRetrieve, jobs) => {
+            if (errRetrieve) { console.error(errRetrieve); return; }
+            this.jobs = {};
+            jobs.forEach(job => {
+              const type = job.garageType || 'Dealership';
+              if (!this.jobs[type]) this.jobs[type] = [];
+              this.jobs[type].push(job);
+            });
+            this.started = true;
+          });
+        },
+        saveJob: function (newJob) {
+          const jobToSave = newJob ? { name: this.newJob, garageType: this.garageType || 'Dealership', isManager: this.isManager || false } : this.selectedJob;
+          gsTools.postRequest('{{ lib.client.url.getUrlNamespace('USER_JOBS').SAVE }}', jobToSave, (errCreate, saved) => {
+            if (errCreate) {
+              alert(errCreate);
+            } else {
+              if (newJob) {
+                if (!this.jobs[this.garageType || 'Dealership']) this.jobs[this.garageType || 'Dealership'] = [];
+                this.jobs[this.garageType].push(saved);
+                alert(`Nouveau job ${newJob} créé avec succès.`);
+              } else {
+                alert(`Job ${jobToSave.name} modifié avec succès.`);
+                this.retrieveJobs();
+              }
+              this.addingJob = false;
+              // this.changed = false;
+            }
+          });
+        },
+        deleteJob: function () {
+          gsTools.deleteRequest('{{ lib.client.url.getUrlNamespace('USER_JOBS').DELETE }}'.replace(':id', this.selectedJob.id), (errDelete) => {
+            if (errDelete) {
+              console.error(errDelete);
+            } else {
+              // this.jobs[this.garageType].splice(this.jobs[this.garageType].indexOf(this.jobToDelete), 1);
+            }
+            this.selectedJob = {};
+          });
+        }
+      }
+    });
+  </script>
+{% endblock %}

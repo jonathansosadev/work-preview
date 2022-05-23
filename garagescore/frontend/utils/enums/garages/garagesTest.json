@@ -1,0 +1,242 @@
+{
+  "GARAGE_DUPONT": {
+    "value": "577a30d774616c1a0056c263",
+    "properties": {
+      "type": "Dealership",
+      "publicDisplayName": "Garage Dupont",
+      "locale": "fr_FR"
+    }
+  },
+  "CARAVANING_MARTIN": {
+    "value": "60ddca40cf527a9863d4a769",
+    "properties": {
+      "type": "Caravanning",
+      "publicDisplayName": "Caravanning Martin",
+      "locale": "fr_FR"
+    }
+  },
+  "VEHICULE_INSPECTION_DURANT": {
+    "value": "5bd0c7ab34f3e7001421c563",
+    "properties": {
+      "type": "VehicleInspection",
+      "publicDisplayName": "Contrôle technique Durant",
+      "locale": "fr_FR"
+    }
+  },
+  "AGENT_DUPONT": {
+    "value": "5bfff5c8c8613c00147ebced",
+    "properties": {
+      "type": "Agent",
+      "publicDisplayName": "Agent dupont",
+      "locale": "fr_FR"
+    }
+  },
+  "MOTO_DUBOIS": {
+    "value": "5c0e725a3ce3a100149dfcd0",
+    "properties": {
+      "type": "MotorbikeDealership",
+      "publicDisplayName": "Moto dubois",
+      "locale": "fr_FR"
+    }
+  },
+  "GARAGE_DEL_BOSQUE": {
+    "value": "5ca1d4b04a7aa10015fc9eba",
+    "properties": {
+      "type": "Dealership",
+      "publicDisplayName": "Taller del Bosque",
+      "locale": "es_ES"
+    }
+  },
+  "CARAVANING_GARCIA": {
+    "value": "60ddca40cf527a9863d4a768",
+    "properties": {
+      "type": "Caravanning",
+      "publicDisplayName": "Caravanning Garcia",
+      "locale": "es_ES"
+    }
+  },
+  "MOTO_DEL_MAR": {
+    "value": "5ca1d5854a7aa10015fc9ec7",
+    "properties": {
+      "type": "MotorbikeDealership",
+      "publicDisplayName": "Garaje Del Mar",
+      "locale": "es_ES"
+    }
+  },
+  "VEHICULE_INSPECTION_DEL_CIELO": {
+    "value": "5ca1d8504a7aa10015fc9efb",
+    "properties": {
+      "type": "VehicleInspection",
+      "publicDisplayName": "Centro Del Cielo",
+      "locale": "es_ES"
+    }
+  },
+  "GARAGE_SMITH": {
+    "value": "5cdd5cac3d5f8600156bfe84",
+    "properties": {
+      "type": "Dealership",
+      "publicDisplayName": "Smith",
+      "locale": "en_US"
+    }
+  },
+  "CARAVANING_WILL": {
+    "value": "60ddca40cf527a9863d4a766",
+    "properties": {
+      "type": "Caravanning",
+      "publicDisplayName": "Will",
+      "locale": "en_US"
+    }
+  },
+  "MOTO_MOORE": {
+    "value": "5cdd5dda3d5f8600156bffac",
+    "properties": {
+      "type": "MotorbikeDealership",
+      "publicDisplayName": "Moore",
+      "locale": "fr_FR"
+    }
+  },
+  "VEHICULE_INSPECTION_CLARK": {
+    "value": "5cdd5f5c3d5f8600156c0046",
+    "properties": {
+      "type": "VehicleInspection",
+      "publicDisplayName": "Clark",
+      "locale": "en_US"
+    }
+  },
+  "AGENT_DEL_LAGO": {
+    "value": "5d2d904168f9900015238a58",
+    "properties": {
+      "type": "Agent",
+      "publicDisplayName": "Agente del lago",
+      "locale": "es_ES"
+    }
+  },
+  "AGENT_TESLA_HOUSTON": {
+    "value": "5d2d935668f9900015238ac9",
+    "properties": {
+      "type": "Agent",
+      "publicDisplayName": "Agent Tesla Houston",
+      "locale": "en_US"
+    }
+  },
+  "GARAGE_NORD": {
+    "value": "5d66e1f030b83300156b5701",
+    "properties": {
+      "type": "Dealership",
+      "publicDisplayName": "Garatge Nord",
+      "locale": "ca_ES"
+    }
+  },
+  "CARAVANING_OUEST": {
+    "value": "60ddca40cf527a9863d4a767",
+    "properties": {
+      "type": "Caravanning",
+      "publicDisplayName": "Caravaning Ouest",
+      "locale": "ca_ES"
+    }
+  },
+  "VEHICULE_INSPECTION_CENTRE": {
+    "value": "5d66e23c30b83300156b5702",
+    "properties": {
+      "type": "VehicleInspection",
+      "publicDisplayName": "Garatge Centre",
+      "locale": "ca_ES"
+    }
+  },
+  "MOTO_SUD": {
+    "value": "5d66e28a30b83300156b5703",
+    "properties": {
+      "type": "MotorbikeDealership",
+      "publicDisplayName": "Garatge Sud",
+      "locale": "ca_ES"
+    }
+  },
+  "AGENT_OEST": {
+    "value": "5d67dbcb4672b70015809a34",
+    "properties": {
+      "type": "Agent",
+      "publicDisplayName": "Agent oest",
+      "locale": "ca_ES"
+    }
+  },
+  "VEHICULE_INSPECTION_LAMBERT": {
+    "value": "5d88c2581614fb0015419a64",
+    "properties": {
+      "type": "VehicleInspection",
+      "publicDisplayName": "Contrôle technique Lambert",
+      "locale": "fr_BE"
+    }
+  },
+  "AGENT_LAMBERT": {
+    "value": "5d8a13ff16d99e001570f325",
+    "properties": {
+      "type": "Agent",
+      "publicDisplayName": "Agent Lambert",
+      "locale": "fr_BE"
+    }
+  },
+  "MOTO_LAMBERT": {
+    "value": "5d8a145816d99e001570f34c",
+    "properties": {
+      "type": "MotorbikeDealership",
+      "publicDisplayName": "Moto Lambert",
+      "locale": "fr_BE"
+    }
+  },
+  "GARAGE_LAMBERT": {
+    "value": "5e18819b73cd42001513969e",
+    "properties": {
+      "type": "Dealership",
+      "publicDisplayName": "Garage Lambert",
+      "locale": "fr_BE"
+    }
+  },
+  "CARAVANING_RICHARD": {
+    "value": "60ddca40cf527a9863d4a765",
+    "properties": {
+      "type": "Caravanning",
+      "publicDisplayName": "Caravaning Richard",
+      "locale": "fr_BE"
+    }
+  },
+  "AGENT_MERTENS": {
+    "value": "5d8a147a16d99e001570f35a",
+    "properties": {
+      "type": "Agent",
+      "publicDisplayName": "Agent Mertens",
+      "locale": "nl_BE"
+    }
+  },
+  "GARAGE_MERTENS": {
+    "value": "5d8a141616d99e001570f32c",
+    "properties": {
+      "type": "Dealership",
+      "publicDisplayName": "Garage Mertens",
+      "locale": "nl_BE"
+    }
+  },
+  "CARAVANING_MERTENS": {
+    "value": "60ddca40cf527a9863d4a764",
+    "properties": {
+      "type": "Caravanning",
+      "publicDisplayName": "Caravaning Mertens",
+      "locale": "nl_BE"
+    }
+  },
+  "MOTO_MERTENS": {
+    "value": "5e188bd973cd420015139911",
+    "properties": {
+      "type": "MotorbikeDealership",
+      "publicDisplayName": "Motorfiets Mertens",
+      "locale": "nl_BE"
+    }
+  },
+  "VEHICULE_INSPECTION_MERTENS": {
+    "value": "5e18901473cd420015139a3a",
+    "properties": {
+      "type": "VehicleInspection",
+      "publicDisplayName": "Technische controle Mertens",
+      "locale": "nl_BE"
+    }
+  }
+}

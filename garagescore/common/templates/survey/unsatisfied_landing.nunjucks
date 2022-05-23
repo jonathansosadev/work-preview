@@ -1,0 +1,355 @@
+<html>
+
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+  <title>{% if garage.name %}{{ garage.name }} - {% endif %}{% if garage.type == 'VehicleInspection' %}Custeed{% else %}GarageScore{% endif %}</title>
+  {% include "./common_head.nunjucks" -%}
+  <style>
+  .c2 {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-family: Lato;
+  }
+
+  .c2_content {
+    max-width: 400px;
+    margin: 50px auto 0;
+    padding: 25px;
+    background: #fff;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 25px 35px 0 rgba(0, 0, 0, 0.16);
+    box-shadow: 0 25px 35px 0 rgba(0, 0, 0, 0.16);
+  }
+
+  .c2_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .c2_title {
+    text-align: center;
+    flex-grow: 1;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.19;
+  }
+
+  .c2_body {
+    margin-bottom: 28px;
+    margin-top: 25px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.36;
+    color: #757575;
+  }
+  .c2_text1 {
+    margin-bottom: 14px;
+  }
+  .c2_text2 {
+    font-weight: bold;
+  }
+
+  .c2_btn-close {
+    padding-top: 2px;
+    height: 14px;
+    cursor: pointer;
+  }
+  .c2_btn-close:before {
+    content: url(/static/latest/images/www/survey/cross.svg);
+  }
+
+  .c2_footer {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+  }
+
+  .c2_btn-yes, .c2_btn-no {
+    text-decoration: none;
+    cursor: pointer;
+    height: 36px;
+    border: 0;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    line-height: 0.86;
+    width: 114px;
+  }
+  .c2_btn-yes {
+    background-color: transparent;
+    border: 1px solid #757575;
+    margin-left: 14px;
+    color: #757575;
+  }
+  .c2_btn-no {
+    background-color: #43b9ad;
+    color: #ffffff;
+  }
+  .c2_btn-yes:hover{
+    background-color: #e0e0e0;
+  }
+  .c2_btn-no:hover {
+    background: #009A8A;
+  }
+  .c2_overlay {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #d6ebe7;
+  }
+
+  </style>
+</head>
+
+<body>
+  <div id="surveyContainer" style="display:none;">
+    <div class="sv_main sv_default_css">
+      <div class="sv_custom_header">
+      </div>
+      <div class="sv_container">
+        <div class="sv_header">
+          <h3>
+            <span style="position: static;">
+              <span style="position: static;" id="surveyTitle"></span>
+            </span>
+          </h3>
+        </div>
+        <div class="sv_body">
+          <div class="sv_p_root" id="sp_100">
+            <h4 class="sv_page_title" style="display: none;">
+              <span style="position: static;">
+                <span style="position: static;">1. </span>
+              </span>
+            </h4>
+            <div class="" style="display: none;">
+              <span style="position: static;">
+                <span style="position: static;">
+                </span>
+              </span>
+            </div>
+            <div class="sv_row">
+              <div>
+                <div class="sv_q sv_qstn" id="sq_100" style="width: 100%;">
+                  <div class="">
+                    <h5 class="sv_q_title">
+                      <span style="position: static;">
+                        <span style="position: static;" id="ratingQ1"></span>
+                        <span style="position: static;" id="coloredScore"></span>
+                        <span style="position: static;" id="ratingQ2"></span>
+                      </span>
+                    </h5>
+                  </div>
+                  <div class="">
+                    <div role="alert" class="sv_q_erbox" style="display: none;">
+                    </div>
+                    <div>
+                      <div class="sv_s_rating">
+                        <span class="sv_s_rating_min_text">
+                          <span id="minStarDescription"></span>
+                        </span>
+                        <div class="rating-star-red" id="rating-star-1">
+                          <div class="rating-star-sub">
+                            {# <span class="rating-star-sub-big">1&nbsp;</span>/5 #}
+                          </div>
+                        </div>
+                        <div class="rating-star-red" id="rating-star-2">
+                          <div class="rating-star-sub">
+                            {# <span class="rating-star-sub-big">2&nbsp;</span>/5 #}
+                          </div>
+                        </div>
+                        <div class="rating-star-red" id="rating-star-3">
+                          <div class="rating-star-sub">
+                            {# <span class="rating-star-sub-big">3&nbsp;</span>/5 #}
+                          </div>
+                        </div>
+                        <div class="rating-star-orange" id="rating-star-4">
+                          <div class="rating-star-sub">
+                            {# <span class="rating-star-sub-big">4&nbsp;</span>/5 #}
+                          </div>
+                        </div>
+                        <div class="rating-star-green" id="rating-star-5">
+                          <div class="rating-star-sub">
+                            {# <span class="rating-star-sub-big">5&nbsp;</span>/5 #}
+                          </div>
+                        </div>
+                        <span class="sv_s_rating_max_text">
+                          <span id="maxStarDescription"></span>
+                        </span>
+                      </div>
+                      <div class="sv_q_rating">
+                      </div>
+                      <div style="display: none;">
+                        <input type="text" aria-label="Quelle note accordez-vous à la prestation ?">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="sv_progress" style="margin-top: 1em;">
+            <div role="progressbar" aria-valuemin="0" aria-valuemax="100" class="sv_progress_bar" style="width: 34%;">
+              <span id="page"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% include  "../i18n/i18n.nunjucks" -%}
+  <script>
+    i18n.loadForSurveyJS('backoffice:survey:unsatisfied-landing');
+    var PARAMS = {};
+    window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+      PARAMS[key] = value;
+    });
+
+    var customConfirm = function (options) {
+      var modalElt = document.createElement('div');
+      modalElt.classList.add('c2');
+      modalElt.innerHTML = '<div class="c2_content"><div class="c2_header"><span class="c2_title"></span><span class="c2_btn-close"></span></div><div class="c2_body"><div class="c2_text1"></div><div class="c2_text2"></div></div><div class="c2_footer"><button class="c2_btn-no"></button><button class="c2_btn-yes"></button></div>';
+
+      var close = modalElt.querySelector('.c2_btn-close');
+      var yes = modalElt.querySelector('.c2_btn-yes');
+      var no = modalElt.querySelector('.c2_btn-no');
+      var title = modalElt.querySelector('.c2_title');
+      var text1 = modalElt.querySelector('.c2_text1');
+      var text2 = modalElt.querySelector('.c2_text2');
+
+
+      if (options.title) title.innerHTML = options.title;
+      if (options.text1) text1.innerHTML = options.text1;
+      if (options.text2) text2.innerHTML = options.text2;
+
+      yes.innerHTML = options.btn_yes;
+      if (options.btn_no === null) no.style.display = 'none';
+      else no.innerHTML = options.btn_no;
+
+      function cancel(event) {
+        event.preventDefault();
+        modalElt.parentNode.removeChild(modalElt);
+        if (options.cancel) options.cancel();
+      }
+      function confirm(event) {
+        event.preventDefault();
+        modalElt.parentNode.removeChild(modalElt);
+        if (options.confirm) options.confirm();
+      }
+      close.addEventListener('click', cancel.bind(this));
+      no.addEventListener('click', cancel.bind(this));
+      yes.addEventListener('click', confirm.bind(this));
+
+      var overlay = document.createElement('DIV');
+      modalElt.appendChild(overlay);
+      overlay.className = 'c2_overlay';
+
+      document.body.appendChild(modalElt);
+    };
+
+    var garageName = '{{ garage.name }}';
+    var ratingType = '{{ garage.ratingType }}';
+    var isReverseRating = {{ garage.isReverseRating }};
+    var lang = PARAMS['locale'] || '{{ garage.locale }}';
+    var links = [
+      '{{surveyUrls.score[0]|safe}}',
+      '{{surveyUrls.score[1]|safe}}',
+      '{{surveyUrls.score[2]|safe}}',
+      '{{surveyUrls.score[3]|safe}}',
+      '{{surveyUrls.score[4]|safe}}',
+      '{{surveyUrls.score[5]|safe}}',
+      '{{surveyUrls.score[6]|safe}}',
+      '{{surveyUrls.score[7]|safe}}',
+      '{{surveyUrls.score[8]|safe}}',
+      '{{surveyUrls.score[9]|safe}}',
+      '{{surveyUrls.score[10]|safe}}'
+    ];
+
+    customConfirm({
+      title: (ratingType === 'stars' ? t('confirmStars1', { stars: PARAMS.score / 2 }) : t('confirmScore1', { score: PARAMS.score }))[lang],
+      text1: t('confirmRate')[lang],
+      text2: (ratingType === 'stars' ? t('confirmStars2') : t('confirmScore2'))[lang],
+      btn_yes: t('btn_yes')[lang],
+      btn_no: t('btn_no')[lang],
+      confirm: function() { document.location.href = links[PARAMS.score] + '&locale=' + lang; },
+      cancel: function () { document.getElementById('surveyContainer').style.display = ""; },
+    });
+
+    var classColorRatingNote = function (note) {
+      if (note < 7) return 'unsatisfied';
+      if (note < 9) return 'neutral';
+      return 'satisfied';
+    }
+
+    var rateDescription = function (rate = 'min') {
+      var description = isReverseRating ? t((rate === 'min' ? 'max' : 'min') + 'RateDescription')[lang] : t(rate + 'RateDescription')[lang];
+      return "<span class='sv_q_rating_" + rate
+        + "_text'><span style='position: static;'><span style='position: static;' id='" + rate
+        + "RateDescription'>" + description
+        + "</span></span></span>";
+    }
+
+    if (ratingType === 'rating') {
+      var rating = document.getElementsByClassName('sv_q_rating')[0];
+      var notes = isReverseRating ? [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0] : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+      for (var i = 0; i < notes.length; i++) {
+        var label = document.createElement('label');
+        label.classList.add("sv_q_rating_item");
+        label.innerHTML = "<input type='radio' name='rating' id='rating" + notes[i] + "' aria-label='" + notes[i] + "' value='"+ notes[i] +"' style='display: none;'>"
+        + (i === 0 ? rateDescription('min') : '')
+        + "<span class='sv_q_rating_item_text " + (classColorRatingNote(notes[i]))
+        + "'><span style='position: static;'><span style='position: static;'>" + notes[i]
+        + "</span></span></span>"
+        + (i === 10 ? rateDescription('max') : '');
+        rating.appendChild(label);
+      }
+    }
+
+    var click = function (score) {
+      document.location.href = links[score];
+    };
+
+    if (ratingType === 'rating') {
+      for (var i = 0; i < 11; i++) {
+        document.getElementById("rating" + i).onclick = click.bind(null, i);
+        if (PARAMS.score == i) document.getElementById("rating" + i).parentElement.classList.add('active');
+      }
+      document.getElementsByClassName('sv_s_rating')[0].style.display = 'none';
+    } else {
+      for (var i = 1; i < 6; i++) {
+        document.getElementById("rating-star-" + i).onclick = click.bind(null, i * 2);
+        if (Math.ceil(PARAMS.score / 2) < i) document.getElementById("rating-star-" + i).classList.add('empty');
+      }
+      document.getElementsByClassName('sv_q_rating')[0].style.display = 'none';
+    }
+
+    function unescapeHTML(string) {
+      var elt = document.createElement("span");
+      elt.innerHTML = string;
+      return elt.innerText;
+    }
+    document.getElementById('surveyTitle').innerHTML = t('surveyTitle', { brand: {% if garage.type == 'VehicleInspection' %}'Custeed'{% else %}'GarageScore'{% endif %}, garageName: unescapeHTML('{{ garage.name }}') })[lang];
+
+    document.getElementById('ratingQ1').innerHTML =  t('rating1')[lang];
+    document.getElementById('coloredScore').innerHTML = ratingType === 'stars' ?
+        ' ' + (t('currentStars', { stars: PARAMS.score / 2 })[lang]) + ' ':
+        ' ' + (t('currentScore', { score: PARAMS.score })[lang]) + ' ';
+    document.getElementById('ratingQ2').innerHTML =  t('rating2', { garageName: garageName, max: ratingType === 'stars' ? 5 : 10 })[lang];
+
+    document.getElementById('minStarDescription').innerHTML = t('minRateDescription')[lang];
+    document.getElementById('maxStarDescription').innerHTML = t('maxRateDescription')[lang];
+    document.getElementById('page').innerHTML = t('page')[lang] + " 1";
+
+    if (PARAMS.score <= 6) document.getElementById('coloredScore').style.color = "#d04331";
+    else if (PARAMS.score <= 8) document.getElementById('coloredScore').style.color = "#f6cc55";
+    else document.getElementById('coloredScore').style.color = "#00b050";
+  </script>
+</body>
+
+</html>

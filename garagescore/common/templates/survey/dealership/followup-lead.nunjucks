@@ -1,0 +1,116 @@
+<html>
+<head>
+  <title>{% if garage.name %}{{ garage.name }} - {% endif %}GarageScore</title>
+  {% include  "../common_head.nunjucks" -%}
+</head>
+<body>
+<div id="surveyContainer">
+  <survey :survey="survey"></survey>
+</div>
+{% include  "../common_top.nunjucks" -%}
+<script>
+  i18n.loadForSurveyJS('backoffice:survey:dealership:followup-lead');
+  survey.title = t('surveyTitle', { garageName: unescapeHTML('{{ garage.name }}') });
+  var leadSaleType = '{{ leadSaleType }}';
+
+  var page1 = { name: '{{ surveyPageTypes.FOLLOWUPLEAD_PAGE }}', questions: [] };
+  survey.pages.push(page1);
+  page1.questions.push({
+    type: "radiogroup",
+    choices: [
+      { value: 'Yes', text: t('Yes') },
+      { value: 'No', text: t('No') }
+    ],
+    isRequired: true,
+    name: "recontacted",
+    title: t('recontacted')
+  });
+  page1.questions.push({
+    type: "radiogroup",
+    choices: [
+      { value: 'Yes', text: t('Yes') },
+      { value: 'No', text: t('No') }
+    ],
+    isRequired: true,
+    visibleIf: "{recontacted}='Yes'",
+    name: "satisfied",
+    title: t('satisfied')
+  });
+  if (leadSaleType !== 'Maintenance') {
+    page1.questions.push({
+      type: "checkbox",
+      choices: [
+        { value: 'SatisfiedReason1', text: t('SatisfiedReason1') },
+        { value: 'SatisfiedReason2', text: t('SatisfiedReason2') },
+        { value: 'SatisfiedReason3', text: t('SatisfiedReason3') },
+        { value: 'SatisfiedReason4', text: t('SatisfiedReason4') },
+        { value: 'SatisfiedReason5', text: t('SatisfiedReason5') },
+        { value: 'SatisfiedReason6', text: t('SatisfiedReason6') }
+      ],
+      visibleIf: "{satisfied}='Yes' and {recontacted}='Yes'",
+      name: "satisfiedReasons",
+      title: t('satisfiedReasons')
+    });
+  } else {
+    page1.questions.push({
+      type: "checkbox",
+      choices: [
+        { value: 'SatisfiedReason7', text: t('SatisfiedReason7') },
+        { value: 'SatisfiedReason8', text: t('SatisfiedReason8') },
+        { value: 'SatisfiedReason9', text: t('SatisfiedReason9') },
+        { value: 'SatisfiedReason10', text: t('SatisfiedReason10') },
+        { value: 'SatisfiedReason11', text: t('SatisfiedReason11') }
+      ],
+      visibleIf: "{satisfied}='Yes' and {recontacted}='Yes'",
+      name: "satisfiedReasons",
+      title: t('satisfiedReasons')
+    });
+  }
+  if (leadSaleType !== 'Maintenance') {
+    page1.questions.push({
+      type: "checkbox",
+      choices: [
+        { value: 'NotSatisfiedReason1', text: t('SatisfiedReason1') },
+        { value: 'NotSatisfiedReason2', text: t('SatisfiedReason2') },
+        { value: 'NotSatisfiedReason3', text: t('SatisfiedReason3') },
+        { value: 'NotSatisfiedReason4', text: t('SatisfiedReason4') },
+        { value: 'NotSatisfiedReason5', text: t('SatisfiedReason5') },
+        { value: 'NotSatisfiedReason6', text: t('SatisfiedReason6') }
+      ],
+      visibleIf: "{satisfied}='No' and {recontacted}='Yes'",
+      name: "notSatisfiedReasons",
+      title: t('notSatisfiedReasons')
+    });
+  } else {
+    page1.questions.push({
+      type: "checkbox",
+      choices: [
+        { value: 'NotSatisfiedReason7', text: t('SatisfiedReason7') },
+        { value: 'NotSatisfiedReason8', text: t('SatisfiedReason8') },
+        { value: 'NotSatisfiedReason9', text: t('SatisfiedReason9') },
+        { value: 'NotSatisfiedReason10', text: t('SatisfiedReason10') },
+        { value: 'NotSatisfiedReason11', text: t('SatisfiedReason11') }
+      ],
+      visibleIf: "{satisfied}='No' and {recontacted}='Yes'",
+      name: "notSatisfiedReasons",
+      title: t('notSatisfiedReasons')
+    });
+  }
+  page1.questions.push({
+    type: "radiogroup",
+    choices: [
+      { value: 'YesDone', text: t('YesDone') },
+      { value: 'YesPlanned', text: t('YesPlanned') },
+      { value: 'NotProposed', text: t('NotProposed') },
+      { value: 'NotWanted', text: t('NotWanted') },
+    ],
+    isRequired: true,
+    visibleIf: "{recontacted}='Yes'",
+    name: "appointment",
+    title: t('appointment')
+  });
+</script>
+{% include  "../common_footer.nunjucks"-%}
+</body>
+</html>
+

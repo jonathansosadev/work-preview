@@ -1,0 +1,190 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+    <style type="text/css">
+        .form-group {
+            margin-bottom: 10px;
+        }
+        .form-group label {
+            text-align: left;
+            font-weight: bold;
+        }
+        .form-group input, .form-group textarea {
+            color: black;
+        }
+        .parse-error {
+            color:red;
+        }
+        #garage-link {
+            margin: auto;
+            font-size: 15px;
+            display: inline-block;
+            font-weight: bold;
+            text-decoration: underline;
+            text-align: left;
+        }
+        button,select {
+            color:black;
+        }
+        .save-button {
+            max-width: 250px;
+            font-size: 18px;
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            float: right;
+        }
+        .btn-action {
+            margin-bottom: 20px;
+            display: inline-block;
+            line-height: 50px;
+            vertical-align: top;
+        }
+        ul,li {
+            list-style: none;
+        }
+        .toprow {
+            line-height: 32px;
+        }
+        #garages-add button{
+            width: 100%;
+            margin-top: 10px;
+        }
+        #garage-edit {
+            margin-top: 35px;
+        }
+        .tab-selector {
+            margin-bottom: 15px;
+        }
+        .tab-selector div {
+            line-height: 30px;
+            font-size: 15px;
+            border: 1px solid white;
+            text-align: center;
+            cursor: pointer;
+        }
+        .tab-selector div.active {
+            color: black;
+            background: white;
+        }
+        .reputation{
+            padding-bottom: 8px;
+        }
+        .white-card {
+            padding: 5px 20px;
+            background-color: whitesmoke;
+            color: black;
+        }
+        .red {
+            color: red;
+        }
+        .green {
+            color: #0d6eb2;
+        }
+    </style>
+{% endblock %}
+{% block page %}
+    {% raw %}
+        <div class="col-md-12 darkbo">
+            <div class="row">
+                <div class="col-md-offset-1 col-md-10">
+                    <div class="row">
+                        <div id="garage-edit" class="col-md-12" >
+                            <div class="row form-group toprow">
+                                <div class="garages-list col-md-12" id="garagesListZone" style="">
+                                    <gs-garages-list :updated="garageIdUpdated"></gs-garages-list>
+                                </div>
+                            </div>
+                            <div class="row form-group toprow">
+                                <span>Dimensions de l'Iframe</span>
+                                <select name="garageType" class="form-control" @change="changeSize($event)">
+                                    <option :value="0">Blason</option>
+                                    <option :value="1">Vertical</option>
+                                    <option :value="2">Horizontal</option>
+                                </select>
+                                <span>Custom</span>
+                                <input v-model="width" placeholder="width">
+                                <input v-model="height" placeholder="height">
+                            </div>
+                            <hr/>
+                            <div  v-if="garageSlug !== null">
+                                <iframe scrolling="no" :src="widgetUrl" :style="{overflow: 'hidden', width:this.iframeWidth + 'px', height:this.iframeHeight + 'px'}"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endraw %}
+{% endblock %}
+
+{% block scripts %}
+    {% include "../common/components/_vue-modal.nunjucks" %}
+    {% include "../common/components/_import-options-component.nunjucks" %}
+    {% include "../common/components/_auto-complete/auto-complete.nunjucks" %}
+    {% include "../common/components/garages-list/garages-list.component.nunjucks" %}
+
+    <script type="text/javascript">
+      /** -------------------------------------- INITIALISATIONS -------------------------------------- **/
+      var garages = {{ garages|safe }};
+      let currentGarageId = document.location.hash ? document.location.hash.substr(1) : '577a30d774616c1a0056c263';
+
+      /** ----------------------------------- FOMATING FOR QUICK FINDS ----------------------------------- **/
+      function setGarageInUrl(garageId) {
+        document.location = document.location.toString().replace(/#.+/,'') + '#' + garageId;
+      }
+
+      /** Our editor */
+      var editor = new Vue({
+        el: '#garage-edit',
+        data: {
+          wwwUrl: '{{ lib.client.wwwUrl() }}',
+          garage: null,
+          garages: garages,
+          garageSlug: 'garagescore-example',
+          width: 350,
+          height: 424
+        },
+        created: function () {
+          document.getElementById("garage-edit").style.display = 'block';
+        },
+        computed: {
+          widgetUrl() {
+            if (this.garageSlug) {
+              console.log(`${this.wwwUrl}/widget/${this.garageSlug}`);
+              return `${this.wwwUrl}/widget/${this.garageSlug}`;
+            }
+            return '';
+          },
+          iframeWidth() {
+            return this.width || 0
+          },
+          iframeHeight() {
+            return this.height || 0
+          }
+        },
+        events: {},
+        watch: {},
+        methods: {
+          /** garage ID update*/
+          garageIdUpdated: function (garage, cancelAutocomplete) {
+            this.garageId = garage.id;
+            this.garageSlug = garage.slug;
+            // if (cancelAutocomplete) {
+            //   cancelAutocomplete();
+            // }
+          },
+          changeSize(event) {
+            console.log(event);
+            const index = event.target.value;
+            const associativeArray = [
+              {width: 350, height:424},
+              {width: 175, height:353},
+              {width: 728, height:94}
+            ];
+            this.width = associativeArray[index].width;
+            this.height = associativeArray[index].height;
+          }
+        }
+      });
+    </script>
+{% endblock %}

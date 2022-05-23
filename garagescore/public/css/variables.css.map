@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAiEA,AAAA,OAAO,CAAC;EACN,IAAI,EAlEC,OAAO;EAmEZ,MAAM,EApDC,OAAO;EAqDd,IAAI,EAhEC,OAAO;EAiEZ,YAAY,EAjDE,OAAO;EAkDrB,iBAAiB,EA9CC,OAAO;EA+CzB,QAAQ,EAjEE,OAAO;CAkElB",
+    "sources": [
+        "../../frontend/assets/style/variables.scss"
+    ],
+    "names": [],
+    "file": "variables.css"
+}

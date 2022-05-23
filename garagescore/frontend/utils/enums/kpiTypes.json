@@ -1,0 +1,26 @@
+{
+  "GARAGE_KPI": {
+    "value": 10,
+    "properties": {}
+  },
+  "AGENT_GARAGE_KPI":{
+    "value": 11,
+    "properties": {}
+  },
+  "SOURCE_KPI": {
+    "value": 12,
+    "properties": {}
+  },
+  "USER_KPI":{
+    "value": 20,
+    "properties": {}
+  },
+  "FRONT_DESK_USER_KPI": {
+    "value": 21,
+    "properties": {}
+  },
+  "AUTOMATION_CAMPAIGN_KPI":{
+    "value": 30,
+    "properties": {}
+  }
+}

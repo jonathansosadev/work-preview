@@ -1,0 +1,86 @@
+
+<!--
+contacted Contacts autoComplete
+search in the used emails and phones
+Usage:
+
+ <search-contacts :recipient.sync="recipient"></search-contacts>
+
+ ==> `recipient` will be automatically synced with selected value on the autocomplete
+-->
+
+<script type="x/template" id="search-contacted-contact">
+    <input :id="inputId" autofocus type="text" name="q"
+           placeholder="Email ou téléphone ..." class="form-control" v-model="recipient">
+</script>
+<script type="text/javascript">
+
+  Vue.component('search-contacts', {
+    template: '#search-contacted-contact',
+    data: function(){
+      return {
+        inputId: 'GL' + Math.floor(Math.random() * 10000),
+        error: '',
+        loading: false,
+        recipient: ''
+      };
+    },
+    watch: {
+      'recipient': function (val) {
+        this.update(val);
+      }
+    },
+    mounted: function () {
+      var that = this;
+      var AC = new autoComplete({
+        selector: '#' + this.inputId,
+        minChars: 2,
+        onSelect: function (event, term) {
+          event.preventDefault();
+          event.stopPropagation();
+          that.update(term);
+        },
+        source: function (termO, cb) {
+          that.getRequest('{{ lib.client.url.getShortUrl('ADMIN_CONTACT_SEARCH') }}?token=' + termO, function (err, contacts) {
+            if(err){
+              that.error = error;
+              return;
+            }
+            cb(contacts);
+          });
+        }.bind(this)
+      });
+    },
+    props: {
+      update: {
+        type: Function,
+        required: true
+      }
+    },
+    methods: {
+      getRequest: function (url, callback) {
+        try {
+            var request = new XMLHttpRequest();
+            request.open('GET', url, true);
+            request.send();
+            request.onload = function () {
+              if (request.status !== 200 && request.status !== 304) {
+                callback('Erreur sur le serveur');
+              } else {
+                var res = JSON.parse(request.responseText);
+                if (!res) {
+                  callback('Erreur sur le serveur');
+                } else {
+                  callback(null, res);
+                }
+              }
+            }.bind(this)
+          } catch (e) {
+            console.error(e);
+            callback('Erreur sur le serveur');
+          }
+        },
+    }
+  });
+
+</script>

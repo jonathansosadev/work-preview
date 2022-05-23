@@ -1,0 +1,517 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+  <style>
+    .jsontree_bg {
+      background: #FFF
+    }
+    .jsontree_tree {
+      margin-left: 30px;
+      font-family: 'PT Mono', monospace;
+      font-size: 14px
+    }
+    .jsontree_child-nodes {
+      display: none;
+      margin-left: 35px;
+      margin-bottom: 5px;
+      line-height: 2
+    }
+    .jsontree_node_expanded > .jsontree_value-wrapper > .jsontree_value > .jsontree_child-nodes {
+      display: block
+    }
+    .jsontree_label-wrapper {
+      float: left;
+      margin-right: 8px
+    }
+    .jsontree_label {
+      font-weight: 400;
+      vertical-align: top;
+      color: #fff;
+      position: relative;
+      padding: 1px;
+      border-radius: 4px;
+      cursor: default
+    }
+    .jsontree_node_complex > .jsontree_label-wrapper > .jsontree_label,
+    .jsontree_show-more {
+      cursor: pointer
+    }
+    .jsontree_node_marked > .jsontree_label-wrapper > .jsontree_label {
+      background: #fff2aa
+    }
+    .jsontree_value-wrapper {
+      display: block;
+      overflow: hidden
+    }
+    .jsontree_node_complex > .jsontree_value-wrapper {
+      overflow: inherit
+    }
+    .jsontree_value {
+      vertical-align: top;
+      display: inline
+    }
+    .jsontree_value_null {
+      color: #777;
+      font-weight: 700
+    }
+    .jsontree_value_string {
+      color: #6ab168;
+      font-weight: 700
+    }
+    .jsontree_value_number {
+      color: #919dca;
+      font-weight: 700
+    }
+    .jsontree_value_boolean {
+      color: #e2a09f;
+      font-weight: 700
+    }
+    .jsontree_expand-button {
+      position: absolute;
+      top: 3px;
+      left: -15px;
+      display: block;
+      width: 11px;
+      height: 11px;
+      background-image: url('icons.svg')
+    }
+    .jsontree_node_expanded > .jsontree_label-wrapper > .jsontree_label > .jsontree_expand-button {
+      background-position: 0 -11px
+    }
+    .jsontree_node_expanded > .jsontree_value-wrapper > .jsontree_value > .jsontree_show-more {
+      display: none
+    }
+    .jsontree_node_empty > .jsontree_label-wrapper > .jsontree_label > .jsontree_expand-button,
+    .jsontree_node_empty > .jsontree_value-wrapper > .jsontree_value > .jsontree_show-more {
+      display: none !important
+    }
+    .jsontree_node_empty > .jsontree_label-wrapper > .jsontree_label {
+      cursor: default !important
+    }
+  </style>
+  <style>
+    button {
+      color: black;
+      margin-left: 10px;
+    }
+    .searchbox {
+      padding: 15px 10px;
+      background: #3c3939;
+      margin-bottom: 20px;
+    }
+    .not-found {
+      color: red;
+    }
+    #right-corner {
+      float: right;
+    }
+    #modes {
+      border-bottom: 1px dotted white;
+    }
+    #modes a {
+      color: white;
+    }
+    #modes .change-mode {
+      cursor: pointer;
+    }
+    #modes .change-mode.active {
+      color: #2de0c2;
+    }
+    #anonymize {
+      margin-top: 20px;
+    }
+    #anonymize button {
+      color: grey;
+      font-weight: bold;
+      border-radius: 3px;
+      margin: 0;
+    }
+    .tree li {
+      float: none;
+    }
+    .summary b {
+      color: #919dca;
+    }
+    .data-action-btn-w-description {
+      margin-top: 20px;
+      margin-left: 0px;
+      padding: 5px 5px;
+      border: 1px solid #919dca;
+      background-color: #3c3939;
+    }
+  </style>
+{% endblock %}
+{% block page %}
+  {% raw %}
+    <template id="nice-summary-job">
+      <div>
+        <b>{{ get('type') }}</b>
+        <br/>
+        <p>
+          &nbsp;&nbsp;&nbsp;<u>Statut</u>: {{ get('status') }} <br/> &nbsp;&nbsp;&nbsp;<u>Date prévue</u>: {{ get('scheduledAtAsDate') }}
+        </p>
+      </div>
+    </template>
+    <template id="nice-summary">
+      <div>
+        <p>
+          <b>Client</b>
+          <div>
+            <u>Nom</u>: {{ get('customer.gender') }}
+            {{ get('customer.fullName') }} <br/>
+            <u>Email</u>: {{ get('customer.contact.email') }} <br/>
+            <u>Téléphone</u>: {{ get('customer.contact.mobilePhone') }} <br/>
+            <u>Adresse</u>: {{ get('customer.street') }}. {{ get('customer.postalCode') }}, {{ get('customer.city') }} <br/>
+          </div>
+        </p>
+        <p>
+          <b>Prestation</b>
+          <div>
+            <u>Type</u>: {{ get('type') }} <br/>
+            <u>Date</u>: {{ formatDate(get('service.providedAt')) }} <br/>
+            <u>Vendeur</u>: {{ get('service.frontDeskUserName') }} <br/>
+          </div>
+        </p>
+        <p>
+          <b>Véhicule</b>
+          <div>
+            <u>Modèle</u>: {{ get('vehicle.model') }} <br/>
+            <u>Marque</u>: {{ get('vehicle.make') }} <br/>
+            <u>Plaque</u>: {{ get('vehicle.plate') }} <br/>
+            <u>Matriculation</u>: {{ get('vehicle.registrationDate') }} <br/>
+            <u>Kilomètrage</u>: {{ get('vehicle.mileage') }} <br/>
+          </div>
+        </p>
+        <p>
+          <b>Source</b>
+          <xmp>
+            {{ get('source.raw.cells') || get('source.raw') }}</xmp>
+        </p>
+      </div>
+    </template>
+  {% endraw %}
+  <div class="container">
+    <h1>
+      Chercher un client final par son data Id</h1>
+    <hr/>
+    {% raw %}
+      <div id="search"></div>
+    {% endraw %}
+    {% include "../common/components/search-data.nunjucks" %}
+    {% if found %}
+      {% raw %}
+        <div class="col-md-12" id="app">
+          <div id="right-corner">
+            <div id="modes">
+              Mode : &nbsp;&nbsp;
+              <span @click="mode='raw'" v-bind:class="{ 'change-mode': true, 'active': mode==='raw' }">Avancé</span>
+              |
+              <span @click="mode='tree'" v-bind:class="{ 'change-mode': true, 'active': mode==='tree' }">Arbre</span>
+              |
+              <span @click="mode='summary'" v-bind:class="{ 'change-mode': true, 'active': mode==='summary' }">Résumé</span>
+              |
+              <a target="_blank" :href="downloadURL" v-bind:class="{ 'change-mode': true }">Exporter</a>
+            </div>
+            <div id="anonymize">
+              <button @click="anonymize()" v-bind:class="{ 'change-mode': true, 'active': mode==='raw' }">Anonymiser</button>
+            </div>
+            <div style="margin-top: 20px; margin-left: 0">
+              <button style="margin: 0" class="btn-sm btn-primary" @click="switchShouldSurfaceInStatistics()">{{ instance.shouldSurfaceInStatistics ? 'Cacher' : 'Afficher' }} le data (shouldSurfaceInStatistics)</button>
+            </div>
+            <div v-if="!isProd" class="data-action-btn-w-description">
+              <button style="margin: 0" class="btn-sm btn-primary" @click="forceSurveyUpdate()">Forcer la mise à jour de la campagne (checkDataWithSurveyUpdates)</button>
+              <p>Prépare l'envoi des remerciements et/ou followups, et créé les tickets leads et insatisfaits</p>
+            </div>
+            <div v-if="!isProd" class="data-action-btn-w-description">
+              <button
+                :disabled="!nextCampaignContact"
+                style="margin: 0"
+                class="btn-sm btn-primary"
+                @click="forceSendNextCampaignContactForDay()">Forcer l'envoie du prochain mail de campagne (sendNextContact)
+              </button>
+              <span>Prochain mail : {{ nextCampaignContact || 'aucun' }}</span>
+              <p>Envoie le prochain mail de campagne en attente.</p>
+            </div>
+            <div v-if="!isProd" class="data-action-btn-w-description">
+              <button style="margin: 0" class="btn-sm btn-primary" @click="forceSendNextCampaignReContactForDay()">Forcer l'envoie des
+                recontacts (sendReContact)</button>
+                <p>Vérifie et traite les RE-contacts (emails et sms), en attente de création</p>
+            </div>
+            <div v-if="!isProd" class="data-action-btn-w-description">
+              <button style="margin: 0" class="btn-sm btn-primary" @click="forceSendUnsatisfiedFollowup()">Forcer l'envoie des
+                followup unsatisfied (job SEND_UNSATISFIED_FOLLOWUP)</button>
+                <p>Créé le surveyFollowupUnsatisfied et envoie un contact VEHICLE INSPECTION - FollowupUnsatisfied</p>
+            </div>
+            <div v-if="!isProd" class="data-action-btn-w-description">
+              <button style="margin: 0" class="btn-sm btn-primary" @click="forceSendLeadFollowup()">Forcer l'envoie des followup lead
+                (job SEND_LEAD_FOLLOWUP)</button>
+                <p>Créé le surveyFollowupLead et envoie un contact FollowupLead - E-mail</p>
+            </div>
+            <div v-if="!isProd" class="data-action-btn-w-description">
+              <button style="margin: 0" class="btn-sm btn-primary" @click="forceSendAlerts()">Créer et Forcer l'envoie des Alertes
+                (fetchAndSendAlert)</button>
+                <p>Créé et envoie les alertes en attente (insatisfaits, leads ...)</p>
+            </div>
+          </div>
+          <xmp v-show="mode==='raw'" v-if="instance">{{ raw }}</xmp>
+          <div class="tree" ref="tree" v-show="mode==='tree'" v-if="instance"></div>
+          <nice-summary class="summary" v-show="mode==='summary'" v-if="instance" v-bind:instance="instance"></nice-summary>
+          <hr/>
+          <div id="jobs">
+            <div v-if="!jobs || jobs.length === 0">Aucun job lié</div>
+            <div v-else>
+              <h3>
+                Liste des jobs associés</h3>
+              <div v-for="(job,j) in jobs">
+                <xmp v-show="mode==='raw'">{{ job }}
+                </xmp>
+                <nice-summary-job class="summary" v-show="mode==='summary'" v-bind:job="job"></nice-summary-job>
+              </div>
+              <div class="tree" ref="treesJobs" v-show="mode==='tree'"></div>
+              <br/><br/>
+            </div>
+          </div>
+        </div>
+      {% endraw %}
+    {% else %}
+      <div class="col-md-12 error">Aucun client trouvé pour {{ dataId }}</div>
+    {% endif %}
+  </div>
+{% endblock %}
+{% block scripts %}
+  <script src="{{ lib.client.staticUrl('/external-lib/jsontree.js') }}"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script type="text/javascript">
+    // get value from object path
+    function _getDeepFieldValue(srcObject, fieldName) {
+      let result = srcObject;
+      const fieldParts = fieldName.split('.');
+      for (let i = 0; i < fieldParts.length; i++) {
+        if (result === null || typeof result === 'undefined') {
+          return null;
+        }
+        result = result[fieldParts[i]];
+      }
+      return result;
+    }
+    // summary component
+    var niceSummary = {
+      template: '#nice-summary',
+      props: ['instance'],
+      computed: {
+        get: function get() {
+          return function (fieldName) { // same code than in data.js model
+            var v = _getDeepFieldValue(this.instance, fieldName);
+            if (v && typeof v.value !== 'undefined') {
+              return v.value;
+            }
+            if (v && v.isEmpty) {
+              return null;
+            }
+            return v;
+          }
+        }
+      },
+      methods: {
+       /**
+        * turn a raw stringified date to a human readable date
+        *
+        * @param {string} rawDate - date parsable using the Date Constructor
+        * @returns {string} human readable date
+        */
+        formatDate (rawDate) {
+          return new Date(rawDate).toLocaleDateString();
+        }
+      }
+    };
+    var niceSummaryJob = {
+      template: '#nice-summary-job',
+      props: ['job'],
+      computed: {
+        get: function get() {
+          return function (fieldName) { // same code than in data.js model
+            var v = _getDeepFieldValue(this.job, fieldName);
+            if (v && typeof v.value !== 'undefined') {
+              return v.value;
+            }
+            if (v && v.isEmpty) {
+              return null;
+            }
+            return v;
+          }
+        }
+      }
+    };
+    // main app
+    new Vue({
+      el: '#app',
+      components: {
+        'nice-summary': niceSummary,
+        'nice-summary-job': niceSummaryJob
+      },
+      data: () => (
+        {mode: 'summary', instance: {{ instance|safe }}, jobs: {{ jobs|safe }}}
+      ),
+      mounted: function mounted() { // display tree
+        if (this.instance) {
+          var wrapper = this.$refs.tree; // document.getElementById("tree");
+          var tree = jsonTree.create(this.instance, wrapper);
+        }
+        if (this.jobs) {
+          var wrapper = this.$refs.treesJobs; // document.getElementById("tree");
+          var tree = jsonTree.create(this.jobs, wrapper);
+        }
+      },
+      computed: { // raw json
+        raw() {
+          return JSON.stringify(this.instance, null, 2)
+        },
+        // pdf link
+        downloadURL() {
+          return "{{ lib.client.url.getShortUrl('ADMIN_DATA_DOWNLOAD_ROOT') }}" + this.instance.id;
+        },
+        nextCampaignContact() {
+          return _getDeepFieldValue(this.instance, 'campaign.contactScenario.nextCampaignContact')
+        },
+        isProd() {
+          return "{{ lib.client.isProduction() }}" === "true"
+        }
+      },
+      methods: {
+        // delete personal data
+        anonymize() {
+          if (confirm("Supprimer les données personnelles ?")) {
+            document.location = "{{ lib.client.url.getShortUrl('ADMIN_DATA_ANONYMIZE_ROOT') }}" + this.instance.id;
+          }
+        },
+        async switchShouldSurfaceInStatistics() {
+          if (confirm("Switcher la valeur du shouldSurfaceInStatistics ?")) {
+            const res = await axios.get(
+              "{{ lib.client.url.getShortUrl('ADMIN_DATA_SWITCH_SHOULDSURFACEINSTATISTICS') }}" + this.instance.id + '?switchTo=' + !this.instance.shouldSurfaceInStatistics
+            );
+            if (res && res.data && typeof res.data.shouldSurfaceInStatistics === 'boolean') {
+              this.instance.shouldSurfaceInStatistics = res.data.shouldSurfaceInStatistics;
+              location.reload();
+            } else {
+              console.log(res);
+              alert('Error... regarde dans la console.')
+            }
+          }
+        },
+        async forceSurveyUpdate() {
+          if (confirm (`Forcer la vérification des mise à jours des survey du data ${
+            this.instance.id
+          } ?`)) {
+            const res = await axios.get("{{ lib.client.url.getShortUrl('ADMIN_DATA_FORCE_SURVEY_UPDATE_ROOT') }}" + this.instance.id);
+            if (res && res.data) {
+              console.log(res.data)
+              alert (`Opération effectuée ${
+                res.data.status === 'KO'
+                  ? '| ' + res.data.text
+                  : ''
+                }`)
+            } else {
+              console.log(res);
+              alert('Error... regarde dans la console.')
+            }
+          }
+        },
+        async forceSendNextCampaignContactForDay() {
+          if (confirm(`Forcer l'envoie de ${
+            this.nextCampaignContact
+          } sur le data ${
+            this.instance.id
+          } ?`)) {
+            const res = await axios.get(
+            "{{ lib.client.url.getShortUrl('ADMIN_DATA_FORCE_SEND_NEXT_CAMPAIGN_CONTACT_FOR_DAY_ROOT') }}" + this.instance.id);
+            if (res && res.data) {
+              console.log(res.data)
+              alert (`Opération effectuée ${
+                res.data.status === 'KO'
+                  ? '| ' + res.data.text
+                  : ''
+                }`)
+            } else {
+              console.log(res);
+              alert('Error... regarde dans la console.')
+            }
+          }
+        },
+        async forceSendNextCampaignReContactForDay() {
+          if (confirm (`Forcer l'envoie des recontact sur le data ${
+            this.instance.id
+          } ?`)) {
+            const res = await axios.get(
+              "{{ lib.client.url.getShortUrl('ADMIN_DATA_FORCE_SEND_NEXT_CAMPAIGN_RE_CONTACT_FOR_DAY_ROOT') }}" + this.instance.id
+            );
+            if (res && res.data) {
+              console.log(res.data)
+              alert (`Opération effectuée ${
+                res.data.status === 'KO'
+                  ? '| ' + res.data.text
+                  : ''
+                }`)
+            } else {
+              console.log(res);
+              alert('Error... regarde dans la console.')
+            }
+          }
+        },
+        async forceSendUnsatisfiedFollowup() {
+          if (confirm (`Forcer l'envoie des unsatisfied followup pour le data : ${
+            this.instance.id
+          } ?`)) {
+            const res = await axios.get(
+            "{{ lib.client.url.getShortUrl('ADMIN_DATA_FORCE_SEND_UNSATISFIED_FOLLOWUP_ROOT') }}" + this.instance.id);
+            if (res && res.data) {
+              console.log(res.data)
+              alert (`Opération effectuée ${
+                res.data.status === 'KO'
+                  ? '| ' + res.data.text
+                  : ''
+                }`)
+            } else {
+              console.log(res);
+              alert('Error... regarde dans la console.')
+            }
+          }
+        },
+        async forceSendLeadFollowup() {
+          if (confirm (`Forcer l'envoie des lead followup pour le data : ${
+            this.instance.id
+          } ?`)) {
+            const res = await axios.get("{{ lib.client.url.getShortUrl('ADMIN_DATA_FORCE_SEND_LEAD_FOLLOWUP_ROOT') }}" + this.instance.id);
+            if (res && res.data) {
+              console.log(res.data)
+              alert (`Opération effectuée ${
+                res.data.status === 'KO'
+                  ? '| ' + res.data.text
+                  : ''
+                }`)
+            } else {
+              console.log(res);
+              alert('Error... regarde dans la console.')
+            }
+          }
+        },
+        async forceSendAlerts() {
+          if (confirm (`Forcer l'envoie des Alerts pour le data : ${
+            this.instance.id
+          } ?`)) {
+            const res = await axios.get("{{ lib.client.url.getShortUrl('ADMIN_DATA_FORCE_SEND_ALERTS_ROOT') }}" + this.instance.id);
+            if (res && res.data) {
+              console.log(res.data)
+              alert (`Opération effectuée ${
+                res.data.status === 'KO'
+                  ? '| ' + res.data.text
+                  : ''
+                }`)
+            } else {
+              console.log(res);
+              alert('Error... regarde dans la console.')
+            }
+          }
+        }
+      }
+    });
+  </script>
+{% endblock %}

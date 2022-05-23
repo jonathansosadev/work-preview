@@ -1,0 +1,188 @@
+[
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "3",
+      "dataType" : "NewVehicleSale",
+      "title" : "Monsieur",
+      "fullName" : "Jean Thomas",
+      "email" : "oabida@garagescore.com",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "isComplete" : false,
+      "pageNumber" : 0,
+      "pageCount" : 4,
+      "timestamp" : 1518893431163.0
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "3",
+      "dataType" : "NewVehicleSale",
+      "title" : "Monsieur",
+      "fullName" : "Jean Thomas",
+      "email" : "oabida@garagescore.com",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "unsatisfiedCriteriaNewVehicleSale" : [
+        "SaleNew5",
+        "SaleNew4",
+        "SaleNew1",
+        "SaleNew2",
+        "SaleNew3"
+      ],
+      "comment" : "commentaire très bien",
+      "acceptTermOfUse" : true,
+      "isComplete" : false,
+      "pageNumber" : 1,
+      "pageCount" : 4,
+      "timestamp" : 1518893455264.0
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "3",
+      "dataType" : "NewVehicleSale",
+      "title" : "Monsieur",
+      "fullName" : "Jean Thomas",
+      "email" : "oabida@garagescore.com",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "unsatisfiedCriteriaNewVehicleSale" : [
+        "SaleNew5",
+        "SaleNew4",
+        "SaleNew1",
+        "SaleNew2",
+        "SaleNew3"
+      ],
+      "comment" : "commentaire très bien",
+      "acceptTermOfUse" : true,
+      "unsatisfiedCriteria1" : [
+        "Sale1",
+        "Sale2",
+        "Sale3",
+        "Sale4"
+      ],
+      "unsatisfiedCriteria2" : [
+        "Sale5",
+        "Sale6",
+        "Sale7",
+        "Sale8"
+      ],
+      "unsatisfiedCriteria4" : [
+        "Sale14",
+        "Sale13",
+        "Sale15",
+        "Sale16"
+      ],
+      "unsatisfiedCriteria5" : [
+        "Sale17",
+        "Sale18",
+        "Sale20",
+        "Sale19"
+      ],
+      "unsatisfiedCriteria6" : [
+        "Sale21",
+        "Sale22",
+        "Sale23",
+        "Sale24"
+      ],
+      "isComplete" : false,
+      "pageNumber" : 2,
+      "pageCount" : 4,
+      "timestamp" : 1518893472219.0
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "3",
+      "dataType" : "NewVehicleSale",
+      "title" : "Monsieur",
+      "fullName" : "Jean Thomas",
+      "email" : "oabida@garagescore.com",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "unsatisfiedCriteriaNewVehicleSale" : [
+        "SaleNew5",
+        "SaleNew4",
+        "SaleNew1",
+        "SaleNew2",
+        "SaleNew3"
+      ],
+      "comment" : "commentaire très bien",
+      "acceptTermOfUse" : true,
+      "unsatisfiedCriteria1" : [
+        "Sale1",
+        "Sale2",
+        "Sale3",
+        "Sale4"
+      ],
+      "unsatisfiedCriteria2" : [
+        "Sale5",
+        "Sale6",
+        "Sale7",
+        "Sale8"
+      ],
+      "unsatisfiedCriteria4" : [
+        "Sale14",
+        "Sale13",
+        "Sale15",
+        "Sale16"
+      ],
+      "unsatisfiedCriteria5" : [
+        "Sale17",
+        "Sale18",
+        "Sale20",
+        "Sale19"
+      ],
+      "unsatisfiedCriteria6" : [
+        "Sale21",
+        "Sale22",
+        "Sale23",
+        "Sale24"
+      ],
+      "serviceMiddleMans" : [
+        "advertingWebsite"
+      ],
+      "customerShareWithGarage" : [
+        "J'accepte d'être averti uniquement par mon établissement des prochaines échéances 'd'entretien et d'offres commerciales"
+      ],
+      "isComplete" : false,
+      "pageNumber" : 3,
+      "pageCount" : 4,
+      "timestamp" : 1518893488410.0
+    }
+  },
+  {
+    "source" : "Internal survey",
+    "payload" : {
+      "rating" : "3",
+      "title" : "Monsieur",
+      "fullName" : "Jean Thomas",
+      "email" : "oabida@garagescore.com",
+      "streetAddress" : "44 Rue Cauchy",
+      "postalCode" : "94110",
+      "city" : "Arcueil",
+      "comment" : "commentaire très bien",
+      "acceptTermOfUse" : true,
+      "serviceMiddleMans" : [
+        "advertingWebsite"
+      ],
+      "customerShareWithGarage" : [
+        "J'accepte d'être averti uniquement par mon établissement des prochaines échéances 'd'entretien et d'offres commerciales"
+      ],
+      "shareWithPartners" : "Oui",
+      "isComplete" : true,
+      "pageNumber" : 2,
+      "pageCount" : 4,
+      "timestamp" : 1518893491641.0
+    }
+  }
+]

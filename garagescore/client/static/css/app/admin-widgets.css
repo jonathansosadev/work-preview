@@ -1,0 +1,767 @@
+/**
+ ** Style file for:
+ ** app.garagescore.com/admin#my_widgets
+ **/
+
+/* Loading 'screen' style, in another places, to refacto */
+.gs-loading-spin {
+	margin-top: 200px;
+	width: 100%;
+	text-align:center;
+	display: inline-block;
+	color: #727272;
+}
+
+.gs-text-info {
+  padding: 30px 60px;
+}
+
+.gs-loading-spin .fa {
+	color: inherit;
+}
+
+.gs-loading-spin .gs-loading-spin-text {
+	color: inherit;
+	padding-left: 10px
+}
+
+/*
+** ADMIN WIDGETS PAGE CONTENT
+*/
+.page-container .gs-widget-help {
+  position: relative;
+  float: right;
+  cursor: pointer;
+}
+
+.page-container .gs-widget-help .fa {
+  color: #CCCCCC;
+}
+
+.page-container .gs-widget-help .gs-widgets-presentation {
+  font-size: 13px;
+  line-height: 1.7;
+  padding: 20px 25px;
+  border-radius: 2px;
+  color: #444444;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 500px;
+  text-align: justify;
+  background: #ededed;
+  z-index: 9;
+  box-shadow: 0 0 10px 0 #aaa;
+}
+
+.gs-widgets-page h4 {
+  margin-bottom: 20px;
+}
+
+.gs-widgets-page {
+  font-family: 'Roboto', sans-serif;
+}
+
+.page-container .gs-title-text {
+  padding: 0 2px 0 5px;
+}
+
+.page-container .gs-list-count-wrapper {
+  padding-left: 40px;
+}
+
+.page-container .gs-list-count-wrapper .gs-list-count {
+	color: #272727;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 14px;
+  border-top: 1px solid #EEEEEE;
+  padding: 10px 0;
+}
+
+.page-container .gs-list-count-wrapper .gs-garage-list-count {
+}
+
+.page-container .gs-list-count-wrapper:first-of-type .gs-list-count {
+  border: none;
+}
+
+.page-container .gs-list-count-wrapper .gs-list-count:hover .gs-list-count {
+  color: #c89750;
+}
+
+.page-container .gs-list-count-wrapper .gs-list-count .gs-list-count-name:hover {
+  color: #219AB5;
+  cursor: pointer;
+}
+
+.page-container .gs-list-count-wrapper .gs-list-count .gs-list-count-icons {
+	text-align: right;
+  font-size: 18px
+}
+
+.page-container .gs-list-count-wrapper .gs-list-count .gs-list-count-icons:hover {
+
+}
+
+.page-container .gs-list-count-wrapper .gs-list-count .gs-list-count-icons a {
+  color: inherit;
+  margin: 0 5px;
+}
+
+.page-container .gs-list-count-wrapper .gs-list-count .gs-list-count-icons a:hover {
+  color: #b9a47b;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.page-container .gs-list-count-wrapper .gs-list-count .gs-list-count-icons .gs-button-delete {
+  color: #666666
+}
+
+.page-container .gs-list-count-wrapper .gs-list-count .gs-list-count-icons .gs-button-delete:hover {
+  color: #666666
+}
+
+/*
+** SHOWCASE WIH STEPPER
+*/
+.page-container .gs-can-go {
+  cursor: pointer;
+}
+
+.page-container .gs-widget-stepper-wrapper {
+  margin: 10px 0;
+  font-size: 0; /* CSS Hack to prevent new-line on inline-blocks */
+}
+
+.page-container .gs-widget-stepper-wrapper .row > div {
+  float: none;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.page-container .gs-widget-stepper-wrapper .gs-widget-stepper {
+
+}
+
+.page-container .gs-widget-stepper-wrapper .gs-widget-stepper .gs-widget-step {
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  color: #777777;
+}
+
+.page-container .gs-widget-stepper-wrapper .gs-widget-stepper .gs-widget-step:before {
+  display: block;
+  content: '';
+  border-top: 1px dotted #aaa;
+  position: absolute;
+  right: -49%;
+  left: 51%;
+  top: 34px
+}
+
+.page-container .gs-widget-stepper-wrapper .gs-widget-stepper .gs-widget-step:last-of-type:before {
+  display: none;
+}
+
+.page-container .gs-widget-stepper-wrapper .gs-widget-stepper .gs-widget-step .gs-widget-step-icon {
+  width: 40px;
+  margin: 2px auto;
+}
+
+.page-container .gs-widget-stepper-wrapper .gs-widget-stepper .gs-widget-step .gs-widget-step-icon img {
+  height: 22px;
+}
+
+.page-container .gs-widget-stepper-wrapper .gs-widget-stepper .gs-widget-step .gs-widget-step-subicon {
+  margin: 2px 0;
+}
+
+.page-container .gs-widget-stepper-wrapper .gs-widget-stepper .gs-widget-step .gs-widget-step-title {
+  font-size: 14px;
+  margin: 2px 0;
+}
+
+.page-container .gs-widget-stepper-wrapper .gs-widget-stepper .gs-widget-step .gs-widget-step-caption {
+  margin: 2px 0;
+  font-style: italic;
+  font-size: 12px;
+}
+
+/* Arrows */
+.page-container .gs-widget-stepper-wrapper .gs-widget-stepper-arrow {
+  text-align: center;
+}
+
+.page-container .gs-widget-stepper-wrapper .gs-widget-steper-arrow-hidden {
+  visibility: hidden;
+}
+
+.page-container .gs-widget-stepper-wrapper .gs-widget-stepper-arrow .gs-widget-stepper-arrow-link {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.page-container .gs-widget-stepper-wrapper .gs-widget-stepper-arrow .gs-widget-stepper-arrow-link img {
+  height: 50px;
+}
+
+/*
+** STEPPER CONDITIONNAL CONTENTS
+*/
+
+/* common between steps */
+.page-container .gs-button:hover {
+  background: #b9a47b;
+  outline: none;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-step h2 {
+  text-align: center;
+  color: #444444;
+  margin: 40px 20px 5px 20px;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-step .gs-widget-stepper-content-step-title-border {
+  border-top: 1px solid #666;
+  width: 190px;
+  margin: auto;
+  margin-bottom: 40px;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-iframe {
+  padding-top: 30px;
+  margin-top: 30px;
+  width: 100%;
+  position: relative;
+  border-top: 1px solid #ddd;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-iframe .gs-widget-simulation-iframe {
+  width: 100%;
+  min-height: 800px;
+  border: 1px solid #DDDDDD;
+  padding: 5px;
+  z-index: 7;
+  position: relative;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-iframe-caption {
+  text-align: center;
+  font-size: 13px;
+  color: #1b96b1;
+  margin: 30px 0 20px 0;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-iframe .gs-widget-stepper-content-iframe-group {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-iframe .gs-widget-iframe-wrapper {
+  margin: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-iframe .gs-widget-iframe-wrapper .gs-widget-iframe-overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-iframe .gs-widget-iframe-wrapper .gs-widget-iframe {
+  border: none;
+  height: 100%;
+  width: 100%;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-confirm {
+  text-align: right;
+  margin: 0 0 20px 0;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-confirm button {
+  border: none;
+  padding: 10px 10px;
+  color: #FFFFFF;
+  background: #1b96b1;
+  border-radius: 3px;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-confirm button:hover {
+  background: #b9a47b;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-confirm button[disabled] {
+  cursor: not-allowed;
+  color: #AAAAAA;
+  background: #348597;
+}
+
+/* Step 1: Simulation */
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-simulation {
+
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-simulation .gs-widget-stepper-content-simulation-form {
+
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-simulation .gs-widget-stepper-content-simulation-form label {
+  font-size: 14px;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-simulation .gs-widget-stepper-content-simulation-form .gs-widget-simulation-form-input {
+  border: 1px solid #AAAAAA;
+  border-radius: 20px;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-simulation .gs-widget-stepper-content-simulation-form input {
+  width: 100%;
+  border: none;
+  outline: none;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-simulation .gs-widget-stepper-content-simulation-form input::-webkit-input-placeholder {
+  font-style: italic;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-simulation .gs-widget-stepper-content-simulation-form input:-moz-placeholder {
+  /* FF 4-18 */
+  font-style: italic;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-simulation .gs-widget-stepper-content-simulation-form input::-moz-placeholder {
+  /* FF 19+ */
+  font-style: italic;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-simulation .gs-widget-stepper-content-simulation-form input:-ms-input-placeholder {
+  /* IE 10+ */
+  font-style: italic;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-simulation .gs-widget-stepper-content-simulation-form button {
+  width: 100%;
+  text-align: center;
+  color: #FFFFFF;
+  background: #1b96b1;
+  outline: none;
+  border: none;
+  padding: 2px;
+  border-radius: 20px;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-simulation .gs-widget-stepper-content-simulation-form button:hover {
+  background: #b9a47b;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-simulation .gs-widget-stepper-conotent-simulation-form-caption {
+  margin: 40px 0;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-simulation .gs-widget-stepper-conotent-simulation-form-caption span {
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-simulation .gs-widget-stepper-conotent-simulation-form-caption a {
+  cursor: pointer;
+}
+
+/* Step 2: Forme */
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-forme .gs-widget-stepper-content-forme-selections {
+  margin: 0 0 30px 0;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-forme .gs-widget-stepper-content-forme-selections .gs-widget-stepper-content-forme-selection {
+  text-align: center;
+  margin: 10px 0 30px 0;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-forme .gs-widget-stepper-content-forme-selections .gs-widget-stepper-content-forme-selection:before {
+  display: block;
+  content: '';
+  position: absolute;
+  border-right: 1px solid #CCC;
+  right: 0;
+  bottom: 0;
+  top: 30px;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-forme .gs-widget-stepper-content-forme-selections .gs-widget-stepper-content-forme-selection:last-of-type:before {
+  display: none;
+  content: none;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-forme .gs-widget-stepper-content-forme-selections .gs-widget-stepper-content-forme-selection h4 {
+  font-size: 12px;
+  color: #555555;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-forme .gs-widget-stepper-content-forme-selections .gs-widget-stepper-content-forme-selection img {
+
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-forme .gs-widget-stepper-content-forme-selections .gs-widget-stepper-content-forme-selection img:hover {
+  cursor: pointer;
+  filter: grayscale(0%);
+  -webkit-filter: grayscale(0%);
+  -moz-filter: grayscale(0%);
+  -ms-filter: grayscale(0%);
+  -o-filter: grayscale(0%);
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-forme .gs-widget-stepper-content-forme-selections .gs-widget-stepper-content-forme-selection .gs-title-blue {
+  color: #219ab5;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-forme .gs-widget-stepper-content-forme-selections .gs-widget-stepper-content-forme-selection .gs-image-dark {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+}
+
+/* Step 3: Size */
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-size {
+
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-size .gs-widget-stepper-content-size-selections {
+  margin-bottom: 60px;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-size .gs-widget-stepper-content-size-selections .gs-widget-stepper-content-size-selection:before {
+  content: '';
+  display: block;
+  position: absolute;
+  right: -50%;
+  height: 3px;
+  left: 50%;
+  top: 48px;
+  z-index: 8;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-size .gs-widget-stepper-content-size-selections .gs-widget-stepper-content-size-selection-gray:before {
+  background: #666666;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-size .gs-widget-stepper-content-size-selections .gs-widget-stepper-content-size-selection-blue:before {
+  background: #1b96b1;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-size .gs-widget-stepper-content-size-selections .gs-widget-stepper-content-size-selection:last-of-type:before {
+  content: none;
+  display: none;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-size .gs-widget-stepper-content-size-selections .gs-widget-stepper-content-size-selection h4 {
+  font-size: 12px;
+  color: #555;
+  text-align: center;
+  height: 25px;
+  cursor: pointer;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-size .gs-widget-stepper-content-size-selections .gs-widget-stepper-content-size-selection .gs-title-blue {
+  color: #219ab5;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-size .gs-widget-stepper-content-size-selections .gs-widget-stepper-content-size-selection .gs-widget-vertical-border {
+  border-right: 1px solid #888888;
+  position: absolute;
+  height: 8px;
+  top: 30px;
+  left: 50%;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-size .gs-widget-stepper-content-size-selections .gs-widget-stepper-content-size-selection .gs-widget-size-cursor {
+  width: 8px;
+  height: 8px;
+  margin: auto;
+  border-radius: 50%;
+  position: relative;
+  z-index: 9;
+  cursor: pointer;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-size .gs-widget-stepper-content-size-selections .gs-widget-stepper-content-size-selection .gs-widget-size-cursor-gray {
+  background: #666666;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-size .gs-widget-stepper-content-size-selections .gs-widget-stepper-content-size-selection .gs-widget-size-cursor-blue {
+  background: #1b96b1;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-size .gs-widget-stepper-content-size-selections .gs-widget-stepper-content-size-selection .gs-widget-size-cursor-gray-bigger {
+  width: 12px;
+  height: 12px;
+  bottom: 2px;
+}
+
+/* Step4: Code*/
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-code {
+  padding: 10px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-code .gs-widget-stepper-content-code-wrapper {
+
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-code .gs-widget-stepper-content-code-copy {
+  text-align: right;
+  padding: 40px 0;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-code .gs-widget-stepper-content-code-copy button {
+  border: none;
+  padding: 4px 8px;
+  background: #1b96b1;
+  color: #FFFFFF;
+  border-radius: 15px;
+  outline: none;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-code .gs-widget-stepper-content-code-copy button:hover {
+  background: #b9a47b;
+}
+
+.page-container .gs-widget-stepper-content-wrapper .gs-widget-stepper-content-code .gs-widget-stepper-content-code-code {
+  font-family: Consolas,monaco,monospace;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  padding: 10px 15px;
+  background: #eee;
+}
+
+/*
+** GROUPS
+*/
+.page-container .gs-group-list-count-wrapper .gs-group-list-count .gs-group-list-count-name:hover {
+  color: #219AB5;
+}
+
+.page-container .gs-group-list-count-wrapper .gs-group-list-count .gs-edit-group-btn {
+  margin: 0 0 0 10px;
+  color: #BBBBBB;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.page-container .gs-group-list-count-wrapper .gs-group-list-edit-group-form {
+  height: 20px;
+  position: relative;
+}
+
+.page-container .gs-group-list-count-wrapper .gs-group-list-edit-group-form input {
+  height: 30px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  position: absolute;
+  left: -5px;
+  top: -6px;
+}
+
+.page-container .gs-group-list-count-wrapper .gs-group-list-edit-group-form .gs-button {
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #FFFFFF;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.page-container .gs-group-list-count-wrapper .gs-group-list-edit-group-form .gs-button-validate {
+  background-color: #c89750;
+}
+
+.page-container .gs-group-list-count-wrapper .gs-group-list-edit-group-form .gs-button-cancel {
+  background-color: #a9a9a9
+}
+.page-container .gs-group-list-count-wrapper .gs-group-list-count .gs-group-list-count-garages-wrapper {
+  height: 0;
+  overflow: hidden;
+}
+
+.page-container .gs-group-list-count-wrapper .gs-group-list-count .gs-group-list-count-garages {
+  background: #e9e9e9;
+  border: 1px solid #d7d7d7;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 20px 0 0 20px;
+  color: #666666;
+  font-size: 13px;
+}
+
+.page-container .gs-group-list-count-wrapper .gs-group-list-count .gs-group-list-count-garages .gs-group-list-count-no-garage {
+  font-style: italic;
+  color: #888888;
+  padding: 10px 5px;
+}
+
+.page-container .gs-group-list-count-wrapper .gs-group-list-count .gs-group-list-count-garages h6 {
+  text-decoration: underline;
+  margin-bottom: 15px;
+}
+
+.page-container .gs-group-list-count-wrapper .gs-group-list-count .gs-group-list-count-garages .gs-group-list-count-garage {
+  padding: 5px;
+}
+
+.page-container .gs-group-list-count-wrapper .gs-group-list-count .gs-group-list-count-garages .gs-group-list-count-garage span {
+  cursor: pointer;
+}
+
+.page-container .gs-group-list-count-wrapper .gs-group-list-count .gs-group-list-count-garages .gs-group-list-count-add-garage {
+  padding: 15px 0 0 0;
+}
+
+.page-container .gs-group-list-count-wrapper .gs-group-list-count .gs-group-list-count-garages .gs-group-list-count-add-garage form .gs-add-garage-button {
+  color: #ffffff;
+  background: #1b96b1;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  text-align: center;
+  padding: 1px;
+  display: inline-block;
+}
+
+.page-container .gs-group-list-count-wrapper .gs-group-list-count .gs-group-list-count-garages .gs-group-list-count-add-garage form input {
+  display: inline-block;
+  width: auto;
+  min-width: 250px;
+}
+
+.page-container .gs-group-create-group-button-wrapper {
+  margin: 30px 0 0 0;
+}
+
+.page-container .gs-group-create-group-button-wrapper .gs-group-create-group-inputs-button {
+  width: 300px;
+}
+
+.page-container .gs-group-create-group-button-wrapper .gs-group-create-group-inputs-button button {
+  width: 100%;
+  padding: 7px 14px;
+  font-size: 14px;
+  background-color: #219ab5;
+  color: white;
+  height: 36px;
+  border-radius: 3px;
+  margin-bottom: 4px;
+  text-align: center;
+  border: none;
+}
+
+.page-container .gs-group-create-group-button-wrapper .gs-group-create-group-inputs-button button:hover {
+  background-color: #b9a47b;
+}
+
+.page-container .gs-group-create-group-button-wrapper .gs-group-create-group-inputs {
+  width: 300px;
+}
+
+.page-container .gs-group-create-group-button-wrapper .gs-group-create-group-inputs input {
+  height: 33px;
+  width: 200px;
+  padding: 6px 12px;
+  font-size: 12px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.page-container .gs-group-create-group-button-wrapper .gs-group-create-group-inputs .gs-button {
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 12px;
+  line-height: 1.42857143;
+  color: #FFFFFF;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.page-container .gs-group-create-group-button-wrapper .gs-group-create-group-inputs .gs-button-validate {
+  background-color: #c89750;
+}
+
+.page-container .gs-group-create-group-button-wrapper .gs-group-create-group-inputs .gs-button-cancel {
+  background-color: #a9a9a9
+}
+
+.page-container .gs-text-group-explications {
+  padding: 15px 30px;
+  color: #555;
+  font-style: italic;
+}
+
+.page-container .gs-open-showcase-group {
+  background: #1b96b1;
+  border: none;
+  color: #EEEEEE;
+}
+
+.page-container .gs-open-showcase-group:hover {
+  background: #b9a47b;
+}
+
+.page-container .gs-btn-return-widgets-wrapper {
+  text-align: center;
+  padding: 30px 0;
+}
+
+.page-container .gs-btn-return-widgets {
+  background: #1b96b1;
+  border: none;
+  color: #EEEEEE;
+  border-radius: 3px;
+}
+
+.page-container .gs-btn-return-widgets:hover {
+  background: #b9a47b;
+}
+
+.page-container .gs-checkbox-span {
+  position: relative;
+  top: 2px;
+}
+
+.gs-cloak {
+  visibility: hidden;
+}
+
+.gs-showcase-loading-spin {
+  top: 132px;
+  color: #666;
+  text-align: center;
+  padding-top: 200px;
+}
+
+.gs-showcase-loading-spin .gs-showcase-loading-spin-text {
+}

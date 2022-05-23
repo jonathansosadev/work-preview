@@ -1,0 +1,92 @@
+<template>
+  <div class="gs-switch-button" @click.prevent.stop="clicked()" :title="hoverMessage || (value ? 'Désactiver' : 'Activer')">
+    <div class="button-wrap" :class="[value ? 'button-active': '', enabled ? 'enabled' : 'disabled']">
+      <div class="button-bg">
+        <div class="button-out"></div>
+        <div class="button-in"></div>
+        <div class="button-switch"></div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    props: {
+      value: {
+        required: true
+      },
+      enabled: {
+        type: Boolean,
+        required: false,
+        default: true
+      },
+      hoverMessage: {
+        type: String,
+        required: false,
+        default: ''
+      }
+    },
+    methods: {
+      clicked: function () {
+        if (this.enabled) {
+          this.$emit('change');
+          this.$emit('click', this.value);
+        }
+      }
+    }
+  }
+</script>
+
+<style lang="scss">
+  .gs-switch-button {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .gs-switch-button .button-wrap {
+    width: 28px;
+    /*margin: 40px auto 0;*/
+    cursor: pointer;
+  }
+  .gs-switch-button .button-bg {
+    width: 100%;
+    height: 100%;
+    border-radius: 40px;
+    padding: 2px;
+    color:#fff;
+    transition:all 0.2s ease;
+  }
+  .gs-switch-button .enabled .button-bg {
+    background-color: #bb2222;
+  }
+  .gs-switch-button .disabled .button-bg {
+    background-color: #848484;
+  }
+  .gs-switch-button .button-switch {
+    position:relative;
+    left:0px;
+    width: 10px;
+    height: 10px;
+    border:solid 5px;
+    background-color:#fff;
+    border-radius: 5px;
+    transition:all 0.2s ease;
+  }
+  .gs-switch-button .button-active .button-switch { left:14px; }
+  .gs-switch-button .button-in,
+  .gs-switch-button .button-out {
+    position:absolute;
+    transition:all 0.2s ease;
+    padding-top:15px;
+    font-size:0.8em;
+    text-transform:uppercase;
+    font-weight:bold;
+  }
+  .gs-switch-button .button-in { margin-left:20px; }
+  .gs-switch-button .button-out { margin-left:18px; }
+  .gs-switch-button .button-active .button-out {  }
+  .gs-switch-button .button-active .button-in {  }
+  .gs-switch-button .button-active.enabled .button-bg { background-color:#22bb22; }
+  .gs-switch-button .button-active.disabled .button-bg { background-color: #848484; }
+</style>

@@ -1,0 +1,588 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+
+{% block css %}
+  <style type="text/css">
+    #app table {
+      max-width: 1600px;
+      width: 100%;
+      margin: 40px auto;
+    }
+
+    #app table .ligne {
+      border-top: 1px solid #666666;
+    }
+
+    #app table .ligne:hover {
+      background: #444444;
+    }
+
+    #app table .tete-source, #app table .tete-lien, #app table .tete-source_count {
+      text-align: center;
+    }
+
+    #app table .tete-source_count span:nth-child(1) {
+      display: block;
+    }
+
+    #app table .cellule-garage {
+      cursor: pointer;
+    }
+
+    #app table .cellule-garage:hover {
+      text-decoration: underline;
+    }
+
+    #app table .cellule-source, #app table .cellule-lien {
+      border-left: 1px solid #444444;
+      text-align: center;
+    }
+
+    #app table .cellule-lien a {
+      display: block;
+    }
+
+    #app table .details {
+      text-align: left;
+      background: #3d3d3d;
+    }
+
+    #app table .details td {
+      padding: 10px;
+    }
+
+    #app table .details td > div {
+      padding: 0 0 0 10px;
+    }
+  </style>
+{% endblock %}
+
+{% block page %}
+  <div class="page-header">
+    <h1>Monitoring E-Réputation</h1>
+  </div>
+
+  {% raw %}
+    <div class="col-md-12" id="app">
+      <div class="row" v-if="!loading">
+        <p class="col-md-12">Cette page permet de monitorer les erreurs rencontrées par nos établissements avec E-Réputation.</p>
+        <p class="col-md-12">Cliquez sur le nom d'un établissement pour afficher plus de détails.</p>
+        <p class="col-md-12">Nombre d'établissements avec un abonnement E-Réputation actif : <strong>{{ countSubscriptions }}</strong></p>
+
+        <div class="col-md-12">
+          <div style="width: 180px;">
+            <h4>Légende</h4>
+            <div>
+              <i class="fa fa-plug" style="color: darkgreen;" title="Connecté"></i> : Source connectée
+            </div>
+            <div style="border-bottom: 1px solid #444;padding: 0 0 4px 0;margin: 0 0 4px 0;">
+              <i class="fa fa-plug" style="color: darkorange;" title="Non connecté"></i> : Source non connectée
+            </div>
+            <div>
+              <i class="fa fa-check" style="color: darkgreen;" title="Aucune erreur détectée"></i> : Aucune erreur
+            </div>
+            <div>
+              <i class="fa fa-exclamation-triangle" style="color: red;" title="Erreur détectée !"></i> : Erreur détectée
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <h2 style="text-align: center;">Établissements avec erreur <i class="fa fa-exclamation-triangle" style="color: red;"></i> ({{ prettifiedGaragesWithError.length }})</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Groupe</th>
+                <th>Établissement</th>
+                <th class="tete-source_count">
+                  <span>{{ prettifiedGaragesWithGoogleError.length }}</span>
+                  <span>Google</span>
+                </th>
+                <th class="tete-source_count">
+                  <span>{{ prettifiedGaragesWithFacebookError.length }}</span>
+                  <span>Facebook</span>
+                </th>
+                <th class="tete-source_count">
+                  <span>{{ prettifiedGaragesWithPagesJaunesError.length }}</span>
+                  <span>PagesJaunes</span>
+                </th>
+                <th class="tete-lien">Lien Cockpit</th>
+              </tr>
+            </thead>
+
+            <tbody v-for="garage in prettifiedGaragesWithError" :key="garage.id">
+              <tr class="ligne">
+                <td class="cellule-garage">{{ garage.group }}</td>
+                <td @click="toggleGarageDetails(garage.id)" class="cellule-garage">{{ garage.name }}</td>
+                <!-- Google -->
+                <td class="cellule-source">
+                  <i v-if="garage.google.connected" class="fa fa-plug" style="color: darkgreen;" title="Connecté"></i>
+                  <i v-else class="fa fa-plug" style="color: darkorange;" title="Non connecté"></i>
+                  <i v-if="!garage.google.error" class="fa fa-check" style="color: darkgreen;" title="Aucune erreur détectée"></i>
+                  <i v-else class="fa fa-exclamation-triangle" style="color: red;" title="Erreur détectée !"></i>
+                </td>
+                <!-- Facebook -->
+                <td class="cellule-source">
+                  <i v-if="garage.facebook.connected" class="fa fa-plug" style="color: darkgreen;" title="Connecté"></i>
+                  <i v-else class="fa fa-plug" style="color: darkorange;" title="Non connecté"></i>
+                  <i v-if="!garage.facebook.error" class="fa fa-check" style="color: darkgreen;" title="Aucune erreur détectée"></i>
+                  <i v-else class="fa fa-exclamation-triangle" style="color: red;" title="Erreur détectée !"></i>
+                </td>
+                <!-- PagesJaunes -->
+                <td class="cellule-source">
+                  <i v-if="garage.pagesJaunes.connected" class="fa fa-plug" style="color: darkgreen;" title="Connecté"></i>
+                  <i v-else class="fa fa-plug" style="color: darkorange;" title="Non connecté"></i>
+                  <i v-if="!garage.pagesJaunes.error" class="fa fa-check" style="color: darkgreen;" title="Aucune erreur détectée"></i>
+                  <i v-else class="fa fa-exclamation-triangle" style="color: red;" title="Erreur détectée !"></i>
+                </td>
+                <!-- Lien Cockpit -->
+                <td class="cellule-lien">
+                  <a :href="'/cockpit/e-reputation?garageId=' + garage.id"  target="_blank"><i class="fa fa-external-link"></i></a>
+                </td>
+              </tr>
+
+              <tr v-if="garage.displayDetails" class="ligne details">
+                <td colspan="6">
+                  <!-- Google -->
+                  <h4>Google</h4>
+                  <div>
+                    Connecté :
+                    <i v-if="garage.google.connected" class="fa fa-plug" style="color: darkgreen;" title="Connecté"></i>
+                    <i v-else class="fa fa-plug" style="color: darkorange;" title="Non connecté"></i>
+                     {{ garage.google.connected ? 'Oui, depuis le ' + formatDate(garage.google.connectedSince) + ', par ' + garage.google.connectedBy : 'Non' }}
+                  </div>
+                  <div>
+                    Erreur :
+                    <i v-if="!garage.google.error" class="fa fa-check" style="color: darkgreen;" title="Aucune erreur détectée"></i>
+                    <i v-else class="fa fa-exclamation-triangle" style="color: red;" title="Erreur détectée !"></i>
+                     {{ garage.google.error || 'Aucune' }}
+                  </div>
+                  <div>
+                    Date de la dernière erreur connue :
+                    <i class="fa fa-calendar-times-o"></i>
+                    {{ garage.google.lastErrorDate ? 'Le ' + formatDate(garage.google.lastErrorDate) : 'Jamais' }}
+                  </div>
+                  <div>
+                    Date de la dernière mise à jour des avis :
+                    <i class="fa fa-calendar-check-o"></i>
+                    {{ garage.google.lastFetch ? 'Le ' + formatDate(garage.google.lastFetch) : 'Jamais' }}
+                  </div>
+
+                  <!-- Facebook -->
+                  <h4>Facebook</h4>
+                  <div>
+                    Connecté :
+                    <i v-if="garage.facebook.connected" class="fa fa-plug" style="color: darkgreen;" title="Connecté"></i>
+                    <i v-else class="fa fa-plug" style="color: darkorange;" title="Non connecté"></i>
+                    {{ garage.facebook.connected ? 'Oui, depuis le ' + formatDate(garage.google.connectedSince) + ', par ' + garage.facebook.connectedBy : 'Non' }}
+                  </div>
+                  <div>
+                    Erreur :
+                    <i v-if="!garage.facebook.error" class="fa fa-check" style="color: darkgreen;" title="Aucune erreur détectée"></i>
+                    <i v-else class="fa fa-exclamation-triangle" style="color: red;" title="Erreur détectée !"></i>
+                    {{ garage.facebook.error || 'Aucune' }}
+                  </div>
+                  <div>
+                    Date de la dernière erreur connue :
+                    <i class="fa fa-calendar-times-o"></i>
+                    {{ garage.facebook.lastErrorDate ? 'Le ' + formatDate(garage.facebook.lastErrorDate) : 'Jamais' }}
+                  </div>
+                  <div>
+                    Date de la dernière mise à jour des avis :
+                    <i class="fa fa-calendar-check-o"></i>
+                    {{ garage.facebook.lastFetch ? 'Le ' + formatDate(garage.facebook.lastFetch) : 'Jamais' }}
+                  </div>
+
+                  <!-- PagesJaunes -->
+                  <h4>PagesJaunes</h4>
+                  <div>
+                    Connecté :
+                    <i v-if="garage.pagesJaunes.connected" class="fa fa-plug" style="color: darkgreen;" title="Connecté"></i>
+                    <i v-else class="fa fa-plug" style="color: darkorange;" title="Non connecté"></i>
+                    {{ garage.pagesJaunes.connected ? 'Oui, depuis le ' + formatDate(garage.pagesJaunes.connectedSince) + ', par ' + garage.pagesJaunes.connectedBy : 'Non' }}
+                  </div>
+                  <div>
+                    Erreur :
+                    <i v-if="!garage.pagesJaunes.error" class="fa fa-check" style="color: darkgreen;" title="Aucune erreur détectée"></i>
+                    <i v-else class="fa fa-exclamation-triangle" style="color: red;" title="Erreur détectée !"></i>
+                    {{ garage.pagesJaunes.error || 'Aucune' }}
+                  </div>
+                  <div>
+                    Date de la dernière erreur connue :
+                    <i class="fa fa-calendar-times-o"></i>
+                    {{ garage.pagesJaunes.lastErrorDate ? 'Le ' + formatDate(garage.pagesJaunes.lastErrorDate) : 'Jamais' }}
+                  </div>
+                  <div>
+                    Date de la dernière mise à jour des avis :
+                    <i class="fa fa-calendar-check-o"></i>
+                    {{ garage.pagesJaunes.lastFetch ? 'Le ' + formatDate(garage.pagesJaunes.lastFetch) : 'Jamais' }}
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2 style="text-align: center;">Établissements sans erreur <i class="fa fa-check" style="color: darkgreen;"></i> ({{ prettifiedGaragesWithoutError.length }})</h2>
+          <table>
+            <thead>
+            <tr>
+              <th>Groupe</th>
+              <th>Établissement</th>
+              <th class="tete-source">Google</th>
+              <th class="tete-source">Facebook</th>
+              <th class="tete-source">PagesJaunes</th>
+              <th class="tete-lien">Lien Cockpit</th>
+            </tr>
+            </thead>
+
+            <tbody v-for="garage in prettifiedGaragesWithoutError" :key="garage.id">
+            <tr class="ligne">
+              <td class="cellule-garage">{{ garage.group }}</td>
+              <td @click="toggleGarageDetails(garage.id)" class="cellule-garage">{{ garage.name }}</td>
+              <!-- Google -->
+              <td class="cellule-source">
+                <i v-if="garage.google.connected" class="fa fa-plug" style="color: darkgreen;" title="Connecté"></i>
+                <i v-else class="fa fa-plug" style="color: darkorange;" title="Non connecté"></i>
+                <i v-if="!garage.google.error" class="fa fa-check" style="color: darkgreen;" title="Aucune erreur détectée"></i>
+                <i v-else class="fa fa-exclamation-triangle" style="color: red;" title="Erreur détectée !"></i>
+              </td>
+              <!-- Facebook -->
+              <td class="cellule-source">
+                <i v-if="garage.facebook.connected" class="fa fa-plug" style="color: darkgreen;" title="Connecté"></i>
+                <i v-else class="fa fa-plug" style="color: darkorange;" title="Non connecté"></i>
+                <i v-if="!garage.facebook.error" class="fa fa-check" style="color: darkgreen;" title="Aucune erreur détectée"></i>
+                <i v-else class="fa fa-exclamation-triangle" style="color: red;" title="Erreur détectée !"></i>
+              </td>
+              <!-- PagesJaunes -->
+              <td class="cellule-source">
+                <i v-if="garage.pagesJaunes.connected" class="fa fa-plug" style="color: darkgreen;" title="Connecté"></i>
+                <i v-else class="fa fa-plug" style="color: darkorange;" title="Non connecté"></i>
+                <i v-if="!garage.pagesJaunes.error" class="fa fa-check" style="color: darkgreen;" title="Aucune erreur détectée"></i>
+                <i v-else class="fa fa-exclamation-triangle" style="color: red;" title="Erreur détectée !"></i>
+              </td>
+              <!-- Lien Cockpit -->
+              <td class="cellule-lien">
+                <a :href="'/cockpit/e-reputation?garageId=' + garage.id"  target="_blank"><i class="fa fa-external-link"></i></a>
+              </td>
+            </tr>
+
+            <tr v-if="garage.displayDetails" class="ligne details">
+              <td colspan="6">
+                <!-- Google -->
+                <h4>Google</h4>
+                <div>
+                  Connecté :
+                  <i v-if="garage.google.connected" class="fa fa-plug" style="color: darkgreen;" title="Connecté"></i>
+                  <i v-else class="fa fa-plug" style="color: darkorange;" title="Non connecté"></i>
+                  {{ garage.google.connected ? 'Oui, depuis le ' + formatDate(garage.google.connectedSince) + ', par ' + garage.google.connectedBy : 'Non' }}
+                </div>
+                <div>
+                  Erreur :
+                  <i v-if="!garage.google.error" class="fa fa-check" style="color: darkgreen;" title="Aucune erreur détectée"></i>
+                  <i v-else class="fa fa-exclamation-triangle" style="color: red;" title="Erreur détectée !"></i>
+                  {{ garage.google.error || 'Aucune' }}
+                </div>
+                <div>
+                  Date de la dernière erreur connue :
+                  <i class="fa fa-calendar-times-o"></i>
+                  {{ garage.google.lastErrorDate ? 'Le ' + formatDate(garage.google.lastErrorDate) : 'Jamais' }}
+                </div>
+                <div>
+                  Date de la dernière mise à jour des avis :
+                  <i class="fa fa-calendar-check-o"></i>
+                  {{ garage.google.lastFetch ? 'Le ' + formatDate(garage.google.lastFetch) : 'Jamais' }}
+                </div>
+
+                <!-- Facebook -->
+                <h4>Facebook</h4>
+                <div>
+                  Connecté :
+                  <i v-if="garage.facebook.connected" class="fa fa-plug" style="color: darkgreen;" title="Connecté"></i>
+                  <i v-else class="fa fa-plug" style="color: darkorange;" title="Non connecté"></i>
+                  {{ garage.facebook.connected ? 'Oui, depuis le ' + formatDate(garage.google.connectedSince) + ', par ' + garage.facebook.connectedBy : 'Non' }}
+                </div>
+                <div>
+                  Erreur :
+                  <i v-if="!garage.facebook.error" class="fa fa-check" style="color: darkgreen;" title="Aucune erreur détectée"></i>
+                  <i v-else class="fa fa-exclamation-triangle" style="color: red;" title="Erreur détectée !"></i>
+                  {{ garage.facebook.error || 'Aucune' }}
+                </div>
+                <div>
+                  Date de la dernière erreur connue :
+                  <i class="fa fa-calendar-times-o"></i>
+                  {{ garage.facebook.lastErrorDate ? 'Le ' + formatDate(garage.facebook.lastErrorDate) : 'Jamais' }}
+                </div>
+                <div>
+                  Date de la dernière mise à jour des avis :
+                  <i class="fa fa-calendar-check-o"></i>
+                  {{ garage.facebook.lastFetch ? 'Le ' + formatDate(garage.facebook.lastFetch) : 'Jamais' }}
+                </div>
+
+                <!-- PagesJaunes -->
+                <h4>PagesJaunes</h4>
+                <div>
+                  Connecté :
+                  <i v-if="garage.pagesJaunes.connected" class="fa fa-plug" style="color: darkgreen;" title="Connecté"></i>
+                  <i v-else class="fa fa-plug" style="color: darkorange;" title="Non connecté"></i>
+                  {{ garage.pagesJaunes.connected ? 'Oui, depuis le ' + formatDate(garage.pagesJaunes.connectedSince) + ', par ' + garage.pagesJaunes.connectedBy : 'Non' }}
+                </div>
+                <div>
+                  Erreur :
+                  <i v-if="!garage.pagesJaunes.error" class="fa fa-check" style="color: darkgreen;" title="Aucune erreur détectée"></i>
+                  <i v-else class="fa fa-exclamation-triangle" style="color: red;" title="Erreur détectée !"></i>
+                  {{ garage.pagesJaunes.error || 'Aucune' }}
+                </div>
+                <div>
+                  Date de la dernière erreur connue :
+                  <i class="fa fa-calendar-times-o"></i>
+                  {{ garage.pagesJaunes.lastErrorDate ? 'Le ' + formatDate(garage.pagesJaunes.lastErrorDate) : 'Jamais' }}
+                </div>
+                <div>
+                  Date de la dernière mise à jour des avis :
+                  <i class="fa fa-calendar-check-o"></i>
+                  {{ garage.pagesJaunes.lastFetch ? 'Le ' + formatDate(garage.pagesJaunes.lastFetch) : 'Jamais' }}
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+          <h2 style="text-align: center;">Établissements sans aucune connexion active <i class="fa fa-plug" style="color: darkorange;"></i> ({{ prettifiedGaragesWithoutConnection.length }})</h2>
+          <table>
+            <thead>
+            <tr>
+              <th>Groupe</th>
+              <th>Établissement</th>
+              <th class="tete-source">Google</th>
+              <th class="tete-source">Facebook</th>
+              <th class="tete-source">PagesJaunes</th>
+              <th class="tete-lien">Lien Cockpit</th>
+            </tr>
+            </thead>
+
+            <tbody v-for="garage in prettifiedGaragesWithoutConnection" :key="garage.id">
+            <tr class="ligne">
+              <td class="cellule-garage">{{ garage.group }}</td>
+              <td @click="toggleGarageDetails(garage.id)" class="cellule-garage">{{ garage.name }}</td>
+              <!-- Google -->
+              <td class="cellule-source">
+                <i v-if="garage.google.connected" class="fa fa-plug" style="color: darkgreen;" title="Connecté"></i>
+                <i v-else class="fa fa-plug" style="color: darkorange;" title="Non connecté"></i>
+                <i v-if="!garage.google.error" class="fa fa-check" style="color: darkgreen;" title="Aucune erreur détectée"></i>
+                <i v-else class="fa fa-exclamation-triangle" style="color: red;" title="Erreur détectée !"></i>
+              </td>
+              <!-- Facebook -->
+              <td class="cellule-source">
+                <i v-if="garage.facebook.connected" class="fa fa-plug" style="color: darkgreen;" title="Connecté"></i>
+                <i v-else class="fa fa-plug" style="color: darkorange;" title="Non connecté"></i>
+                <i v-if="!garage.facebook.error" class="fa fa-check" style="color: darkgreen;" title="Aucune erreur détectée"></i>
+                <i v-else class="fa fa-exclamation-triangle" style="color: red;" title="Erreur détectée !"></i>
+              </td>
+              <!-- PagesJaunes -->
+              <td class="cellule-source">
+                <i v-if="garage.pagesJaunes.connected" class="fa fa-plug" style="color: darkgreen;" title="Connecté"></i>
+                <i v-else class="fa fa-plug" style="color: darkorange;" title="Non connecté"></i>
+                <i v-if="!garage.pagesJaunes.error" class="fa fa-check" style="color: darkgreen;" title="Aucune erreur détectée"></i>
+                <i v-else class="fa fa-exclamation-triangle" style="color: red;" title="Erreur détectée !"></i>
+              </td>
+              <!-- Lien Cockpit -->
+              <td class="cellule-lien">
+                <a :href="'/cockpit/e-reputation?garageId=' + garage.id"  target="_blank"><i class="fa fa-external-link"></i></a>
+              </td>
+            </tr>
+
+            <tr v-if="garage.displayDetails" class="ligne details">
+              <td colspan="6">
+                <!-- Google -->
+                <h4>Google</h4>
+                <div>
+                  Connecté :
+                  <i v-if="garage.google.connected" class="fa fa-plug" style="color: darkgreen;" title="Connecté"></i>
+                  <i v-else class="fa fa-plug" style="color: darkorange;" title="Non connecté"></i>
+                  {{ garage.google.connected ? 'Oui, depuis le ' + formatDate(garage.google.connectedSince) + ', par ' + garage.google.connectedBy : 'Non' }}
+                </div>
+                <div>
+                  Erreur :
+                  <i v-if="!garage.google.error" class="fa fa-check" style="color: darkgreen;" title="Aucune erreur détectée"></i>
+                  <i v-else class="fa fa-exclamation-triangle" style="color: red;" title="Erreur détectée !"></i>
+                  {{ garage.google.error || 'Aucune' }}
+                </div>
+                <div>
+                  Date de la dernière erreur connue :
+                  <i class="fa fa-calendar-times-o"></i>
+                  {{ garage.google.lastErrorDate ? 'Le ' + formatDate(garage.google.lastErrorDate) : 'Jamais' }}
+                </div>
+                <div>
+                  Date de la dernière mise à jour des avis :
+                  <i class="fa fa-calendar-check-o"></i>
+                  {{ garage.google.lastFetch ? 'Le ' + formatDate(garage.google.lastFetch) : 'Jamais' }}
+                </div>
+
+                <!-- Facebook -->
+                <h4>Facebook</h4>
+                <div>
+                  Connecté :
+                  <i v-if="garage.facebook.connected" class="fa fa-plug" style="color: darkgreen;" title="Connecté"></i>
+                  <i v-else class="fa fa-plug" style="color: darkorange;" title="Non connecté"></i>
+                  {{ garage.facebook.connected ? 'Oui, depuis le ' + formatDate(garage.google.connectedSince) + ', par ' + garage.facebook.connectedBy : 'Non' }}
+                </div>
+                <div>
+                  Erreur :
+                  <i v-if="!garage.facebook.error" class="fa fa-check" style="color: darkgreen;" title="Aucune erreur détectée"></i>
+                  <i v-else class="fa fa-exclamation-triangle" style="color: red;" title="Erreur détectée !"></i>
+                  {{ garage.facebook.error || 'Aucune' }}
+                </div>
+                <div>
+                  Date de la dernière erreur connue :
+                  <i class="fa fa-calendar-times-o"></i>
+                  {{ garage.facebook.lastErrorDate ? 'Le ' + formatDate(garage.facebook.lastErrorDate) : 'Jamais' }}
+                </div>
+                <div>
+                  Date de la dernière mise à jour des avis :
+                  <i class="fa fa-calendar-check-o"></i>
+                  {{ garage.facebook.lastFetch ? 'Le ' + formatDate(garage.facebook.lastFetch) : 'Jamais' }}
+                </div>
+
+                <!-- PagesJaunes -->
+                <h4>PagesJaunes</h4>
+                <div>
+                  Connecté :
+                  <i v-if="garage.pagesJaunes.connected" class="fa fa-plug" style="color: darkgreen;" title="Connecté"></i>
+                  <i v-else class="fa fa-plug" style="color: darkorange;" title="Non connecté"></i>
+                  {{ garage.pagesJaunes.connected ? 'Oui, depuis le ' + formatDate(garage.pagesJaunes.connectedSince) + ', par ' + garage.pagesJaunes.connectedBy : 'Non' }}
+                </div>
+                <div>
+                  Erreur :
+                  <i v-if="!garage.pagesJaunes.error" class="fa fa-check" style="color: darkgreen;" title="Aucune erreur détectée"></i>
+                  <i v-else class="fa fa-exclamation-triangle" style="color: red;" title="Erreur détectée !"></i>
+                  {{ garage.pagesJaunes.error || 'Aucune' }}
+                </div>
+                <div>
+                  Date de la dernière erreur connue :
+                  <i class="fa fa-calendar-times-o"></i>
+                  {{ garage.pagesJaunes.lastErrorDate ? 'Le ' + formatDate(garage.pagesJaunes.lastErrorDate) : 'Jamais' }}
+                </div>
+                <div>
+                  Date de la dernière mise à jour des avis :
+                  <i class="fa fa-calendar-check-o"></i>
+                  {{ garage.pagesJaunes.lastFetch ? 'Le ' + formatDate(garage.pagesJaunes.lastFetch) : 'Jamais' }}
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div v-else>
+        <p class="col-md-12" style="text-align: center;">Chargement, veuillez patienter <i class="fa fa-spinner fa-spin"></i></p>
+      </div>
+    </div>
+  {% endraw %}
+
+{% endblock %}
+
+{% block scripts %}
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+      new Vue({
+        el: '#app',
+
+        data: function() {
+          return {
+            loading: true,
+            garages: []
+          };
+        },
+
+        async mounted() {
+          this.garages.push(...(await this.fetchGarages()));
+          this.loading = false;
+        },
+
+        computed: {
+          countSubscriptions() {
+            return this.garages.length;
+          },
+          prettifiedGarages() {
+            return this.garages.map((garage) => {
+              const conf = garage.exogenousReviewsConfigurations;
+              return {
+                id: garage.id,
+                name: garage.publicDisplayName,
+                group: garage.group,
+                displayDetails: garage.displayDetails || false,
+                google: {
+                  connected: (conf && conf.Google && conf.Google.token && conf.Google.externalId) || false,
+                  connectedBy: (conf && conf.Google && conf.Google.connectedBy) || 'utilisateur inconnu',
+                  error: conf && conf.Google && conf.Google.error,
+                  lastErrorDate: conf && conf.Google && conf.Google.lastError,
+                  connectedSince: conf && conf.Google && conf.Google.lastRefresh,
+                  lastFetch: conf && conf.Google && conf.Google.lastFetch
+                },
+                facebook: {
+                  connected: (conf && conf.Facebook && conf.Facebook.token && conf.Facebook.externalId) || false,
+                  connectedBy: (conf && conf.Facebook && conf.Facebook.connectedBy) || 'utilisateur inconnu',
+                  error: conf && conf.Facebook && conf.Facebook.error,
+                  lastErrorDate: conf && conf.Facebook && conf.Facebook.lastError,
+                  connectedSince: conf && conf.Facebook && conf.Facebook.lastRefresh,
+                  lastFetch: conf && conf.Facebook && conf.Facebook.lastFetch
+                },
+                pagesJaunes: {
+                  connected: (conf && conf.PagesJaunes && conf.PagesJaunes.token && conf.PagesJaunes.externalId) || false,
+                  connectedBy: (conf && conf.PagesJaunes && conf.PagesJaunes.connectedBy) || 'utilisateur inconnu',
+                  error: conf && conf.PagesJaunes && conf.PagesJaunes.error,
+                  lastErrorDate: conf && conf.PagesJaunes && conf.PagesJaunes.lastError,
+                  connectedSince: conf && conf.PagesJaunes && conf.PagesJaunes.lastRefresh,
+                  lastFetch: conf && conf.PagesJaunes && conf.PagesJaunes.lastFetch
+                }
+              };
+            });
+          },
+          prettifiedGaragesWithError() {
+            return this.prettifiedGarages.filter((garage) => garage.google.error || garage.facebook.error || garage.pagesJaunes.error).sort((a, b) => a.group < b.group ? -1 : 1);
+          },
+		      prettifiedGaragesWithGoogleError() {
+            return this.prettifiedGarages.filter((garage) => garage.google.error).sort((a, b) => a.group < b.group ? -1 : 1);
+          },
+		      prettifiedGaragesWithFacebookError() {
+            return this.prettifiedGarages.filter((garage) => garage.facebook.error).sort((a, b) => a.group < b.group ? -1 : 1);
+          },
+          prettifiedGaragesWithPagesJaunesError() {
+            return this.prettifiedGarages.filter((garage) => garage.pagesJaunes.error).sort((a, b) => a.group < b.group ? -1 : 1);
+          },
+          prettifiedGaragesWithoutError() {
+            return this.prettifiedGarages.filter((garage) => (garage.google.connected || garage.facebook.connected || garage.pagesJaunes.connected)
+              && !garage.google.error && !garage.facebook.error && !garage.pagesJaunes.error)
+              .sort((a, b) => a.group < b.group ? -1 : 1);
+          },
+          prettifiedGaragesWithoutConnection() {
+            return this.prettifiedGarages.filter((garage) => (!garage.google.connected && !garage.facebook.connected && !garage.pagesJaunes.connected)
+              && !garage.google.error && !garage.facebook.error && !garage.pagesJaunes.error)
+              .sort((a, b) => a.group < b.group ? -1 : 1);
+          },
+        },
+
+        methods: {
+          async fetchGarages() {
+            const response = await axios.get('{{ lib.client.url.getShortUrl('ADMIN_REPUTYSCORE_MONITORING_FETCH_GARAGES') }}');
+            return response.data;
+          },
+          toggleGarageDetails(garageId) {
+            const garage = this.garages.find((garage) => garage.id === garageId);
+
+            if (garage) {
+              Vue.set(garage, 'displayDetails', !garage.displayDetails);
+            }
+          },
+          formatDate(rawDate) {
+            if (!rawDate) {
+              return '(date incoonue)';
+            }
+            const date = new Date(rawDate);
+            return `${date.toLocaleDateString()} à ${date.toLocaleTimeString()}`;
+          }
+        }
+      });
+    });
+  </script>
+{% endblock %}

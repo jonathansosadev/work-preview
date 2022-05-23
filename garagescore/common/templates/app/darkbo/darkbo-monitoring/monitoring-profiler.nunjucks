@@ -1,0 +1,300 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+  <style type="text/css">
+  .global_score {
+    text-align: center;
+    font-size: 5em;
+  }
+  .global_apdex {
+    text-align: center;
+    font-style: italic;
+    font-size: 1em;
+  }
+  span.over10 {
+    font-size: 0.4em;
+  }
+  .global_id {
+    text-align: center;
+    font-size: 2em;
+  }
+  .request {
+    margin: 3em;
+    padding: 0.5em;
+    font-size: 13px;
+    line-height: 1.42857143;
+    color: #333;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .request.slow {
+    border-color: red;
+    border-width: 5px;
+  }
+  .request.bof {
+    border-color: rgb(255, 153, 0);
+    border-width: 5px;
+  }
+  .request_score {
+    text-align: center;
+    font-size: 3em;
+  }
+  .request_id {
+    color: #7070ea;
+    text-align: center;
+  }
+  .request_count {
+    font-weight: 800;
+  }
+  </style>
+{% endblock %}
+
+{% block page %}
+{% raw %}
+<div id="content">
+  <div class="page-header">
+    <h1>App performance review</h1>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-md-offset-8 text-right">
+      <button class="btn btn-primary" @click="reload()">
+        Refresh
+      </button>
+      <button class="btn btn-warning" @click="reset">
+        Reset All
+      </button>
+    </div>
+  </div>
+  <div class="col-md-12" style="margin-top:50px;">
+    <div v-if="mongoJournal.length < 0">
+      Aucune requête enregistrée, bizarre....
+      "{{serverError}}"
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="score_global row"><div class="global_id">Note globale Mongo</div>
+        <div class="global_apdex">ApDex threshold: 100ms</div>
+        
+        <div class="global_score">{{isNaN(mongoReport.score) ? "-":mongoReport.score}}<span class="over10">/10</span></div>
+      </div>
+      <div class="row">
+          <input class="col-md-3 request" type="text" v-model="mongoFilter" placeholder="Filtrer sur les noms" />
+      </div>
+      <div v-for="req of mongoReport.requests" class="row">
+        <div v-if="!mongoFilter || req.id.toLowerCase().indexOf(mongoFilter.toLowerCase())>= 0" v-bind:class="{ request: true, bof: req.score>=7 && req.score<9, slow: req.score<7 }">
+          <div class="request_score">{{req.score}}<span class="over10">/10</span></div>
+          <div class="request_id">{{req.id}}</div>
+          <div class="request_count" v-if="req.count>1">{{req.count}} appels</div>
+          <div class="request_count" v-else>{{req.count}} appel</div>
+          <div class="request_detail">temps moyen: {{avg(req.millis)}}ms</div>
+          <div class="request_detail">keysExamined/nreturned moyen:
+            {{avg(req.keysExamined) === 0 ? '- no index -' : avg(req.keysExamined)}}</div>
+          <div class="request_detail">plans: {{unique(req.planSummary)}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="score_global row">
+        <div class="global_id">Note globale GraphQL</div>
+        <div class="global_apdex">ApDex threshold: 300ms</div>
+        <div class="global_score">{{isNaN(graphqlReport.score) ? "-":graphqlReport.score}}<span class="over10">/10</span></div>
+      </div>
+      <div class="row">
+        <input class="col-md-3 request" type="text" v-model="graphqlFilter" placeholder="Filtrer sur les noms" />
+      </div>
+      <div v-for="req of graphqlReport.requests" class="row">
+        <div v-if="!graphqlFilter || req.id.toLowerCase().indexOf(graphqlFilter.toLowerCase())>= 0" v-bind:class="{ request: true, bof: req.score>=7 && req.score<9, slow: req.score<7 }">
+          <div class="request_score">{{req.score}}<span class="over10">/10</span></div>
+          <div class="request_id">{{req.id}}</div>
+          <div class="request_count" v-if="req.count>1">{{req.count}} appels</div>
+          <div class="request_count" v-else>{{req.count}} appel</div>
+          <div class="request_detail">temps moyen: {{avg(req.runTime)}}ms</div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  <hr/>
+  <p>
+    Help:
+    <pre>
+    The Apdex score is a ratio value of the number of satisfied and tolerating requests to the total requests made.
+    Each satisfied request counts as one request, while each tolerating request counts as half a satisfied request.
+    
+    Satisfied T or less <= 100 ms Tolerated>T, <= 4T Between 100ms and 400ms Frustrated> 4T Greater than 400ms
+    
+    Example:
+      During a 2 minute period a host handles 200 requests.
+      The Apdex threshold T = 0.5 seconds (500ms). This value is arbitrary and is selected by the user.
+    
+      If:
+      170 of the requests were handled within 100ms, so they are classified as Satisfied.
+      20 of the requests were handled between 100ms and 400ms, so they are classified as Tolerating.
+      The remaining 10 were not handled properly or took longer than 400ms, so they are classified as Frustrated.
+      The resulting Apdex score is 0.9: (170 + (20/2))/200 = 0.9.
+    </pre>
+    <br/>
+    <br/ >
+    <b>Note de configuration:</b><br />
+    Trois variables d'environnement sont nécessaires:<br />
+    * PROFILER (valeur actuelle: {% endraw %}{{ env_profiler }}{% raw %})<br />
+    * PROFILER_NAMESPACE (valeur actuelle: {% endraw %}{{ env_profiler_namespace }}{% raw %})<br />
+    * PROFILER_PRINT_SLOW_QUERIES (valeur actuelle: {% endraw %}{{ env_profiler_printSlowQueries }}{% raw %})<br />
+    <br />
+    Les requêtes mongo sont dans <b>db.system.profile</b><br/>
+    Les requêtes graphql sont dans <b>db.graphqlProfile</b><br />
+  </p>
+</div>
+{% endraw %}
+{% endblock %}
+
+{% block scripts %}
+{% include "../common/components/switch-button.nunjucks" %}
+  <script type="text/javascript">
+    var app = new Vue({
+      el: '#content',
+      data: function () {
+        return {
+          mongoFilter:"",
+          graphqlFilter: "",
+          serverError: "{{ error }}",
+          mongoJournal: {{ mongoJournal|safe }},
+          graphqlJournal: {{ graphqlJournal| safe }},
+        };
+      },
+        computed: {
+          mongoReport() {
+            const groupByRequest = {};
+            this.mongoJournal.forEach((j,i) => {
+              let comment = JSON.parse(j.command.comment || {});
+              let id = comment.requestId;
+              id = id.replace(/.*\/common\//,'common/');
+              id = id.replace(/.*\/server\//,'server/');
+              if(!id) {
+                id = `loopback_ts_${j.ts}`;
+              }
+              if(!groupByRequest[id]) {
+                groupByRequest[id] =
+                  { id: id, satisfaction: [], keysExamined: [], nreturned: [], 
+                    planSummary: [], millis: [] };
+              }
+              const r = groupByRequest[id];
+              const satisfaction = this.apDex(j.millis, 100);
+              r.satisfaction.push(satisfaction);
+              r.millis.push(j.millis);
+              r.keysExamined.push(j.keysExamined);
+              r.nreturned.push(j.nreturned);
+              r.planSummary.push(j.planSummary);
+            });
+          const requests = [];
+          let scoresTotal = 0;
+          let scoresCount = 0;
+          Object.keys(groupByRequest).forEach(n => {
+            const r = groupByRequest[n];
+            let score = this.avg(r.satisfaction);
+            score = Math.round(10 * score);
+            scoresTotal+= score;
+            scoresCount++;
+            //
+            requests.push({
+              id:n,
+              score,
+              count: r.millis.length,
+              millis: r.millis,
+              keysExamined: r.keysExamined,
+              nreturned: r.nreturned,
+              planSummary: r.planSummary,
+            });
+          });
+          requests.sort((a, b) => a.score - b.score);
+          return {
+            score: Math.floor(scoresTotal/ scoresCount),
+            requests 
+          }
+        },
+        graphqlReport() {
+            const groupByRequest = {};
+            this.graphqlJournal.forEach(j => {
+              let id = j.name;
+              id = id.replace(/_.*/, '');
+              if (!groupByRequest[id]) {
+                groupByRequest[id] =
+                {
+                  id: id, satisfaction: [], runTime: []
+                };
+              }
+              const r = groupByRequest[id];
+              const satisfaction = this.apDex(j.runTime, 300);
+              r.satisfaction.push(satisfaction);
+              r.runTime.push(j.runTime);
+            });
+            const requests = [];
+            let scoresTotal = 0;
+            let scoresCount = 0;
+            Object.keys(groupByRequest).forEach(n => {
+              const r = groupByRequest[n];
+              let score = this.avg(r.satisfaction);
+              score = Math.round(10 * score);
+              scoresTotal += score;
+              scoresCount++;
+              //
+              requests.push({
+                id: n,
+                score,
+                count: r.runTime.length,
+                runTime: r.runTime,
+              });
+            });
+            requests.sort((a, b) => a.score - b.score);
+            return {
+              score: Math.floor(scoresTotal / scoresCount),
+              requests
+            }
+          }
+      },
+      methods: {
+        apDex(time, threshold) {
+          return time <= threshold ? 1 : time <= threshold*4 ? 0.5 : 0
+        },
+        avg(arr, round=100) {
+          const sum = arr.reduce((a, b) => a + b, 0);
+          const v = sum / arr.length
+          return round ? Math.round(round * v)/ round : v;
+        },
+        unique(arr) {
+          const u = {};
+          arr.forEach(a => {u[a] = true });
+          return Object.keys(u);
+        },
+        reload: function() {
+          document.location.reload();
+        },
+        reset: function() {
+          if(confirm("Effacer les logs ?")) {
+            let request = new XMLHttpRequest();
+            let posturl = '{{ lib.client.url.getShortUrl("ADMIN_MONITORING_PROFILER") }}';
+            request.open('POST', posturl, true);
+            request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+            request.onload = () => {
+              if (request.status !== 200 && request.status !== 304) {
+                alert("Erreur inconnue " + request.status + " !");
+              } else {
+                const data = JSON.parse(request.responseText);
+                if(data.status === "KO") {
+                  alert("Erreur " + data.error);
+                }
+                this.mongoJournal.splice(0, this.mongoJournal.length);
+                this.graphqlJournal.splice(0, this.graphqlJournal.length);
+              }
+            };
+            request.send(JSON.stringify({ review: this.review }));
+          }
+        },
+      }
+    });
+
+  </script>
+{% endblock %}

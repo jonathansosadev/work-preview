@@ -1,0 +1,61 @@
+<div id="stars">
+	{% if score <= 0 %}
+		<img id="star1" src="{{ lib.client.latestStaticUrl('/images/widget/star0.svg') }}" />
+	{% elif score < 5 %}
+		<img id="star1" src="{{ lib.client.latestStaticUrl('/images/widget/star1.svg') }}" />
+	{% elif score < 10 %}
+		<img id="star1" src="{{ lib.client.latestStaticUrl('/images/widget/star2.svg') }}" />
+	{% elif score < 15 %}
+		<img id="star1" src="{{ lib.client.latestStaticUrl('/images/widget/star3.svg') }}" />
+	{% else %}
+		<img id="star1" src="{{ lib.client.latestStaticUrl('/images/widget/star4.svg') }}" />
+	{% endif %}
+
+	{% if score < 20 %}
+		<img id="star2" src="{{ lib.client.latestStaticUrl('/images/widget/star0.svg') }}" />
+	{% elif score > 20 and score < 25 %}
+		<img id="star2" src="{{ lib.client.latestStaticUrl('/images/widget/star1.svg') }}" />
+	{% elif score > 20 and score < 30 %}
+		<img id="star2" src="{{ lib.client.latestStaticUrl('/images/widget/star2.svg') }}" />
+	{% elif score > 20 and score < 35 %}
+		<img id="star2" src="{{ lib.client.latestStaticUrl('/images/widget/star3.svg') }}" />
+	{% else %}
+		<img id="star2" src="{{ lib.client.latestStaticUrl('/images/widget/star4.svg') }}" />
+	{% endif %}
+
+	{% if score < 40 %}
+		<img id="star3" src="{{ lib.client.latestStaticUrl('/images/widget/star0.svg') }}" />
+	{% elif score > 40 and score < 45 %}
+		<img id="star3" src="{{ lib.client.latestStaticUrl('/images/widget/star1.svg') }}" />
+	{% elif score > 40 and score < 50 %}
+		<img id="star3" src="{{ lib.client.latestStaticUrl('/images/widget/star2.svg') }}" />
+	{% elif score > 40 and score < 55 %}
+		<img id="star3" src="{{ lib.client.latestStaticUrl('/images/widget/star3.svg') }}" />
+	{% else %}
+		<img id="star3" src="{{ lib.client.latestStaticUrl('/images/widget/star4.svg') }}" />
+	{% endif %}
+
+	{% if score < 60 %}
+		<img id="star4" src="{{ lib.client.latestStaticUrl('/images/widget/star0.svg') }}" />
+	{% elif score > 60 and score < 65 %}
+		<img id="star4" src="{{ lib.client.latestStaticUrl('/images/widget/star1.svg') }}" />
+	{% elif score > 60 and score < 70 %}
+		<img id="star4" src="{{ lib.client.latestStaticUrl('/images/widget/star2.svg') }}" />
+	{% elif score > 60 and score < 75 %}
+		<img id="star4" src="{{ lib.client.latestStaticUrl('/images/widget/star3.svg') }}" />
+	{% else %}
+		<img id="star4" src="{{ lib.client.latestStaticUrl('/images/widget/star4.svg') }}" />
+	{% endif %}
+
+	{% if score < 80 %}
+		<img id="star5" src="{{ lib.client.latestStaticUrl('/images/widget/star0.svg') }}" />
+	{% elif score > 80 and score < 85 %}
+		<img id="star5" src="{{ lib.client.latestStaticUrl('/images/widget/star1.svg') }}" />
+	{% elif score > 80 and score < 90 %}
+		<img id="star5" src="{{ lib.client.latestStaticUrl('/images/widget/star2.svg') }}" />
+	{% elif score > 80 and score < 95 %}
+		<img id="star5" src="{{ lib.client.latestStaticUrl('/images/widget/star3.svg') }}" />
+	{% else %}
+		<img id="star5" src="{{ lib.client.latestStaticUrl('/images/widget/star4.svg') }}" />
+	{% endif %}
+</div>

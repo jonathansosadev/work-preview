@@ -1,0 +1,26 @@
+{
+    "INITIAL_NAME" : {
+        "value": "InitialName",
+        "properties": {}
+    },
+    "GARAGE_NAME" : {
+        "value": "GarageName",
+        "properties": {}
+    },
+    "LAST_NAME" : {
+        "value": "LastName",
+        "properties": {}
+    },
+    "FIRST_NAME" : {
+        "value": "FirstName",
+        "properties": {}
+    },
+    "SIGN" : {
+        "value": "Sign",
+        "properties": {}
+    },
+    "GROUP_NAME" : {
+        "value": "GroupName",
+        "properties": {}
+    }
+}

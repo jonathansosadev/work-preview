@@ -1,0 +1,112 @@
+{% extends "../common/layouts/darkbo.nunjucks" %} {% block css %}
+<style type="text/css">
+.option-filter {
+  margin-bottom: 10px;
+  padding: 2px 5px;
+  float: none;
+}
+</style>
+{% endblock %} {% block page %}{% raw %}
+<div class="page-header">
+  <h1>Options d'import partagées</h1>
+</div>
+<div class="col-md-12" id="app">
+  <div class="row">
+    <u class="col-md-12">Instructions</u>
+    <p class="col-md-12">Insérer un filtre par ligne.</p>
+    <div class="col-md-12">
+      <xmp>
+Possibilities :
+- <code>["lastName"] <b>!=</b> "AUTO"</code>
+-> lastName should not be equal to "AUTO"
+- <code>["lastName"] <b>!=</b> "AUTO"i</code>
+-> lastName should not be equal to "auto"
+- <code>!["lastName"]<b>.includes</b>("AUTO")</code>
+-> lastName should not include "AUTO"
+- <code>!["lastName"]<b>.includes</b>("AUTO")<b>i</b></code>
+-> lastName should not include "auto"
+- <code>!["lastName"] <b>inc</b> ("AUTO", "VOITURE")</code>
+-> lastName should not include "auto" or "voiture"
+- <code>!["lastName"] <b>in</b> ("AUTO", "VOITURE")</code>
+-> lastName should not be equal to "auto" or "voiture"
+- <code>FIXAOUT2018</code>
+-> special fix, accept only rows with firstName or lastName empty
+
+Bigger filter example :
+- <code>(["Nom Affaire"] = "GIDAB" or ["Compte Affaire"] = "VNVOB") and !["Nom Complet"] in ("Jean-phil", "Tsamère")</code>
+
+Things to know :
+- I negate every query but you can also remove the "!" of course
+- <code>in</code> and <code>inc</code> are <b>case insensitive</b>
+- Always add spaces between operators : !=, =, and, or
+- Every field are converted to string. So <code>["Kilometre reading"] > 100</code> will never work
+-> You can use a little trick to make it work <code>["Kilometre reading"]<b>*1</b> > 100</code>
+- Replace <code>["lastName"]</code> by <code>{"lastName"}</code> if you need mapping columns
+- BE CAREFUL ! You can't use <code>{"xxx"} = ""</code> only use inequalities with {} like <code>{"xxx"} != ""</code>
+      </xmp>
+    </div>
+  </div>
+  <br/><br/>
+  !!!! Les filtres sont maintenant gérés en dur dans le code !!!! 
+  <!--div class="row">
+    <ul class="col-md-12">
+      <li v-for="(filter, i) in filters" class="row option-filter">
+        <input type="text" size="100" v-model="filters[i]" v-on:change="queueChange">
+        <span v-on:click="removeFilter(i)" style="cursor:pointer" >X</span>
+      </li>
+    </ul>
+  </div>
+  <div class="row">
+      <br/><br/>
+    <button class="btn btn-success" v-on:click="addFilter">Ajouter un filtre</button>
+  </div-->
+</div>
+{% endraw %}{% endblock %} {% block scripts %}
+
+<script type="text/javascript">
+  var FILTERS = {{ filters|safe }};
+  document.addEventListener("DOMContentLoaded", function () {
+
+    new Vue({
+      el: '#app',
+      data: { filters: FILTERS, saveTimeout: null },
+      created: function () { },
+      methods: {
+        addFilter: function () {
+          this.filters.push('');
+        },
+        removeFilter: function (i) {
+          this.filters.splice(i, 1);
+          this.queueChange();
+        },
+        save: function () {
+          var url = '{{ lib.client.url.getShortUrl('ADMIN_IMPORTS_SHARED_FILTERS_SAVE') }}';
+          var data = { filters: this.filters };
+          gsTools.postRequest(url, data, function (err, result) {
+            if (err || result.status == 'ko') {
+              this.error = err || result.error;
+              return;
+            }
+            this.maintenanceMode = result.maintenanceMode;
+          }.bind(this));
+        },
+        // ask for an auto save, but we wait some ms before saving in case another change is made
+        queueChange: function () {
+          if (this.saveTimeout) {
+            clearTimeout(this.saveTimeout);
+          }
+          this.saveTimeout = setTimeout(this.save.bind(this), 300);
+        }
+      }
+    });
+
+
+
+
+
+
+  });
+
+</script>
+
+{% endblock %}

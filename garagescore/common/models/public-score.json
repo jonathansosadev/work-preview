@@ -1,0 +1,57 @@
+{
+  "name": "PublicScore",
+  "plural": "PublicScores",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "mongodb": {
+    "collection": "publicScores"
+  },
+  "http": {
+    "path": "public-scores"
+  },
+  "mixins": {
+    "EventEmitter": true,
+    "SmartSort": true,
+    "Stream": true
+  },
+  "properties": {
+    "type": {
+      "type": "string",
+      "required": true
+    },
+    "payload": {
+      "type": {
+        "rating": {
+          "type": {
+            "global": { "type": "object" },
+            "perValue": { "type": "object" },
+            "byItem": { "type": "object" },
+            "byVehicleMake": { "type": "object" },
+            "byCategories": { "type": "object" }
+          }
+        }
+      },
+      "required": true
+    },
+    "synthesizedAt": {
+      "type": "date"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "garage": {
+      "type": "belongsTo",
+      "model": "Garage",
+      "foreignKey": ""
+    }
+  },
+  "indexes": {
+    "garageId_index": {"garageId": 1},
+    "synthesizedAt_index": {"synthesizedAt": -1}
+  },
+  "acls": [
+  ],
+  "methods": {
+  }
+}

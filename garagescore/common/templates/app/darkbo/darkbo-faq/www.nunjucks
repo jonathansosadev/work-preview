@@ -1,0 +1,25 @@
+{% extends "./_master.nunjucks" %}
+{% block title %}Site web{% endblock %}
+{% block questions %}
+<a class="row question" id="q_1" href="#a_1">Quelles sont les pages ville qui apparaissent dans le sitemap ?</a>
+<a class="row question" id="q_2" href="#a_2">Quand une url est-elle en noindex ?</a>
+<a class="row question" id="q_3" href="#a_3">Comment puis-je charger une page sans utiliser le cache serveur ?</a>
+{% endblock %}
+
+{% block answers %}
+<div class="row answer" id="a_1"  data-date="en Février 2017">
+	<p>Une page ville, exemple : <a href="https://www.garagescore.com/garage/tom-auto-service-ad-combs-la-ville/Brunoy">https://www.garagescore.com/garage/tom-auto-service-ad-combs-la-ville/Brunoy</a>, apparait dans le sitemap si le nom de la ville ne fait pas partie du slug ET qu'elle a au moins 10 avis utilisateurs.</p>
+</div>
+<div class="row answer" id="a_2"  data-date="en Février 2017">
+	<p>Les pages certificats contiennent la meta noindex si:</p>
+	<p>
+	- C'est explicitement configuré (garage caché des moteurs de recherche)<br/>
+	- L'url est en <i>page/xx</i> avec xx > 1<br/>
+	- Il s'agit d'une page ville et le slug du garage contient le nom de la ville
+	- Il s'agit d'une page ville et elle ne contient aucun avis
+	</p>
+</div>
+<div class="row answer" id="a_3"  data-date="en Février 2017">
+	<p>En rajoutant <i>nocache=xxx</i> à la query string, exemple: <a href="https://www.garagescore.com/garage/garagescore-example?nocache=1">https://www.garagescore.com/garage/garagescore-example?nocache=1</a>. Note: pour ne pas tomber sur le cache du CDN, remplacer le <i>1</i> par une valeur aléatoire à chaque requête.</p>
+</div>
+{% endblock %}

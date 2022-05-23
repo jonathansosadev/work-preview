@@ -1,0 +1,19 @@
+{
+  "SUPER_ADMIN": {
+    "value": "SuperAdmin",
+    "properties": {
+      "canCreateUser": ["SuperAdmin", "Admin", "User"]
+    }
+  },
+  "ADMIN": {
+    "value": "Admin",
+    "properties": {
+      "canCreateUser": ["Admin", "User"]
+    }
+  },
+  "USER": {
+    "value": "User",
+    "properties": {
+    }
+  }
+}

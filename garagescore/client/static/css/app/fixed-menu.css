@@ -1,0 +1,39 @@
+.fixed-menu{
+  position: fixed;
+  padding: 0;
+  z-index: 10;
+  min-width: 500px;
+  width: 100%;
+  height: 35px;
+  background-color:#219AB5;
+}
+
+.menu-button-container {
+  text-align: center;
+  display: inline-block;
+  width: 40px;
+  vertical-align: top;
+}
+
+
+.menu-button-container a:hover, .menu-button-container a:focus {
+  background: #3e4a53;
+  border: none;
+  color: #d1d1d1
+}
+
+.menu-button-container a, .filter-button {
+  border-radius: 0;
+  padding: 0;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+}
+
+.menu-button-container a {
+  background-color: transparent;
+  border: none;
+  color: #f3f3f3;
+  font-size: 20px;
+  padding-top:2px;
+}

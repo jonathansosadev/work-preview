@@ -1,0 +1,522 @@
+<script>
+  i18n.loadForSurveyJS('backoffice:survey:common-footer');
+  var survey = new Survey.Model(survey);
+
+  var previousData = {};
+  var previousPageCount = 0;
+  var currentPageName = '{{ surveyPageTypes.ENTRY_PAGE }}';
+  var contactPageSeen = false;
+  var garageType = '{{ garage.type }}';
+  var ratingType = '{{ garage.ratingType }}';
+  var isReverseRating = {{ garage.isReverseRating }};
+  var googlePlaceId = '{{ garage.googlePlaceId }}';
+  var googleCampaignActivated = '{{ garage.googleCampaignActivated }}';
+
+  var alertRating1 = t('alertRating1');
+  var alertRating2 = t('alertRating2');
+  var alertRating3 = t('alertRating3');
+  var alertStars = t('alertStars');
+
+  function loadState(survey) {
+    var serverData = {% if surveyData %}{{ surveyData|safe }}{% else %}null{% endif %};
+    var scoreFromParams = PARAMS['score'];
+    var clientData = null;
+    if (getCookie('survey-{{id}}') != null){
+      clientData = JSON.parse(getCookie('survey-{{id}}'));
+    }
+    var res = null;
+    if (serverData && clientData) {
+      if (serverData.timestamp >= clientData.timestamp){
+        res = serverData;
+      }
+      else {
+        res = clientData;
+      }
+    }
+    else if (serverData) {
+      res = serverData;
+    }
+    else if (clientData) {
+      res = clientData;
+    }
+    if (res) {
+      if (res.isComplete) { survey.setCompleted(); }
+      if (score && score !== res.rating && !res.isComplete) {
+        // ignore score given in the url and take the previous one
+        score = res.rating;
+        /*
+        old code: alert the user (who usually ignore it) and update the rating
+        var oldRating = ratingType === 'rating' ? res.rating : (Math.floor(res.rating) / 2) + ' ' +  alertStars[survey.locale];
+        var newRating = ratingType === 'rating' ? score : (Math.floor(score) / 2) + ' ' +  alertStars[survey.locale];
+        if (!document.referrer.includes('/u/')) alert(alertRating1[survey.locale] + ' ' + oldRating + ' ' + alertRating2[survey.locale] + ' ' + newRating);
+        survey.currentPageNo = 0;
+        saveLocalStuff(survey);
+        res.rating = score;
+        survey.data.rating = score;
+        saveState(survey);
+        */
+      }
+      for (var prop in res) {
+        // skip loop if the property is from prototype
+        if(survey.data.hasOwnProperty(prop) && survey.data[prop]){
+          res[prop] = survey.data[prop];
+        }
+      }
+      survey.data = res;
+      previousData = JSON.parse(JSON.stringify(survey.data));
+    }
+    else if (score) {
+      survey.data.rating = score;
+      saveState(survey);
+    }
+  }
+
+  function saveState(survey, sharedOnGoogleClicked) {
+    if ((JSON.stringify(previousData) !== JSON.stringify(survey.data)) ||
+      survey.isCompleted ||
+      sharedOnGoogleClicked
+    ) {
+      const source = !currentPageName && PARAMS['source'] === 'sms' ? '{{ surveyPageTypes.SOURCE_SMS_PAGE }}' : '{{ surveyPageTypes.SOURCE_EMAIL_PAGE }}'
+      var objs = [survey.data, {
+          isComplete: survey.isCompleted,
+          sharedOnGoogleClicked: sharedOnGoogleClicked,
+          currentPageName: currentPageName ? currentPageName : source,
+          nextPageName: survey.isCompleted ? '{{ surveyPageTypes.THANKYOU_PAGE }}' : survey.currentPage.name,
+          timestamp: Date.now(),
+        }],
+        res =  objs.reduce(function (r, o) {
+          Object.keys(o).forEach(function (k) {
+            r[k] = o[k];
+          });
+          return r;
+        }, {});
+      res = JSON.parse(JSON.stringify(res));
+      //Fix contact saving too early
+      if (!contactPageSeen) {
+        delete res.title;
+        delete res.fullName;
+        delete res.email;
+        delete res.mobilePhone;
+        delete res.streetAddress;
+        delete res.postalCode;
+        delete res.city;
+      }
+      var resultAsString = JSON.stringify(res);
+      setCookie("survey-{{id}}", resultAsString, 365);
+      var req = new XMLHttpRequest();
+      req.open( 'POST', '/s/save/{{id}}');
+      req.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+      req.send( resultAsString );
+      previousData = JSON.parse(JSON.stringify(survey.data));
+    }
+  }
+
+  function saveLocalStuff(survey) {
+    setCookie("survey-page-{{id}}", survey.currentPageNo, 365);
+    //Fix contact saving too early
+    setCookie("survey-contact-page-seen-{{id}}", contactPageSeen, 365);
+  }
+
+  function loadLocalStuff(survey) {
+    if (getCookie('survey-page-{{id}}') != null){
+      survey.currentPageNo = parseInt(getCookie('survey-page-{{id}}'));
+      if (survey.currentPageNo === 0) ignoreFirstSave = false;
+    }
+    //Fix contact saving too early
+    if (getCookie('survey-contact-page-seen-{{id}}') != null){
+      contactPageSeen = getCookie('survey-contact-page-seen-{{id}}');
+    }
+  }
+
+  function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
+  function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return null;
+  }
+
+  function surveyIsVI(survey){
+    return (survey.data && survey.data.dataType === 'VehicleInspection') || (garageType === 'VehicleInspection');
+  }
+
+  var ignoreFirstSave = true;
+  survey
+    .onCurrentPageChanged
+    .add(function (survey, options) {
+      setTimeout(function(){
+        setCGUAndPrivacy();
+        if(surveyIsVI(survey)){
+          VI_setAcceptTermsOfSharing();
+          VI_setPolitica();
+        }
+        else {
+          setAcceptTermsOfSharing();
+          setPoliticaAfterNavigationButtons();
+        }
+      }, 100);
+      // When a survey is loaded this event is fired
+      //  - once if the page to be loaded is the first
+      //  - twice else
+      // The first time we get into this callback, oldCurrentPage is null
+      // ignoreFirstSave == true at startup and is set to false if the page to load is the 1st
+      if (ignoreFirstSave) {
+        ignoreFirstSave = false;
+      } else if (options.oldCurrentPage) {
+        saveState(survey);
+        saveLocalStuff(survey);
+      }
+      //Fix contact saving too early
+      if (survey.currentPage.name === "contacts") {
+        contactPageSeen = true;
+      }
+    });
+  survey
+    .onComplete
+    .add(function (survey, options) {
+      saveState(survey);
+    });
+
+
+  var projectPageProcessed = 0;
+  survey
+    .onAfterRenderQuestion
+    .add(function (survey, options) {
+      /* Hacking surveyJs so 0 => 10 rating are colored*/
+      var ratingTexts = document.getElementsByClassName('sv_q_rating_item_text');
+      if(ratingTexts) {
+        if (isReverseRating) {
+          for (var i = 0; i < ratingTexts.length; i++) {
+            ratingTexts[i].parentNode.addEventListener('click', function () {  setTimeout(function () {setTitleQ1(survey.data.rating);}, 0) });
+            if (i > 3) ratingTexts[i].classList.add('unsatisfied');
+            else if (i > 1) ratingTexts[i].classList.add('neutral');
+            else ratingTexts[i].classList.add('satisfied');
+          }
+        } else {
+           for (var i = 0; i < ratingTexts.length; i++) {
+            ratingTexts[i].parentNode.addEventListener('click', function () {  setTimeout(function () {setTitleQ1(survey.data.rating);}, 0) });
+            if (i < 7) ratingTexts[i].classList.add('unsatisfied');
+            else if (i < 9) ratingTexts[i].classList.add('neutral');
+            else ratingTexts[i].classList.add('satisfied');
+          }
+        }
+      }
+
+      if(surveyIsVI(survey)) {
+        // set custom Id to use css on it
+        if(options.question.name.lastIndexOf("leadModels_", 0) === 0) {
+          //don't do it twice
+          if(!options.question.id.indexOf("Custeed") !== -1) {
+            options.question.id = "Custeed-"+options.question.name;
+          }
+        }
+        // set custom Id to use css on it
+        if(options.question.name === 'acceptTermOfSharing') {
+          //don't do it twice
+          if(!options.question.id.indexOf("Custeed") !== -1) {
+            options.question.id = "Custeed-"+options.question.name;
+          }
+        }
+      }
+    });
+
+  survey.onAfterRenderPage.add(function () {
+    loadState(survey);
+    loadLocalStuff(survey);
+    survey.setValue('acceptTermOfUse', false); // hack default value for boolean
+    // VI : hack default value for boolean but no overwrite if the value was set
+    if(surveyIsVI(survey) && survey.data && survey.data.acceptTermOfSharing === undefined) {
+      survey.setValue('acceptTermOfSharing', false);
+    }
+    survey.setValue('dataType', '{{dataType}}'); // hack default value for boolean
+    // To save the score and all arguments in general
+    // saveState(survey);
+  });
+
+  var onValueChangingProcessing = false;
+  function specialValueSelected(options, specialValue) {
+    var q = options.question;
+    var prevValue = q.prevValue;
+    var index = options.value.indexOf(specialValue);
+    onValueChangingProcessing = true;
+    //has special value selected
+    if(index > -1) {
+      //special value was selected before
+      if(prevValue.indexOf(specialValue) > -1) {
+        var value = q.value;
+        value.splice(index, 1);
+        q.value = value;
+      } else {
+        //special value select just now
+        q.value = [specialValue];
+      }
+    }
+    onValueChangingProcessing = false;
+    return index > -1;
+  }
+
+  survey.onValueChanged.add(function(survey, options) {
+    currentPageName = survey.currentPage.name;
+    if(onValueChangingProcessing) return;
+    // #3534 redirect to google
+    if (options.name === 'shareWithPartners' ) {
+      survey.data.shareWithPartners = options.value;
+      survey.data.sharedOnGoogleClicked = options.value === 'Oui';
+      if (options.value === 'Oui' && survey.data.rating > 8 && googlePlaceId && googleCampaignActivated) {
+        saveState(survey, options.value === 'Oui');
+        survey.completeLastPage()
+        window.open("http://search.google.com/local/writereview?placeid=" + googlePlaceId);
+      }
+      saveState(survey);
+    }
+    var q = options.question;
+
+    if(surveyIsVI(survey)) {
+      // hack because requiredIf property doesn't work
+      if(q && q.name === "rating") {
+        var unsatisfiedCriteriaQuestion = survey.getQuestionByName('unsatisfiedCriteria');
+        if(unsatisfiedCriteriaQuestion){
+          unsatisfiedCriteriaQuestion.isRequired = options.value <= 6 ? true : false;
+        }
+      }
+
+      // leadModels : can be leadModels_1 to 5
+      if(q && q.name.lastIndexOf('leadModels_', 0) === 0) {
+        const currentLeadModelsQuestion = q.name;
+        //if leadModels_1 value is noPreference , reset the others leadModels
+        if(currentLeadModelsQuestion === 'leadModels_1' && options.value === 'noPreference') {
+          for (var i = 2; i <= 5; i++) {
+            const name = 'leadModels_' + i;
+            const question = survey.getQuestionByName(name);
+            if(question && question.value !== undefined) {
+              question.value = undefined;
+            }
+          }
+        }
+      }
+    }
+
+
+    //If question is not defined or question is not checkbox do nothing
+    if (q && (q.getType() === "rating" || q.getType() === "starrating") && q.name === 'rating' && options.value >= 9) {
+      if (survey.data.unsatisfiedCriteriaNewVehicleSale) {
+        survey.data.unsatisfiedCriteriaNewVehicleSale.splice(0, survey.data.unsatisfiedCriteriaNewVehicleSale.length);
+      }
+      if (survey.data.unsatisfiedCriteriaUsedVehicleSale) {
+        survey.data.unsatisfiedCriteriaUsedVehicleSale.splice(0, survey.data.unsatisfiedCriteriaUsedVehicleSale.length);
+      }
+      else if (survey.data.unsatisfiedCriteria) {
+        survey.data.unsatisfiedCriteria.splice(0, survey.data.unsatisfiedCriteria.length);
+      }
+    }
+    if(!q || q.getType() !== "checkbox") return;
+    //returns if the value set for the first time or there is nothing to do
+    if(!q.prevValue || !options.value) {
+      q.prevValue = options.value;
+      return;
+    }
+    specialValueSelected(options, "Je ne sais pas"); // to translate ??
+    specialValueSelected(options, "Unknown");
+    q.prevValue = q.value;
+  });
+  /** Validate reponses using our server
+   * We break the validation between various validators
+   * Each validator receive a param
+   * if not valid: they call next({field, message})
+   * if valid: they call next()
+   * options.data is binded to this
+  */
+
+  // https://github.com/hughsk/async-series/blob/master/index.js (run async validators in series)
+  function series(arr, ready, safe) {
+    var length = arr.length; var orig;
+    if (!length) return setTimeout(ready, 1);
+    function handleItem(idx) { arr[idx](function(err) { if (err) { return ready(err)} if (idx < length - 1) { return handleItem(idx + 1)} return ready();  }) }
+    if (safe) { orig = handleItem;  handleItem = function(idx) { setTimeout(function() { orig(idx)  }, 1) } }
+    handleItem(0)
+  }
+  /*********************
+   * Comment validator
+   * TODO: make some nice ajax calls to our server
+   *********************/
+  var commentMessage = t('commentMessage');
+  var commentValidator = function(next) {
+    var comment = this["comment"];
+    if (!comment) { next(); return; }
+    if (comment.length < 10) {
+      next({field:'comment', message: commentMessage[survey.locale]});
+      return;
+    }
+    next();
+  };
+  // surveyjs config to validate data
+  survey.onServerValidateQuestions = function (survey, options) {
+    series([commentValidator.bind(options.data)],
+      function(err) {
+        if(err) {
+          options.errors[err.field] = err.message
+        }
+        options.complete();
+
+    });
+  };
+
+  new Vue({ el: '#surveyContainer', data: { survey: survey } });
+  function insertAfter(newNode, referenceNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+  }
+
+  var brand = ((garageType === "VehicleInspection") ? 'Custeed' : 'GarageScore');
+  var cgu1 = t('cgu1');
+  var cgu2 = t('cgu2', {brand: brand});
+  var cgu3 = t('cgu3');
+  var cgu4 = t('cgu4', {brand: brand});
+  var cguUrl = {
+    fr_FR: 'http://www.garagescore.com/CGU.pdf',
+    fr_BE: 'http://www.garagescore.com/CGU.pdf',
+    fr_NC: 'http://www.garagescore.com/CGU.pdf',
+    en_US: 'http://www.garagescore.com/CGU.pdf',
+    es_ES: 'http://www.garagescore.com/CGU-es.pdf',
+    ca_ES: 'http://www.garagescore.com/CGU-es.pdf',
+  };
+  var privacyUrl = {
+    fr_FR: 'http://www.garagescore.com/privacy.pdf',
+    fr_BE: 'http://www.garagescore.com/privacy.pdf',
+    fr_NC: 'http://www.garagescore.com/privacy.pdf',
+    en_US: 'http://www.garagescore.com/privacy.pdf',
+    es_ES: 'http://www.garagescore.com/privacy-es.pdf',
+    ca_ES: 'http://www.garagescore.com/privacy-es.pdf',
+  };
+  function deleteCGUAndPrivacy() {
+    //deleting element 
+    if (document.querySelector('input[name="acceptTermOfUse"]')) {
+      var inputElement = document.querySelector('input[name="acceptTermOfUse"]');
+      var spanId = document.getElementById("acceptTermText");
+      inputElement.parentNode.removeChild(spanId);
+    }
+  }
+  // hack the label of termOfuse checkbox to insert into a link
+  function setCGUAndPrivacy() {
+    if (document.querySelector('input[name="acceptTermOfUse"]')) {
+      var e = document.createElement('span');
+      e.setAttribute("id", "acceptTermText");
+      e.innerHTML = '<span style="font-size:10px; position: absolute;"><em>' + cgu1[survey.locale] +
+        ' <a href="' + cguUrl[survey.locale] +
+          '" onclick="window.open(this.href, \'ConditionsGeneralesdUtilisationGarageScore\', \'resizable=yes,status=no,location=no,toolbar=no,menubar=no,fullscreen=no,scrollbars=yes,dependent=no\'); return false;">' + cgu2[survey.locale] +
+        '</a> ' + cgu3[survey.locale] +
+        ' <a href="' + privacyUrl[survey.locale] +
+          '" onclick="window.open(this.href, \'PolitiquedeConfidentialiteGarageScore\', \'resizable=yes,status=no,location=no,toolbar=no,menubar=no,fullscreen=no,scrollbars=yes,dependent=no\'); return false;">' + cgu4[survey.locale] +
+        '</a></em></span>';
+      document.querySelector('input[name="acceptTermOfUse"]').parentNode.appendChild(e);
+      document.querySelector('input[name="acceptTermOfUse"]').closest('.sv_q').classList.add('sv_q_cgu'); // Custom class for custom CSS
+    }
+  }
+  var acceptTermOfSharing1 = t('acceptTermOfSharing1', {brand: brand});
+  var acceptTermOfSharing2 = t('acceptTermOfSharing2');
+  var acceptTermOfSharing3 = t('acceptTermOfSharing3', {brand: brand});
+  function setAcceptTermsOfSharing() {
+    if (document.getElementById('acceptTermOfSharing1')) { return; }
+    if(document.querySelector('input[name="acceptTermOfSharing"]')) {
+        var e = document.createElement('span');
+        var e2 = document.createElement('span');
+        e.innerHTML = '<span id="acceptTermOfSharing1" style="font-size:14px; line-height: 20px;"><em>' + acceptTermOfSharing1[survey.locale] + '</em></span>';
+        e2.innerHTML = '<div style="line-height: 20px; margin-bottom: 20px;  margin-top: 5px">' + acceptTermOfSharing2[survey.locale]+ '<br>' +
+          acceptTermOfSharing3[survey.locale] + '</div>';
+        var input = document.querySelector('input[name="acceptTermOfSharing"]');
+        var p = document.querySelector('input[name="acceptTermOfSharing"]').parentNode;
+        p.appendChild(e);
+        p.insertBefore(e2, input);
+    }
+  }
+
+  function VI_setAcceptTermsOfSharing(){
+    var input = document.querySelector('input[name="acceptTermOfSharing"]');
+    if(input) {
+      var e = document.createElement('div');
+      e.innerHTML = '<h5 class="sv_q_title"><span style="position: static;"><span style="position: static; font-size: 16px">' + t('VI_acceptTermOfSharing')[survey.locale] + '</span></span></h5>' +
+      '<div class="sv_q_description" style="margin-bottom : 1em"><span style="position: static;"><span style="position: static; font-size: 16px">' + t('VI_acceptTermOfSharingDescription')[survey.locale] + '</span></span></div>';
+      var target = document.querySelector('#Custeed-acceptTermOfSharing');
+      target.insertBefore(e, document.querySelector('#Custeed-acceptTermOfSharing > div'));
+    }
+  }
+
+  var politicaButton = document.createElement('div');
+  var privacyEmail = "privacy@custeed.com";
+  // updated politica, with link
+  if(surveyIsVI(survey)) {
+      politicaButton.innerHTML = '<div class="dontdoittwice" style="font-size: 12px;color: grey;">'+
+      t("politica_VI_1")[survey.locale] +
+      t("politica_VI_2")[survey.locale] +
+      '<a style="color:inherit;" href="mailto:'+ privacyEmail + '">' + privacyEmail + '</a>. ' +
+      t('politica_VI_3')[survey.locale] + '</div>';
+  }
+  else {
+    var politica = t('politica', {brand: brand, brandLowercase: 'garagescore' });
+    politicaButton.innerHTML = '<div class="dontdoittwice" style="font-size: 12px;color: grey">' + politica[survey.locale] + "</div>";
+  }
+
+  function VI_setPolitica() {
+    var clone = politicaButton.cloneNode(true);
+    var selector = document.querySelector('div.sv_nav');
+    var dontdoittwice = document.querySelector('div.dontdoittwice');
+    if (survey.currentPage && survey.currentPage.name === "projectPage" && !dontdoittwice) {
+        selector.parentNode.insertBefore(clone, selector.nextSibling);
+    } else if(dontdoittwice) {
+      dontdoittwice.parentNode.removeChild(dontdoittwice);
+    }
+  }
+
+  function setPoliticaAfterNavigationButtons() {
+    var clone = politicaButton.cloneNode(true);
+    if (document.querySelector('input[name="acceptTermOfSharing"]') && !document.querySelector('div.dontdoittwice')) {
+      document.querySelector('div.sv_nav').parentNode.insertBefore(clone, document.querySelector('div.sv_nav').nextSibling);
+    } else if(document.querySelector('div.dontdoittwice')) {
+      var dontdoittwice = document.querySelector('div.dontdoittwice');
+      dontdoittwice.parentNode.removeChild(dontdoittwice);
+    }
+  }
+
+  /* Hacking surveyJs so I can put a custom template for rating question title (colors) */
+  function setTitleQ1(newScore) {
+    var ratingQuestionTitle = document.querySelector('.sv_q_rating, [class^=rating-global-]').closest('.sv_q').getElementsByClassName('sv_q_title')[0];
+    ratingQuestionTitle.innerHTML = '<span style="position: static;" id="ratingQ1"></span><span style="position: static;" id="coloredScore"></span><span style="position: static;" id="ratingQ2"></span>';
+
+    if (newScore) {
+      document.getElementById('ratingQ1').innerHTML = t('rating1')[survey.locale];
+      document.getElementById('coloredScore').innerHTML = ratingType === 'stars' ?
+        ' ' + t('currentStars', { stars: newScore / 2 })[survey.locale] + ' ' :
+        ' ' + t('currentScore', { score: newScore })[survey.locale] + ' ';
+      document.getElementById('ratingQ2').innerHTML = t('rating2', { garageName: garage.name, max: ratingType === 'stars' ? 5 : 10 })[survey.locale];
+    } else {
+      document.getElementById('ratingQ1').innerHTML = ' ' + t('noScore')[survey.locale] + ' ';
+    }
+
+    if (newScore <= 6) document.getElementById('coloredScore').style.color = "#d04331";
+    else if (newScore <= 8) document.getElementById('coloredScore').style.color = "#f6cc55";
+    else document.getElementById('coloredScore').style.color = "#00b050";
+  }
+  setTitleQ1(PARAMS.score);
+  var ratingStars = document.getElementsByClassName('rating-star');
+  for (var i = 0; i < ratingStars.length; i++) {
+    ratingStars[i].addEventListener('click', function () { setTimeout(function () {setTitleQ1(survey.data.rating);}, 0) });
+  }
+
+</script>
+<script>
+{% include  "../tracking/fingerprint.js" -%}
+</script>

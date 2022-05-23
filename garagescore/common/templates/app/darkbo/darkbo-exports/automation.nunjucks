@@ -1,0 +1,392 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+<style type="text/css">
+	.page-header {
+    margin-top: 20px;
+  }
+  #app {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+
+  div.garages-list {
+    margin: 0 0 -10px 0;
+  }
+  label.gs-garages-list-label-above-input {
+    display: none;
+  }
+  .gs-garages-list-wrapper input.gs-garages-list-input {
+    background: #FFF;
+    color: #555;
+    height: 34px;
+    padding: 6px 12px;
+    border-radius: 4px;
+  }
+  gs-garages-list-wrapper-advanced {
+    margin-bottom: 10px;
+  }
+  div.gs-garages-list-suggestions-menu {
+    background: #FFF;
+  }
+  div.autocomplete-suggestion {
+    color: #555 !important;
+  }
+  div.autocomplete-suggestion:hover {
+    background: #CCC !important;
+  }
+
+  ul.columns-list {
+    display: block;
+    list-style-type: circle;
+    padding-inline-start: 40px;
+    {# margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    #}
+  }
+  ul.columns-list > li {
+    float: unset;
+  }
+
+  .big-button {
+    width: 50%;
+    height: 200px;
+    font-size: 50px;
+    padding-top: 60px;
+    overflow: hidden;
+  }
+</style>
+{% endblock %}
+{% block page %}
+{% raw %}
+<div id="app">
+  <div class="row">
+  <div class="page-header">
+      <h2>Export Automation sur le nombre de ciblé automation en M-1</h2>
+      <br/>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <p>⚠ Quand vous sélectionner un autre mois, c'est toujours M-1, exemple: sélectionner Juin, M-1 est appliqué, le résultat de l'export sera sur Mai.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <select class="form-control" v-model="month">
+            <option v-for="(name, index) of monthsName" :value="index">{{ name }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <button class="btn btn-primary" @click="exportSentAutomation()">Exporter au format CSV</button>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <h2>Export personalisable Automation</h2>
+      <br/>
+    </div>
+    <div class="col-md-12">
+      <p>
+        ETAPE 1 : conditions (garages ou groupes)
+        Ici on peut filtrer sur des garages et/ou des groupes
+        Il faut que j'ajoute la possibilité de filter sur les dates
+      </p>
+      <div class="row form-group">
+        <div class="col-md-11">
+          <div class="form-group">
+            <label class="garages-list">Liste des garages (garages)</label>
+            <gs-garages-list :updated="addFilteredGarage" class="garages-list" show-advanced></gs-garages-list>
+            <span class="badge garage" v-for="garageId in selectedGarages" :key="garageId">
+            {% raw %}
+            {{ garagesMap[garageId].label }} <span @click="removeFilteredGarage(garageId)">X</span>
+            {% endraw %}
+            </span>
+          </div>
+          <br/>
+          {#
+          <div class="form-group">
+            <label class="col-md-2">Groupe&nbsp;</label>
+            <groups-list :groups="groups" :garages="garages" gs-label="Exemple: Daumont/Renault" :updated="addFilteredGroup"></groups-list>
+            <span class="badge garage" v-for="(value, group) in selectedGroups" :key="group">
+            {{ group }} <span @click="removeFilteredGroup(group)">X</span>
+            </span>
+          </div>
+          #}
+          <br/>
+          <div class="form-group col-xs-6">
+            <label class="col-md-4" style="padding-left: 0;padding-top: 6px">Date min</label>
+            <div class="input-group col-md-8">
+              <input class="flatpickr form-control" v-model="selectedMinDate" type="text" placeholder="Choisir une date ...">
+              <div class="input-group-addon btn" @click="selectedMinDate = ''">X</div>
+            </div>
+          </div>
+          <div class="form-group col-xs-6">
+            <label class="col-md-4" style="padding-left: 0;padding-top: 6px">Date max</label>
+            <div class="input-group col-md-8">
+              <input class="flatpickr form-control" v-model="selectedMaxDate" type="text" placeholder="Choisir une date ...">
+              <div class="input-group-addon btn" @click="selectedMaxDate = ''">X</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-11" style="margin-bottom: 30px;">
+      <P>
+        ETAPE 2 TODO: colonnes (liste de colonnes accessibles + colonnes selectionées + bouton pour supprimer)
+        il me faut un autocomplete pour les colonnes
+        afficher les colonnes selectionnées et mettre à dispo un bouton pour supprimer
+        <br/>
+        Pour le moment, les colonnes renvoyées sont:
+      </p>
+      <ul class="columns-list">
+        <li>Nom établissement</li>
+        <li>Groupe</li>
+        <li>Email user</li>
+        <li>Mobile user</li>
+        <li>Opt-in RGPD</li>
+        <li>Date opt out</li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-11">
+      ETAPE 3 : lancer !
+      <br/>
+      <button id="launch-export" class="btn btn-primary">Exporter au format CSV</button>
+    </div>
+  </div>
+
+</div>
+{% endraw %}
+{% endblock %}
+
+{% block scripts %}
+  {% include "../common/components/_auto-complete/auto-complete.nunjucks" %}
+  {% include "../common/components/garages-list/garages-list.component.nunjucks" %}
+  {% include "../common/components/_groups-list.nunjucks" %}
+  <script type="text/javascript">
+    /* I need :
+     *    - list of garages
+     *    - list of groups
+     *    - hardcoded list of available fields
+     */
+    const garages = {{ garages|safe }};
+    const garagesMap = {};
+    for (const g of garages) {
+      garagesMap[g.id] = {
+        label: `${g.publicDisplayName} [${g.id}]`,
+        name: g.publicDisplayName,
+        group: g.group
+      };
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      /* global Vue:true */
+      // init Vue
+      new Vue({
+        el: '#app',
+        data: function () {
+          return {
+            garages: 'TODO',
+            groups: 'TODO',
+            garages: garages,
+            groups: {{ groups | safe }},
+            garagesMap: garagesMap,
+            // availableColumns: {{ availableColumns | safe }},
+            // [{ field: '', values: [] }, ...]
+            conditions: [],
+            selectedMinDate: '',
+            selectedMaxDate: '',
+            selectedColumns: [],
+            month: new Date().getMonth(),
+            monthsName: [
+              'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
+            ]
+          }
+        },
+        mounted: function () {
+          flatpickr('.flatpickr', {
+            enableTime: true,
+            time_24hr: true,
+            dateFormat: 'd-m-Y H:i',
+            altFormat: 'd-m-Y H:i'
+          });
+
+          document.getElementById('launch-export').addEventListener('click', this.launchExport);
+        },
+        computed: {
+          hasCondition() {
+            return (checkedField, checkedValue = null) => {
+              return this.conditions.some(({ field, values }) => {
+                if (checkedValue) {
+                  return checkedField === field && values.includes(checkedValue);
+                }
+                return checkedField === field;
+              });
+            };
+          },
+          getCondition() {
+            return (checkedField) => {
+              return this.conditions.find(({ field }) => checkedField === field);
+            }
+          },
+          selectedGarages() {
+            const garageIdCondition = this.getCondition('garageId');
+            return garageIdCondition && garageIdCondition.values;
+          },
+          selectedGroups() {
+            const groupCondition = this.getCondition('group');
+            return groupCondition && groupCondition.values;
+          }
+        },
+        methods: {
+          // On conditions
+          addCondition(field, value) {
+            if (!field || !value) return;
+            if (!this.hasCondition(field)) {
+              this.conditions.push({ field, values: [value] });
+              return;
+            }
+            if (!this.hasCondition(field, value)) {
+              this.getCondition(field).values.push(value);
+            }
+          },
+          removeCondition(field, value = null) {
+            if (!field || !this.hasCondition(field)) return;
+            if (!value) {
+              this.conditions = this.conditions.filter((condition) => {
+                return condition.field !== field;
+              });
+              return;
+            }
+            if (this.hasCondition(field, value)) {
+              const garageIdCondition = this.getCondition(field);
+              garageIdCondition.values = garageIdCondition.values.filter((v) => v !== value);
+            }
+          },
+          addFilteredGarage({ id }) {
+            this.addCondition('garageId', id);
+          },
+          removeFilteredGarage(garageId) {
+            this.removeCondition('garageId', garageId);
+          },
+          addFilteredGroup(group) {
+            this.addCondition('group', group);
+          },
+          removeFilteredGroup(group) {
+            this.removeCondition('group', group);
+          },
+          setDateBoundariesInConditions() {
+            this.removeCondition('date');
+            this.addCondition('date', { $gte: moment(this.selectedMinDate, 'DD-MM-YYYY').valueOf() });
+            this.addCondition('date', { $lte: moment(this.selectedMaxDate, 'DD-MM-YYYY').valueOf() });
+          },
+          /*
+          // On columns
+          addSelectedColumn() {
+            // speaks for itself
+          },
+          removeSelectedColumn() {
+            // speaks for itself
+          },
+          */
+          // Launch
+          fixDateBoundaries() {
+            // If start is after end, invert them
+            const bigBangStr = '2020-07-01';
+            const todayString = moment().format('DD-MM-YYYY');
+            this.selectedMinDate = this.selectedMinDate || bigBangStr;
+            this.selectedMaxDate = this.selectedMaxDate || todayString;
+
+            const minDate = moment(this.selectedMinDate, 'DD-MM-YYYY');
+            const maxDate = moment(this.selectedMaxDate, 'DD-MM-YYYY');
+            if (minDate.isAfter(maxDate)) {
+              this.selectedMinDate = maxDate.format('DD-MM-YYYY');
+              this.selectedMaxDate = minDate.format('DD-MM-YYYY');
+            }
+          },
+          checkForQueryAcceptance() {
+            let maxAcceptedPeriod = moment.duration(3, 'months');
+            const garageIdCondition = this.getCondition('garageId');
+            const groupCondition = this.getCondition('group');
+
+            if (groupCondition && groupCondition.values.length === 1) {
+              maxAcceptedPeriod = moment.duration(6, 'months');
+            }
+            if (garageIdCondition) {
+              const { values: selectedGarageIds } = garageIdCondition;
+              if (selectedGarageIds.length && selectedGarageIds.length < 5) {
+                maxAcceptedPeriod = moment.duration(1, 'year');
+              }
+              if (selectedGarageIds.length && selectedGarageIds.length < 50) {
+                maxAcceptedPeriod = moment.duration(6, 'months');
+              }
+            }
+
+            const minDate = moment(this.selectedMinDate, 'DD-MM-YYYY');
+            const maxDate = moment(this.selectedMaxDate, 'DD-MM-YYYY');
+            const difference = moment.duration(maxDate.diff(minDate));
+
+            const queryAccepted = difference.as('ms') < maxAcceptedPeriod.as('ms');
+            const message = `Période de temps doit être inférieur à ${maxAcceptedPeriod.as('months')} mois`;
+            return {
+              queryAccepted,
+              message: queryAccepted ? 'OK' : message
+            };
+          },
+          async launchExport() {
+            this.fixDateBoundaries();
+            this.setDateBoundariesInConditions();
+            const { queryAccepted, message } = this.checkForQueryAcceptance();
+            if (!queryAccepted) {
+              alert(message);
+              return;
+            }
+
+            const exportsUrl = '{{ lib.client.url.getShortUrl('ADMIN_EXPORTS_AUTOMATION_DOWNLOAD') }}';
+
+            const res = await axios.post(
+              exportsUrl,
+              { filters: this.conditions, /*columns: this.selectedColumns*/ }
+            );
+
+            if (res.data) {
+              // Little hack... How to make the result of a POST request download...
+              const formattedDate = moment().format('DD-MM-YYYY');
+              const plop = document.createElement('a');
+              plop.setAttribute('href', 'data:application/octet-stream,' + encodeURIComponent(res.data));
+              plop.setAttribute('download', `${formattedDate}_export-automation.csv`);
+              if (document.createEvent) {
+                const event = document.createEvent('MouseEvents');
+                event.initEvent('click', true, true);
+                plop.dispatchEvent(event);
+              } else {
+                plop.click();
+              }
+            }
+          },
+          async exportSentAutomation() {
+            const res = await axios.post( '{{ lib.client.url.getShortUrl('ADMIN_EXPORTS_AUTOMATION_SENT_DOWNLOAD') }}',{ month: this.month });
+            if (res.data) {
+              const plop = document.createElement('a');
+              plop.setAttribute('href', 'data:application/octet-stream,' + encodeURIComponent(res.data));
+              plop.setAttribute('download', 'export-automation.csv');
+              if (document.createEvent) {
+                const event = document.createEvent('MouseEvents');
+                event.initEvent('click', true, true);
+                plop.dispatchEvent(event);
+              } else {
+                plop.click();
+              }
+            }
+          }
+        }
+      });
+    });
+  </script>
+{% endblock %}

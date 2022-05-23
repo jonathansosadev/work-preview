@@ -1,0 +1,262 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+<style type="text/css">
+	#app textarea {
+		color:black;
+	}
+	ul.tags {
+		padding: 1px 5px;
+		overflow: auto;
+		margin-left: inherit;
+		margin-right: inherit;
+		border: 1px solid #dddddd;
+		color: #444444;
+		background: white;
+	}
+	ul.tags li {
+		position: relative;
+		padding: .2em 18px .2em .5em;
+		border: 1px solid #dddddd;
+		background: #f6f6f6 50% 50% repeat-x;
+		font-weight: bold;
+		color: #0073ea;
+		display: block;
+		float: left;
+		margin: 2px 5px 2px 0;
+		border-radius: 2px;
+	}
+	ul.tags li.input {
+		background: none;
+		border: none;
+	}
+	ul.tags li.input input{
+		background: none;
+		box-sizing: border-box;
+		box-shadow: none;
+		border: none;
+		margin: 0;
+		padding: 0;
+		width: inherit;
+		background-color: inherit;
+		outline: none;
+	}
+	li.input input:focus{
+		outline: none;
+	}
+	ul.tags a {
+		cursor: pointer;
+		position: absolute;
+		right: 0.25em;
+		top: 50%;
+		margin-top: -8px;
+		line-height: 17px;
+		color: #736262;
+		font-weight: bold;
+		text-decoration: none;
+	}
+	.warningduplicates {
+		text-align: center;
+		color: #ffcd57;
+		margin-top: 5px;
+		margin-bottom: 5px;
+	}
+</style>
+{% endblock %}
+{% block page %}
+<div class="page-header">
+	<h1>Définition des types</h1>
+</div>
+{% raw %}
+<div class="col-md-12" id="app">
+	<div class="row">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label class="control-label col-md-4">Liste des définitions</label>
+				<div  class="col-md-4">
+					<select name="types" class="form-control" v-model="currentId">
+						<option v-for="option in configsOptions" :value="option.value"> {{ option.text }} </option>
+						<option value="-1">:: Nouvelle définition ::</option>
+					</select>
+				</div>
+			</div>
+		</form>
+	</div>
+	<hr/>
+	<form class="form-horizontal">
+		<div class="row form-group">
+			<label class="control-label col-md-3">Référence</label>
+			<div class="col-md-5">
+				<input type="text"_ size="30" name="_reference" v-model="config._reference"/>
+			</div>
+		</div>
+
+		<div class="row form-group" v-for="label in labels">
+			<label class="control-label col-md-3">{{ labelsTranslation[label] }}</label>
+			<div class="col-md-5">
+				<ul class="tags">
+					<li v-for="val in config[label]">
+						<span>{{ val }}</span>
+						<a @click="removeLabel(label, val)"><i class="fa fa-times" aria-hidden="true"></i></a>
+					</li>
+					<li class="input">
+						<input type="text" class="" autocomplete="off" @keyup.enter="addLabel(label, $event)">
+					</li>
+				</ul>
+			</div>
+		</div>
+	</form>
+	<br/><br/>
+	<div v-if="duplicates.length === 1" class="warningduplicates col-md-5 col-md-offset-3">Attention la valeur suivante : {{ duplicates }} apparait dans plusieurs colonnes ou plusieurs fois dans la même colonne</div>
+	<div v-if="duplicates.length > 1" class="warningduplicates col-md-5 col-md-offset-3">Attention les valeurs suivantes : {{ duplicates }} apparaissent dans plusieurs colonnes ou plusieurs fois dans la même colonne</div>
+	<form class="form-horizontal">
+		<div class="row form-group">
+			<input v-if="!loading" class="btn btn-success btn-lg col-md-3 col-md-offset-4" type="submit" value="Sauver" @click="saveTypes"/>
+			<input v-if="loading" class="btn btn-default disabled btn-lg col-md-3 col-md-offset-4" value="..."/>
+		</div>
+	</form>
+	<br/><br/>
+</div>
+{% endraw %}
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+
+
+  var configs = {{ configs|safe }};
+  var dataTypes = {{ dataTypes|safe }}
+  var currentId = Object.keys(configs).length === 0 ? '-1' : document.location.hash ? document.location.hash.substr(1) : configs[Object.keys(configs)[0]].id;
+  var emptyConf = { };
+  var configsOptions = [];
+  Object.keys(configs).forEach(function(k) {
+    configsOptions.push({ value: configs[k].id, text: configs[k]._reference });
+  });
+
+
+
+  var labelsTranslation = {
+  };
+  Object.keys(dataTypes).forEach((k) => {
+    labelsTranslation[dataTypes[k].value] = dataTypes[k].name;
+  });
+
+  var labels = Object.keys(labelsTranslation);
+  function setURL(configId) {
+    document.location = document.location.toString().replace(/#.+/,'') + '#' + configId;
+  }
+  document.addEventListener("DOMContentLoaded", function() {
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        loading: false,
+        makesHref: '{{ lib.client.url.getShortUrl('ADMIN_DATA_FILE_DYNAMIC_PARSERS_MAKES') }}',
+        typesHref: '{{ lib.client.url.getShortUrl('ADMIN_DATA_FILE_DYNAMIC_PARSERS_TYPES') }}',
+        config: emptyConf,
+        currentId: currentId,
+        configsOptions : configsOptions,
+        labels: labels,
+        labelsTranslation: labelsTranslation,
+        duplicates: []
+      },
+      created: function() {
+        this.checkDuplicates();
+        if (currentId && currentId !== '-1') {
+          this.loadTypes(currentId);
+        }
+      },
+      watch: {
+        config: {
+          handler: function (value, oldVal) {
+            // this.$set('configJSON', JSON.stringify(value, null, 2));
+          },
+          deep: true
+        },
+        currentId: function (currentId) {
+          setURL(currentId);
+          this.loadTypes(currentId);
+        }
+      },
+      methods: {
+        /** check if we have a value shared by multiple types */
+        checkDuplicates: function () {
+          var found = {};
+          var duplicates = {};
+          for (var l = 0; l < this.labels.length; l++) {
+            var values = this.config[this.labels[l]];
+            if (values) {
+              for (var v = 0; v < values.length; v++) {
+                if (found[values[v]]) duplicates[values[v]] = true;
+                found[values[v]] = true;
+              }
+            }
+          }
+          this.duplicates = Object.keys(duplicates);
+        },
+        /* add a new value to a label */
+        addLabel: function(label, e) {
+          var val = e.currentTarget.value;
+          if (!val || !val.length) { return; }
+          if (!this.config[label]) { Vue.set(this.config, label, []); }
+          this.config[label].push(val);
+          e.currentTarget.value = '';
+          this.checkDuplicates();
+        },
+        /* remove a value to a label */
+        removeLabel: function(label, val) {
+          this.config[label].splice(this.config[label].indexOf(val), 1);
+          this.checkDuplicates();
+        },
+        /** load a config*/
+        loadTypes: function (typesId) {
+          if (typesId === '-1') {
+            this.config = emptyConf;
+            return;
+          }
+          this.loading = true;
+          var request = new XMLHttpRequest();
+          var url = '{{ lib.client.url.getShortUrl("ADMIN_DATA_FILE_DYNAMIC_PARSERS_TYPES_LOAD") }}' + typesId;
+          request.open('GET', url, true);
+          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          request.onload = function () {
+            this.loading = false;
+            if (request.status != 200 && request.status != 304){
+              alert("Erreur " + request.status + " !");
+            } else {
+              var response = JSON.parse(request.responseText);
+              this.config = response.types;
+              this.checkDuplicates();
+            }
+          }.bind(this);
+          request.send(JSON.stringify({ typesId: typesId }));
+        },
+        /** save a config*/
+        saveTypes: function () {
+          var typesId = this.currentId;
+          if (!this.config._reference) {
+            alert("Référence nécessaire");
+            return false;
+          }
+          this.loading = true;
+          var request = new XMLHttpRequest();
+          var url = '{{ lib.client.url.getShortUrl("ADMIN_DATA_FILE_DYNAMIC_PARSERS_TYPES_SAVE") }}' + typesId;
+          request.open('POST', url, true);
+          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          request.onload = function () {
+            this.loading = false;
+            if (request.status != 200 && request.status != 304){
+              alert("Erreur " + request.status + " !");
+            } else {
+              var response = JSON.parse(request.responseText);
+              setURL(response.details.id);
+              this.currentId = response.details.id;
+            }
+          }.bind(this);
+          request.send(JSON.stringify({ typesId: typesId, types: this.config }));
+          return false;
+        }
+      }
+    });
+
+  });
+
+</script>
+{% endblock %}

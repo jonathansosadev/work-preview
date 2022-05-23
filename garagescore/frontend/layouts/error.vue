@@ -1,0 +1,271 @@
+<template>
+  <div class="layout-error">
+    <div class="error-404-container">
+
+      <!-- COMMON HEADER -->
+      <header>
+        <img class="cl-logo" src="/error/GS-Logo-long-blanc.png" title="Logo GarageScore" alt="Logo GarageScore">
+      </header>
+
+      <!-- 404 -->
+      <div id="dv-content" v-if="error.statusCode === 404">
+        <h6 class="cl-404">Oupsss...</h6>
+        <h3 class="cl-bonjour">Page introuvable</h3>
+        <p class="cl-excuse">
+          La page que vous avez demandée n’a pas été trouvée. Il se peut que le lien utilisé <br/>
+          n'existe plus ou que vous ayez tapé l’adresse (URL) incorrectement.
+        </p>
+        <a class="button" href="https://www.garagescore.com/">
+          Accueil<img src="/error/ic-droite.png" title="GarageScore.com" alt="GarageScore.com">
+        </a>
+      </div>
+
+      <!-- OTHER ERRORS -->
+      <div v-else>
+        <h6 class="cl-404">Oupsss...</h6>
+        <h3 class="cl-bonjour">Erreur</h3>
+        <p class="cl-excuse">
+          La page que vous avez demandé a généré une erreur sur notre serveur <br/>
+          Veuillez nous excuser pour la gêne occasionnée.
+        </p>
+        <a class="button" href="https://www.garagescore.com/">
+          Accueil<img src="/error/ic-droite.png" title="GarageScore.com" alt="GarageScore.com">
+        </a>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    props: ['error'],
+    layout: null
+  }
+</script>
+
+<style lang="scss" scoped>
+  html, body, div, span, applet, object, iframe,
+  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+  a, abbr, acronym, address, big, cite, code,
+  del, dfn, em, img, ins, kbd, q, s, samp,
+  small, strike, strong, sub, sup, tt, var,
+  b, u, i, center,
+  dl, dt, dd, ol, ul, li,
+  fieldset, form, label, legend,
+  table, caption, tbody, tfoot, thead, tr, th, td,
+  article, aside, canvas, details, embed,
+  figure, figcaption, footer, header, hgroup,
+  menu, nav, output, ruby, section, summary,
+  time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+  }
+  /* HTML5 display-role reset for older browsers */
+  article, aside, details, figcaption, figure,
+  footer, header, hgroup, menu, nav, section {
+    display: block;
+  }
+  body {
+    line-height: 1;
+  }
+  ol, ul {
+    list-style: none;
+  }
+  blockquote, q {
+    quotes: none;
+  }
+  blockquote:before, blockquote:after,
+  q:before, q:after {
+    content: '';
+    content: none;
+  }
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  /*FIN RESET*/
+
+  .layout-error {
+    background: url("/error/bg-body.jpg") no-repeat;
+    background-size: 100% 100vh;
+  }
+  header{
+    width: 100%;
+    height: 10vh;
+  }
+  header .cl-logo{
+    margin: 2.6vh 0 0 2.6%;
+  }
+  #dv-content{
+    width: 100%;
+    height: 90vh;
+    text-align: center;
+    color: #FFF;
+  }
+  .cl-404{
+    font-size: 17vh;
+    font-family: 'Roboto Bold', sans-serif;
+    letter-spacing: 0.1vw;
+    padding-top: 16vh;
+  }
+  .cl-bonjour{
+    font-size: 4vh;
+    margin-top: 4.5vh;
+    font-family: 'Roboto Medium', sans-serif;
+    letter-spacing: 0.1vw;
+  }
+  .cl-excuse{
+    width: 90%;
+    font-size: 2vh;
+    margin: 9vh auto 0 auto;
+    font-family: 'Roboto Light', sans-serif;
+    letter-spacing: 0.1vw;
+    line-height: 140%;
+  }
+  .button{
+    display: inline-block;
+    margin-top: 9vh;
+    width: 15vw;
+    height: 7vh;
+    line-height: 7vh;
+    background: rgba(255, 255, 255, 0);
+    border-style: solid;
+    border-color: #FFF;
+    border-width: 1px;
+    border-radius: 3vh;
+  }
+  a.button{
+    text-decoration: none;
+    color: #FFF;
+    font-size: 3vh;
+    font-family: 'Roboto Light', sans-serif;
+  }
+  img{
+    margin-left: 12%;
+  }
+  @media (min-width: 320px) and (max-width: 560px) {
+    header .cl-logo{
+      width: 35%;
+    }
+    .button{
+      width: 40vw;
+      height: 6vh;
+    }
+    .button img{
+      width: 15%;
+    }
+  }
+  /*iPhone 6 Device*/
+  @media (min-width: 667px) and (max-width: 800px) {
+    header .cl-logo{
+      width: 30%;
+    }
+    .button{
+      width: 15vw;
+    }
+    a.button{
+      font-size: 3.5vh;
+    }
+    .button img{
+      width: 15%;
+    }
+    .cl-excuse{
+      font-size: 3vh;
+    }
+    .cl-bonjour{
+      font-size: 7vh;
+    }
+    .cl-404{
+      font-size: 20vh;
+      padding-top: 10vh;
+    }
+  }
+  /*iPad Device*/
+  @media (width: 1024px) and (height: 1366px) {
+    header .cl-logo{
+      width: 20%;
+    }
+    button{
+      width: 20vw;
+      height: 6vh;
+    }
+  }
+  /*iPad Pro Device*/
+  @media (min-width: 768px) and (max-width: 1024px) {
+    header .cl-logo{
+      width: 20%;
+    }
+    button{
+      width: 25vw;
+    }
+    button img{
+      width: 15%;
+    }
+  }
+  /*iPad Rotate Device*/
+  @media (width: 768px) and (height: 1024px) {
+    header .cl-logo{
+      width: 30%;
+    }
+    button{
+      width: 30vw;
+      height: 6vh;
+    }
+    button a{
+      font-size: 3vh;
+    }
+    .cl-excuse{
+      font-size: 2vh;
+    }
+    .cl-bonjour{
+      font-size: 6vh;
+    }
+    .cl-404{
+      font-size: 15vh;
+    }
+  }
+  /* Rotate*/
+  @media (min-width: 568px) and (max-width: 767px) {
+    header .cl-logo{
+      width: 20%;
+    }
+    button{
+      width: 20vw;
+    }
+    button img{
+      width: 10%;
+    }
+    .cl-excuse{
+      font-size: 3vh;
+    }
+  }
+  /*Small Device*/
+  @media (min-width: 150px) and (max-width: 320px) {
+    header .cl-logo{
+      width: 40%;
+    }
+    button{
+      width: 30vw;
+      height: 5vh;
+    }
+    button a{
+      font-size: 2vh;
+    }
+    button img{
+      width: 20%;
+    }
+    .cl-excuse{
+      font-size: 1.5vh;
+    }
+    .cl-bonjour{
+      font-size: 5vh;
+    }
+    .cl-404{
+      font-size: 12vh;
+    }
+  }
+</style>

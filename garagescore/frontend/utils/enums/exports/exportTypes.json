@@ -1,0 +1,92 @@
+{
+  "GARAGES": {
+    "value": "GARAGES",
+    "properties": {
+      "category": "BY_GARAGES"
+    }
+  },
+  "FRONT_DESK_USERS": {
+    "value": "FRONT_DESK_USERS",
+    "properties": {
+      "category": "BY_FRONT_DESK_USERS"
+    }
+  },
+  "FRONT_DESK_USERS_DMS": {
+    "value": "FRONT_DESK_USERS_DMS",
+    "properties": {
+      "category": "BY_FRONT_DESK_USERS"
+    }
+  },
+  "FRONT_DESK_USERS_CUSTEED": {
+    "value": "FRONT_DESK_USERS_CUSTEED",
+    "properties": {
+      "category": "BY_FRONT_DESK_USERS"
+    }
+  },
+  "SATISFACTION": {
+    "value": "SATISFACTION",
+    "properties": {
+      "category": "BY_DATA"
+    }
+  },
+  "CONTACTS": {
+    "value": "CONTACTS",
+    "properties": {
+      "category": "BY_DATA"
+    }
+  },
+  "CONTACTS_MODIFIED": {
+    "value": "CONTACTS_MODIFIED",
+    "properties": {
+      "category": "BY_DATA"
+    }
+  },
+  "LEADS": {
+    "value": "LEADS",
+    "properties": {
+      "category": "BY_DATA"
+    }
+  },
+  "FORWARDED_LEADS": {
+    "value": "FORWARDED_LEADS",
+    "properties": {
+      "category": "BY_DATA"
+    }
+  },
+  "UNSATISFIED": {
+    "value": "UNSATISFIED",
+    "properties": {
+      "category": "BY_DATA"
+    }
+  },
+  "EREPUTATION": {
+    "value": "EREPUTATION",
+    "properties": {
+      "category": "BY_DATA"
+    }
+  },
+  "ADMIN_USERS": {
+    "value": "ADMIN_USERS",
+    "properties": {
+      "category": "BY_ADMIN_USERS"
+    }
+  },
+  "ADMIN_GARAGES": {
+    "value": "ADMIN_GARAGES",
+    "properties": {
+      "category": "BY_ADMIN_GARAGES"
+    }
+  },
+  "AUTOMATION_RGPD": {
+    "value": "AUTOMATION_RGPD",
+    "properties": {
+      "category": "BY_DATA"
+    }
+  },
+  "AUTOMATION_CAMPAIGN": {
+    "value": "AUTOMATION_CAMPAIGN",
+    "properties": {
+      "category": "BY_DATA"
+    }
+  }
+}

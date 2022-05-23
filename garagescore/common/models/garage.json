@@ -1,0 +1,674 @@
+{
+  "name": "Garage",
+  "plural": "Garages",
+  "base": "GarageScoreBaseModel",
+  "options": {
+    "strictObjectIDCoercion": true
+  },
+  "mongodb": {
+    "collection": "garages"
+  },
+  "http": {
+    "path": "garage"
+  },
+  "mixins": {
+    "FindWithProjection": true,
+    "Stream": true,
+    "EventEmitter": true,
+    "SmartSort": true
+  },
+  "properties": {
+    "type": {
+      "type": "string",
+      "default": "Dealership"
+    },
+    "slug": {
+      "type": "string",
+      "required": true
+    },
+    "publicDisplayName": {
+      "type": "string",
+      "required": true
+    },
+    "securedDisplayName": {
+      "type": "string",
+      "required": true
+    },
+    "brandNames": {
+      "type": "Array",
+      "required": true
+    },
+    "tags": {
+      "type": "Array"
+    },
+    "logoEmail": {
+      "type": "array"
+    },
+    "logoDirectoryPage": {
+      "type": "array"
+    },
+    "dataImportStartedAt": {
+      "type": "date"
+    },
+    "googleCampaignActivated": {
+      "type": "boolean",
+      "required": false,
+      "default": false
+    },
+    "googleCampaignLock": {
+      "type": "boolean",
+      "required": false,
+      "default": false
+    },
+    "streetAddress": {
+      "type": "string"
+    },
+    "postalCode": {
+      "type": "string"
+    },
+    "region": {
+      "type": "string"
+    },
+    "subRegion": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "googlePlaceId": {
+      "type": "string"
+    },
+    "googlePlace": {
+      "type": "Object"
+    },
+    "links": {
+      "type": [
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "dms": {
+      "type": "object"
+    },
+    "importSchema": {
+      "type": {
+        "path": "string",
+        "options": {
+          "type": {
+            "filter": "string"
+          }
+        }
+      }
+    },
+    "usersQuota": {
+      "type": "number",
+      "default": 5
+    },
+    "firstContactDelay": {
+      "Maintenance": {
+        "value": "number",
+        "history": [
+          {
+            "userId": "string",
+            "date": "date",
+            "value": "number"
+          }
+        ],
+        "brandHistory": [
+          {
+            "userId": "string",
+            "prevValue": "number",
+            "value": "number",
+            "date": "date"
+          }
+        ]
+      }
+    },
+    "surveySignature": {
+      "useDefault": {
+        "type": "boolean",
+        "default": true
+      },
+      "defaultSignature": {
+        "lastName": "string",
+        "firstName": "string",
+        "job": "string",
+        "phone": "string"
+      },
+      "Maintenance": {
+        "lastName": "string",
+        "firstName": "string",
+        "job": "string",
+        "phone": "string"
+      },
+      "NewVehicleSale": {
+        "lastName": "string",
+        "firstName": "string",
+        "job": "string",
+        "phone": "string"
+      },
+      "UsedVehicleSale": {
+        "lastName": "string",
+        "firstName": "string",
+        "job": "string",
+        "phone": "string"
+      }
+    },
+    "subscriptions": {
+      "priceValidated": {
+        "type": "boolean",
+        "required": false,
+        "default": false
+      },
+      "Maintenance": {
+        "enabled": "boolean",
+        "price": "number",
+        "date": "date",
+        "churn": {
+          "enabled": "boolean",
+          "delta": "number"
+        }
+      },
+      "NewVehicleSale": {
+        "enabled": "boolean",
+        "price": "number",
+        "date": "date",
+        "churn": {
+          "enabled": "boolean",
+          "delta": "number"
+        }
+      },
+      "UsedVehicleSale": {
+        "enabled": "boolean",
+        "price": "number",
+        "date": "date",
+        "churn": {
+          "enabled": "boolean",
+          "delta": "number"
+        }
+      },
+      "Lead": {
+        "enabled": "boolean",
+        "price": "number",
+        "date": "date",
+        "churn": {
+          "enabled": "boolean",
+          "delta": "number"
+        }
+      },
+      "EReputation": {
+        "enabled": "boolean",
+        "price": "number",
+        "date": "date",
+        "churn": {
+          "enabled": "boolean",
+          "delta": "number"
+        }
+      },
+      "VehicleInspection": {
+        "enabled": "boolean",
+        "price": "number",
+        "date": "date",
+        "churn": {
+          "enabled": "boolean",
+          "delta": "number"
+        }
+      },
+      "Analytics": {
+        "enabled": "boolean",
+        "price": "number",
+        "date": "date",
+        "churn": {
+          "enabled": "boolean",
+          "delta": "number"
+        }
+      },
+      "CrossLeads": {
+        "enabled": "boolean",
+        "price": "number",
+        "included": "number",
+        "unitPrice": "number",
+        "restrictMobile": "boolean",
+        "minutePrice": "number",
+        "date": "date",
+        "churn": {
+          "enabled": "boolean",
+          "delta": "number"
+        }
+      },
+      "Automation": {
+        "enabled": "boolean",
+        "price": "number",
+        "included": "number",
+        "every": "number",
+        "date": "date",
+        "churn": {
+          "enabled": "boolean",
+          "delta": "number"
+        }
+      },
+      "Coaching": {
+        "enabled": "boolean",
+        "price": "number",
+        "date": "date",
+        "churn": {
+          "enabled": "boolean",
+          "delta": "number"
+        }
+      },
+      "Connect": {
+        "enabled": "boolean",
+        "price": "number",
+        "date": "date"
+      },
+      "active": {
+        "type": "boolean"
+      },
+      "dateStart": {
+        "type": "date"
+      },
+      "dateEnd": {
+        "type": "date"
+      },
+      "isFullChurn" : {
+        "type": "boolean"
+      },
+      "churnEffectiveDate": {
+        "type": "date"
+      },
+      "setup": {
+        "enabled": "boolean",
+        "price": "number",
+        "monthOffset": "number",
+        "billDate": "date",
+        "alreadyBilled": "boolean"
+      },
+      "users": {
+        "included": "number",
+        "price": "number",
+        "maximumTotalPriceForUsers": "number"
+      },
+      "contacts": {
+        "bundle": "boolean",
+        "included": "number",
+        "every": "number",
+        "price": "number"
+      }
+    },
+    "ratingType": {
+      "type": "string"
+    },
+    "isReverseRating": {
+      "type": "boolean"
+    },
+    "certificateWording": {
+      "type": "string",
+      "default": "appointment"
+    },
+    "zohoDealUrl": {
+      "type": "string"
+    },
+    "disableZohoUrl": {
+      "type": "boolean",
+      "default": false
+    },
+    "annexGarageId": {
+      "type": "string"
+    },
+    "bizDevId": {
+      "type": "string"
+    },
+    "performerId": {
+      "type": "string"
+    },
+    "hideDirectoryPage": {
+      "type": "boolean",
+      "default": true
+    },
+    "disableAutoAllowCrawlers": {
+      "type": "boolean",
+      "default": false
+    },
+    "updateFrequency": {
+      "type": "string",
+      "default": "never"
+    },
+    "status": {
+      "type": "string"
+    },
+    "updateFrequencyCreatedAt": {
+      "type": "date"
+    },
+    "runningSince": {
+      "type": "date"
+    },
+    "group": {
+      "type": "string"
+    },
+    "imports": {
+      "type": "array"
+    },
+    "enrichScriptEnabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "selectup": {
+      "enabled": "boolean",
+      "loginAPV": "string",
+      "loginVN": "string",
+      "loginVO": "string",
+      "password": "string"
+    },
+    "thresholds": {
+      "alertSensitiveThreshold": {
+        "maintenance": {
+          "type": "number",
+          "default": 6
+        },
+        "sale_new": {
+          "type": "number",
+          "default": 6
+        },
+        "sale_used": {
+          "type": "number",
+          "default": 6
+        },
+        "vehicle_inspection": {
+          "type": "number",
+          "default": 6
+        }
+      }
+    },
+    "businessId": {
+      "type": "string",
+      "default": ""
+    },
+    "externalId": {
+      "type": "string",
+      "default": ""
+    },
+    "shareReviews": {
+      "type": "boolean",
+      "default": true
+    },
+    "automaticBillingBillNow": {
+      "type": "boolean",
+      "required": false
+    },
+    "stopShareReviewsAt": {
+      "type": "date"
+    },
+    "postOnGoogleMyBusiness": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "lastPostOnGoogleMyBusinessAt": {
+      "type": "date",
+      "required": false
+    },
+    "exogenousReviewsConfigurations": {
+      "Google": {
+        "connectedBy": {
+          "type": "string",
+          "default": ""
+        },
+        "error": {
+          "type": "string",
+          "default": ""
+        },
+        "token": {
+          "type": "string",
+          "default": ""
+        },
+        "externalId": {
+          "type": "string",
+          "default": ""
+        },
+        "lastError": {
+          "type": "date",
+          "default": null
+        },
+        "lastRefresh": {
+          "type": "date",
+          "default": null
+        },
+        "lastFetch": {
+          "type": "date",
+          "default": null
+        }
+      },
+      "PagesJaunes": {
+        "connectedBy": {
+          "type": "string",
+          "default": ""
+        },
+        "error": {
+          "type": "string",
+          "default": ""
+        },
+        "token": {
+          "type": "string",
+          "default": ""
+        },
+        "externalId": {
+          "type": "string",
+          "default": ""
+        },
+        "lastError": {
+          "type": "date",
+          "default": null
+        },
+        "lastRefresh": {
+          "type": "date",
+          "default": null
+        },
+        "lastFetch": {
+          "type": "date",
+          "default": null
+        }
+      },
+      "Facebook": {
+        "connectedBy": {
+          "type": "string",
+          "default": ""
+        },
+        "error": {
+          "type": "string",
+          "default": ""
+        },
+        "token": {
+          "type": "string",
+          "default": ""
+        },
+        "externalId": {
+          "type": "string",
+          "default": ""
+        },
+        "lastError": {
+          "type": "date",
+          "default": null
+        },
+        "lastRefresh": {
+          "type": "date",
+          "default": null
+        },
+        "lastFetch": {
+          "type": "date",
+          "default": null
+        }
+      }
+    },
+    "parent": {
+      "garageId": {
+        "type": "string"
+      },
+      "shareLeadTicket": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "NewVehicleSale": {
+          "type": "boolean"
+        },
+        "UsedVehicleSale": {
+          "type": "boolean"
+        }
+      }
+    },
+    "locale": {
+      "type": "string",
+      "required": true,
+      "default": "fr_FR"
+    },
+    "additionalLocales": {
+      "type": "array"
+    },
+    "timezone": {
+      "type": "string",
+      "required": true,
+      "default": "Europe/Paris"
+    },
+    "http2ftp": {
+      "lastUploadDate": {
+        "type": "date"
+      },
+      "lastFileNameUpload": {
+        "type": "string"
+      },
+      "details": {
+        "type": "object"
+      }
+    },
+    "cic": {
+      "email": {
+        "type": "string"
+      },
+      "lastEmailSentDate": {
+        "type": "date"
+      },
+      "details": {
+        "type": "object"
+      }
+    },
+    "ticketsConfiguration": {
+      "Unsatisfied_Maintenance": { "type": "Object" },
+      "Unsatisfied_NewVehicleSale": { "type": "Object" },
+      "Unsatisfied_UsedVehicleSale": { "type": "Object" },
+      "Lead_Maintenance": { "type": "Object" },
+      "Lead_NewVehicleSale": { "type": "Object" },
+      "Lead_UsedVehicleSale": { "type": "Object" },
+      "VehicleInspection": { "type": "Object" }
+    },
+    "campaignTrackingUrl": {
+      "type": "string",
+      "required": false
+    },
+    "dataFirstDays": {
+      "firstMaintenanceDay": {
+        "type": "number"
+      },
+      "firstNewVehicleSaleDay": {
+        "type": "number"
+      },
+      "firstUsedVehicleSaleDay":  {
+        "type": "number"
+      }
+    },
+    "allowReviewCreationFromContactTicket": {
+      "type": "boolean",
+      "default": false
+    },
+    "enableCrossLeadsSelfAssignCallAlert": {
+      "type": "boolean",
+      "default": true
+    },
+    "leadsVisibleToEveryone": {
+      "type": "boolean",
+      "default": false
+    },
+
+    "automaticReviewResponseDelay": {
+      "type": "number",
+      "default": 14400000
+    }
+  },
+  "indexes": {
+    "slug": {
+      "name": "slug",
+      "keys": {
+        "slug": 1
+      }
+    },
+    "garagesToIndex": {
+      "name": "garagesToIndex",
+      "keys": {
+        "locale": 1,
+        "hideDirectoryPage": 1,
+        "updatedAt": -1
+      }
+    }
+  },
+  "validations": [],
+  "relations": {
+    "customers": {
+      "type": "hasMany",
+      "model": "Customer",
+      "foreignKey": ""
+    },
+    "campaigns": {
+      "type": "hasMany",
+      "model": "Campaign",
+      "foreignKey": ""
+    },
+    "dataRecords": {
+      "type": "hasMany",
+      "model": "DataRecord",
+      "foreignKey": ""
+    },
+    "dataFiles": {
+      "type": "hasMany",
+      "model": "DataFile",
+      "foreignKey": ""
+    },
+    "campaignScenario": {
+      "type": "belongsTo",
+      "model": "CampaignScenario",
+      "foreignKey": "campaignScenarioId"
+    },
+    "automaticBillingSubscriptions": {
+      "type": "referencesMany",
+      "model": "AutomaticBillingSubscription"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "find"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "findById"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "findOne"
+    }
+  ],
+  "methods": {},
+  "monthPriceHistory" : {
+    "type": "array"
+  }
+}

@@ -1,0 +1,371 @@
+<html>
+<head>
+  <title>{% if garage.name %}{{ garage.name }} - {% endif %}GarageScore</title>
+  {% include  "../common_head.nunjucks" -%}
+</head>
+<body>
+<div id="surveyContainer">
+  <survey :survey="survey"></survey>
+</div>
+{% include  "../common_top.nunjucks" -%}
+<script>
+  i18n.loadForSurveyJS('backoffice:survey:motorbike-dealership:maintenance');
+  survey.title = t('surveyTitle', { garageName: unescapeHTML('{{ garage.name }}') });
+
+  var maintenanceCriteriaChoices = [
+    { value: '{{ reviewDetailedCriterias.MAINTENANCE_CRITERIA_1 }}', text: t('MAINTENANCE_CRITERIA_1') },
+    { value: '{{ reviewDetailedCriterias.MAINTENANCE_CRITERIA_2 }}', text: t('MAINTENANCE_CRITERIA_2') },
+    { value: '{{ reviewDetailedCriterias.MAINTENANCE_CRITERIA_3 }}', text: t('MAINTENANCE_CRITERIA_3') },
+    { value: '{{ reviewDetailedCriterias.MAINTENANCE_CRITERIA_4 }}', text: t('MAINTENANCE_CRITERIA_4') },
+    { value: '{{ reviewDetailedCriterias.MAINTENANCE_CRITERIA_5 }}', text: t('MAINTENANCE_CRITERIA_5') }
+  ];
+
+  var score = PARAMS['score'];
+  var getTitleQ1 = function () {
+    if (!score) return t("noScore");
+    if (garage.ratingType === 'rating') return t('currentScore', { garageName: unescapeHTML("{{ garage.name }}"), score: score });
+    else return t('currentStars', { garageName: unescapeHTML("{{ garage.name }}"), stars: Math.floor(score  / 2) });
+  }
+  var titleQ1 = getTitleQ1();
+
+  var page1 = { name: '{{ surveyPageTypes.REVIEW_PAGE }}', questions: [] };
+  var page2 = {
+    name: '{{ surveyPageTypes.LEAD_PAGE }}',
+    questions: [],
+    visibleIf: "{leadType} = '{{ leadTypes.IN_CONTACT_WITH_VENDOR }}' or {leadType} = '{{ leadTypes.INTERESTED }}' or {leadType} = '{{ leadTypes.ALREADY_PLANNED_OTHER_BUSINESS }}'"
+  };
+  var page3 = {
+    name: '{{ surveyPageTypes.UNSATISFIED_PAGE }}',
+    questions: [],
+    visibleIf: maintenanceCriteriaChoices.map(function (c) { return '{unsatisfiedCriteria[0]} = ' + c.value; }).join(' or '),
+  };
+  var page4 = {
+    name: '{{ surveyPageTypes.CONTACT_PAGE }}',
+    questions: [],
+    title: t('page4.title')
+  };
+  var page5 = {
+    name: '{{ surveyPageTypes.SHAREWITHPARTNERS_PAGE }}',
+    questions: [],
+    visibleIf: `({rating} >= 9 and '${survey.country}'!='FR') or '${survey.country}'='FR'`,
+  };
+
+  survey.pages.push(page1);
+  survey.pages.push(page2);
+  survey.pages.push(page3);
+  survey.pages.push(page4);
+  survey.pages.push(page5);
+  if (garage.ratingType === 'stars') {
+    page1.questions.push({
+      type: "starrating",
+      name: "rating",
+      title: titleQ1,
+      isRequired: true,
+      choices: ["2", "4", "6", "8", "10"],
+      defaultValue: 2 * Math.ceil(score / 2),
+      minRateDescription: t('minRateDescription')[survey.locale],
+      maxRateDescription: t('maxRateDescription')[survey.locale]
+    });
+  } else {
+    page1.questions.push({
+      isRequired: true,
+      type: "rating",
+      name: "rating",
+      defaultValue: score,
+      rateValues: garage.isReverseRating ? [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0] : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      title: titleQ1,
+      minRateDescription: garage.isReverseRating ? t('maxRateDescription') : t('minRateDescription'),
+      maxRateDescription: garage.isReverseRating ? t('minRateDescription') : t('maxRateDescription'),
+    });
+  }
+
+  page1.questions.push(generateUnsatisfiedCriteria("unsatisfiedCriteria", false, "{rating} < 9 and {rating} > 6", maintenanceCriteriaChoices));
+
+  page1.questions.push(generateUnsatisfiedCriteria("unsatisfiedCriteria", true, "{rating} < 6 or {rating} = 6", maintenanceCriteriaChoices));
+
+  page1.questions.push({
+    type: "comment",
+    name: "comment",
+    isRequired: true,
+    title: t('comment'),
+    validators: [
+      {
+        type: "comment"
+      }
+    ]
+  });
+  page1.questions.push({
+    type: "radiogroup",
+    choices: [
+      { value: '{{ leadTypes.IN_CONTACT_WITH_VENDOR }}', text: t('IN_CONTACT_WITH_VENDOR') },
+      { value: '{{ leadTypes.ALREADY_PLANNED_OTHER_BUSINESS }}', text: t('ALREADY_PLANNED_OTHER_BUSINESS')},
+      { value: '{{ leadTypes.INTERESTED }}', text: t('INTERESTED') },
+      { value: '{{ leadTypes.ALREADY_ORDERED_UNSPECIFIED }}', text: t('ALREADY_ORDERED_UNSPECIFIED') },
+      { value: '{{ leadTypes.NOT_INTERESTED }}', text: t('NOT_INTERESTED') }
+    ],
+    isRequired: true,
+    name: "leadType",
+    title: t('leadType')
+  });
+  page1.questions.push({
+    type: "boolean",
+    name: "acceptTermOfUse",
+    label: ' ', // a html element must be putted after the input element to contain a link
+    // defaultValue: true,
+    isRequired: true,
+    validators: [
+      {
+        type: "termsofusevalidator"
+      }
+    ]
+  });
+
+  page2.questions.push({
+    type: "radiogroup",
+    choices: [
+      { value: '{{ leadTimings.NOW }}', text: t('NOW') },
+      { value: '{{ leadTimings.SHORT_TERM }}', text: t('SHORT_TERM') },
+      { value: '{{ leadTimings.MID_TERM }}', text: t('MID_TERM') },
+      { value: '{{ leadTimings.LONG_TERM }}', text: t('LONG_TERM') }
+    ],
+    isRequired: true,
+    name: "leadTime",
+    title: t('leadTime')
+  });
+
+  page2.questions.push({
+    type: "radiogroup",
+    choices: [
+      { value: '{{ leadSaleTypes.NEW_VEHICLE_SALE }}', text: t('NEW_VEHICLE_SALE') },
+      { value: '{{ leadSaleTypes.USED_VEHICLE_SALE }}', text: t('USED_VEHICLE_SALE') },
+      { value: '{{ leadSaleTypes.UNKNOWN }}', text: t('UNKNOWN') }
+    ],
+    isRequired: true,
+    name: "leadSaleType",
+    title: t('leadSaleType')
+  });
+
+  page2.questions.push({
+    type: "radiogroup",
+    choices: [
+      { value: 'yes', text: t('yes') },
+      { value: 'noButKnowModele', text: t('noButKnowModele') },
+      { value: 'no', text: t('no') }
+    ],
+    isRequired: true,
+    name: "leadKnowVehicle",
+    title: t('leadKnowVehicle')
+  });
+
+  page2.questions.push({
+    type: "matrixdropdown",
+    name: "leadModels",
+    visibleIf: "{leadKnowVehicle}='noButKnowModele'",
+    title: t('leadModels'),
+    isRequired: true,
+    columns: [
+      {
+        name: 'model',
+        title: " ",
+        choices: {{ brands | safe }}
+      },
+    ],
+    rows: [
+      {
+        value: "first",
+        text: t('first')
+      },
+      {
+        value: "second",
+        text: t('second')
+      },
+      {
+        value: "third",
+        text: t('third')
+      },
+    ]
+  });
+
+  page2.questions.push({
+    type: "text",
+    isRequired: true,
+    name: "leadVehicle",
+    visibleIf: "{leadKnowVehicle}='yes'",
+    title: t('leadVehicle')
+  });
+
+  page2.questions.push({
+    type: "checkbox",
+    visibleIf: "{leadKnowVehicle} != 'yes'",
+    choices: {{ vehicleBodyTypes|safe }}.map(function(c) { return ({ value: c.value, text: t(c.value) }); }),
+    isRequired: true,
+    name: "leadBodyType",
+    title: t('leadBodyType')
+  });
+
+  page2.questions.push({
+    type: "checkbox",
+    choices: {{ CylinderTypes|safe }}.map(function(c) { return ({ value: c.value, text: t(c.value) }); }),
+    isRequired: true,
+    name: "leadCylinder",
+    title: t('leadCylinder')
+  });
+  var yesLabel = "Oui pour ce deux-roues";
+  if (vehicle.model && vehicle.make) { yesLabel = t('yesLabelModelMake', { make: vehicle.make, model: vehicle.model }); }
+  if (vehicle.model && !vehicle.make) { yesLabel = t('yesLabelModel', { model: vehicle.model }); }
+  page2.questions.push({
+    type: "radiogroup",
+    choices: [
+      { value: 'Yes', text: yesLabel },
+      { value: 'YesOther', text: t('YesOther') },
+      { value: 'No', text: t('No') }
+    ],
+    isRequired: true,
+    name: "leadTradeIn",
+    title: "Souhaitez-vous une offre de reprise ?"
+  });
+
+  page2.questions.push({
+    type: "radiogroup",
+    choices: [
+      { value: '{{ leadFinancing.cash }}', text: t('cash') },
+      { value: '{{ leadFinancing.leasing }}', text: t('leasing') },
+      { value: '{{ leadFinancing.credit }}', text: t('credit') },
+      { value: '{{ leadFinancing.unknown }}', text: t('unknown') },
+    ],
+    isRequired: true,
+    name: "leadFunding",
+    title: t('leadFunding')
+  });
+
+  page3.questions.push({
+    type: "html",
+    name: "message1",
+    html: t('page3.message1')
+  });
+
+  var unsatisfiedConditions = function (value) {
+    var conditions = [];
+    for (var i = 0; i < maintenanceCriteriaChoices.length; i++) {
+      conditions.push("{unsatisfiedCriteria[" + i + "]} = '" + value + "'");
+    }
+    return conditions.join(" or ");
+  };
+
+  page3.questions.push({
+    type: "checkbox",
+    choices: [
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_1 }}', text: t('MAINTENANCE_SUB_CRITERIA_1') },
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_2 }}', text: t('MAINTENANCE_SUB_CRITERIA_2') },
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_3 }}', text: t('MAINTENANCE_SUB_CRITERIA_3') },
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_4 }}', text: t('MAINTENANCE_SUB_CRITERIA_4') }
+    ],
+    visibleIf: unsatisfiedConditions('Maintenance1'),
+    name: "unsatisfiedCriteria1",
+    title: t('unsatisfiedCriteria1')
+  });
+
+  page3.questions.push({
+    type: "checkbox",
+    choices: [
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_5 }}', text: t('MAINTENANCE_SUB_CRITERIA_5') },
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_6 }}', text: t('MAINTENANCE_SUB_CRITERIA_6') },
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_7 }}', text: t('MAINTENANCE_SUB_CRITERIA_7') },
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_8 }}', text: t('MAINTENANCE_SUB_CRITERIA_8') }
+    ],
+    name: "unsatisfiedCriteria2",
+    visibleIf: unsatisfiedConditions('Maintenance2'),
+    title: t('unsatisfiedCriteria2')
+  });
+
+  page3.questions.push({
+    type: "checkbox",
+    choices: [
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_10 }}', text: t('MAINTENANCE_SUB_CRITERIA_10') },
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_11 }}', text: t('MAINTENANCE_SUB_CRITERIA_11') },
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_12 }}', text: t('MAINTENANCE_SUB_CRITERIA_12') },
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_13 }}', text: t('MAINTENANCE_SUB_CRITERIA_13') }
+    ],
+    name: "unsatisfiedCriteria3",
+    visibleIf: unsatisfiedConditions('Maintenance3'),
+    title: t('unsatisfiedCriteria3')
+  });
+
+  page3.questions.push({
+    type: "checkbox",
+    choices: [
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_15 }}', text: t('MAINTENANCE_SUB_CRITERIA_15') },
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_16 }}', text: t('MAINTENANCE_SUB_CRITERIA_16') },
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_17 }}', text: t('MAINTENANCE_SUB_CRITERIA_17') },
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_18 }}', text: t('MAINTENANCE_SUB_CRITERIA_18') }
+    ],
+    name: "unsatisfiedCriteria4",
+    visibleIf: unsatisfiedConditions('Maintenance4'),
+    title: t('unsatisfiedCriteria4')
+  });
+
+  page3.questions.push({
+    type: "checkbox",
+    choices: [
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_20 }}', text: t('MAINTENANCE_SUB_CRITERIA_20') },
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_21 }}', text: t('MAINTENANCE_SUB_CRITERIA_21') },
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_22 }}', text: t('MAINTENANCE_SUB_CRITERIA_22') },
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_23 }}', text: t('MAINTENANCE_SUB_CRITERIA_23') }
+    ],
+    name: "unsatisfiedCriteria5",
+    visibleIf: unsatisfiedConditions('Maintenance5'),
+    title: t('unsatisfiedCriteria5')
+  });
+
+  page4.questions.push({
+    type: "checkbox",
+    choices: [
+      { value: 'price', text: t('price') },
+      { value: 'vicinity', text: t('vicinity') },
+      { value: 'speed', text: t('speed') },
+      { value: 'reassuring', text: t('reassuring') },
+      { value: 'offer', text: t('offer') },
+      { value: 'recommendation', text: t('recommendation') },
+      { value: 'paymentFacilities', text: t('paymentFacilities') },
+      { value: 'loanVehicle', text: t('loanVehicle') },
+      { value: 'partners', text: t('partners') },
+      { value: 'autre', text: t('autre') },
+    ],
+    isRequired: true,
+    name: "serviceMiddleMans",
+    title: t('serviceMiddleMans')
+  });
+
+  page4.questions.push({
+    type: "text",
+    isRequired: false,
+    name: "serviceMiddleManOther",
+    visibleIf: "{serviceMiddleMans} contains 'autre'",
+    title: t('serviceMiddleManOther')
+  });
+
+  page4.questions.push({
+    type: "checkbox",
+    choices: [
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_1 }}', text: t('MAINTENANCE_SUB_CRITERIA_1_CAT') },
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_2 }}', text: t('MAINTENANCE_SUB_CRITERIA_2_CAT') },
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_3 }}', text: t('MAINTENANCE_SUB_CRITERIA_3_CAT') },
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_5 }}', text: t('MAINTENANCE_SUB_CRITERIA_5_CAT') },
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_7 }}', text: t('MAINTENANCE_SUB_CRITERIA_7_CAT') },
+      { value: '{{ reviewDetailedSubcriterias.MAINTENANCE_SUB_CRITERIA_8 }}', text: t('MAINTENANCE_SUB_CRITERIA_8_CAT') }
+    ],
+    isRequired: true,
+    name: "serviceCategories",
+    title: t('serviceCategories')
+  });
+
+  commonQuestions.customerInfos.forEach(function (q) {
+    page4.questions.push(q)
+  });
+
+  page5.questions.push(commonQuestions.shareWithPartners);
+</script>
+{% include  "../common_footer.nunjucks" -%}
+</body>
+</html>
+

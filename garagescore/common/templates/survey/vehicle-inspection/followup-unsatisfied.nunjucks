@@ -1,0 +1,79 @@
+<html>
+<head>
+  <title>{% if garage.name %}Votre avis sur {{ garage.name }}{% else %}Une enquête Custeed{% endif %}</title>
+  {% include  "../common_head.nunjucks" -%}
+</head>
+<body>
+  <div id="surveyContainer"><survey :survey="survey"></survey></div>
+  {% include  "../common_top.nunjucks" -%}
+<script>
+    i18n.loadForSurveyJS('backoffice:survey:vehicle-inspection:followup-unsatisfied');
+  survey.title = t('surveyTitle', { garageName: unescapeHTML('{{ garage.name }}') });
+
+  var score = {% if data.rating %}{{ data.rating }}{% else %}null{% endif %};
+  var scoreTitle = t('scoreTitle');
+  if (score) {
+    scoreTitle += ' (' + score + '/10)';
+  }
+  var page1 = { name: '{{ surveyPageTypes.FOLLOWUPUNSATISFIED_PAGE }}', questions: [] };
+  survey.pages.push(page1);
+  page1.questions.push({
+    type: "radiogroup",RESOLVED: '',
+    choices: [
+      { value: 'Resolved', text: t('Yes') },
+      { value: 'NotResolved', text: t('No') },
+      { value: 'InProgress', text: t('InProgress') }
+    ],
+    isRequired: true,
+    name: "followupStatus",
+    title: t('followupStatus')
+  });
+  page1.questions.push({
+    type: "radiogroup",
+    choices: [
+      { value: 'Yes', text: t('Yes') },
+      { value: 'No', text: t('No') }
+    ],
+    isRequired: true,
+    name: "follwupRecontact",
+    title: t('follwupRecontact')
+  });
+  page1.questions.push({
+    type: "radiogroup",
+    choices: [
+      { value: 'Yes', text: t('Yes') },
+      { value: 'No', text: t('No') }
+    ],
+    isRequired: true,
+    name: "followupChangeMind",
+    title: scoreTitle
+  });
+  page1.questions.push({
+    isRequired: true,
+    type: "rating",
+    name: "followupUnsatisfiedRating",
+    visibleIf: "{followupChangeMind}='Yes'",
+    defaultValue: score,
+    rateValues: garage.isReverseRating ? [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0] : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    title: t('followupUnsatisfiedRating'),
+    minRateDescription: garage.isReverseRating ? t('maxRateDescription') : t('minRateDescription'),
+    maxRateDescription: garage.isReverseRating ? t('minRateDescription') : t('maxRateDescription'),
+  });
+  page1.questions.push({
+    type: "comment",
+    name: "followupUnsatisfiedComment",
+    visibleIf: "{followupChangeMind}='Yes'",
+    isRequired: true,
+    title: t('followupUnsatisfiedComment')
+  });
+  page1.questions.push({
+    type: "comment",
+    name: "unsatisfiedComment",
+    isRequired: false,
+    title: t('unsatisfiedComment')
+  });
+</script>
+{% include  "../common_footer.nunjucks"-%}
+</body>
+</html>
+

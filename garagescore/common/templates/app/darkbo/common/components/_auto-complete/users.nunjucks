@@ -1,0 +1,174 @@
+
+{#
+users autoComplete
+search in the used emails and phones
+must include : common/templates/app/views/admin/_auto-complete/auto-complete.nunjucks
+must include : <script type="text/javascript" src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.js"></script>
+Usage:
+
+ <users
+    :user-id="selectedUserId"
+    :disabled="disableAutoCompletBoolean"
+    :deletable="1"
+    :min-chars="3"
+    :context="someData"
+    v-on:change="changeFunction"
+    v-on:notfound="notfoundFn"
+    :excluded="excludedUsers"
+    ::user-by-id="user by id callbale"
+    :place-holder="'Ajouter un utilisateur'"
+    :users="users or callbale">
+ </users>
+
+ ==> `userId` will be automatically synced with selected value on the autocomplete
+#}
+
+<script type="x/template" id="search-users">
+    <div class="input-group" v-if="deletable">
+        <input :id="inputId" type="text" name="q" :value="defaultValue"
+                :placeholder="placeHolder || 'Email...'" class="form-control" :disabled="disabled" @keyup.enter="onPressEnter">
+        <div class="input-group-addon btn" @click="disselectUser()">
+            <i class="fa fa-times" aria-hidden="true"></i>
+        </div>
+    </div>
+
+    <input :id="inputId" type="text" name="q" :value="defaultValue" v-else
+           :placeholder="placeHolder || 'Email...'" class="form-control" :disabled="disabled" @keyup.enter="onPressEnter">
+</script>
+<script type="text/javascript">
+  if (!gsTools) {
+    throw new Error('tools not found !');
+  }
+  Vue.component('users', {
+    template: '#search-users',
+    props: {
+      userId: {
+        type: String,
+        required: false
+      },
+      placeHolder: {
+        type: String,
+        required: false
+      },
+      users: {
+        required: false
+      },
+      excluded: {
+        type: Array,
+        required: false
+      },
+      deletable: {
+        type: Boolean,
+        required: false
+      },
+      minChars: {
+        type: Number,
+        required: false
+      },
+      context: {
+        required: false
+      },
+      disabled: {
+        type: Boolean,
+        required: false
+      },
+    },
+    data: function(){
+      return {
+        inputId: 'GL' + Math.floor(Math.random() * 10000),
+        error: '',
+        defaultValue: '',
+        emptySearch: false,
+        loading: false
+      };
+    },
+    mounted: function () {
+      var that = this;
+      function filterUsers(users) {
+        if (!that.excluded) {
+          return users;
+        }
+        return _.filter(users, function (u) {
+          return !_.find(that.excluded, function (excludedUser) {
+            return excludedUser.id == u.id;
+          });
+        });
+      }
+      var AC = new autoComplete({
+        selector: '#' + this.inputId,
+        minChars: (that.minChars || that.minChars === 0) ? that.minChars : 2,
+        cache: false, // important or the filters will not work on focus
+        onSelect: function (event, term, item) {
+          event.preventDefault();
+          event.stopPropagation();
+          that.$emit('change', item.attributes['data-id'].value, that.context);
+        },
+        renderItem: function (item, search){
+          search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+          var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
+          return '<div class="autocomplete-suggestion" data-val="' + gsTools.displayUser(item) + '" title="' + gsTools.displayUser(item) + '" data-id="' + item.id + '">' + gsTools.displayUser(item).replace(re, "<b>$1</b>") + '</div>';
+        },
+        source: function (termO, cb) {
+          function returnUsers(users) {
+            that.emptySearch = !users || users.length === 0;
+            cb(users);
+          }
+          if (that.users instanceof Array) {
+            // TODO filter users for term0
+            returnUsers(filterUsers(that.users));
+            return;
+          }
+          if (that.users instanceof Function) {
+            that.users(termO, function (err, users) {
+              if(err){
+                that.error = error;
+                returnUsers([]);
+                return;
+              }
+              returnUsers(filterUsers(users));
+            });
+            return;
+          }
+          gsTools.getRequest('{{ lib.client.url.getShortUrl('USER_SEARCH') }}?token=' + termO , {}, function (err, users) {
+            if(err){
+              that.error = err;
+              this.$displayError(err);
+              returnUsers([]);
+              return;
+            }
+            returnUsers(filterUsers(users));
+          });
+        }.bind(this)
+      });
+      this.refreshUser();
+      this.$watch('userId', async function () {
+        await that.refreshUser();
+      }, {deep:true})
+    },
+    methods: {
+      disselectUser: function(){
+        this.defaultValue = '';
+        this.$emit('change', '');
+      },
+      refreshUser: async function () {
+        try {
+          if (this.userId) { // display parent email /backoffice/users
+            const res = await axios.get('{{ lib.client.url.getShortUrl('ADMIN_USER') }}' + this.userId);
+            this.defaultValue = res.data.email
+          } else {
+            this.defaultValue = '';
+          }
+        } catch (err) {
+          alert("Erreur refreshUser()! Plus de détails dans la console");
+          console.log(error)
+        }
+      },
+      onPressEnter: function (event) {
+        if (this.emptySearch) {
+          this.$emit('notfound', event.target.value, this.context);
+        }
+      }
+    }
+  });
+
+</script>

@@ -1,0 +1,87 @@
+{
+  "name": "Configuration",
+  "base": "PersistedModel",
+  "options": {},
+  "mixins": {
+    "GetMongoConnector": true
+  },
+  "mongodb": {
+    "collection": "configurations"
+  },
+  "http": {
+    "path": "configuration"
+  },
+  "properties": {
+    "reserved_field_name" : {
+      "type": "string",
+      "required": true
+    },
+    "garageExampleId" : {
+      "type": "string",
+      "required": false
+    },
+    "maintenanceMode": {
+      "type": "boolean",
+      "required": false
+    },
+    "sharedImportFilters": {
+      "type": "Array",
+      "required": false
+    },
+    "drawings": {
+      "type": "Object",
+      "required": false
+    },
+    "monthlySummary": {
+      "type": "Object",
+      "required": false
+    },
+    "generalStats": {
+      "type": "Object",
+      "required": false
+    },
+    "exportLeads": {
+      "type": "Object",
+      "required": false
+    },
+    "emptyWords": {
+      "type": "Array",
+      "required": false
+    },
+    "learningResources": {
+      "type": "Object",
+      "required": false
+    },
+    "betaAutomation": {
+      "type": "Object",
+      "required": false
+    },
+    "monthlySummaryValidations": {
+      "type": "Array",
+      "required": false
+    },
+    "dataToAddToCustomers": {
+      "type": "Object",
+      "required": false
+    },
+    "automationMonitoringSettings": {
+      "type": "Object",
+      "required": false
+    },
+    "xLeadsFilters": {
+      "type": "Object",
+      "required": false
+    }
+  },
+  "indexes": {
+    "reserved_field_name_index": {
+      "keys": {
+        "reserved_field_name": 1
+      }
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

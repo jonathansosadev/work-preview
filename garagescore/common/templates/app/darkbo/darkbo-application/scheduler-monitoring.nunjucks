@@ -1,0 +1,141 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+  <style type="text/css">
+    table td, table th {
+      padding: 5px;
+    }
+    .red-line {
+      color: red;
+    }
+    .warning {
+      border: 1px solid #9a0000;
+      background-color: #cd231a;
+      color: white;
+      display: inline-block;
+      border-radius: 5px;
+      padding: 5px;
+    }
+  </style>
+{% endblock %}
+{% block page %}
+  {% raw %}
+  <div class="col-md-12" id="content">
+    <div class="overlay-loading" v-if="loading"><div class="centered-loading"></div></div>
+    <div class="row text-center" style="margin: 50px">
+      <div class="col-md-12">
+        Monitoring du scheduler
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+      <table style="width: 100%;" class="table-bordered">
+        <tr>
+          <th>Job</th>
+          <th style="width: 200px">WAITING</th>
+          <th style="width: 200px">DONE</th>
+          <th style="width: 200px">INQUEUE</th>
+          <th style="width: 200px">ERROR</th>
+          <th style="width: 200px">CANCELLED</th>
+          <th style="width: 200px">Autres</th>
+        </tr>
+        <tr v-for="job in jobs">
+            <td>
+              <div>{{ job.type }}</div>
+              <div class="warning" v-if="warningOther(job.info) > 0">Trop de statut "Autre" ({{warningOther(job.info)}})</div>
+              <div class="warning" v-if="warningStatus(job.info, 'INQUEUE') > 0">Trop de statut "INQUEUE" ({{warningStatus(job.info, 'INQUEUE')}})</div>
+            </td>
+            <td><div v-html="displayStatus(job.info.WAITING)" /></td>
+            <td><div v-html="displayStatus(job.info.DONE)" /><</td>
+            <td><div v-html="displayStatus(job.info.INQUEUE)" /><</td>
+            <td><div v-html="displayStatus(job.info.ERROR)" /><</td>
+            <td><div v-html="displayStatus(job.info.CANCELLED)" /><</td>
+            <td><div v-html="displayOtherStatus(job.info)" /><</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+{% endraw %}
+{% endblock %}
+
+{% block scripts %}
+  {% include "../common/components/switch-button.nunjucks" %}
+  <script type="text/javascript">
+    var jobs = {{ jobs|safe }};
+
+    var app = new Vue({
+      el: '#content',
+      data: {
+        loading: false,
+        jobs: jobs,
+      },
+      methods: {
+        displayStatus(info) {
+          if (!info) { return ''; }
+          const getMonthShortName = (monthNum) => {
+            // A little hack here to get the month name without hardcoding an array
+            // toDateString returns something looking like "Sun Nov 01 2020"
+            return new Date(new Date().setMonth(monthNum - 1)).toDateString().split(' ')[1];
+          };
+
+          return Object.keys(info)
+            // First we transform those "day/month" into [int(day), int(month)]
+            .map((date) => date.split('/').map((part) => parseInt(part, 10)))
+            // Sort them so the first day is displayed first
+            .sort(([dayA, monthA, yearA], [dayB, monthB, yearB]) => {
+              if (yearA !== yearB) return yearA - yearB;
+              if (monthA !== monthB) return monthA - monthB;
+              return dayA - dayB;
+            })
+            // For each date, get the amount of jobs
+            .map(([day, month, year]) => {
+              const date = `${day}/${month}/${year}`;
+              return `${day} ${getMonthShortName(month)} ${year} : ${info[date]}`
+            })
+            // Insert line break between each
+            .join('<br/>');
+        },
+
+        displayOtherStatus(info) {
+          if (!info) { return ''; }
+          const other = JSON.parse(JSON.stringify(info));
+          delete other.WAITING;
+          delete other.DONE;
+          delete other.INQUEUE;
+          delete other.ERROR;
+          delete other.CANCELLED;
+          const status = Object.keys(other);
+          return status.map(d => {
+            let count = 0;
+            Object.values(other[d]).forEach(v => { count+=v; });
+            return `${d}: ${count}`
+          }).join("<br/>");
+        },
+
+        warningStatus(info, status) {
+          let count = 0;
+          if (!info[status]) { return 0; }
+          Object.keys(info[status]).forEach(date => {
+            count+=info[status][date]; });
+          return count;
+        },
+
+        warningOther(info) {
+          if (!info) { return ''; }
+          const other = JSON.parse(JSON.stringify(info));
+          delete other.WAITING;
+          delete other.DONE;
+          delete other.INQUEUE;
+          delete other.ERROR;
+          delete other.CANCELLED;
+          const status = Object.keys(other);
+          let count = 0;
+          status.forEach(d => {
+            Object.values(other[d]).forEach(v => { count+=v; });
+          })
+          return count;
+        }
+      },
+    });
+  </script>
+{% endblock %}

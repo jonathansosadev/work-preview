@@ -1,0 +1,14 @@
+{
+    "PROMOTER" : {
+        "value": "promoter",
+        "properties": {}
+    },
+    "PASSIVE" : {
+        "value": "passive",
+        "properties": {}
+    },
+    "DETRACTOR" : {
+        "value": "detractor",
+        "properties": {}
+    }
+}

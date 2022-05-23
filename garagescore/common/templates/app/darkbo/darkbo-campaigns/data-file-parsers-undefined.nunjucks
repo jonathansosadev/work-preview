@@ -1,0 +1,194 @@
+{% extends "../common/layouts/darkbo.nunjucks" %} {% block css %}
+<style type="text/css">
+  textarea,
+  button {
+    width: 100%;
+    color: black;
+  }
+
+  .pull-right {
+      margin-left: 10px!important;
+  }
+  #results {
+    display: none;
+  }
+  .list-group-item {
+    float: initial;
+    height: 30px;
+    padding: 5px 15px;
+    color: black;
+  }
+  .list-group {
+    margin-bottom: 0;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  .clkable {
+    cursor: pointer;
+  }
+  .scrollableList {
+    margin: 5px;
+  }
+  .frame {
+    border: 1px solid white;
+    padding-bottom: 12px;
+  }
+  .desc {
+    background-color: whitesmoke;
+    color: #0e0e0e;
+    padding: 8px 12px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+  }
+    .green {
+        color: green;
+    }
+</style>
+{% endblock %} {% block page %}
+<div class="page-header">
+  <h1>Imports : Gérer les frontDeskUserNames "UNDEFINED"</h1>
+</div>
+<div id="undefined-dictionnary">
+  <div class="col-md-12">
+    <h4>Liste active</h4>
+    <p class="desc">
+      <span style="font-size: larger">A savoir avant d'ajouter un mot :</span><br/>
+      - Le dictionnaire est insensible à la casse.<br/>
+      - Les accents ne sont pas pris en compte, inutile d'ajouter "à définir" si vous avez déjà "a definir".<br/>
+        <span style="font-weight: bold; color: red;">- IL EST IMPORTANT D'ATTENDRE 10 MINUTES APRES L'AJOUT DE MOTS POUR QU'ILS SOIENT EFFECTIFS LORS D'UN IMPORT</span><br/>
+    </p>
+    <div class="col-md-12 frame">
+      <span style="margin: 8px" v-on:click="downloadDictionary()" class="btn btn-default btn-xs pull-right" type="button">
+        <i class="fa fa-download"></i>
+      </span>
+      <h4>Liste de mots considérés "UNDEFINED"</h4>
+      <div>
+        <div class="input-group">
+          <input v-model="search" type="text" @keyup.enter="addOrRemoveWord()" class="form-control" placeholder="Ajouter ou chercher...">
+          <span class="input-group-btn">
+            <button v-on:click="addOrRemoveWord()" class="btn btn-primary" type="button"><i :class="addOrRemoveClass"></i></button>
+          </span>
+        </div>
+      </div>
+      <div class="scrollableList">
+        <ul class="list-group">
+          <li class="list-group-item" v-for="item in dictionary">{{ "{{"  }}item.word {{ "}}" }}
+            <i v-on:click="addOrRemoveWord(item.word)" class="fa fa-remove pull-right text-danger clkable"></i>
+          </li>
+        </ul>
+      </div>
+    </div>
+      <div class="col-md-12 frame">
+          <h4>Modifier rétroactivement les datas avec une valeur précise pour les passer en "UNDEFINED" (est sensible à la casse, aux accents etc. La string doit être exactement celle qu'il y a en bdd.) Ca peut être très long (Environ 4 secondes pour 50 datas en moyenne), soyez patient (un message apparaitra en bas si c'est bon ou dans la console si c'est bujé)</h4>
+          <div>
+            <input v-model="retro" type="text" @keyup.enter="applyWordToBdd()" class="form-control" placeholder="Ajouter ou chercher...">
+            <button v-if="!loading && retro" v-on:click="applyWordToBdd()" class="btn btn-primary" type="button">APPLIQUER LE MOT RETROACTIVEMENT<i class="fa fa-flash text-danger clkable"></i></button>
+            <span v-for="apply in applied">( {{ "{{" }} apply {{ "}}" }} )<br></span>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+  // import Vue from 'vue';
+
+  document.addEventListener("DOMContentLoaded", function() {
+
+
+    new Vue({
+      el: '#undefined-dictionnary',
+      data: function () {
+        return {
+          dictionary: [],
+          applied: [],
+          loading: false,
+          nModified: 0,
+          search: '',
+          reason: '',
+          status: '',
+          review: '',
+          retro: '',
+        };
+      },
+      watch: {
+      },
+      computed: {
+        addOrRemoveClass() {
+          return this.dictionary.map((item) => item.word)
+            .includes(this.search.toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '')) ? 'fa fa-minus' : 'fa fa-plus';
+        }
+      },
+      mounted: function () {
+        this.getUndefinedWords();
+      },
+      methods: {
+        getUndefinedWords: function () {
+          let request = new XMLHttpRequest();
+          let url = '{{ lib.client.url.getShortUrl("ADMIN_DATA_FILE_DYNAMIC_PARSERS_UNDEFINED_LOAD") }}';
+          request.open('GET', url, true);
+          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          request.onload = () => {
+            if (request.status !== 200 && request.status !== 304){
+              alert("Erreur " + request.status + " ! " + request.responseText);
+            } else {
+              this.dictionary = JSON.parse(request.responseText);
+              console.log('UndefinedWords loaded !');
+            }
+          };
+          request.send();
+        },
+        addOrRemoveWord: function (word) {
+          let request = new XMLHttpRequest();
+          let posturl = '{{ lib.client.url.getUrl('ADMIN_DATA_FILE_DYNAMIC_PARSERS_UNDEFINED_SAVE') }}';
+          request.open('POST', posturl, true);
+          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          request.onload = () => {
+            if (request.status !== 200 && request.status !== 304) {
+              alert("Erreur ! Plus de détails dans la console");
+              console.error("Update error : ");
+              console.error(request.responseText);
+            } else {
+              console.log('CensoredWords updated !');
+              this.getUndefinedWords();
+            }
+          };
+          request.send(JSON.stringify({ word: word || this.search }));
+        },
+        applyWordToBdd: function () {
+          if (this.retro && !this.loading) {
+            this.loading = true;
+            let request = new XMLHttpRequest();
+            let posturl = '{{ lib.client.url.getUrl('ADMIN_DATA_FILE_DYNAMIC_PARSERS_UNDEFINED_APPLY') }}';
+            request.open('POST', posturl, true);
+            request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+            request.onload = () => {
+              if (request.status !== 200 && request.status !== 304) {
+                alert("Erreur ! Plus de détails dans la console");
+                console.error("Update error : ");
+                console.error(request.responseText);
+              } else {
+                console.log(`Word ${this.retro} applied !`);
+                let result = JSON.parse(request.responseText);
+                this.applied.push(`${this.retro} appliqué sur ${result.nModified} datas`);
+                this.nModified = result.nModified;
+              }
+              this.loading = false;
+            };
+            request.send(JSON.stringify({ word: this.retro }));
+          }
+        },
+        filter: function (words) {
+          return words.filter(c => c.toLowerCase().includes(this.search.toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '')));
+        },
+        downloadDictionary: function () {
+          let csvContent = "data:text/csv;charset=utf-8," + encodeURIComponent(this.dictionary.words.join('\r\n'));
+          let link = document.createElement("a");
+          link.setAttribute("href", csvContent);
+          link.setAttribute("download", "undefined-words-" + this.dictionary.language + ".txt");
+          link.click();
+        }
+      }
+    });
+  });
+</script> {% endblock %}

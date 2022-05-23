@@ -1,0 +1,240 @@
+{
+  "name": "GarageHistory",
+  "plural": "GarageHistories",
+  "base": "GarageScoreBaseModel",
+  "options": {
+    "strictObjectIDCoercion": true
+  },
+  "mongodb": {
+    "collection": "garageHistories"
+  },
+  "http": {
+    "path": "garage-history"
+  },
+  "mixins": {
+    "Stream": true,
+    "EventEmitter": true,
+    "MongoDirect": {
+    "whereBuildAddons": true
+    },
+    "SmartSort": true
+  },
+  "properties": {
+    "garageId": {
+      "type": "object"
+    },
+    "externalId" : {
+      "type": "string"
+    },
+    "periodToken": {
+      "type": "string"
+    },
+    "frontDesk": {
+      "type": "string"
+    },
+    "garagePublicDisplayName": {
+      "type": "string"
+    },
+    "garagePublicSearchName": {
+      "type": "string"
+    },
+    "garageSlug": {
+      "type": "string"
+    },
+    "total": {
+      "type": "number"
+    },
+    "totalShouldSurfaceInCampaignStats": {
+      "type": "number"
+    },
+    "countHavingContacts": {
+      "type": "number"
+    },
+    "countShouldReceiveSurveys": {
+      "type": "number"
+    },
+    "countCustomers": {
+      "type": "number"
+    },
+    "countEmails": {
+      "type": "number"
+    },
+    "countPhones": {
+      "type": "number"
+    },
+    "countSurveys": {
+      "type": "number"
+    },
+    "countSurveysResponded": {
+      "type": "number"
+    },
+    "countSurveysRespondedPercent": {
+      "type": "number"
+    },
+    "countSurveySatisfied": {
+      "type": "number"
+    },
+    "countSurveyUnsatisfied": {
+      "type": "number"
+    },
+    "countSurveyAPV": {
+      "type": "number"
+    },
+    "countSurveyRespondedAPV": {
+      "type": "number"
+    },
+    "countSurveyVN": {
+      "type": "number"
+    },
+    "countSurveyRespondedVN": {
+      "type": "number"
+    },
+    "countSurveyVO": {
+      "type": "number"
+    },
+    "countSurveyRespondedVO": {
+      "type": "number"
+    },
+    "countSurveyVI": {
+      "type": "number"
+    },
+    "countSurveyRespondedVI": {
+      "type": "number"
+    },
+    "countSurveyLead": {
+      "type": "number"
+    },
+    "countSurveyLeadVn": {
+      "type": "number"
+    },
+    "countSurveyLeadVo": {
+      "type": "number"
+    },
+    "countSurveyLeadUnknownSale": {
+      "type": "number"
+    },
+    "countSurveyLeadTrade": {
+      "type": "number"
+    },
+    "countSurveyLeadNoTrade": {
+      "type": "number"
+    },
+    "countSurveyLeadUnknownTrade": {
+      "type": "number"
+    },
+    "countFollowup": {
+      "type": "number"
+    },
+    "countFollowupResponded": {
+      "type": "number"
+    },
+    "countFollowupResponseQid122": {
+      "type": "number"
+    },
+    "scoreAPV": {
+      "type": "number"
+    },
+    "scoreVN": {
+      "type": "number"
+    },
+    "scoreVO": {
+      "type": "number"
+    },
+    "surveysUnsatisfied": {
+      "type": "object"
+    },
+    "surveysLead": {
+      "type": "object"
+    },
+    "surveySatisfiedPercent": {
+      "type": "number",
+      "required": false
+    },
+    "surveyUnsatisfiedPercent": {
+      "type": "number",
+      "required": false
+    },
+    "surveyUncontactablePercent": {
+      "type": "number",
+      "required": false
+    },
+    "scoreNPS": {
+      "type": "number",
+      "required": false
+    },
+    "countPotentialSales": {
+      "type": "number",
+      "required": false
+    },
+    "countConversions": {
+      "type": "number",
+      "required": false
+    },
+    "countConversionsVO": {
+      "type": "number",
+      "required": false
+    },
+    "countConversionsVN": {
+      "type": "number",
+      "required": false
+    },
+    "countConversionsTradeins": {
+      "type": "number",
+      "required": false
+    },
+    "countLeadTicket": {
+      "type": "number",
+      "required": false
+    },
+    "countLeadToRecontact": {
+      "type": "number",
+      "required": false
+    },
+    "countLeadActiveTicket": {
+      "type": "number",
+      "required": false
+    },
+    "countLeadClosedTicket": {
+      "type": "number",
+      "required": false
+    },
+    "countLeadTicketTransformedToSale": {
+      "type": "number",
+      "required": false
+    }
+  },
+  "indexes": {
+    "period_token": {
+      "keys": {
+        "periodToken": 1
+      }
+    },
+    "period_token_garageId": {
+      "keys": {
+        "periodToken": 1,
+        "garageId": 1
+      }
+    },
+    "frontDesk_garageId": {
+      "keys": {
+        "frontDesk": 1,
+        "garageId": 1
+      }
+    },
+    "period_token_garageId_frontDesk": {
+      "keys": {
+        "periodToken": 1,
+        "garageId": 1,
+        "frontDesk": 1
+      },
+      "options": {
+        "unique": true
+      }
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [
+  ],
+  "methods": {}
+}

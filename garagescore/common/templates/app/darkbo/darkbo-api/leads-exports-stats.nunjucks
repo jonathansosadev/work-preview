@@ -1,0 +1,148 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+  <style type="text/css">
+    #app {
+      align-item: center;
+    }
+    .global-stat {
+      display: inline-block;
+      width: 25%;
+      margin-left: 6.25%;
+      border-radius: 3px;
+      background-color: #FFF;
+      color: #000;
+      text-align: center;
+      padding: 10px;
+    }
+    .global-stat h4 {
+      font-weight: bold; 
+      font-size: 16px;
+    }
+    .global-stat span {
+      font-weight: bold; 
+      font-size: 40px;
+    }
+    div.section {
+      margin-top: 20px;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+{% endblock %}
+{% block page %}
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="page-header col-md-8">
+      {% block pageTitle %}
+        <h1>Visualiser les résultats des exports de leads</h1>
+      {% endblock %}
+    </div>
+  </div>
+  <div class="col-md-2"></div>
+  <div id="app" class="col-md-8">
+    <div class="row">
+      {# <div class="col-md-3"> #}
+        <label for="dateSelector">Choisir la date</label>
+        <input id="dateSelector" class="form-control" type="date" v-model="date"/>
+      {# </div> #}
+    </div>
+    {% raw %}
+      <div class="row section">
+        <h4>Statistiques globales d'exports des leads <span v-if='dayHasStat'> pour le {{ dateToDisplay }}<span></h4>
+        <div class="global-stat">
+          <h4>Nombre de leads concernés</h4>
+          <span>{{ totalLeads }}</span>
+        </div>
+        <div class="global-stat">
+          <h4>Nombre de leads créés</h4>
+          <span>{{ requestsOK }}</span>
+        </div>
+        <div class="global-stat" :class="{ error: requestsKO > 0}">
+          <h4>Nombre de leads en erreur</h4>
+          <span>{{ requestsKO }}</span>
+        </div>
+      </div>
+      <div class="row section">
+        <h4>Statistiques d'execution brutes</h4>
+        <pre>{{ statsToDisplay }}</pre>
+      </div>
+    {% endraw %}
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script type="text/javascript">
+
+    let rawStats = {{ exportStats|safe }};
+    const yesterday = new Date(Date.now() - (24*3600*1000));
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+      /* global Vue:true */
+      // init Vue
+      new Vue({
+        el: '#app',
+        data: {
+          exportStats: rawStats,
+          date: yesterday.toISOString().split('T').shift()
+        },
+        computed: {
+          dayHasStat() {
+            return this.exportStats.find(s => s.executionDate === this.dateToDisplay);
+          },
+          statsToDisplay() {
+            let ret = this.exportStats.find(s => s.executionDate === this.dateToDisplay);
+            return ret || this.exportStats;
+          },
+          dateToDisplay() {
+            return this.date.split('-').reverse().join('/');
+          },
+          totalLeads() {
+            if (!this.statsToDisplay) return 0;
+            let statsToConsider = Array.isArray(this.statsToDisplay) ? this.statsToDisplay : [this.statsToDisplay];
+            return statsToConsider.reduce((res, stat) => {
+              let calc = 0;
+              for (script in stat) {
+                if (stat.hasOwnProperty(script)) {
+                  calc += stat[script].nRequests || 0;
+                }
+              }
+              return res + calc;
+            }, 0);
+          },
+          requestsOK() {
+            if (!this.statsToDisplay) return 0;
+            let statsToConsider = Array.isArray(this.statsToDisplay) ? this.statsToDisplay : [this.statsToDisplay];
+            return statsToConsider.reduce((res, stat) => {
+              let calc = 0;
+              for (script in stat) {
+                if (stat.hasOwnProperty(script) && stat[script].responses) {
+                  calc += stat[script].successfulRequests || 0;
+                }
+              }
+              return res + calc;
+            }, 0);
+          },
+          requestsKO() {
+            if (!this.statsToDisplay) return 0;
+            let statsToConsider = Array.isArray(this.statsToDisplay) ? this.statsToDisplay : [this.statsToDisplay];
+            return statsToConsider.reduce((res, stat) => {
+              let calc = 0;
+              for (script in stat) {
+                if (stat.hasOwnProperty(script) && stat[script].failedRequests) {
+                  calc += stat[script].failedRequests.length || 0;
+                }
+              }
+              return res + calc;
+            }, 0);
+          }
+        },
+        events: {
+        },
+        methods: {
+        }
+      });
+    });
+  </script>
+{% endblock %}

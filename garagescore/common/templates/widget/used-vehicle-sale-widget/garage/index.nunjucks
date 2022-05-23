@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>GarageScore : {{ garage.publicDisplayName }}</title>
+    <base target="_blank">
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Quicksand:400,700">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="{{ lib.client.staticUrl('/css/widget/maintenance-widget/maintenance-widget.css') }}">
+   </head>
+  <body>
+    <div id="garagescore-review-widget" class="garagescore-widget">
+      <div class="garagescore-widget-background-mask">
+        <div class="garagescore-widget-content-wrapper">
+          {% if publicScore.synthesizedAt %}
+            <div class="garagescore-synthesized-at">
+              le {{ publicScore.synthesizedAt }}
+            </div>
+          {% endif %}
+          <div class="garagescore-recommendation">
+            {% if publicScore.payload.recommendation.yesRatio %}
+              <div class="garagescore-recommendation-yes-ratio">
+                {{ publicScore.payload.recommendation.yesRatio }}
+              </div>
+              <div class="garagescore-recommendation-yes-label">
+                des clients recommandent
+              </div>
+            {% endif %}
+            <div class="garagescore-garage-public-display-name">
+              <a href="{{ garage.directoryPageUrl }}">{{ garage.publicDisplayName }}</a>
+            </div>
+            {% if publicScore.payload.recommendation.respondentsCount %}
+              <div class="garagescore-recommendation-respondents-count">
+                <a href="{{ garage.directoryPageUrl }}">
+                  {% if publicScore.payload.recommendation.yesRatio %}
+                    {% if publicScore.payload.recommendation.respondentsCount == 1 %}
+                      sur {{ publicScore.payload.recommendation.respondentsCount }} avis client
+                    {% else %}
+                      sur {{ publicScore.payload.recommendation.respondentsCount }} avis clients
+                    {% endif %}
+                  {% else %}
+                    {% if publicScore.payload.recommendation.respondentsCount == 1 %}
+                      {{ publicScore.payload.recommendation.respondentsCount }} avis client
+                    {% else %}
+                      {{ publicScore.payload.recommendation.respondentsCount }} avis clients
+                    {% endif %}
+                  {% endif %}
+                </a>
+              </div>
+            {% endif %}
+          </div>
+          <div class="garagescore-powered-by">
+            <a href="http://www.garagescore.com/">Avis clients collectés par <img class="garagescore-logo" src="{{ lib.client.staticUrl('/images/garagescore-top-logo-menu.svg') }}" title="GarageScore" alt="GarageScore"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ gaWidgetKey }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ gaWidgetKey }}');
+    </script>
+  </body>
+</html>

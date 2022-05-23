@@ -1,0 +1,6 @@
+web: bash ./start.sh MainApp
+scheduler: bash ./start.sh Scheduler
+ceres: bash ./start.sh Ceres
+vesta: bash ./start.sh Vesta
+pallas: bash ./start.sh Pallas
+surveyresponses: bash ./start.sh SurveyResponses

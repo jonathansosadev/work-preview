@@ -1,0 +1,14 @@
+{
+  "MANUAL": {
+    "value": "manual",
+    "properties": {}
+  },
+  "AUTOMATIC": {
+    "value": "automatic",
+    "properties": {}
+  },
+  "AUTOMATED": {
+    "value": "automated",
+    "properties": {}
+  }
+}

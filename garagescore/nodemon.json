@@ -1,0 +1,7 @@
+{
+  "ext": "js json nunjucks",
+  "ignore": [
+    "bin", "client", "test", "sandbox-de-jscari", "lab"
+  ],
+  "verbose": true
+}

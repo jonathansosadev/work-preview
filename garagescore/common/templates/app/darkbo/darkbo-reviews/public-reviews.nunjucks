@@ -1,0 +1,390 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+  <style type="text/css">
+    .topcommands {
+      margin-bottom: 30px;
+      font-style: italic;
+    }
+    .review-score, .review-comment {
+
+    }
+
+    .review-score, .review-comment {
+      font-size: 15px;
+      max-width: 250px;
+      text-overflow: ellipsis;
+      overflow-x: hidden;
+    }
+    .reply-link, .reply-link:hover, .reply-link:visited	{
+
+    }
+    .reply-txt b{
+      text-decoration: underline;
+    }
+    .review-recommend {
+      font-size: 25px;
+      text-align: center;
+    }
+    form select{
+      color: black;
+    }
+    .form-group{
+      margin-left: 10px;
+    }
+    .updatedStatus {
+      display: none;
+      color: green;
+    }
+    .fa-angle-double-left, .fa-angle-double-right {
+      color: white;
+      font-size: 30px;
+    }
+    .status-suggestion {
+      color: #bbb;
+    }
+  </style>
+{% endblock %}
+{% block page %}
+  <div class="page-header">
+    <h1>Liste des avis publiés</h1>
+  </div>
+
+  <div class="col-md-12 topcommands">
+    <div class="row">
+      <div class="col-md-12">
+        <form id="review-filters" class="form-inline">
+          <div class="form-group">
+            <select name="garageId" id="garageId" v-model="garageId" @change="onFilter">
+              <option {% if garageId == null %}selected{%endif%} disabled value="">Garage</option>
+              <option value=""></option>
+              {% for id, g in garages %}
+                <option {% if garageId == id %}selected{%endif%} value="{{id}}">{{ g }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <select name="status" id="status" v-model="status" @change="onFilter" style="max-width: 220px; ">
+              <option {% if report == null %}selected{%endif%} disabled value="">Statut</option>
+              <option value=""></option>
+              <option value="APPROVED">APPROVED</option>
+              <option value="PENDING">PENDING</option>
+              {{ filterStatusOptions | safe }}
+            </select>
+          </div>
+          <div class="form-group">
+            <select name="report" id="report" v-model="report" @change="onFilter">
+              <option {% if report == null %}selected{%endif%} disabled value="">Signalement</option>
+              <option value=""></option>
+              <option {% if report == 1 %}selected{%endif%} value="1">Signalés</option>
+              <option {% if report == 0 %}selected{%endif%} value="0">Non signalés</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <select name="maxScore" id="maxScore" v-model="maxScore" @change="onFilter">
+              <option {% if maxScore == null %}selected{%endif%} disabled value="">Score Maximum</option>
+              <option value=""></option>
+              <option {% if maxScore == 10 %}selected{%endif%} value="10">10/10 maximum</option>
+              <option {% if maxScore == 9 %}selected{%endif%} value="9">9/10 maximum</option>
+              <option {% if maxScore == 8 %}selected{%endif%} value="8">8/10 maximum</option>
+              <option {% if maxScore == 7 %}selected{%endif%} value="7">7/10 maximum</option>
+              <option {% if maxScore == 6 %}selected{%endif%} value="6">6/10 maximum</option>
+              <option {% if maxScore == 5 %}selected{%endif%} value="5">5/10 maximum</option>
+              <option {% if maxScore == 4 %}selected{%endif%} value="4">4/10 maximum</option>
+              <option {% if maxScore == 3 %}selected{%endif%} value="3">3/10 maximum</option>
+              <option {% if maxScore == 2 %}selected{%endif%} value="2">2/10 maximum</option>
+              <option {% if maxScore == 1 %}selected{%endif%} value="1">1/10 maximum</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <select name="shareWithPartners" id="shareWithPartners" v-model="shareWithPartners" @change="onFilter">
+              <option {% if shareWithPartners == null or shareWithPartners == 0 or shareWithPartners == "" %}selected{%endif%} disabled value="">Partenaires</option>
+              <option value=""></option>
+              <option {% if shareWithPartners == 1 %}selected{%endif%} value="1">Partagés</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <select name="reviewType" id="reviewType" v-model="reviewType" @change="onFilter">
+              <option {% if reviewType == null %}selected{%endif%} disabled value="">Type de prestation</option>
+              <option value=""></option>
+              <option {% if reviewType == 'Maintenance' %}selected{%endif%} value="Maintenance">Maintenance</option>
+              <option {% if reviewType == 'MaintenanceFollowup' %}selected{%endif%} value="MaintenanceFollowup">MaintenanceFollowup</option>
+              <option {% if reviewType == 'NewVehicleSale' %}selected{%endif%} value="NewVehicleSale">NewVehicleSale</option>
+              <option {% if reviewType == 'UsedVehicleSale' %}selected{%endif%} value="UsedVehicleSale">UsedVehicleSale</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <select name="modelType" id="modelType" v-model="modelType" @change="onFilter">
+              <option {% if modelType == null %}selected{%endif%} disabled value="">Réponses de l'établissement</option>
+              <option value=""></option>
+              <option {% if modelType == 'ExistingPublicComment' %}selected{%endif%} value="ExistingPublicComment">Avec une réponse</option>
+              <option {% if modelType == 'PendingPublicComment' %}selected{%endif%} value="PendingPublicComment">Avec une réponse en attente</option>
+            </select>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    {% if (totalCount == filteredCount) %}
+      {{ totalCount }} avis
+    {% else %}
+      {{ filteredCount }}/{{ totalCount }} avis
+    {% endif %}
+  </div>
+  <div class="col-md-12"><div class="row">
+      <br/><br/>
+      {% if (skip > 0) %}<div class="col-md-2 col-md-offset-4"><a href="{{pathPrev}}"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></div>{% endif %}
+      {% if (skip + reviewsPerPage < filteredCount and skip == 0) %}<div class="col-md-2 col-md-offset-7"><a href="{{pathNext}}"> <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></div>{% endif %}
+      {% if (skip + reviewsPerPage < filteredCount and skip != 0) %}<div class="col-md-2 col-md-offset-1"><a href="{{pathNext}}"> <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></div>{% endif %}
+      <br/><br/>
+    </div>
+  </div>
+  <div class="col-md-12"><div class="table-responsive">
+      <table class="table" id="reviews-list">
+        <thead>
+        <th>Id, Type et garage</th>
+        <th>Utilisateur</th>
+        <th>Reco et Note</th>
+        <th>Avis utilisateur</th>
+        <th>Partage partenaires</th>
+        <th>Statut</th>
+        <th>Réponse de l'établissement</th>
+        <th>Remplacer le texte de l'avis</th>
+        </thead>
+        <tbody>
+        <tr v-for="r in reviews" is="reviewrow" :r="r" :soptions="compositeStatusOptions"></tr>
+
+        </tbody>
+      </table>
+    </div></div>
+  <div class="col-md-12"><div class="row">
+      {% if (skip > 0) %}<div class="col-md-2 col-md-offset-4"><a href="{{pathPrev}}"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></div>{% endif %}
+      {% if (skip + reviewsPerPage < filteredCount) %}<div class="col-md-2 col-md-offset-1"><a href="{{pathNext}}"> <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></div>{% endif %}
+    </div>
+    <br/><br/></div>
+
+  {% raw %}
+    <script type="x/template" id="review-template">
+      <tr>
+        <td class="">
+          <span class="review-garage">{{ r.id }}</span>
+          <br/>{{ r.garage }}
+          <br/>{{ r.type }}
+        </td>
+        <td class="">
+          <b>{{r.author }}</b><br/>
+          <div v-if="r.ip">IP:&nbsp;<b>&nbsp;{{r.ip}}</b></div>
+          <div v-if="r.fingerPrint">FP:&nbsp;<b>&nbsp;{{r.fingerPrint}}</b></div>
+          <span class="review-date">{{ r.createdAt }}</span><br/>
+          <div style="padding-top: 5px;" v-if="r.shareWithPartners && r.sharedWithPartnersAt">
+            <b>Partagé le </b>  <span class="review-type">{{ r.sharedWithPartnersAt }}</span>
+          </div>
+        </td>
+        <td class="">
+          <div>
+              <select style="color:#000000"  v-model="r.score" @change="updateScore(r.id, $event)">
+                <option :value="0" :selected="r.score == 0">0</option>
+                <option v-for="n in 100" :value="n/10" :selected="r.score == n/10">{{ n/10 }}</option>
+              </select>
+          /10</div>
+          <div :id="'updatedScore' + r.id" class="updatedStatus">Score mis à jour</div>
+        </td>
+        <td class="">
+          <div class="review-comment" v-if="!r.moderation" :class="{ reviewCommentEmpty: r.isEmptyComment}">«&nbsp;{{ r.comment }}&nbsp;»</div>
+          <div class="review-comment" v-else>{{ r.moderation }} (modéré)</div>
+        </td>
+        <td>
+          <select style="color:#000000" v-model="r.shareWithPartners" @change="updateShareWithPartners(r.id, $event)">
+            <option v-for="option in [ true,false ]" :value="option"> {{ (option == true) ? "Oui" : "Non" }}</option>
+          </select>
+          </form>
+          <div :id="'updatedShareWithPartners' + r.id" class="updatedStatus">Partage mis à jour</div>
+        </td>
+        <td class="">
+          <form>
+            <select class="compositeStatus" v-model="r.compositeStatus" name="compositeStatus" @change="updateStatus(r.id, $event)">
+              <option v-for="option in soptions" :value="option.value"> {{ option.text }} </option>
+            </select>
+          </form>
+          <div :id="'updatedStatus' + r.id" class="updatedStatus">Statut mis à jour</div>
+          <br/>
+          <div v-if="r.suggestedStatus" class="status-suggestion"> Suggestion:
+            <span v-if="r.suggestedStatus.rejectedReason">{{ r.suggestedStatus.rejectedReason }}</span>
+            <span v-else>{{r.suggestedStatus.approvableStatus}}</span>
+          </div>
+        </td>
+        <td class="">
+          <div v-if="r.reply" class="reply-txt">«&nbsp;{{ r.reply }}&nbsp;»</div>
+          <form v-if="r.reply">
+            <select class="compositeStatus" v-model="r.replyCompositeStatus" name="replyCompositeStatus" @change="updateReplyStatus(r.id, $event)">
+              <option v-for="option in soptions" :value="option.value"> {{ option.text }} </option>
+            </select>
+          </form>
+          <div v-if="r.reply" :id="'updatedReplyStatus' + r.id" class="updatedStatus">Statut mis à jour</div>
+          <br v-if="r.reply"/>
+          <div v-if="r.suggestedReplyStatus" class="status-suggestion"> Suggestion:
+            <span v-if="r.suggestedReplyStatus.rejectedReason">{{ r.suggestedReplyStatus.rejectedReason }}</span>
+            <span v-else>{{r.suggestedReplyStatus.approvableStatus}}</span>
+          </div>
+        </td>
+        <td class="">
+          <a class="reply-link btn btn-primary" href="#" @click="moderate(r)">Remplacer</a>
+        </td>
+      </tr>
+    </script>
+  {% endraw %}
+{% endblock %}
+
+
+{% block scripts %}
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+
+      new Vue({
+        el: '#review-filters',
+        data: function() {
+            return {
+              garageId: "{{garageId}}",
+              maxScore: "{{maxScore}}",
+              shareWithPartners: "{{shareWithPartners}}",
+              report: "{{report}}",
+              status: "{{status}}",
+              reviewType: "{{reviewType}}",
+              modelType: "{{modelType}}"
+            };
+        },
+        methods: {
+          // filters change
+          onFilter : function(){
+            var params = "?";
+            if(this.garageId) params += "&garageId="+this.garageId;
+            if(this.maxScore) params += "&maxScore="+this.maxScore;
+            if(this.shareWithPartners) params += "&shareWithPartners="+this.shareWithPartners;
+            if(this.report) params += "&report="+this.report;
+            if(this.status) params += "&status="+this.status;
+            if(this.reviewType) params += "&reviewType="+this.reviewType;
+            if(this.modelType) params += "&modelType="+this.modelType;
+            document.location = document.location.protocol + '//' + document.location.host + document.location.pathname + params;
+          }
+        }
+      });
+      new Vue({
+        el: '#reviews-list',
+        components: {
+          'reviewrow': {
+            template: '#review-template',
+            props: ['r', 'soptions'],
+            replace: true, // tr in the template
+            data: function () {
+              return {
+                  updatedStatus: ''
+              } ;
+            },
+            methods : {
+              updateStatus: function(id, e) {
+                var compositeStatus = e.target.value;
+                var request = new XMLHttpRequest();
+                var posturl = '{{ lib.client.url.getShortUrl("ADMIN_PUBLIC_REVIEW_UPDATE") }}';
+                request.open('POST', posturl, true);
+                request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+                request.onload = function () {
+                  this.loading = false;
+                  if (request.status != 200 && request.status != 304){
+                    alert("Erreur " + request.status + " !");
+                  } else {
+                    document.getElementById('updatedStatus' + id).style.display = 'block';
+                    setTimeout(function() {document.getElementById('updatedStatus' + id).style.display = 'none'}, 3000);
+                  }
+                }.bind(this);
+                request.send(JSON.stringify({ reviewId: id, action :"updateStatus", compositeStatus: compositeStatus }));
+              },
+              updateReplyStatus: function(id, e) {
+                var compositeStatus = e.target.value;
+                var request = new XMLHttpRequest();
+                var posturl = '{{ lib.client.url.getShortUrl("ADMIN_PUBLIC_REVIEW_UPDATE") }}';
+                request.open('POST', posturl, true);
+                request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+                request.onload = function () {
+                  this.loading = false;
+                  if (request.status != 200 && request.status != 304){
+                    alert("Erreur " + request.status + " !");
+                  } else {
+                    document.getElementById('updatedReplyStatus' + id).style.display = 'block';
+                    setTimeout(function() {document.getElementById('updatedReplyStatus' + id).style.display = 'none'}, 3000);
+                  }
+                }.bind(this);
+                request.send(JSON.stringify({ reviewId: id, action :"updateReplyStatus", isComment: true, compositeStatus: compositeStatus }));
+              },
+              // moderate
+              moderate: function (review) {
+                var m = prompt("Entrez le texte qui va remplacer l'avis");
+                if (!m) { return; }
+                var request = new XMLHttpRequest();
+                var posturl = '{{ lib.client.url.getShortUrl("ADMIN_PUBLIC_REVIEW_MODERATE") }}';
+                request.open('POST', posturl, true);
+                request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+                request.onload = function () {
+                  this.loading = false;
+                  if (request.status != 200 && request.status != 304){
+                    alert("Erreur !");
+                  } else {
+                    review.moderation = m;
+                  }
+                }.bind(this);
+                this.lastCheckedGarages = this.checkedGarages;
+                request.send(JSON.stringify({ reviewId: review.id, action :"updateModerate",moderation: m }));
+              },
+              updateShareWithPartners: function(id, e) {
+                  var _shareWithPartners = e.target.value;
+                  var request = new XMLHttpRequest();
+                  var posturl = '{{ lib.client.url.getShortUrl("ADMIN_PUBLIC_REVIEW_UPDATE") }}';
+                  request.open('POST', posturl, true);
+                  request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+                  request.onload = function () {
+                      this.loading = false;
+                      if (request.status != 200 && request.status != 304){
+                          alert("Erreur " + request.status + " !");
+                      } else {
+                          document.getElementById('updatedShareWithPartners' + id).style.display = 'block';
+                          setTimeout(function() {document.getElementById('updatedShareWithPartners' + id).style.display = 'none'}, 3000);
+                      }
+                  }.bind(this);
+                  request.send(JSON.stringify({ reviewId: id, action :"updateShareWithPartner" ,shareWithPartners: _shareWithPartners }));
+              },
+              updateScore: function(id, e) {
+                  var score = parseFloat(e.target.value);
+                  var request = new XMLHttpRequest();
+                  var posturl = '{{ lib.client.url.getShortUrl("ADMIN_PUBLIC_REVIEW_UPDATE") }}';
+                  request.open('POST', posturl, true);
+                  request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+                  request.onload = function () {
+                      this.loading = false;
+                      if (request.status != 200 && request.status != 304){
+                          alert("Erreur " + request.status + " !");
+                      } else {
+                          document.getElementById('updatedScore' + id).style.display = 'block';
+                          setTimeout(function() {document.getElementById('updatedScore' + id).style.display = 'none'}, 3000);
+                      }
+                  }.bind(this);
+                  request.send(JSON.stringify({ reviewId: id, action :"updateScore" ,score: score }));
+              },
+            }
+          }
+        },
+        data: function (){
+            return {
+              reviews: {{ reviews|safe }},
+              gsApprovableStatus: {{ gsApprovableStatus | safe }},
+              gsApprovableRejectedReason: {{ gsApprovableRejectedReason | safe }},
+              compositeStatusOptions : {{ rejectedReasonsFilter | safe }}
+            };
+        },
+        methods: {
+
+        }
+      });
+    });//DOMContentLoaded
+
+  </script>
+
+{% endblock %}

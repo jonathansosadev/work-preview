@@ -1,0 +1,122 @@
+{#
+  see http://codepen.io/mattbeaudry/pen/rwjIJ
+
+ <switch-button
+      :value.sync="value"
+      :enabled.sync="enabled"
+      :hover-message="hoverMsg"
+      v-on:change="changeFunction"
+      v-on:click="clickFunction">
+ </switch-button>
+#}
+
+<script type="x/template" id="contact-info" xmlns="http://www.w3.org/1999/html">
+  <div>
+    <div v-if="contact.type === 'ALERT_EMAIL'">
+      AlertType:  <strong>{{ '{{' }} contact.payload.alertType {{ '}}' }}</strong> <br>
+      Garage:  <strong v-if="contact.garage">{{ '{{' }} contact.garage.publicDisplayName {{ '}}' }}</strong> <br>
+      Id:  <strong v-if="contact.garage">{{ '{{' }} contact.payload.dataId {{ '}}' }}</strong> <br>
+      <div v-if="contact.alert">
+        Date creation alert: <strong>{{ '{{' }} contact.alert.createdAt | dateFormat  {{ '}}' }}</strong> <br>
+        Date min d'envoi: <strong>{{ '{{' }} contact.alert.executionDate | dateFormat  {{ '}}' }}</strong> <br>
+        Nombre utilisateurs concernés: <strong>{{ '{{' }} contact.alert.foreign.userIds.length  {{ '}}' }}</strong>
+      </div>
+    </div>
+    <div v-if="contact.type === 'MONTHLY_SUMMARY_EMAIL' || contact.type === 'MONTHLY_SUMMARY_SMS'">
+      Type: <strong>{{ '{{ ' }} contact.report.reportLabel {{ '}}' }}</strong> <br>
+      Période: <strong>{{ '{{ ' }} contact.report.period {{ '}}' }}</strong> <br>
+      Date de création: <strong>{{ '{{ ' }} contact.report.createdAt | dateFormat {{ '}}' }}</strong> <br>
+      <a target="_blank" :href="getMonthlySummaryUrl(contact.report.reportId)">
+        <i class="fa fa-file-text-o" aria-hidden="true"> show report</i>
+      </a>
+    </div>
+    <div v-if="contact.type === 'REPORT_EMAIL'">
+      Type: <strong>{{ '{{ ' }} contact.report.reportLabel {{ '}}' }}</strong> <br>
+      Période: <strong>{{ '{{ ' }} contact.report.period {{ '}}' }}</strong> <br>
+      Context: <strong>{{ '{{ ' }} contact.report.context {{ '}}' }}</strong> <br>
+      Nombre de garages: <strong>{{ '{{ ' }} contact.report.garageIds.length {{ '}}' }}</strong> <br>
+      Date de création: <strong>{{ '{{ ' }} contact.report.createdAt | dateFormat {{ '}}' }}</strong> <br>
+      <a target="_blank" :href="getPublicUrl(contact.report.reportPublicToken)">
+        <i class="fa fa-file-text-o" aria-hidden="true"> show report</i>
+      </a>
+    </div>
+    <div v-if="contact.type === 'CAMPAIGN_SMS' || contact.type === 'CAMPAIGN_EMAIL'">
+      Nom: <strong>{{ '{{' }} (contactConfig && contactConfig.name) || contact.payload.key {{ '}}' }}</strong> <br>
+      Type: <strong v-if="contact.data">{{ '{{' }} contact.data.type {{ '}}' }}</strong> <br>
+      Garage: <strong>{{ '{{' }} contact.garage.publicDisplayName {{ '}}' }}</strong> <br>
+      Fichier Original: <strong v-if="contact.dataFile">{{ '{{' }} contact.dataFile.filePath {{ '}}' }}</strong> <br>
+      <a @click.prevent="showContactDetail(contact)" >
+        <i class="fa fa-plus" aria-hidden="true"> plus d'infos</i>
+      </a>
+    </div>
+    <div v-if="contact.type === 'USER_MESSAGE_EMAIL'">
+      Context :  {{ '{{' }} contact.payload.context {{ '}}' }} <br>
+      Message :  {{ '{{' }} contact.payload.message {{ '}}' }} <br>
+      <div v-if="contact.payload.firstName">Prénom :  {{ '{{' }} contact.payload.firstName {{ '}}' }}</div>
+      <div v-if="contact.payload.lastName">Nom :  {{ '{{' }} contact.payload.lastName {{ '}}' }}</div>
+      <div v-if="contact.payload.name">Nom :  {{ '{{' }} contact.payload.name {{ '}}' }}</div>
+      <div v-if="contact.payload.email">Email :  {{ '{{' }} contact.payload.email {{ '}}' }}</div>
+      <div v-if="contact.payload.phone">Téléphone :  {{ '{{' }} contact.payload.phone {{ '}}' }}</div>
+      <div v-if="contact.payload.raisonsociale">Raison sociale :  {{ '{{' }} contact.payload.raisonsociale {{ '}}' }}</div>
+      <div v-if="contact.payload.emailConnectedUser">Email utilisateur connecté :  {{ '{{' }} contact.payload.emailConnectedUser {{ '}}' }}</div>
+    </div>
+    <modal :show.boolean="showModalInfo" :modal-width="630" :close-modal="closeModal">
+      <h3 slot="header">Détails du contact</h3>
+      <div slot="body">
+        <p style="color: black" v-if="selectedContact && selectedContact.data">
+          Date d'inter : <strong>{{ '{{' }} selectedContact.data.service.providedAt | dateFormat {{ '}}' }}</strong> <br>
+          DataId : <strong>{{ '{{' }} selectedContact.data._id | dateFormat {{ '}}' }}</strong> <br>
+          Genre : <strong v-if="selectedContact.data.customer.gender">{{ '{{' }} selectedContact.data.customer.gender.value {{ '}}' }}</strong> <br>
+          Nom : <strong v-if="selectedContact.data.customer.lastName || selectedContact.data.customer.fullName">{{ '{{' }} selectedContact.data.customer.lastName.value || selectedContact.data.customer.fullName.value {{ '}}' }}</strong> <br>
+          Prénom : <strong v-if="selectedContact.data.customer.firstName">{{ '{{' }} selectedContact.data.customer.firstName.value {{ '}}' }}</strong> <br>
+          Email : <strong v-if="selectedContact.data.customer.contact.email">{{ '{{' }} selectedContact.data.customer.contact.email.value {{ '}}' }}</strong> <br>
+          Téléphone : <strong v-if="selectedContact.data.customer.contact.mobilePhone">{{ '{{' }} selectedContact.data.customer.contact.mobilePhone.value {{ '}}' }}</strong> <br>
+          Ville : <strong v-if="selectedContact.data.customer.city">{{ '{{' }} selectedContact.data.customer.city.value {{ '}}' }}</strong> <br>
+          Marque : <strong v-if="selectedContact.data.vehicle.make">{{ '{{' }} selectedContact.data.vehicle.make.value {{ '}}' }}</strong> <br>
+          Modèle : <strong v-if="selectedContact.data.vehicle.model">{{ '{{' }} selectedContact.data.vehicle.model.value  {{ '}}' }}</strong> <br>
+        </p>
+      </div>
+    </modal>
+  </div>
+
+</script>
+
+
+{% include "./_vue-modal.nunjucks" %}
+<script type="text/javascript">
+  Vue.component('contact-info', {
+    template: '#contact-info',
+    data: function () {
+      return {
+        selectedContact: null,
+        showModalInfo: false,
+      }
+    },
+    props: {
+      contact: {
+        type: Object,
+        required: true
+      },
+      contactConfig: {
+        type: Object,
+        required: false
+      }
+    },
+    methods: {
+      getMonthlySummaryUrl(reportId) {
+        return `{{ base_url }}/report/monthlySummary/${reportId}`;
+      },
+      getPublicUrl(token){
+        return '{{ base_url }}/report/' + token;
+      },
+      showContactDetail: function (contact) {
+        this.selectedContact = contact;
+        this.showModalInfo = true;
+      },
+      closeModal: function () {
+        this.selectedContact = null;
+        this.showModalInfo = false;
+      }
+    }
+  });
+</script>

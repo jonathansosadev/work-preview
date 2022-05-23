@@ -1,0 +1,55 @@
+{
+  "name": "CockpitExportConfiguration",
+  "plural": "CockpitExportsConfigurations",
+  "base": "GarageScoreBaseModel",
+  "options": {},
+  "mongodb": {
+    "collection": "cockpitExportsConfiguration"
+  },
+  "http": {
+    "path": "cockpitExportsConfiguration"
+  },
+  "mixins": {},
+  "properties": {
+    "userId": {
+      "type": "string"
+    },
+    "exportType": {
+      "type": "string"
+    },
+    "periodId": {
+      "type": "string"
+    },
+    "dataTypes": {
+      "type": "array"
+    },
+    "garageIds": {
+      "type": "array"
+    },
+    "fields": {
+      "type": "array"
+    },
+    "name": {
+      "type": "string"
+    },
+    "recipients": {
+      "type": "array"
+    },
+    "automaticallyGenerated": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "indexes": {
+    "userId": {
+      "name": "userId",
+      "keys": {
+        "userId": 1
+      }
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

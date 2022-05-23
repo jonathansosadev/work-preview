@@ -1,0 +1,114 @@
+[
+  {
+    "source": "Internal survey",
+    "date": "2021-03-23T13:25:36.525Z",
+    "payload": {
+      "acceptTermOfUse": true,
+      "acceptTermOfSharing": true,
+      "dataType": "VehicleInspection",
+      "rating": 10,
+      "comment": "superbe établissement , rien à dire",
+      "isComplete": false,
+      "pageNumber": 1,
+      "pageCount": 4,
+      "timestamp": 1616505934653
+    }
+  },
+  {
+    "source": "Internal survey",
+    "date": "2021-03-23T13:26:21.574Z",
+    "payload": {
+      "acceptTermOfUse": true,
+      "acceptTermOfSharing": true,
+      "dataType": "VehicleInspection",
+      "rating": 10,
+      "comment": "superbe établissement , rien à dire",
+      "leadModels_1": "Aston Martin",
+      "leadModels_2": "McLaren",
+      "leadModels_3": "Ferrari",
+      "leadTime": "BetweenNowToMidTerm",
+      "leadSaleType": "NewVehicleSale",
+      "leadEnergyType": "diesel_fuel",
+      "leadFunding": "cash",
+      "leadTradeIn": "Yes",
+      "testDrive": "Yes",
+      "isComplete": false,
+      "pageNumber": 2,
+      "pageCount": 4,
+      "timestamp": 1616505980391
+    }
+  },
+  {
+    "source": "Internal survey",
+    "date": "2021-03-23T13:26:41.571Z",
+    "payload": {
+      "title": "Monsieur",
+      "fullName": "Jean Dubois",
+      "email": "testG@gmail.com",
+      "streetAddress": "44 Rue Cauchy",
+      "postalCode": "94110",
+      "city": "Arcueil",
+      "acceptTermOfUse": true,
+      "acceptTermOfSharing": true,
+      "dataType": "VehicleInspection",
+      "rating": 10,
+      "comment": "superbe établissement , rien à dire",
+      "leadModels_1": "Aston Martin",
+      "leadModels_2": "McLaren",
+      "leadModels_3": "Ferrari",
+      "leadTime": "BetweenNowToMidTerm",
+      "leadSaleType": "NewVehicleSale",
+      "leadEnergyType": "diesel_fuel",
+      "leadFunding": "cash",
+      "leadTradeIn": "Yes",
+      "testDrive": "Yes",
+      "serviceMiddleMan": [
+        "Pub",
+        "Offer",
+        "Garage"
+      ],
+      "recommend": true,
+      "isComplete": false,
+      "pageNumber": 3,
+      "pageCount": 4,
+      "timestamp": 1616505997470
+    }
+  },
+  {
+    "source": "Internal survey",
+    "date": "2021-03-23T13:26:51.549Z",
+    "payload": {
+      "title": "Monsieur",
+      "fullName": "Jean Dubois",
+      "email": "testG@gmail.com",
+      "streetAddress": "44 Rue Cauchy",
+      "postalCode": "94110",
+      "city": "Arcueil",
+      "acceptTermOfUse": true,
+      "acceptTermOfSharing": true,
+      "dataType": "VehicleInspection",
+      "rating": 10,
+      "comment": "superbe établissement , rien à dire",
+      "leadModels_1": "Aston Martin",
+      "leadModels_2": "McLaren",
+      "leadModels_3": "Ferrari",
+      "leadTime": "BetweenNowToMidTerm",
+      "leadSaleType": "NewVehicleSale",
+      "leadEnergyType": "diesel_fuel",
+      "leadFunding": "cash",
+      "leadTradeIn": "Yes",
+      "testDrive": "Yes",
+      "serviceMiddleMan": [
+        "Pub",
+        "Offer",
+        "Garage"
+      ],
+      "recommend": true,
+      "shareWithPartners": "Oui",
+      "isComplete": true,
+      "pageNumber": 3,
+      "pageCount": 4,
+      "timestamp": 1616506009632
+    }
+  }
+]

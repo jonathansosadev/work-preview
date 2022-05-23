@@ -1,0 +1,406 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+
+{% block css %}
+<style type="text/css">
+	#app li {
+		float: none;
+		margin-bottom:5px;
+	}
+	#app textarea {
+		color:black;
+	}
+	.subcontrol {
+		display:inline-block;
+		width: inherit;
+	}
+	.sublink {
+		line-height: 34px;
+	}
+</style>
+{% endblock %}
+
+{% block page %}
+<div class="page-header">
+	<h1>Édition des parsers</h1>
+
+</div>
+{% raw %}
+<div class="col-md-12" id="app">
+  	<textarea id="configJSON" cols="50" rows="20" style="position: absolute; right: 0; z-index:5">{{configJSON}}</textarea>
+  	<hr/>
+  	<div class="row">
+	  	<form class="form-horizontal">
+	  		<div class="form-group">
+	            <label class="control-label col-md-4">Liste des parsers</label>
+	            <div  class="col-md-4">
+	            	<select name="currentId" class="form-control" v-model="currentId">
+	              		<option v-for="option in configsOptions" :value="option.value"> {{ option.text }} </option>
+	              		<option value="-1">:: Nouvelle config ::</option>
+	            	</select>
+	        	</div>
+	        </div>
+	  	</form>
+  	</div>
+  	<hr/>
+  	<form class="form-horizontal">
+  		<div class="row form-group">
+            <label class="control-label col-md-3">Référence</label>
+            <div class="col-md-5">
+            	<input type="text" size="30" name="_reference" v-model="config._reference"/>
+            </div>
+        </div>
+  		<div class="row form-group">
+            <label class="control-label col-md-3">Définition des colonnes</label>
+            <div  class="col-md-3">
+            	<select name="columns" class="form-control" v-model="config.foreigns.parserColumnsId">
+              		<option v-for="column in columns" :value="column.id"> {{ column._reference }} </option>
+            	</select>
+            </div>
+            <div  class="col-md-2 sublink">
+            	<a :href=columnsHref>Gestion des définitions</a>
+            </div>
+          </div>
+        <div class="row form-group">
+            <label class="control-label col-md-3">Définition des constructeurs</label>
+            <div  class="col-md-3">
+            	<select name="vehicleMake" class="form-control" v-model="config.foreigns.parserVehicleMakesId">
+	              	<option v-for="make in makes" :value="make.id"> {{ make._reference }} </option>
+            	</select>
+            </div>
+            <div  class="col-md-2 sublink">
+            	<a :href=makesHref>Gestion des définitions</a>
+            </div>
+        </div>
+        <div class="row form-group">
+          <label class="control-label col-md-3">Définition des types</label>
+          <div  class="col-md-3">
+            <select name="columns" class="form-control" v-model="config.foreigns.parserTypesId">
+              <option v-for="typesList in typesLists" :value="typesList.id"> {{ typesList._reference }} </option>
+            </select>
+          </div>
+          <div  class="col-md-2 sublink">
+            <a :href=typesHref>Gestion des types</a>
+          </div>
+        </div>
+        <div class="row form-group">
+            <label class="control-label col-md-3">Format de fichier</label>
+            <div  class="col-md-3">
+            	<select name="format" class="form-control" v-model="config.fileformat.format">
+              		<option value="csv">csv</option>
+              		<option value="xlsx">xls(x)</option>
+              		<option value="xml">xml</option>
+              		<option value="json">json</option>
+              		<option value="variable">Défini par l'extension du nom de fichier</option>
+            	</select>
+            </div>
+        </div>
+        <div class="row form-group" v-if="config.fileformat.format === 'csv' || config.fileformat.format === 'xml' || config.fileformat.format === 'variable'">
+            <label class="control-label col-md-3">Encodage</label>
+            <div  class="col-md-3">
+            	<select name="charset" class="form-control" v-model="config.fileformat.charset">
+              		<option>UTF-8</option>
+              		<option>win1252</option>
+            	</select>
+            </div>
+        </div>
+        <div class="row form-group">
+            <label class="control-label col-md-3">Pays (format des num. de tél)</label>
+            <div  class="col-md-3">
+            	<select name="country" class="form-control" v-model="config.country">
+              		<option value="fr_FR">France</option>
+              		<option value="fr_MC">Monaco</option>
+              		<option value="fr_BE">Belgique</option>
+                  <option value="nl_BE">Belgique (nl)</option>
+                  <option value="fr_NC">Nouvelle-Calédonie</option>
+              		<option value="es_ES">Espagne (es)</option>
+              		<option value="ca_ES">Espagne (ca)</option>
+              		<option value="en_US">USA</option>
+              		<option value="es_PE">Pérou</option>
+            	</select>
+            </div>
+        </div>
+        <div class="row form-group" v-if="config.fileformat.format === 'xlsx' || config.fileformat.format === 'variable'">
+            <label class="control-label col-md-3">Feuille Excel</label>
+            <div  class="col-md-3">
+            	<select name="worksheetName" class="form-control" v-model="config.fileformat.worksheetName">
+              		<option>#first#</option>
+            	</select>
+            </div>
+        </div>
+        <div class="row form-group" v-if="config.fileformat.format === 'xml'">
+            <label class="control-label col-md-3">Chemin XML</label>
+            <div  class="col-md-3">
+              	<input type="text" name="path" v-model="config.fileformat.path" />
+            </div>
+        </div>
+        <div class="row form-group" v-if="config.fileformat.format === 'xlsx' || config.fileformat.format === 'csv'">
+            <label class="control-label col-md-3">Nombre de premières lignes à ignorer</label>
+            <div  class="col-md-3">
+            	<select name="ignoreFirstXLines" class="form-control" v-model="config.fileformat.ignoreFirstXLines">
+                <option value="">0</option>
+                <option v-for="n in 100" :value="n">{{ n }}</option>
+            	</select>
+            </div>
+        </div>
+        <div class="row form-group">
+            <label class="control-label col-md-3">Format de la date d'intervention</label>
+            {% endraw %}
+            {% for dataRecordType in dataRecordTypes %}
+            <div  class="col-md-2" style="width: 200px;">
+              {{dataRecordType}} <input type="text" name="dataRecordCompletedAt" v-model="config.format.dataRecordCompletedAt.{{dataRecordType}}" />
+            </div>
+            {% endfor %}
+            {% raw %}
+        </div>
+        <div class="row form-group">
+          <label class="control-label col-md-3">Date d'intervention facultative (J-1)</label>
+          {% endraw %}
+            <input type="checkbox" v-model="config.optionalCompletedAt">
+          {% raw %}
+        </div>
+        <div class="row form-group">
+            <label class="control-label col-md-3">Format de la date de mise en circulation</label>
+            <div  class="col-md-3">
+            	<input type="text" name="vehicleRegistrationFirstRegisteredAt" v-model="config.format.vehicleRegistrationFirstRegisteredAt" />
+            </div>
+
+        </div>
+        <div class="row form-group">
+            <label class="control-label col-md-3">Ville par défaut</label>
+            <div  class="col-md-3">
+            	<input type="text" name="defaults_city" v-model="config.defaults.city" />
+            </div>
+        </div>
+        <div class="row form-group">
+            <label class="control-label col-md-3">Code pays par défaut</label>
+            <div  class="col-md-3">
+            	<input type="text" name="defaults_countryCode" v-model="config.defaults.countryCode" />
+            </div>
+        </div>
+        <div class="row form-group">
+            <label class="control-label col-md-3">Code postal par défaut</label>
+            <div  class="col-md-3">
+            	<input type="text" name="defaults_postCode" v-model="config.defaults.postCode" />
+            </div>
+        </div>
+        <div class="row form-group">
+            <label class="control-label col-md-3">Rue par défaut</label>
+            <div  class="col-md-3">
+            	<input type="text" name="defaults_streetAddress" v-model="config.defaults.streetAddress" />
+            </div>
+        </div>
+        <div class="row form-group">
+            <label class="control-label col-md-3">Transformers</label>
+            <ul class="col-md-6">
+            	<li>Séparateur: tabulation&nbsp;<select name="tsv-to-csv" class="form-control subcontrol" v-model="config.transformers.tsvToCsv"><option value=""></option><option value="1">Transformer tous les /t en ;</option></select></li>
+            	<li>Séparateur: virgule&nbsp;<select name="vsv-to-csv" class="form-control subcontrol" v-model="config.transformers.vsvToCsv"><option value=""></option><option value="1">Transformer toutes les , en ;</option></select></li>
+            	<li>Séparateur: pipe&nbsp;<select name="psv-to-csv" class="form-control subcontrol" v-model="config.transformers.psvToCsv"><option value=""></option><option value="1">Transformer tous les | en ;</option></select></li>
+            	<li>Forcer le nombre de colonnes&nbsp;<select name="colsize-csv" class="form-control subcontrol
+subcontrol"  v-model="config.transformers.colsizeCsv"><option v-for="n in 100" :value="n">{{ n }}</option></select></li>
+              <li>Taille fixe avec espaces (mettre la taille des colonnes séparée par des espaces)<br/>
+                <input type="text" style="width:100%" name="fixedlength-to-csv" class="form-control subcontrol" v-model="config.transformers.fixedLengthToCsv" placeholder='4,10,22,5,..'/>
+              </li>
+            {% endraw %}
+            {% for dataFileType in dataFileTypes.values() %}
+            <li>Ajouter un header {{ dataFileType }}<textarea type="text" name="headerless-csv" class="form-control" style="width:100%" v-model="config.transformers.headerlessCsv.{{dataFileType}}.header"> </textarea> </li>
+            {% endfor %}
+            {% raw %}
+
+            </ul>
+        </div>
+
+        <div class="row form-group">
+            <label class="control-label col-md-3">valuesTransformer(columnName, value, rowCells)</label>
+            <textarea cols="100"> (transforme les differents formats de date de cobrediamix, renvoie null pour fullName de sofida si _cessions</textarea>
+        </div>
+  	</form>
+  	<br/><br/>
+  	<form class="form-horizontal">
+  		<div class="row form-group">
+  			<input v-if="!loading" class="btn btn-success btn-lg col-md-3 col-md-offset-4" type="submit" value="Sauver" @click="saveConfig"/>
+  			<input v-if="loading" class="btn btn-default disabled btn-lg col-md-3 col-md-offset-4" value="..."/>
+  		</div>
+  	</form>
+
+</div>
+
+
+
+{% endraw %}
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+var configs = {{ configs|safe }};
+var makes = {{ makes|safe }};
+var columns = {{ columns|safe }};
+var typesLists = {{ typesLists|safe }};
+var currentId = Object.keys(configs).length === 0 ? '-1' : document.location.hash ? document.location.hash.substr(1) : configs[Object.keys(configs)[0]].id;
+var emptyConf = {
+  country: 'fr_FR',
+	foreigns: {
+    parserVehicleMakesId: '',
+    parserColumnsId: '',
+    parserTypesId: ''
+  },
+	fileformat: {
+    ignoreFirstXLines: '',
+    path: '',
+    worksheetName: '',
+    charset: '',
+    format: ''
+  },
+	format: {
+	  dataRecordCompletedAt: {},
+    vehicleRegistrationFirstRegisteredAt: ''
+  },
+	defaults: {
+	  streetAddress: '',
+    postCode: '',
+    countryCode: '',
+    city: ''
+  },
+	transformers: {
+	  headerlessCsv: {},
+    tsvToCsv: '',
+    vsvToCsv: '',
+    fixedLengthToCsv: [],
+
+  },
+  optionalCompletedAt: false,
+  _reference: ''
+};
+var configsOptions = [];
+Object.keys(configs).forEach(function(k) {
+    configsOptions.push({ value: configs[k].id, text: configs[k]._reference });
+});
+
+function setURL(configId) {
+	document.location = document.location.toString().replace(/#.+/,'') + '#' + configId;
+}
+document.addEventListener("DOMContentLoaded", function() {
+    var vm = new Vue({
+      el: '#app',
+      data: function () {
+        return {
+          loading: false,
+          makesHref: '{{ lib.client.url.getShortUrl('ADMIN_DATA_FILE_DYNAMIC_PARSERS_MAKES') }}',
+          columnsHref: '{{ lib.client.url.getShortUrl('ADMIN_DATA_FILE_DYNAMIC_PARSERS_COLUMNS') }}',
+          typesHref: '{{ lib.client.url.getShortUrl('ADMIN_DATA_FILE_DYNAMIC_PARSERS_TYPES') }}',
+          config: emptyConf,
+          currentId: currentId,
+          dataRecordTypes: {{ dataRecordTypesJson | safe }},
+          dataFileTypes: {{ dataFileTypesJson | safe }},
+          configJSON: '',
+          configsOptions : configsOptions,
+          makes: makes,
+          columns: columns,
+          typesLists: typesLists
+        };
+      },
+      created: function () {
+        this.config = emptyConf;
+        this.setDefaultValue();
+        if (this.currentId && this.currentId !== '-1') {
+          this.loadConfig(currentId);
+        }
+      },
+      watch: {
+      	'config': {
+          handler: function (value, oldVal) {
+            this.configJSON = JSON.stringify(value, null, 2);
+          },
+          deep: true
+        },
+        'currentId': function (currentId) {
+      	  if (currentId) {
+            setURL(currentId);
+            this.loadConfig(currentId);
+          }
+        }
+      },
+      methods: {
+        setDefaultValue: function () {
+          var recordTypes = Object.keys(this.dataRecordTypes);
+          var fileTypes = Object.keys(this.dataFileTypes);
+
+          if (!this.config.format) {
+            this.$set(this.config, 'format', {dataRecordCompletedAt: {}, vehicleRegistrationFirstRegisteredAt: ''});
+          }
+          if (!this.config.format.dataRecordCompletedAt) {
+            this.$set(this.config.format, 'dataRecordCompletedAt', {});
+          }
+          if (!this.config.transformers) {
+            this.$set(this.config, 'transformers', {});
+          }
+          if (!this.config.transformers.headerlessCsv) {
+            this.$set(this.config.transformers, 'headerlessCsv', {});
+          }
+          for (var i = 0; i < recordTypes.length; ++i) {
+            if (!this.config.format.dataRecordCompletedAt[this.dataRecordTypes[recordTypes[i]]]) {
+              this.$set(this.config.format.dataRecordCompletedAt, this.dataRecordTypes[recordTypes[i]],  '');
+            }
+          }
+          for (var i = 0; i < fileTypes.length; ++i) {
+            if (!this.config.transformers.headerlessCsv[this.dataFileTypes[fileTypes[i]]]) {
+              this.$set(this.config.transformers.headerlessCsv, this.dataFileTypes[fileTypes[i]], {});
+            }
+            if (!this.config.transformers.headerlessCsv[this.dataFileTypes[fileTypes[i]]].header) {
+              this.$set(this.config.transformers.headerlessCsv[this.dataFileTypes[fileTypes[i]]], 'header', '');
+            }
+          }
+        },
+       /** load a config*/
+       loadConfig: function (parserId) {
+       	if (parserId === '-1') {
+			    this.config = emptyConf;
+			    this.setDefaultValue();
+       		return;
+       	}
+      	this.loading = true;
+      	var request = new XMLHttpRequest();
+      	var url = '{{ lib.client.url.getShortUrl("ADMIN_DATA_FILE_DYNAMIC_PARSERS_CONFIG_LOAD") }}' + parserId;
+      	request.open('GET', url, true);
+      	request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+      	request.onload = function () {
+      		this.loading = false;
+      		if (request.status != 200 && request.status != 304){
+      			alert("Erreur " + request.status + " !");
+      			} else {
+      				var response = JSON.parse(request.responseText);
+      				this.config = response.config;
+      				this.setDefaultValue();
+      			}
+      		}.bind(this);
+      		request.send(JSON.stringify({ parserId: parserId }));
+      	},
+       /** save a config*/
+       saveConfig: function () {
+       	var configId = this.currentId;
+       	if (!this.config._reference) {
+       		alert("Référence nécessaire");
+       		return false;
+       	}
+      	this.loading = true;
+      	var request = new XMLHttpRequest();
+      	var url = '{{ lib.client.url.getShortUrl("ADMIN_DATA_FILE_DYNAMIC_PARSERS_CONFIG_SAVE") }}' + configId;
+      	request.open('POST', url, true);
+      	request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+      	request.onload = function () {
+      		this.loading = false;
+      		if (request.status != 200 && request.status != 304){
+      			alert("Erreur " + request.status + " !");
+      			} else {
+      				var response = JSON.parse(request.responseText);
+      				setURL(response.details.id);
+      				this.currentId = response.details.id;
+      			}
+      		}.bind(this);
+      	request.send(JSON.stringify({ configId: configId, config: this.config }));
+      	return false;
+      	}
+      }
+     });
+});
+
+</script>
+{% endblock %}

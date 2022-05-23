@@ -1,0 +1,38 @@
+{
+  "name": "CampaignFilter",
+  "plural": "CampaignFilters",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "mongodb": {
+    "collection": "campaignFilters"
+  },
+  "http": {
+    "path": "campaign-filter"
+  },
+  "mixins": {
+    "MongoDirect": true,
+    "SmartSort": true
+  },
+  "properties": {
+    "type": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "matchQuery": {
+      "type": "object"
+    }
+  },
+  "validations": [],
+  "relations": {
+  },
+  "acls": [
+  ],
+  "methods": {
+  }
+}

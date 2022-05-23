@@ -1,0 +1,32 @@
+{
+  "PERCENT": {
+    "value": "percent",
+    "properties": {
+      "suffix" : "%"
+    }
+  },
+  "PERCENT_ROUND": {
+    "value": "percentRound",
+    "properties": {
+      "suffix" : "%"
+    }
+  },
+  "GRADE_10": {
+    "value": "grade_10",
+    "properties": {
+      "suffix" : ""
+    }
+  },
+  "GRADE_5": {
+    "value": "grade_5",
+    "properties": {
+      "suffix" : ""
+    }
+  },
+  "ROUND": {
+    "value": "round",
+    "properties": {
+      "suffix" : ""
+    }
+  }
+}

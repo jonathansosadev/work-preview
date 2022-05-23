@@ -1,0 +1,63 @@
+{% extends "./_master.nunjucks" %}
+
+{% block title %}Rapport{% endblock %}
+
+{% block questions %}
+    <a class="row question" id="q_1" href="#a_1">Qu'est ce qu'un rapport mensuel ?</a>
+    <a class="row question" id="q_2" href="#a_2">Qu'est ce qu'un rapport hébdomadaire ?</a>
+    <a class="row question" id="q_3" href="#a_3">Qu'est ce qu'un rapport journalier ?</a>
+    <a class="row question" id="q_4" href="#a_1">Quand le rapport mensuel sera envoyé ?</a>
+    <a class="row question" id="q_5" href="#a_2">Quand le rapport hébdomadaire sera envoyé ?</a>
+    <a class="row question" id="q_6" href="#a_2">Quand le rapport journalier sera envoyé ?</a>
+    <a class="row question" id="q_7" href="#a_3">Quand un rapport est considéré comme vide ?</a>
+{% endblock %}
+
+{% block answers %}
+    <div class="row answer" id="a_1" data-date="en Février 2017">
+      <p>Le rapport mensuel contient : </p>
+      <p> - une page de statistiques (la même que cockpit ).</p>
+      <p> - un résumé des mécontents ( Atelier, Vn, VO).</p>
+      <p> - un résumé des projects véhicules.</p>
+      <p> Le rapport mensuel contient les données des client qui sont passé pendant le mois de référence.</p>
+    </div>
+    <div class="row answer" id="a_2" data-date="en Février 2017">
+      <p>Le rapport hébdomadaire contient : </p>
+      <p> - une page de statistiques (la même que cockpit ).</p>
+      <p> - un résumé des mécontents ( Atelier, Vn, VO).</p>
+      <p> - un résumé des projects véhicules.</p>
+      <p> Le rapport hébdomadaire contient les données des client qui ont répondu à une enquête de satisfaction pendant la semaine de référence.</p>
+    </div>
+    <div class="row answer" id="a_3" data-date="en Février 2017">
+      <p>Le rapport journalier contient : </p>
+      <p> - une page de statistiques (la même que cockpit ).</p>
+      <p> - un résumé des mécontents ( Atelier, Vn, VO).</p>
+      <p> - un résumé des projects véhicules.</p>
+      <p> Le rapport journalier contient les données des client qui ont répondu à une enquête de satisfaction pendant le jour de référence.</p>
+    </div>
+    <div class="row answer" id="a_4" data-date="en Janvier 2017">
+        <p>Le rapport mensuel est envoyé à un utilisateur configuré à le reçevoir,
+            à 5 heur du matin le 10 de chaque mois pour le mois qui précede.<br>
+            Si un utilisateur sera configuré entre le 10 et la fin du mois il recevera le rapport
+            le lendemin de son configuration à 5 heures du matin.
+        </p>
+    </div>
+    <div class="row answer" id="a_5" data-date="en Février 2017">
+        <p>Le rapport hébdomadaire est envoyé à un utilisateur configuré à le reçevoir,
+            à 5 heur du matin chaque Lundi pour la semaine qui précede.<br>
+            La semaine commence le Lundi.<br>
+            Si un utilisateur sera configuré entre Mercredi et la fin de la semaine il recevera le rapport
+            le lendemin de son configuration à 5 heures du matin.
+        </p>
+    </div>
+    <div class="row answer" id="a_6" data-date="en Février 2017">
+      <p>Le rapport journalier est envoyé à un utilisateur configuré à le reçevoir,
+        à 5 heur du matin chaque jour pour le jour qui précede.<br>
+        Un utilisateur qui vient d'être configurer recevra ces rapport à partir du lendemain de son configuration.
+      </p>
+    </div>
+    <div class="row answer" id="a_7" data-date="en Janvier 2017">
+        <p>Un rapport vide est soit :</p>
+        <p> - un rapport associé à utilisateur qui n'est pas configuré à des garages</p>
+        <p> - un rapport qui n'a aucun contact sondé </p>
+    </div>
+{% endblock %}

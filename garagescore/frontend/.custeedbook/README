@@ -1,0 +1,33 @@
+Pour setup le projet : npm install
+Pour lancer le custeedbook : npm run custeedbook
+Allez ensuite à l'adresse indiquée dans la console pour afficher le custeedbook.
+
+FAQ
+
+1 - Où trouver les composants existants ?
+
+Les composants de base sont disponibles dans le dossier "frontend/components/ui".
+Certains composants moins basiques sont disponibles dans "frontend/components/global"
+Enfin, les composants spécifiques sont disponibles dans les sous dossiers de "frontend/components"
+
+2 - Comment importer un composant existant ?
+
+Dans ".custeedbook/config.js", il suffit d'importer le composant puis d'utiliser la méthode Vue.component("nomDuComposant", composant)
+
+3 - Où dois-je créer mes nouveaux composants ?
+
+Les nouveaux composants doivent être crées dans le dossier ".custeedbook/newComponents".
+Il faut ensuite créer un fichier nommé "nomDuComposant.story.js", dans le dossier ".custeedbook/stories".
+Prendre exemple sur "Button.story.js" pour créer sa story.
+
+4 - Où se trouvent les variables globales (couleurs, tailles)
+
+Les variables globales se trouvent dans le fichier "frontend/assets/style/variables.scss".
+Si une variable de couleur du zeppelin n'est pas présente dans le fichier, notifiez quelqu'un en interne.
+
+5 - Quelles sont les dimensions pour le responsive ?
+
+Les dimensions pour le responsive se trouvent dans le fichier "frontend/assets/style/variables.scss".
+Les variables servant au responsive sont en bas de fichier, $breakpoint-min <= et $breakpoint-max >=.
+
+

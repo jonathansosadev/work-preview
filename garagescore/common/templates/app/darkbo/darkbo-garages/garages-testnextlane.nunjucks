@@ -1,0 +1,128 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+
+  <style type="text/css">
+    .form-group input {
+      color: black;
+    }
+    .form-group select {
+      color: black;
+    }
+  </style>
+{% endblock %}
+
+{% block page %}
+<div class="page-header">
+  <h1>Test nextlane</h1>
+</div>
+<div class="col-md-12">
+  <p>
+    Test la récupération des données nextlane pour un jour et un garage donné.
+  </p>
+</div>
+{% raw %}
+  <div id="content" class="col-md-12">
+    <div class="row form-group">  
+      <label class="col-md-2">Quel dataType utiliser ?</label>
+      <select class="col-md-3" v-model="selectedDataFileType">
+        <option v-for="type in dataFileTypes" >
+          {{ type }}
+        </option>
+      </select>
+    </div>
+    <div class="row">
+      <label class="col-md-12">Garage</label>
+      <div class="form-group col-md-12 searchbox">
+        
+          <input type="text" v-model="id" size="40" placeholder="garageId"/>
+        
+      </div>
+      <div class="col-md-12">Exemple: 577a30d774616c1a0056c263</div>
+    </div>
+
+ 
+  <div class="row" style="margin-top: 30px">
+    <div class="col-md-12">
+      <a @click="getCsv" class="btn btn-success">Récupérer le csv</a>
+    </div>
+  </div>
+  <div v-if="loading" class="row"> {{ loading }}</div>
+  <div v-if="error" class="row">{{ error }}</div>
+  <div v-if="results" class="row"><pre>{{results}}</pre></div>
+</div>
+{% endraw %}
+{% endblock %}
+
+
+{% block scripts %}
+<script type="text/javascript">
+</script>
+
+{% include "../common/components/_auto-complete/auto-complete.nunjucks" %}
+  {% include "../common/components/garages-list/garages-list.component.nunjucks" %}
+<script type="text/javascript">
+  let dataFileTypes = {{ dataFileTypes|safe }}
+  new Vue({
+    el: '#content',
+    data: function () {
+      return {
+        dataFileTypes: dataFileTypes,
+        selectedDataFileType: (dataFileTypes && dataFileTypes[0]) || null,
+        id: '',
+        loading: null,
+        error: null,
+        results: ''
+      };
+    },
+    methods: {
+      getCsv: function () {
+        if (!this.id || this.id.length !== 24 || !this.selectedDataFileType) return;
+        this.loading = 'Chargement....';
+        this.error = null;
+        this.results = null;
+        var request = new XMLHttpRequest();
+        var url = '{{ lib.client.url.getShortUrl('ADMIN_GARAGE_TEST_NEXTLANE_GETCSV') }}'
+          + '?id=' + this.id + '&dataType=' + this.selectedDataFileType;
+        request.open('POST', url, true);
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        request.send();
+        request.onload = function () {
+          if (request.status !== 200 && request.status !== 304) {
+            this.results = { isValid: false };
+            this.error = 'Erreur sur le serveur';
+          } else {
+            var resSocket = JSON.parse(request.responseText);
+            var protocol = document.location.protocol.indexOf('https') > -1 ? 'wss' : 'ws';
+            var HOST = protocol + '://' + document.location.host + resSocket.websocket;
+            var ws = new WebSocket(HOST);
+
+            ws.onmessage = function (event) {
+              var res = event.data && JSON.parse(event.data);
+              console.log(res)
+              if (res && res.status === 'running') {
+                this.loading = ['C\'est long...','zzzzzz...', 'Ça  arrive, ça arrive...', 'Un peu de patience...', 'Bientôt des résultats ! ...enfin on espère...'][Math.floor(Math.random() * 5)];
+                return;
+              }
+              if (res && res.status === 'ok') {
+                this.loading = null;
+                this.results = res.details;
+              } else if (res && res.status === 'ko') {
+                this.loading = null;
+                this.error = res.message;
+              } else {
+                this.loading = null;
+                this.error = 'Erreur serveur';
+              }
+              ws.close();
+            }.bind(this);
+          }
+        }.bind(this);
+
+      },
+      selectDataType: function (e) {
+      console.log(e.target.value)
+      } 
+    }
+  });
+</script>
+{% endblock %}

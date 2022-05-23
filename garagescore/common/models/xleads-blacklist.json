@@ -1,0 +1,31 @@
+{
+  "name": "XLeadsBlacklist",
+  "plural": "XLeadsBlacklist",
+  "base": "GarageScoreBaseModel",
+  "options": {
+  },
+  "http": {
+    "path": "xLeadsBlacklist"
+  },
+  "mixins": {
+    "Stream": true,
+    "SmartSort": true
+  },
+  "mongodb": {
+    "collection": "xLeadsBlacklist"
+  },
+  "indexes": {
+  },
+  "properties": {
+    "field": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+  },
+  "acls": [
+  ],
+  "methods": {
+  }
+}

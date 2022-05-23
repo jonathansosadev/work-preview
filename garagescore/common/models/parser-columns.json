@@ -1,0 +1,110 @@
+{
+  "name": "ParserColumns",
+  "base": "GarageScoreBaseModel",
+  "options": {},
+  "mixins": {
+    "SmartSort": true
+  },
+  "mongodb": {
+    "collection": "parserColumns"
+  },
+  "http": {
+    "path": "parser-columns"
+  },
+  "properties": {
+    "_reference": {
+      "type": "String"
+    },
+    "dataRecordCompletedAt": {
+      "type": "Array"
+    },
+    "billedAt": {
+      "type": "Array"
+    },
+    "vehicleRegistrationFirstRegisteredAt": {
+      "type": "Array"
+    },    
+    "gender": {
+      "type": "Array"
+    },
+    "fullName": {
+      "type": "Array"
+    },
+    "lastName": {
+      "type": "Array"
+    },
+    "firstName": {
+      "type": "Array"
+    },
+    "vehicleRegistrationPlate": {
+      "type": "Array"
+    },
+    "homePhone": {
+      "type": "Array"
+    },
+    "mobilePhone": {
+      "type": "Array"
+    },
+    "officePhone": {
+      "type": "Array"
+    },
+    "fax": {
+      "type": "Array"
+    },
+    "email": {
+      "type": "Array"
+    },
+    "streetAddress": {
+      "type": "Array"
+    },
+    "postCode": {
+      "type": "Array"
+    },
+    "countryCode": {
+      "type": "Array"
+    },
+    "city": {
+      "type": "Array"
+    },    
+    "vehicleMake": {
+      "type": "Array"
+    },
+    "vehicleCategoryId": {
+      "type": "Array"
+    },
+    "vehicleModel": {
+      "type": "Array"
+    },
+    "vehicleMileage": {
+      "type": "Array"
+    },
+    "vehicleVin": {
+      "type": "Array"
+    },
+    "rowType": {
+      "type": "Array"
+    },
+    "foreigns_providedFrontDeskUserName": {
+      "type": "Array"
+    },
+    "foreigns_providedFrontDeskUserTeam": {
+      "type": "Array"
+    },
+    "foreigns_providedCustomerId": {
+      "type": "Array"
+    },
+    "foreigns_providedGarageId": {
+      "type": "Array"
+    },
+    "optOutMailing": {
+      "type": "Array"
+    },
+    "optOutSMS": {
+      "type": "Array"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

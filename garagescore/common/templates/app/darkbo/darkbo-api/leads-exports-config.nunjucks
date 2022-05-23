@@ -1,0 +1,397 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+  <style type="text/css">
+    #app {
+      align-item: center;
+    }
+
+    .panel.collapsed .panel-collapse {
+      display: none;
+    }
+    .panel-default {
+      border-color: #666666;
+    }
+    .panel-default>.panel-heading {
+      overflow: auto;
+      color: #FFF;
+      background-color: #474747;
+      border-color: #666666;
+    }
+    .panel-title {
+      display: inline-block;
+      padding-top: 8px;
+      border-color: #666666;
+    }
+    .panel-default>.panel-heading+.panel-collapse>.panel-body {
+      background-color: #3d3d3d;
+      border-color: #666666;
+    }
+
+    div.garages-list {
+      margin: 0 0 -10px 0;
+    }
+    label.gs-garages-list-label-above-input {
+      display: none;
+    }
+    .gs-garages-list-wrapper input.gs-garages-list-input {
+      background: #FFF;
+      color: #555;
+      height: 34px;
+      padding: 6px 12px;
+      border-radius: 4px;
+    }
+    .gs-garages-list-checkbox {
+      display: none;
+    }
+    div.gs-garages-list-suggestions-menu {
+      background: #FFF;
+    }
+    div.autocomplete-suggestion {
+      color: #555 !important;
+    }
+    div.autocomplete-suggestion:hover {
+      background: #CCC !important;
+    }
+
+    .garage {
+      margin-right: 7px;
+      margin-bottom: 3px;
+      border-radius: 8px;
+    }
+    .garage-config {
+      display: flex;
+      align-items: center;
+      margin: 5px 5px 0;
+      padding: 5px;
+      border: 1px solid #666666
+    }
+    .garage-config button {
+      margin-top: 5px
+    }
+    .source-configs {
+      border: 1px solid #666666
+    }
+    .source-config {
+      margin-bottom: 5px
+    }
+    .source-label {
+      padding-top: 7px
+    }
+    .garage-label {
+      font-size: 1.35rem;
+      line-height: 14px;
+    }
+
+  </style>
+{% endblock %}
+{% block page %}
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="page-header col-md-8">
+      {% block pageTitle %}
+        <h1>Configurer les exports de leads</h1>
+      {% endblock %}
+    </div>
+  </div>
+
+  <div id="app" class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div style="margin-bottom:  30px;">
+          <button class="btn btn-success" @click="addConfig">Ajouter une configuration</button>
+      </div>
+      {% raw %}
+        <div class="panel-group" id="accordion" role="tablist">
+          <div class="panel panel-default" :class="{ collapsed: index !== 0 }" v-for="(conf, index) in configs">
+            <div class="panel-heading" role="tab" @click="toggleTabExpand">
+              <h4 class="panel-title">
+                {{ conf.name }}
+              </h4>
+              <span style="float: right;">
+                <button class="btn btn-success" @click.stop="saveConfig(conf)">Sauvegarder {{conf.name}}</button>
+              </span>
+            </div> <!-- End panel header -->
+            <div class="panel-collapse collapse in" role="tabpanel">
+              <div class="panel-body">
+
+                <div style="margin-bottom:  5px;">
+                  <label :for="'name' + index">Nom de la configuration (name)</label>
+                  <input :id="'name' + index" type="text" class="form-control" v-model="conf.newName">
+                </div>
+                <div style="margin-bottom: 5px;">
+                  <label :for="'apiUrl' + index">URL ou email à utiliser (apiUrl)</label>
+                  <input :id="'apiUrl' + index" type="text" class="form-control" v-model="conf.apiUrl">
+                </div>
+                <label class="garages-list">Liste des garages (garages)</label>
+                <gs-garages-list :updated="addGarageToConf(conf.name)" class="garages-list"></gs-garages-list>
+                <span class="badge garage" v-for="(value, garage) in conf.garages" v-if="garagesMap[garage] && conf.name !== 'SelectUp'" :key="garage">
+                  {{ garagesMap[garage].label }}
+                  <span @click="removeGarageFromConf(conf.name, garage)">X</span>
+                </span>
+
+                <br/><b>Configuration garage par garage:</b> ( exemple: {{confExample(conf.newName || conf.name)}} )
+                <div v-for="(garageConf, gId) in conf.garages">
+                  <div class="row garage-config" v-if="conf.name !== 'SelectUp'">
+                    <label :for="gId" class="col-md-2 col-form-label garage-label">{{ garagesMap[gId] && garagesMap[gId].name }}</label>
+                    <div class="col-md-10">
+                      <input :id="gId" type="text" class="form-control" v-model="conf.garages[gId]" placeholder="JSON de configuration pour le garage">
+                    </div>
+                  </div>
+
+                  <div v-else class="row garage-config" :class="{ collapsed: index !== 0 }">
+                    <div class="col-md-2">
+                      <span class="garage-label">{{ garagesMap[gId] && garagesMap[gId].name }}</span>
+                      <span class="garage-label" v-if="garagesMap[gId] && garagesMap[gId].group"> | {{ garagesMap[gId].group }}</span>
+                      <button class="btn btn-warning" @click.stop="resetGarageConfig(conf.name, gId)">Reset à default</button>
+                      <button class="btn btn-danger" @click.stop="removeGarageFromConf(conf.name, gId)">Supprimer</button>
+                    </div> <!-- End col garageName -->
+                    <div class="col-md-10" v-if="!isGarageExpanded(gId)">
+                      <button class="btn btn-primary" @click.stop="expandGarage(gId)">Ouvrir la configuration</button>
+                    </div>
+                    <div class="col-md-10 source-configs" v-else>
+                      <div class="row source-config" v-for="(sourceConfig, idx) in garageConf">
+                        <div class="col-md-3 source-label">
+                          <switch-button :value.boolean="sourceConfIsEnabled(sourceConfig)" @change="toggleSource(sourceConfig)"></switch-button>
+                          {{ sourceConfig.name }}
+                        </div> <!-- End col sourceName -->
+                        <div class="col-md-9" v-if="sourceConfIsEnabled(sourceConfig)">
+                          <div class="row">
+                            <div class="col-lg-4">
+                              <div class="input-group">
+                                <span class="input-group-addon">family</span>
+                                <input type="text" class="form-control" v-model="sourceConfig.exportedValues.family">
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="input-group">
+                                <span class="input-group-addon">subFamily</span>
+                                <input type="text" class="form-control" v-model="sourceConfig.exportedValues.subFamily">
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="input-group">
+                                <span class="input-group-addon">contactType</span>
+                                <input type="text" class="form-control" v-model="sourceConfig.exportedValues.contactType">
+                              </div>
+                            </div>
+                          </div>
+                        </div> <!-- End col sourceConfig -->
+                        </div>
+                    </div> <!-- End col garageConfig -->
+                  <div>
+                </div> <!-- End row Garage -->
+
+
+              </div> <!-- End Panel Body -->
+            </div>
+          </div>
+        </div> <!-- End Accordion -->
+      {% endraw %}
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+  {% include "../common/components/_auto-complete/auto-complete.nunjucks" %}
+  {% include "../common/components/garages-list/garages-list.component.nunjucks" %}
+  {% include "../common/components/switch-button.nunjucks" %}
+
+  <script type="text/javascript">
+    if (!gsTools) {
+      throw new Error('tools not found !');
+    }
+    Vue.prototype.$gsTools = gsTools;
+
+    const configs = {{ configs|safe }};
+    const garages = {{ garages|safe }};
+    const SourceTypes = {{ SourceTypes|safe }};
+    const LeadSaleTypes = {{ LeadSaleTypes|safe }};
+    const garagesMap = {};
+    for (const g of garages) {
+      garagesMap[g.id] = {
+        label: `${g.publicDisplayName} [${g.id}]`,
+        name: g.publicDisplayName,
+        group: g.group
+      };
+    }
+    for (const c of configs) {
+      c.newName = c.name;
+      if (c.name !== 'SelectUp') {
+        for (const gId in c.garages) {
+          c.garages[gId] = JSON.stringify(c.garages[gId]);
+        }
+      }
+    }
+    let counter = 1;
+    document.addEventListener('DOMContentLoaded', function () {
+
+      /* global Vue:true */
+      // init Vue
+      new Vue({
+        el: '#app',
+        data: {
+          configs,
+          garagesMap,
+          savedConfigs: configs.map(c => c.name),
+          expandedGarageId: null
+        },
+        computed: {
+          getGarageText() {
+            return (garageId) => garagesMap[garageId].label;
+          },
+          confExampleString() {
+            return (confName) => JSON.stringify(this.confExample(confName));
+          },
+          confExample() {
+            return (confName) => {
+              switch (confName) {
+                case 'SelectUp':
+                  return { family: 'GarageScore', subFamily: 'GarageScore', contactType: "Projet d'achat" };
+                case 'MBParis':
+                  return {};
+                default:
+                  return { autoDealer: 64, family: 'Welcome-Pro' };
+              }
+            };
+          },
+          defaultGarageConfig() {
+            return (confName) => {
+              if (confName !== 'SelectUp') return JSON.stringify(this.confExample(confName));
+
+              return SourceTypes.map((source) => (
+                LeadSaleTypes.map(({ leadType, displayName }) => ({
+                  name: `${source} ${displayName}`,
+                  enabled: false,
+                  query: { source, leadType },
+                  exportedValues: this.confExample(confName)
+                }))
+              ))
+              .flat();
+            }
+          },
+          isGarageExpanded() {
+            return (garageId) => this.expandedGarageId === garageId;
+          },
+          sourceConfIsEnabled() {
+            return (sourceConf) => !!sourceConf.enabled;
+          }
+        },
+        events: {
+        },
+        methods: {
+          toggleTabExpand(event) {
+            const allPanels = event.target.closest('.panel-group').childNodes;
+            const currentPanel = event.target.closest('.panel-default');
+            const toExpand = currentPanel.classList.contains('collapsed');
+            for (const panel of allPanels) {
+              panel.classList.add('collapsed');
+            }
+            if (toExpand) {
+              currentPanel.classList.remove('collapsed');
+            } else {
+              Array.from(allPanels)
+                .find((panel) => !panel.isSameNode(currentPanel))
+                .classList
+                .remove('collapsed');
+            }
+          },
+          expandGarage(garageId) {
+            this.expandedGarageId = garageId;
+          },
+          toggleSource(sourceConf) {
+            sourceConf.enabled = !sourceConf.enabled;
+          },
+          addGarageToConf(confName) {
+            var self = {
+              ...this,
+              confName
+            };
+            let actualFct = function (garage) {
+              let conf = this.configs.find(c => c.name === this.confName);
+              if (conf && conf.garages) {
+                Vue.set(conf.garages, garage.id, this.defaultGarageConfig(this.confName));
+              }
+            }
+            return actualFct.bind(self);
+          },
+          removeGarageFromConf(confName, garageId) {
+            let conf = this.configs.find(c => c.name === confName);
+            if (conf && conf.garages && ~Object.keys(conf.garages).indexOf(garageId)) {
+              this.$delete(conf.garages, garageId);
+            }
+          },
+          resetGarageConfig(confName, garageId) {
+            let conf = this.configs.find(c => c.name === confName);
+            if (conf && conf.garages && ~Object.keys(conf.garages).indexOf(garageId)) {
+              Vue.set(conf.garages, garageId, this.defaultGarageConfig(confName));
+            }
+          },
+          addConfig() {
+            this.configs.unshift({
+              name: `Configuration ${counter++}`,
+              apiUrl: '',
+              garages: {}
+            });
+          },
+          saveConfig(config) {
+            // cleanup list of garages
+            const url = '{{ lib.client.url.getShortUrl('ADMIN_LEADS_EXPORTS_CONFIG') }}';
+            for (let gId in config.garages) {
+              if (!this.garagesMap[gId]) delete config.garages[gId];
+              try {
+                if (config.name !== 'SelectUp') {
+                  config.garages[gId] = JSON.parse(config.garages[gId]);
+                }
+              } catch {
+                config.garages[gId] = {};
+              }
+            }
+            // call save config service
+            gsTools.postRequest(url, config, (err, res) => {
+              if (!err && res) {
+                for (let c of res) {
+                  c.newName = c.name;
+                  if (config.name !== 'SelectUp') {
+                    for (let gId in c.garages) {
+                      c.garages[gId] = JSON.stringify(c.garages[gId]);
+                    }
+                  }
+                }
+                this.savedConfigs = res.map(c => c.name);
+                this.configs = res;
+                alert('Config sauvegardée avec succès');
+              } else {
+                alert(`Erreur lors de la sauvegarde des configs ${err}`)
+              }
+            });
+          },
+          deleteConfig(configName) {
+            // If not already saved, we don't need to call the service, simply remove it from frontEnd
+            if (!this.savedConfigs.includes(configName)) {
+              this.configs = this.configs.filter(c => c.name !== configName);
+              return;
+            }
+            // On other cases, call the service
+            let url = '{{ lib.client.url.getShortUrl('ADMIN_LEADS_EXPORTS_CONFIG') }}';
+            url += (url.endsWith('/') ? '' : '/') + '?name=' + configName;
+            gsTools.deleteRequest(url, (err, res) => {
+              if (!err && res) {
+                for (let c of res) {
+                  c.newName = c.name;
+                  if (config.name !== 'SelectUp') {
+                    for (let gId in c.garages) {
+                      c.garages[gId] = JSON.stringify(c.garages[gId]);
+                    }
+                  }
+                }
+                this.savedConfigs = res.map(c => c.name);
+                this.configs = res;
+              }
+            });
+          }
+        }
+      });
+    });
+  </script>
+{% endblock %}

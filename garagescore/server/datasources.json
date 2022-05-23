@@ -1,0 +1,12 @@
+{
+  "transient": {
+    "name": "transient",
+    "connector": "transient"
+  },
+  "garagescoreMongoDataSource": {
+    "name": "garagescoreMongoDataSource",
+    "connectionTimeout": 60000,
+    "requestTimeout": 60000,
+    "allowExtendedOperators": true
+  }
+}

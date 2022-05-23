@@ -1,0 +1,196 @@
+
+
+<style type="text/css">
+  #survey-list-template {
+    color: black;
+  }
+  .data-list tr > td {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+</style>
+<script type="x/template" id="data-list" xmlns="http://www.w3.org/1999/html">
+  <div id="survey-list-template">
+    <table class="table data-list">
+      <tr style="background-color: #e6e6e6" class="survey-list-header-tr">
+        <th class="container-fluid survey-list-header">
+          <div class="row">
+            <div class="col-xs-4"> Infos</div>
+            <div class="col-xs-2"> Mobile</div>
+            <div class="col-xs-3"> Email</div>
+            <div class="col-xs-2"> Contact</div>
+            <div class="col-xs-1"> répondu ?</div>
+          </div>
+        </th>
+      </tr>
+      <tr class="spacer-line">
+      </tr>
+      <tr v-for="(singleData, index) in datas" :id="singleData.id">
+        <td class="container-fluid">
+          <div class="col-xs-4">
+            completedAt: <span v-if="singleData.service">{{ '{{ ' }} singleData.service.providedAt | dateFormat {{ '}}' }}</span><br>
+            importedAt: <span v-if="singleData.source">{{ '{{ ' }} singleData.source.importedAt | dateFormat {{ '}}' }}</span><br>
+            customerFullName: <span v-if="singleData.customer && singleData.customer.fullName">{{ '{{ ' }} singleData.customer.fullName.value {{ '}}' }}</span><br>
+          </div>
+          <div class="col-xs-2">
+            <span v-if="singleData.customer && singleData.customer.contact && singleData.customer.contact.mobilePhone">{{ '{{ ' }} singleData.customer.contact.mobilePhone.value {{ '}}' }}</span><br>
+            <span v-if="singleData.campaign && singleData.campaign.contactStatus">{{ '{{ ' }} singleData.campaign.contactStatus.phoneStatus {{ '}}' }}</span>
+
+          </div>
+          <div class="col-xs-3">
+            <span v-if="singleData.customer && singleData.customer.contact && singleData.customer.contact.email">{{ '{{ ' }} singleData.customer.contact.email.value {{ '}}' }}</span><br>
+            <span v-if="singleData.campaign && singleData.campaign.contactStatus">{{ '{{ ' }} singleData.campaign.contactStatus.emailStatus {{ '}}' }}</span>
+          </div>
+          <div class="col-xs-2">
+            {{ '{{ ' }} singleData.campaign.contactStatus.status  {{ '}}' }}
+
+            <button class="badge" @click="getContacts(singleData)" v-if="singleData">
+              Afficher les contacts envoyés
+              <i class="fa fa-cog fa-spin font-18" aria-hidden="true" v-if="singleData.contactsLoading"></i>
+            </button>
+            <div v-if="singleData.contactsLoaded">
+              <p v-for="(contact, index) in singleData.contacts">
+                {{ '{{ ' }} contact.id {{ '}}' }} : {{ '{{ ' }} contact.payload.name {{ '}}' }}
+              </p>
+            </div>
+            <p v-if="!singleData.campaign">Pas de campaign item</p>
+          </div>
+          <div class="col-xs-1">
+            {{ '{{ ' }} singleData.survey && singleData.survey.firstRespondedAt ? 'Oui' : 'Non' {{ '}}' }}<br>
+            <span v-if="singleData.survey && singleData.survey.firstRespondedAt">{{ '{{ ' }} singleData.survey.firstRespondedAt | dateFormat {{ '}}' }}</span>
+          </div>
+
+        </td>
+      </tr>
+      <tr v-if="!datas.length">
+        <td class="container-fluid no-result-msg">
+          Aucun résultat, veuillez modifier votre recherche ou vos filtres.
+        </td>
+      </tr>
+
+      {% include "../../common/components/_pagination.nunjucks" %}
+      <tr v-if="pageCount < 2" style="height: 65px;"></tr>
+    </table>
+  </div>
+</script>
+
+<script type="text/javascript">
+
+  Vue.component('data-list', {
+    template: '#data-list',
+    props: {
+      campaignId: {
+        type: String,
+        required: true,
+        twoWay: true
+      },
+    },
+    data: function(){
+      return {
+        loading: false,
+        errorMsg: '',
+        currentRequest: null,
+        selectedPeriodId: null,
+        currentPage: 1,
+        currentOrder: 'completedAt',
+        currentOrderOrientation: 'DESC',
+        pageCount: 1,
+        pageSize: 10,
+        totalSurveys: 0,
+        datas: [],
+        showLeadSubscritpion: false
+      }
+    },
+    mounted: function() {
+      this.loadDataList();
+    },
+    methods: {
+      nextPage: function () {
+        this.currentPage = this.currentPage + 1;
+        this.loadDataList();
+      },
+      goPage: function (num) {
+        this.currentPage = num;
+        this.loadDataList();
+      },
+      forwardPage: function () {
+        this.currentPage = this.currentPage - 1;
+        this.loadDataList();
+      },
+      getContacts: function (data) {
+        var request = new XMLHttpRequest();
+        var url = '{{ lib.client.url.getShortUrl('ADMIN_CONTACT_LIST') }}?filter=' + encodeURIComponent(JSON.stringify({
+            limit: 50,
+            order: "createdAt DESC",
+            where: { 'payload.dataId' : data.id }
+          }));
+        request.open('GET', url, true);
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        request.send();
+        data.contactsLoading = true;
+        request.onload = function () {
+          data.contactsLoading = false;
+          if (request.status != 200 && request.status != 304) {
+            this.errorMsg = 'Erreur sur le serveur';
+          } else {
+            var res = JSON.parse(request.responseText);
+            if (!res) {
+              this.errorMsg = 'Erreur sur le serveur';
+            } else {
+              data.contacts = res.contacts;
+              data.contactsLoaded = true;
+            }
+          }
+        }.bind(this);
+      },
+      loadDataList: function () {
+        try {
+          var request = new XMLHttpRequest();
+          var posturl = '{{ lib.client.url.getShortUrl('ADMIN_GARAGE_PULL_LIST_CAMPAIGN_DATAS') }}?t=' + new Date().getTime();
+          request.open('POST', posturl, true);
+          request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+          if (this.currentRequest) {
+            this.currentRequest.abort();
+          }
+          this.currentRequest =  request;
+          this.loading = true;
+          request.onload = function () {
+            this.loading = false;
+            if (request.status !== 200 && request.status !== 304) {
+              this.errorMsg = 'Erreur sur le serveur';
+            } else {
+              var res = JSON.parse(request.responseText);
+              if (!res) {
+                this.errorMsg = 'Erreur sur le serveur';
+              } else {
+                this.datas = res.datas.map(function (singleData) {
+                  singleData.contacts = [];
+                  singleData.contactsLoading = false;
+                  singleData.contactsLoaded = false;
+                  return singleData;
+                }.bind(this));
+                this.pageSize = res.limit;
+                this.currentPage = (res.skip / res.limit) + 1;
+                this.pageCount = Math.floor(res.total / res.limit) + ((res.total % res.limit == 0) ? 0 : 1);
+                this.totalSurveys = res.total;
+                if (this.setCountContactsToDownload) { this.setCountContactsToDownload(res.total); }
+                if (this.pageCount == 0) {
+                  this.pageCount = 1;
+                }
+              }
+            }
+          }.bind(this);
+          request.send(JSON.stringify({
+            limit: this.pageSize,
+            skip: this.pageSize * (this.currentPage - 1),
+            campaignId: this.campaignId
+          }));
+        } catch (e) {
+          this.loading = false;
+          this.errorMsg = 'Erreur sur le serveur';
+          console.error(e);
+        }
+      }
+    }
+  });
+</script>

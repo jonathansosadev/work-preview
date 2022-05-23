@@ -1,0 +1,10 @@
+#wrapper .container{padding:0}#wrapper{position:relative;overflow:hidden;margin:auto}.gs-body{width:100%;display:inline-block}.left-block{width:66.66666667%;display:inline-block;float:left}.right-block{width:33.33333333%;display:inline-block;float:right}.mobile-only{display:none}@media (max-width:768px){.right-block{display:none}.left-block{width:100%}.mobile-only{display:inline-block}}
+.contact{height:150px;width:100%;background-color:#e9230e;display:inline-block}
+.global-rating{height:50px;width:100%;background-color:#1e620f;display:inline-block}
+#wrapper .gs-footer{width:100%;background:#f2f2f2}#wrapper .gs-footer ul li{font-family:Lato,sans-serif;font-size:18px;font-weight:300;color:#bcbcbc}#wrapper .gs-footer h4{font-size:18px;color:#219ab5;font-weight:400;font-family:Lato,sans-serif}
+.gs-header{height:70px;width:100%;background-color:#ff0}
+.gs-nav{height:30px;width:100%;background-color:#000;color:#fff}
+.gs-top-header{height:20px;width:100%;background-color:#0d6eb2}
+.contact-map{height:300px;width:100%;background-color:#db0041;display:inline-block}
+.ratings{height:100px;width:100%;background-color:#31b88a;display:inline-block}
+.reviews{height:300px;width:100%;background-color:#0c3;display:inline-block}

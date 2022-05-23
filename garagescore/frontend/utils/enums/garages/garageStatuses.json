@@ -1,0 +1,72 @@
+{
+  "WAITING": {
+    "value": "Waiting",
+    "properties": {
+      "description": "En attente - Lancement différé",
+      "code": 0
+    }
+  },
+  "DATA_MISSING": {
+    "value": "DataMissing",
+    "properties": {
+      "description": "DMS non automatisable",
+      "code": 1
+    }
+  },
+  "TO_CREATE": {
+    "value": "ToCreate",
+    "properties": {
+      "description": "Abonnement à créer 1",
+      "code": 2.1
+    }
+  },
+  "TO_PLUG": {
+    "value": "ToPlug",
+    "properties": {
+      "description": "A brancher 2",
+      "code": 2.2
+    }
+  },
+  "TO_CONFIGURE": {
+    "value": "ToConfigure",
+    "properties": {
+      "description": "A paramétrer 3",
+      "code": 2.3
+    }
+  },
+  "USERS_MISSING": {
+    "value": "UsersMissing",
+    "properties": {
+      "description": "Users à créer",
+      "code": 3.1
+    }
+  },
+  "RUNNING_AUTO": {
+    "value": "RunningAuto",
+    "properties": {
+      "description": "Garage lancé en automatique 5",
+      "code": 4.1
+    }
+  },
+  "RUNNING_MANUAL": {
+    "value": "RunningManual",
+    "properties": {
+      "description": "Garage lancé en manuel",
+      "code": 4.2
+    }
+  },
+  "STOPPED": {
+    "value": "Stopped",
+    "properties": {
+      "description": "Garage arrêté",
+      "code": 5
+    }
+  },
+  "EREP_ONLY": {
+    "value": "ErepOnly",
+    "properties": {
+      "description": "Erep only, don't you know how to read ?",
+      "code": 6
+    }
+  }
+}

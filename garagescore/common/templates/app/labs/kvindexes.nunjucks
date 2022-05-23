@@ -1,0 +1,232 @@
+{% extends "./_2cols-layout.nunjucks" %}
+{% block title %}
+Optimisation des recherches sur Data
+{% endblock %}
+{% block style %}
+<style>
+  label,
+  select,
+  input,
+  button {
+    width: 300px;
+    display: block;
+    margin: auto;
+    font-size: 18px;
+  }
+
+  label {
+    text-align: center;
+    font-weight: bold;
+  }
+
+  select {
+    margin-bottom: 10px;
+  }
+
+  button {
+    margin-top: 20px;
+    font-weight: bolder;
+    background: grey;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  form {
+    max-width: 350px;
+    padding-bottom: 10px;
+    display: block;
+    margin: auto;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+
+  #queryTime {
+    text-align: right;
+  }
+</style>
+{% endblock %}
+
+{% block intro %}
+<b>Indexes clé/valeur</b>
+
+<p>Dans cette expérience, les filtres sur les datas ont été optimisés.</p>
+
+<p>Premièrement, chaque filtre sur une colonne correspond à un seul match <q>champ=valeur</q>
+  au lieu de requêtes booléennes parfois plus complexes impliquant plusieurs champs.</p>
+
+<p>A noter, la période qui a été découpée en plusieurs valeurs: année=xx, semestre=yy,...,isLastQuarter=vrai/faux.
+</p>
+
+<p>Tous les champs servant aux filtres ont été regroupés au même endroit
+  <q>data.indexed</q> et compressés, <q>scoreFilter=Promoter</q> va par exemple correspondre à <q>s1:1</q> en bdd.
+</p>
+
+<p>Ensuite, un champ clé/valeur <q>data.indexedSatisfactionKV</q> spécifique à la page satisfaction a été créé,
+  la recherche se fait donc seulement sur un l'index unique <q>{ 'indexedSatisfactionKV.k': 1,
+    'indexedSatisfactionKV.v': 1, 'review.createdAt':-1 }</q>
+
+  <p>Ce nouveau contenu implique à peu près 10% d'overhead sur la taille de Data (à relativer car on pourra
+    supprimer des indexes).</p>
+
+  <p>Le code a également été travaillé pour que les champs <q>indexed</q> et <q>indexedSatisfactionKV</q> soient
+    contruits à l'identique
+    lors du reset (mongo) et de l'update (node lors de data.set), puisque le script Mongo est généré par Node qui
+    lui partage donc ses fonctions (pas de double maintenance).</p>
+
+  <b>God Mode</b>
+
+  <p>En haut des résultats, on peut apercevoir 3 informations: le temps pris pour récupérer la liste des
+    établissements (repris de Cockpit),
+    le temps de recherche effectif grâce aux nouveautés et si le god mode est activé.</p>
+
+  <p>Ce mode est différent de celui de production.</p>
+
+  <p>Très simplement, lorsque l'utilisateur dispose de plus de 100 établissements,
+    on déduit que celà signifie qu'il a accès à TOUS les établissements.
+    (demain on pourra y ajouter une vérification de son email @gscore voire d'un booléen dans user).</p>
+
+  <p>Nous supprimons donc le filtre sur les établissements.</p>
+
+  <p>On résoud ainsi les problèmes de performance des indexes lorsque l'on demande un filtre sur trop de valeurs
+    (par exemple XXX garages).</p>
+
+  <p>Ce mode n'est pas compatible avec le filtre sur le type d'établissements à moins ce que l'on reproduise dans Data un champ <q>data.garageType</q></p>
+
+  <b>Etape suivante</b>
+  <p>Les champs servant à la recherche ayant été simplifiés et isolés, la porte est maintenant ouverte à un système
+    plus complexe.</p>
+  <p><q>indexedSatisfactionKV</q> pourrait être syncronisé avec un service externe dédié à la recherche.</p>
+  {% endblock %}
+
+  {% block content %}
+  <form>
+    <div>
+      <label>Période</label>
+      <select name="periodToken">
+        <option value="lastQuarter" {% if query.periodToken == "lastQuarter" %}selected="selected" {% endif %}>
+          lastQuarter</option>
+        <option value="ALL_HISTORY" {% if query.periodToken == "ALL_HISTORY" %}selected="selected" {% endif %}>
+          ALL_HISTORY</option>
+      </select>
+    </div>
+    <div>
+      <label>Type</label>
+      <select name="type">
+        <option default value=""></option>
+        <option value="Unknown" {% if query.type == "Unknown" %}selected="selected" {% endif %}>Unknown</option>
+        <option value="Maintenance" {% if query.type == "Maintenance" %}selected="selected" {% endif %}>Maintenance
+        </option>
+        <option value="VehicleSale" {% if query.type == "VehicleSale" %}selected="selected" {% endif %}>VehicleSale
+        </option>
+        <option value="NewVehicleSale" {% if query.type == "NewVehicleSale" %}selected="selected" {% endif %}>
+          NewVehicleSale</option>
+        <option value="UsedVehicleSale" {% if query.type == "UsedVehicleSale" %}selected="selected" {% endif %}>
+          UsedVehicleSale</option>
+        <option value="NewVehicleSale" {% if query.type == "NewVehicleSale" %}selected="selected" {% endif %}>
+          NewVehicleSale</option>
+        <option value="VehicleInspection" {% if query.type == "VehicleInspection" %}selected="selected" {% endif %}>
+          VehicleInspection</option>
+        <option value="ExogenousReview" {% if query.type == "ExogenousReview" %}selected="selected" {% endif %}>
+          ExogenousReview</option>
+      </select>
+    </div>
+    <div>
+      <label>Score</label>
+      <select name="scoreFilter">
+        <option default value=""></option>
+        <option value="Promoter" {% if query.scoreFilter == "Promoter" %}selected="selected" {% endif %}>Promoter
+        </option>
+        <option value="Neutral" {% if query.scoreFilter == "Neutral" %}selected="selected" {% endif %}>Neutral
+        </option>
+        <option value="Detractor" {% if query.scoreFilter == "Detractor" %}selected="selected" {% endif %}>Detractor
+        </option>
+      </select>
+    </div>
+    <div>
+      <label>Publication</label>
+      <select name="publicReviewFilter">
+        <option default value=""></option>
+        <option value="Approved" {% if query.publicReviewFilter == "Approved" %}selected="selected" {% endif %}>
+          Approved</option>
+        <option value="Rejected" {% if query.publicReviewFilter == "Rejected" %}selected="selected" {% endif %}>
+          Rejected</option>
+      </select>
+    </div>
+    <div>
+      <label>Réponse</label>
+      <select name="responseFilter">
+        <option default value=""></option>
+        <option value="Approved" {% if query.responseFilter == "Approved" %}selected="selected" {% endif %}>Approved
+        </option>
+        <option value="Rejected" {% if query.responseFilter == "Rejected" %}selected="selected" {% endif %}>Rejected
+        </option>
+        <option value="NoResponse" {% if query.responseFilter == "NoResponse" %}selected="selected" {% endif %}>
+          NoResponse</option>
+      </select>
+    </div>
+    <div>
+      <label>Suivi J+5</label>
+      <select name="followupUnsatisfiedFilter">
+        <option default value=""></option>
+        <option value="NewUnsatisfied" {% if query.followupUnsatisfiedFilter == "NewUnsatisfied" %}selected="selected"
+          {% endif %}>NewUnsatisfied</option>
+        <option value="Resolved" {% if query.followupUnsatisfiedFilter == "Resolved" %}selected="selected" {% endif %}>
+          Resolved</option>
+        <option value="InProgress" {% if query.followupUnsatisfiedFilter == "InProgress" %}selected="selected"
+          {% endif %}>InProgress</option>
+        <option value="NotResolved" {% if query.followupUnsatisfiedFilter == "NotResolved" %}selected="selected"
+          {% endif %}>NotResolved</option>
+        <option value="UnsatisfiedWithoutAnswer"
+          {% if query.followupUnsatisfiedFilter == "UnsatisfiedWithoutAnswer" %}selected="selected" {% endif %}>
+          UnsatisfiedWithoutAnswer</option>
+      </select>
+    </div>
+    <div>
+      <label>Suivi FPA</label>
+      <select name="followupLeadFilter">
+        <option default value=""></option>
+        <option value="NewLeads" {% if query.followupLeadFilter == "NewLeads" %}selected="selected" {% endif %}>
+          NewLeads</option>
+        <option value="YesPlanned" {% if query.followupLeadFilter == "YesPlanned" %}selected="selected"
+          {% endif %}>YesPlanned</option>
+        <option value="YesDone" {% if query.followupLeadFilter == "YesDone" %}selected="selected" {% endif %}>
+          YesDone</option>
+        <option value="NotWanted" {% if query.followupLeadFilter == "NotWanted" %}selected="selected" {% endif %}>
+          NotWanted</option>
+        <option value="NotRecontacted" {% if query.followupLeadFilter == "NotRecontacted" %}selected="selected"
+          {% endif %}>NotRecontacted</option>
+        <option value="NotProposed" {% if query.followupLeadFilter == "NotProposed" %}selected="selected"
+          {% endif %}>NotProposed</option>
+        <option value="LeadsConverted" {% if query.followupLeadFilter == "LeadsConverted" %}selected="selected"
+          {% endif %}>LeadsConverted</option>
+        <option value="LeadWithoutAnswer" {% if query.followupLeadFilter == "LeadWithoutAnswer" %}selected="selected"
+          {% endif %}>LeadWithoutAnswer</option>
+      </select>
+    </div>
+    <div>
+      <button type="submit">Filtrer</button>
+    </div>
+  </form>
+  <hr>
+  <div id="queryTime"></div>
+  <div id="results"></div>
+
+  {% endblock %}
+  {% block script %}
+  <script>
+    const datas = {{ datas | safe }};
+    const queryTime = {{ queryTime }};
+    const garageIdsTime = {{ garageIdsTime }};
+    const godMode = '{{ godMode }} - {{email}}';
+    //{"customer.fullName.value":1}
+    const resultsContainer = document.getElementById("results");
+    const queryTimeContainer = document.getElementById("queryTime");
+    queryTimeContainer.innerHTML = `godMode: ${godMode} - garageIdsTime: ${garageIdsTime}ms - queryTime: ${queryTime}ms`;
+    resultsContainer.innerHTML = datas.length === 0 ? '0 résultat' : '';
+    for (let i = 0; i < datas.length; i++) {
+      const c = (datas[i].customer && datas[i].customer.fullName && datas[i].customer.fullName.value) || "??";
+      resultsContainer.innerHTML += `<div>${datas[i].customer.fullName.value}</div>`;
+    }
+  </script>
+  {% endblock %}

@@ -1,0 +1,31 @@
+{
+  "name": "InternalEvent",
+  "base": "GarageScoreBaseModel",
+  "http": {
+    "path": "internalEvents"
+  },
+  "mongodb": {
+    "collection": "internalEvents"
+  },
+  "options": {
+  },
+  "mixins": {
+  },
+  "indexes": {
+      "eventType": { "eventType": 1, "eventDay":1, "nsamples":1 },
+      "dim1": { "eventType": 1, "dim1":1, "eventDay":1 },
+      "dim2": { "eventType": 1, "dim2":1, "eventDay":1 },
+      "dim3": { "eventType": 1, "dim3":1, "eventDay":1 },
+      "dim4": { "eventType": 1, "dim4":1, "eventDay":1 },
+      "dim5": { "eventType": 1, "dim5":1, "eventDay":1 }
+  },
+  "properties": {
+  },
+  "validations": [],
+  "relations": {
+  },
+  "acls": [
+  ],
+  "methods": {
+  }
+}

@@ -1,0 +1,529 @@
+{% extends "../common/layouts/darkbo.nunjucks" %}
+{% block css %}
+  <style type="text/css">
+    input, select {
+      color: black;
+    }
+    #loading {
+      text-align: center;
+      margin-top: 30px;
+    }
+    form{
+      margin-top:30px;
+    }
+    .alert {
+      width: 98%;
+      margin-left: 1%;
+    }
+    .report-title{
+      margin-bottom: 30px;
+    }
+    .validation-result{
+      float:left;
+      margin-left: 30px;
+      margin-bottom: 10px;
+    }
+    #sample {
+      overflow-x: scroll;
+    }
+
+    .sample-row {
+      white-space: nowrap;
+      border-left: 1px solid #CCC;
+      font-size: 0;
+    }
+
+    .sample-row .cell{
+      background: #111;
+    }
+    .sample-row:nth-child(odd) .cell{
+      background: #222;
+    }
+    .cell {
+      font-size: 13px;
+      height: 25px;
+      line-height: 25px;
+      width:120px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      border:0;
+      border-right: 1px solid #CCC;
+      border-bottom: 1px solid #CCC;
+      display: inline-block;
+    }
+    .cell-xs {
+      width:30px;
+    }
+    .cell-xs {
+      width:60px;
+    }
+    .cell-value {
+    }
+    .sample-row.sample-row-header .cell {
+      font-size: 14px;
+      font-weight: bold;
+      height: 30px;
+      line-height: 30px;
+      color:#111;
+      background: #ccc;
+      text-align: center;
+      border-right-color: white;
+    }
+    #report-unknownMakes {
+      -ms-touch-action: inherit;
+      touch-action: inherit;
+      cursor: auto;
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+      user-select: text;
+      background: none;
+    }
+    #report-unknownMakes ul {
+      margin: 0;
+    }
+    #report-unknownMakes li {
+      margin-right: 3px;
+      margin-top: 5px;
+      float: left;
+    }
+    #report-perType .badge {
+      margin-right: 4px;
+    }
+    .columnLabel {
+      margin-right: 5px;
+      border: 1px solid #888;
+      border-radius: 5px;
+      padding: 3px;
+      margin-bottom: 5px;
+      display: inline-block;
+    }
+    .columnLabel-duplicate {
+      color: red;
+    }
+  </style>
+{% endblock %}
+{% block page %}
+  <div class="page-header">
+
+    {% block pageTitle %}
+      <h1>Import de fichiers garages</h1>
+    {% endblock %}
+  </div>
+  <div class="col-md-12" id="app">
+    <div class="row">
+      <u class="col-md-12">Instructions</u>
+      {% block Instructions %}
+
+      {% endblock %}
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <b>Fichier volumineux ?</b> Merci de lancer la validation et l'import en ligne de commande.
+        <div v-if="!validateCommand"><i>...Choisir un fichier et des configurations, pour voir les lignes de commande à exécuter...</i></i></div>
+        <div v-else>
+          Valider en ligne de commande : <code>{{'{{'}} validateCommand {{'}}'}}</code>
+          <br/>Importer en ligne de commande : <code>{{'{{'}} importCommand {{'}}'}}</code>
+        </div>
+      </div>
+      <br/><br/>
+    </div>
+            <div class="row" style="margin-top:10px">
+              <label class="col-md-3">
+                Garage
+              </label>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-3">
+                <select name="garageId" id="garageId" class="form-control"  v-model="garageId" @change="onSelectGarage">
+                  <option disabled>Choisir un garage</option>
+                  {% for g in garages %}
+                    <option value="{{ g.id }}">{{ g.publicDisplayName }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-group col-md-3">
+                {% block additionalInput %}
+
+                {% endblock %}
+              </div>
+            </div>
+              <div class="row">
+                  <label class="col-md-3">
+                      Import Automation
+                  </label>
+              </div>
+              <div class="row">
+                  <div class="form-group col-md-3">
+                    <input type="checkbox" v-model="importAutomation">
+                  </div>
+                  <div class="form-group col-md-3" v-if="importAutomation">
+                      <span style="color:red;font-size:2rem">Aucune campagne ne sera envoyée, et les données seront cachées des statistiques. Seule la banque de données des clients finaux sera alterée.</span>
+                  </div>
+              </div>
+    <form  class="row">
+      <div id="testZone" class="col-md-12">
+        <div class="row">
+          <label class="col-md-4">
+            Fichier
+          </label>
+          <label class="col-md-2">
+            Format du fichier d'import
+          </label>
+          <label class="col-md-2">
+            Type de données
+          </label>
+          <label class="col-md-2">
+            Options d'import
+          </label>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-4">
+            {% block fileChooseInput %}
+
+            {% endblock %}
+          </div>
+          <div class="form-group col-md-2">
+            <select name="importSchemaName" id="importSchemaName" class="form-control" v-model="importSchemaName">
+              <option selected disabled>Choisir</option>
+              {% for availableSchema in availableSchemas %}
+                <option value="{{ availableSchema }}">{{ availableSchema.replace(dbPath,'') }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <select name="dataType" id="dataType" class="form-control" v-model="dataType">
+              <option selected disabled>Choisir</option>
+              {% for availableDataType in availableDataTypes %}
+                <option value="{{ availableDataType }}">{{ availableDataType }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <import-options :json="importOptions" ></import-options>
+          </div>
+          <div class="form-group col-md-2">
+            <button id="valid" type="submit" class="btn btn-info" @click="runValidation">Valider le fichier</button>
+          </div>
+
+        </div>
+      </div>
+
+      <div v-if="loading" id="loading" class="col-md-12">
+        <div class="row">
+          <div class="col-md-12">
+            <span class="glyphicon glyphicon glyphicon-refresh" aria-hidden="true"></span>
+            Veuillez patienter...
+          </div>
+        </div>
+      </div>
+      <div  v-if="error_msg" id="report-ko" class="col-md-12 alert alert-danger">
+        <div class="row">
+          <h3 class='col-md-12 report-title' >Fichier invalide ou erreur serveur</h3>
+          <div class='col-md-offset-1 col-md-10' id="report-ko-msg" >{{'{{'}} error_msg {{'}}'}} </div>
+        </div>
+      </div>
+      <div class="row">
+        <div v-if="import_done" id="import-ok" class="col-md-12 alert alert-info">
+          <div class="row">
+            <h3 class='col-md-12 report-title' >Fichier importé</h3>
+            <div class='col-md-12' type='button'>
+              Les contacts seront envoyés lors de la prochaine campagne.
+              <br/>
+              Infos : <span id="importDetails">{{'{{'}} importDetails {{'}}'}}</span>
+            </div>
+          </div>
+        </div>
+        <div v-if="!import_done && !error_msg && !loading && results && results.isValid" id="report-ok" class="col-md-12 alert alert-success">
+          <div class="row">
+            <h3 class='col-md-12 report-title' > Rapport de validation : </h3>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class='validation-result'>
+                <div class='btn btn-lg' :class="{ 'btn-primary': results.validationDetails.withEmails > results.validationDetails.rows * 0.7, 'btn-warning': results.validationDetails.withEmails < results.validationDetails.rows *0.7 }">
+                  Avec un Email <span class='badge' id="report-emails">{{'{{'}} results.validationDetails.withEmails {{'}}'}} / {{'{{'}}results.validationDetails.rows{{'}}'}}</span>
+                </div>
+              </div>
+              <div class='validation-result'>
+                <div class='btn btn-lg' :class="{ 'btn-primary': results.validationDetails.withMobile > results.validationDetails.rows * 0.7, 'btn-warning': results.validationDetails.withMobile < results.validationDetails.rows *0.7 }">
+                  Avec tél mobile <span class='badge' id="report-sms">{{'{{'}} results.validationDetails.withMobile {{'}}'}} / {{'{{'}}results.validationDetails.rows{{'}}'}}</span>
+                </div>
+              </div>
+              <div class='validation-result'>
+                <div class='btn btn-lg' :class="{ 'btn-primary': results.validationDetails.withName > results.validationDetails.rows * 0.7, 'btn-warning': results.validationDetails.withName < results.validationDetails.rows *0.7 }">
+                  Avec un nom complet <span class='badge' id="report-name">{{'{{'}} results.validationDetails.withName {{'}}'}} / {{'{{'}}results.validationDetails.rows{{'}}'}}</span>
+                </div>
+              </div>
+              <div class='validation-result'>
+                <div class='btn btn-lg' :class="{ 'btn-primary': results.validationDetails.withCity > results.validationDetails.rows * 0.7, 'btn-warning': results.validationDetails.withCity < results.validationDetails.rows *0.7 }">
+                  Avec une ville <span class='badge' id="report-name">{{'{{'}} results.validationDetails.withCity {{'}}'}} / {{'{{'}}results.validationDetails.rows{{'}}'}}</span>
+                </div>
+              </div>
+              <div class='validation-result'>
+                <div class='btn btn-lg' :class="{ 'btn-primary': results.validationDetails.withServiceProvidedAt > results.validationDetails.rows * 0.7, 'btn-warning': results.validationDetails.withServiceProvidedAt < results.validationDetails.rows *0.7 }">
+                  Avec date d'intervention <span class='badge' id="report-review-date">{{'{{'}} results.validationDetails.withServiceProvidedAt {{'}}'}} / {{'{{'}}results.validationDetails.rows{{'}}'}}
+                    (
+								min={{'{{'}} results.validationDetails.minServiceProvidedAt {{'}}'}}
+                    -
+								max={{'{{'}} results.validationDetails.maxServiceProvidedAt {{'}}'}}
+
+                    )
+
+							</span>
+                </div>
+              </div>
+              <div class='validation-result'>
+                <div class='btn btn-lg' :class="{ 'btn-primary': results.validationDetails.withVehicleModel > results.validationDetails.rows * 0.7, 'btn-warning': results.validationDetails.withVehicleModel < results.validationDetails.rows *0.7 }">
+                  Avec véhicule <span class='badge' id="report-model">{{'{{'}} results.validationDetails.withVehicleModel {{'}}'}} / {{'{{'}}results.validationDetails.rows{{'}}'}}</span>
+                </div>
+              </div>
+              <div class='validation-result'>
+                <div class='btn btn-lg' :class="{ 'btn-primary': results.validationDetails.withVehicleMake > results.validationDetails.rows * 0.7, 'btn-warning': results.validationDetails.withVehicleMake < results.validationDetails.rows *0.7 }">
+                  Avec marque <span class='badge' id="report-make">{{'{{'}} results.validationDetails.withVehicleMake {{'}}'}} / {{'{{'}}results.validationDetails.rows{{'}}'}}</span>
+                </div>
+              </div>
+              <div class='validation-result'>
+                <div class='btn btn-lg' :class="{ 'btn-primary': results.validationDetails.nbDuplicates == 0, 'btn-warning': results.validationDetails.nbDuplicates > 0 }">
+                  Doublons ignorés <span class='badge' id="report-duplicates">{{'{{'}} results.validationDetails.nbDuplicates {{'}}'}} / {{'{{'}}results.validationDetails.rows + results.validationDetails.nbDuplicates{{'}}'}}</span>
+                </div>
+              </div>
+
+              <div class='validation-result'>
+                <div class='btn btn-lg' :class="{ 'btn-primary': results.validationDetails.unknownVehicleMakes.length == 0, 'btn-warning': results.validationDetails.unknownVehicleMakes.length > 0 }">
+                  {{'{{'}}results.validationDetails.unknownVehicleMakes.length{{'}}'}} marque(s) inconnue(s)
+                  <ul id="report-unknownMakes"><li class='badge' v-for="m in results.validationDetails.unknownVehicleMakes">
+                      {{'{{'}} m {{'}}'}}
+                    </li></ul>
+                </div>
+              </div>
+
+              <div class='validation-result'>
+                <div class='btn btn-lg' :class="{ 'btn-primary': !results.validationDetails.perType.UNKNOWN, 'btn-warning': results.validationDetails.perType.UNKNOWN }">
+                  Prestations
+                  <span id="report-perType"><span class='badge' v-for="(t,n) in results.validationDetails.perType">
+							    {{'{{'}} t {{'}}'}}:{{'{{'}} n {{'}}'}}&nbsp;
+							 </span></span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            <h3 class='col-md-12 report-title' style="margin-bottom: 0"> Important : </h3>
+            <div class='col-md-12'> Attention, si vous avez configuré des options d'import lors de la validation, elles seront ignorées. Lors de l'import, les options utilisées sont celles du garage
+            </div>
+            <br>
+            <div class="row">
+              <div class='col-xs-12 text-center'>
+                <button id="import" type="submit" class="btn btn-success btn-lg" @click="runImport">Importer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </form>
+  </div>
+
+  <div class="row" id="sample"  v-if="!import_done && !error_msg && !loading && results && results.validationDetails.columnLabels">
+    <div class="col-md-2">
+      Labels trouvés
+    </div>
+    <div class="col-md-10 columnLabels">
+		<span v-for="label in results.validationDetails.columnLabels">
+			<span  :class="{ 'columnLabel': true, 'columnLabel-duplicate': label.isDuplicate }">{{'{{'}} label.value {{'}}'}}</span>
+		</span>
+    </div>
+  </div>
+  <div class="row" id="sample"  v-if="showSample">
+
+    <div class="sample-row sample-row-header">
+      <div class="cell"><span class="cell-value">Prestation</span></div>
+      <div class="cell"><span class="cell-value">Date intervention</span></div>
+      <div class="cell cell-sm"><span class="cell-value">Type de client</span></div>
+      <div class="cell cell-sm"><span class="cell-value">Titre</span></div>
+      <div class="cell cell-xs"><span class="cell-value">Titre ab.</span></div>
+      <div class="cell cell-xs"><span class="cell-value">Genre</span></div>
+      <div class="cell"><span class="cell-value">Nom complet</span></div>
+      <div class="cell"><span class="cell-value">Prénom</span></div>
+      <div class="cell"><span class="cell-value">Nom</span></div>
+      <div class="cell"><span class="cell-value">Email</span></div>
+      <div class="cell"><span class="cell-value">N° Portable</span></div>
+      <div class="cell"><span class="cell-value">N° Fixe</span></div>
+      <div class="cell"><span class="cell-value">N° Bureau</span></div>
+      <div class="cell"><span class="cell-value">N° Fax</span></div>
+      <div class="cell"><span class="cell-value">Rue</span></div>
+      <div class="cell"><span class="cell-value">Code postal</span></div>
+      <div class="cell"><span class="cell-value">Ville</span></div>
+      <div class="cell"><span class="cell-value">Pays</span></div>
+      <div class="cell"><span class="cell-value">VIN</span></div>
+      <div class="cell"><span class="cell-value">Marque</span></div>
+      <div class="cell"><span class="cell-value">Modèle</span></div>
+      <div class="cell cell-xs"><span class="cell-value">Cat.</span></div>
+      <div class="cell"><span class="cell-value">Kilométrage</span></div>
+      <div class="cell"><span class="cell-value">Plaque</span></div>
+      <div class="cell cell-xs"><span class="cell-value">Pays Plaque</span></div>
+      <div class="cell"><span class="cell-value">Date MEC</span></div>
+      <div class="cell"><span class="cell-value">Date facture</span></div>
+      <div class="cell"><span class="cell-value">Prix</span></div>
+      <div class="cell"><span class="cell-value">garageProvidedFrontDeskUserName</span></div>
+      <div class="cell"><span class="cell-value">garageProvidedFrontDeskUserTeam</span></div>
+    </div>
+
+    <div v-for="dataRecord in results.validationDetails.sample" class="sample-row">
+      <div v-if="dataRecord">
+        <div class="cell"><span class="cell-value">{{'{{'}} dataRecord.type {{'}}'}}</span></div>
+        <div class="cell"><span class="cell-value">{{'{{'}} dataRecord.completedAt {{'}}'}}</span></div>
+        <div class="cell cell-sm"><span class="cell-value"  v-if="dataRecord.customerd">{{'{{'}} dataRecord.customer.type {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell cell-sm"><span class="cell-value" v-if="dataRecord.customer" >{{'{{'}} dataRecord.customer.title {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell cell-xs"><span class="cell-value" v-if="dataRecord.customer">{{'{{'}} dataRecord.customer.abbreviatedTitle {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell cell-xs"><span class="cell-value" v-if="dataRecord.customer">{{'{{'}} dataRecord.customer.gender {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell"><span class="cell-value" v-if="dataRecord.customer">{{'{{'}} dataRecord.customer.fullName {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell"><span class="cell-value" v-if="dataRecord.customer">{{'{{'}} dataRecord.customer.firstName {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell"><span class="cell-value" v-if="dataRecord.customer">{{'{{'}} dataRecord.customer.lastName {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell"><span class="cell-value" v-if="dataRecord.customer && dataRecord.customer.contactChannel && dataRecord.customer.contactChannel.email">{{'{{'}} dataRecord.customer.contactChannel.email.address{{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell"><span class="cell-value" v-if="dataRecord.customer && dataRecord.customer.contactChannel && dataRecord.customer.contactChannel.mobilePhone">{{'{{'}} dataRecord.customer.contactChannel.mobilePhone.number {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell"><span class="cell-value" v-if="dataRecord.customer && dataRecord.customer.contactChannel && dataRecord.customer.contactChannel.homePhone">{{'{{'}} dataRecord.customer.contactChannel.homePhone.number {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell"><span class="cell-value" v-if="dataRecord.customer && dataRecord.customer.contactChannel && dataRecord.customer.contactChannel.officePhone">{{'{{'}} dataRecord.customer.contactChannel.officePhone.number {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell"><span class="cell-value" v-if="dataRecord.customer && dataRecord.customer.contactChannel && dataRecord.customer.contactChannel.fax">{{'{{'}} dataRecord.customer.contactChannel.fax.number {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell"><span class="cell-value" v-if="dataRecord.customer && dataRecord.customer.contactChannel && dataRecord.customer.contactChannel.snailMail">{{'{{'}} dataRecord.customer.contactChannel.snailMail.streetAddress{{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell"><span class="cell-value" v-if="dataRecord.customer && dataRecord.customer.contactChannel && dataRecord.customer.contactChannel.snailMail">{{'{{'}} dataRecord.customer.contactChannel.snailMail.postCode {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell"><span class="cell-value" v-if="dataRecord.customer && dataRecord.customer.contactChannel && dataRecord.customer.contactChannel.snailMail">{{'{{'}} dataRecord.customer.contactChannel.snailMail.city {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell"><span class="cell-value" v-if="dataRecord.customer && dataRecord.customer.contactChannel && dataRecord.customer.contactChannel.snailMail">{{'{{'}} dataRecord.customer.contactChannel.snailMail.countryCode {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell"><span class="cell-value" v-if="dataRecord.vehicle" style="font-size: 10px;">{{'{{'}} dataRecord.vehicle.vin {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell"><span class="cell-value" v-if="dataRecord.vehicle">{{'{{'}} dataRecord.vehicle.make {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell"><span class="cell-value" v-if="dataRecord.vehicle">{{'{{'}} dataRecord.vehicle.model {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell cell-xs"><span class="cell-value" v-if="dataRecord.vehicle">{{'{{'}} dataRecord.vehicle.categoryId {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell"><span class="cell-value" v-if="dataRecord.vehicle">{{'{{'}} dataRecord.vehicle.mileage {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell"><span class="cell-value" v-if="dataRecord.vehicle && dataRecord.vehicle.registration">{{'{{'}} dataRecord.vehicle.registration.plate {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell cell-xs"><span class="cell-value" v-if="dataRecord.vehicle && dataRecord.vehicle.registration">{{'{{'}} dataRecord.vehicle.registration.countryCode {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell"><span class="cell-value" v-if="dataRecord.vehicle &&  dataRecord.vehicle.registration">{{'{{'}} dataRecord.vehicle.registration.firstRegisteredAt {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell"><span class="cell-value">{{'{{'}} dataRecord.billedAt {{'}}'}}</span></div>
+        <div class="cell"><span class="cell-value">{{'{{'}} dataRecord.price {{'}}'}}</span></div>
+        <div class="cell"><span class="cell-value" v-if="dataRecord.foreign">{{'{{'}} dataRecord.foreign.garageProvidedFrontDeskUserName {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        <div class="cell"><span class="cell-value" v-if="dataRecord.foreign">{{'{{'}} dataRecord.foreign.garageProvidedFrontDeskUserTeam {{'}}'}}</span><span class="cell-value" v-else></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  </div>
+
+
+
+
+{% endblock %}
+
+{% block scripts %}
+  {% include "../common/components/_vue-modal.nunjucks" %}
+  {% include "../common/components/_import-options-component.nunjucks" %}
+  <script type="text/javascript">
+
+     function formatValidationResults(results) {
+      if(results.validationDetails && results.validationDetails.columnLabels) {
+        // compute duplicate labels
+        var labels = results.validationDetails.columnLabels;
+        for (var i = 0; i < labels.length; i++) {
+          var value = labels[i];
+          var isDuplicate = false;
+          for (var j = 0; j < labels.length; j++) {
+            if (i !== j && (labels[j] === value || labels[j].value === value)) {
+              isDuplicate = true;
+              break;
+            }
+          }
+          labels[i] = { value: value, isDuplicate: isDuplicate };
+        }
+      }
+      return results;
+    }
+
+    var garages = {{ garagesObject|safe }};
+    garages = garages.sort(function(a,b) {
+      return a.publicDisplayName.localeCompare(b.publicDisplayName);
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+
+      /* global Vue:true */
+      // init Vue
+      new Vue({
+        el: '#app',
+        data: {
+          availableFiles: {{ availableFiles|safe }},
+          filePath: null,
+          filesListLoading: false,
+          importSchemaName: null,
+          importOptions: {},
+          dataType: null,
+          dataFiles: [],
+          garageId: '577a30d774616c1a0056c263', // garagescore
+          dataFileId: null,
+          garages: garages,
+          loading: false,
+          import_done: false,
+          error_msg: null,
+          results: null,
+          importDetails: null,
+          showSample: false,
+          csvFile: null,
+          importAutomation: false
+        },
+        events: {
+          'importOptions-change': function (options) {
+            this.$set(this.importOptions, 'is', options.is);
+            this.$set(this.importOptions, 'column', options.column);
+            this.$set(this.importOptions, 'value', options.value);
+          }
+        },
+        computed: {
+          validateCommand() {
+            if (!this.filePath) return;
+            if (!this.importSchemaName) return;
+            if (!this.dataType) return;
+            const f = this.filePath.replace('humanupload:/', '');
+            const s = this.importSchemaName;
+            const d = this.dataType;
+            // const a = importAutomation
+            return `node scripts/imports/validate-file.js humanupload "${f}" ${s} ${d}`;
+          },
+          importCommand() {
+            if (!this.filePath) return;
+            if (!this.importSchemaName) return;
+            if (!this.dataType) return;
+            const f = this.filePath.replace('humanupload:/', '');
+            const s = this.importSchemaName;
+            const d = this.dataType;
+            const g = this.garageId;
+            return `node scripts/imports/import-file-automation.js humanupload "${f}" ${s} ${d} ${g}`;
+
+          }
+        },
+        methods: {
+          onSelectGarage: onSelectGarage,
+          runValidation: runValidation,
+          runImport: runImport
+        }
+      });
+    });
+  </script>
+
+  {% block runImportBody %}
+    <script type="text/javascript">
+      function runImport() {}
+    </script>
+  {% endblock %}
+  {% block runValidationBody %}
+    <script type="text/javascript">
+      function runValidation() {}
+    </script>
+  {% endblock %}
+  {% block onSelectGarage %}
+    <script type="text/javascript">
+      function onSelectGarage() {}
+    </script>
+  {% endblock %}
+
+{% endblock %}

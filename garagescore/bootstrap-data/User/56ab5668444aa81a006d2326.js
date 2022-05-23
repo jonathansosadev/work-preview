@@ -1,0 +1,122 @@
+const { ObjectID } = require('mongodb');
+
+module.exports = {
+    "_id" : ObjectID("56ab5668444aa81a006d2326"),
+    "password" : "$2a$10$QQ9d37saTy/vYK74fvEUAuvLtzLWWYqV6z6CI9uuczXq3zP38TcSm",
+    "email" : "custeed@garagescore.com",
+    "createdAt" : new Date(),
+    "updatedAt" : new Date(),
+    "subscriptionStatus" : "Terminated",
+    "lastName" : "Teed",
+    "firstName" : "Cus",
+    "authRequest": {
+      "ACCESS_TO_E_REPUTATION": false
+    },
+    "authorization" : {
+        "ACCESS_TO_COCKPIT" : true,
+        "ACCESS_TO_SATISFACTION" : true,
+        "ACCESS_TO_UNSATISFIED" : true,
+        "ACCESS_TO_LEADS" : true,
+        "ACCESS_TO_CONTACTS" : true,
+        "ACCESS_TO_E_REPUTATION" : true,
+        "ACCESS_TO_ADMIN" : true,
+        "ACCESS_TO_DARKBO" : true,
+        "ACCESS_TO_GREYBO" : true,
+        "WIDGET_MANAGEMENT" : true,
+        "ACCESS_TO_WELCOME" : true,
+        "ACCESS_TO_AUTOMATION" : true,
+        "ACCESS_TO_ESTABLISHMENT" : true,
+        "ACCESS_TO_TEAM" : true
+    },
+    "allGaragesAlerts" : {
+        "LeadVn" : true,
+        "ExogenousNewReview" : true,
+        "EscalationLeadMaintenance" : true,
+        "LeadApv" : true
+    },
+    "garageIds" : [
+        ObjectID("5bd0c7ab34f3e7001421c563"),
+        ObjectID("5bfff5c8c8613c00147ebced"),
+        ObjectID("5c0e725a3ce3a100149dfcd0"),
+        ObjectID("5ca1d4b04a7aa10015fc9eba"),
+        ObjectID("5ca1d5854a7aa10015fc9ec7"),
+        ObjectID("5ca1d8504a7aa10015fc9efb"),
+        ObjectID("5cdd5cac3d5f8600156bfe84"),
+        ObjectID("5cdd5dda3d5f8600156bffac"),
+        ObjectID("5cdd5f5c3d5f8600156c0046"),
+        ObjectID("5d2d904168f9900015238a58"),
+        ObjectID("5d2d935668f9900015238ac9"),
+        ObjectID("5d8a13ff16d99e001570f325"),
+        ObjectID("5d8a147a16d99e001570f35a"),
+        ObjectID("5d8a141616d99e001570f32c"),
+        ObjectID("5d8a145816d99e001570f34c"),
+        ObjectID("5d66e1f030b83300156b5701"),
+        ObjectID("5d66e23c30b83300156b5702"),
+        ObjectID("5d66e28a30b83300156b5703"),
+        ObjectID("5d67dbcb4672b70015809a34"),
+        ObjectID("5d88c2581614fb0015419a64"),
+        ObjectID("5e188bd973cd420015139911"),
+        ObjectID("5e18819b73cd42001513969e"),
+        ObjectID("5e18901473cd420015139a3a"),
+        ObjectID("60ddca40cf527a9863d4a764"),
+        ObjectID("60ddca40cf527a9863d4a765"),
+        ObjectID("60ddca40cf527a9863d4a766"),
+        ObjectID("60ddca40cf527a9863d4a767"),
+        ObjectID("60ddca40cf527a9863d4a768"),
+        ObjectID("60ddca40cf527a9863d4a769"),
+        ObjectID("577a30d774616c1a0056c263")
+    ],
+    "isPerfMan": false,
+    "isBizDev": false,
+    "trolled" : null,
+    "cockpitType" : "Dealership",
+    "reportConfigs" : {
+        "daily" : {
+            "enable" : true,
+            "generalVue" : true,
+            "lead" : true,
+            "unsatisfiedApv" : true,
+            "unsatisfiedVn" : true,
+            "unsatisfiedVo" : true,
+            "leadVn" : true,
+            "leadVo" : true
+        },
+        "weekly" : {
+            "enable" : true,
+            "generalVue" : true,
+            "lead" : true,
+            "unsatisfiedApv" : true,
+            "unsatisfiedVn" : true,
+            "unsatisfiedVo" : true,
+            "leadVn" : true,
+            "leadVo" : true
+        },
+        "monthly" : {
+            "enable" : true,
+            "generalVue" : true,
+            "lead" : true,
+            "unsatisfiedApv" : true,
+            "unsatisfiedVn" : true,
+            "unsatisfiedVo" : true,
+            "leadVn" : true,
+            "leadVo" : true,
+            "UnsatisfiedVI" : false
+        },
+        "monthlySummary" : {
+            "unsatisfiedApv" : true,
+            "unsatisfiedVn" : true,
+            "unsatisfiedVo" : true,
+            "unsatisfiedVI" : true,
+            "leadVn" : true,
+            "leadVo" : true,
+            "contactsApv" : true,
+            "contactsVn" : true,
+            "contactsVo" : true,
+            "contactsVI" : true,
+            "enable" : true
+        }
+    },
+    "remainingLoginAttemptBeforeCaptcha": 3,
+    "accessCount" : 1,
+    "role" : "SuperAdmin"
+};

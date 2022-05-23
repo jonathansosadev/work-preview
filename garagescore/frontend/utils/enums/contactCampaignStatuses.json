@@ -1,0 +1,30 @@
+{
+  "NOT_TO_SURFACE": {
+    "value": "----",
+    "properties": {}
+  },
+  "IMPOSSIBLE": {
+    "value": "Impossible",
+    "properties": {}
+  },
+  "BLOCKED": {
+    "value": "Blocked",
+    "properties": {}
+  },
+  "RECEIVED": {
+    "value": "Received",
+    "properties": {}
+  },
+  "SCHEDULED": {
+    "value": "Scheduled",
+    "properties": {}
+  },
+  "NOT_RECEIVED": {
+    "value": "NotReceived",
+    "properties": {}
+  },
+  "NO_CAMPAIGN": {
+    "value": "NoCampaign",
+    "properties": {}
+  }
+}
