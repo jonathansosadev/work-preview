@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <defs>
+        <style>
+            .cls-1{fill:none}.cls-2{clip-path:url(#clip-path)}.cls-3{fill:#0081ec}
+        </style>
+        <clipPath id="clip-path">
+            <path d="M0 0h24v24H0z" class="cls-1"/>
+        </clipPath>
+    </defs>
+    <g id="x" class="cls-2" transform="translate(0 .001)">
+        <path id="Rectangle_1445" d="M0 0h16v16H0z" class="cls-1" data-name="Rectangle 1445" transform="translate(7.841 .061)"/>
+        <path id="Union_3" d="M12 14.182L2.181 24 0 21.817 9.818 12 0 2.181 2.181 0 12 9.818 21.817 0 24 2.181 14.182 12 24 21.817 21.817 24z" class="cls-3" data-name="Union 3"/>
+    </g>
+</svg>

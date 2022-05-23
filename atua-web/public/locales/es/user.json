@@ -1,0 +1,98 @@
+{
+  "profile": {
+    "main": {
+      "greeting": "Hola {{user}}",
+      "form": {
+        "first_name": { "label": "Nombres", "tip": "Nombres" },
+        "last_name": { "label": "Apellidos", "tip": "Apellidos" },
+        "phone_area_code": { "label": "Código de área", "tip": "Código" },
+        "phone_number": { "label": "Número de teléfono", "tip": "Teléfono" },
+        "date_of_birth": { "label": "Fecha de nacimiento", "tip": "Nacimiento" }
+      }
+    },
+    "email": {
+      "form": {
+        "email": { "label": "Email" }
+      }
+    },
+
+    "pin": {
+      "title": "Contraseña",
+      "form": {
+        "pin_old": "Pin actual",
+        "pin_new": "Nuevo Pin"
+      }
+    },
+    "address": {
+      "title": "Dirección",
+      "form": {
+        "street_name": "Calle",
+        "street_number": "Número",
+        "zip_code": { "long": "Código postal", "short": "C.P" },
+        "country": "País",
+        "province": "Provincia",
+        "city": "Ciudad",
+        "description": "Info Adicional"
+      }
+    },
+    "id": {
+      "title": "Documento",
+      "form": {
+        "document_type": {
+          "label": "Tipo de ID",
+          "dni": "D.N.I.",
+          "passport": "Pasaporte",
+          "ci": "C.I.",
+          "le": "L.E.",
+          "lc": "L.C."
+        },
+        "document_number": {
+          "label": "Número"
+        },
+        "document_expiration": {
+          "label": "Vencimiento"
+        },
+        "images": {
+          "title": "Fotos",
+          "id_front": "Frente",
+          "id_back": "Dorso"
+        }
+      }
+    },
+    "drivers_license": {
+      "title": "Registro de conducir",
+      "form": {
+        "license_expiration": { "label": "Vencimiento" },
+        "images": {
+          "title": "Fotos",
+          "driver_license_front": "Frente",
+          "driver_license_back": "Dorso"
+        }
+      }
+    },
+    "controls": {
+      "warning": "Ten en cuenta que algunos de los cambios realizados pueden tardar entre 24 y 72 hs en efectuarse, dependiendo de la disponibilidad de nuestros operadores.",
+      "button": {
+        "back": "Volver",
+        "delete": "Borrar Cuenta"
+      }
+    },
+    "incomplete_info": {
+      "complete": "",
+      "incomplete": "Información incompleta",
+      "incomplete_tip": "Seleccione editar para agregar"
+    }
+  },
+  "delete_user": {
+    "slogan": "Que en tus vacaciones trabaje tu auto.",
+    "title": "Eliminar cuenta",
+    "body": "Atención, esta por borrar su cuenta. Esto no puede revertirse y perderá absolutamente todo lo hecho en nuestra plataforma. Si esta seguro que quiere proceder, ingrese su contraseña actual.",
+    "form": {
+      "current_password": { "label": "Contraseña actual" },
+      "button": {
+        "delete": "Borrar Cuenta",
+        "back": "Volver"
+      }
+    }
+  }
+}

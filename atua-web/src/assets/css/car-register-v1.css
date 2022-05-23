@@ -1,0 +1,73 @@
+._register_form_border {
+  border-radius: 15px;
+}
+
+._crumbs_gradient_filler {
+  background: rgb(100, 45, 230);
+  background: linear-gradient(
+    90deg,
+    rgba(100, 45, 230, 1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+._crumbs_filler {
+  background-color: var(--primary_color_shade1);
+}
+
+._crumbs_border_top_left {
+  border-radius: 15px 0 0 0;
+}
+._crumbs_border_top_right {
+  border-radius: 0 15px 0 0;
+}
+
+._form_spacer {
+  margin-bottom: 1rem;
+  height: 1px;
+  background-color: var(--shadow-color);
+  opacity: 0.3;
+}
+
+._ims_image_input_label {
+  padding: 0.25rem;
+  color: white;
+  border: none;
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* File Inputs */
+
+._input_file {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+._input_file + label {
+  font-size: 1.2em;
+  font-weight: bold;
+  width: 100%;
+  border-radius: 3px;
+}
+
+._input_file:focus + label,
+._input_file + label:hover,
+._inputless_label:focus,
+._inputless_label:hover {
+  transform: scale(1.01);
+  opacity: 1.1;
+}
+
+._inputless_label {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: var(--secondary_color);
+  width: 100%;
+  border-radius: 3px;
+}

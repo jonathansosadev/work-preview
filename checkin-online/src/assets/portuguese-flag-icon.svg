@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="37.846" height="37.848" viewBox="0 0 37.846 37.848">
+  <defs>
+    <filter id="Ellipse_1722" x="0" y="0" width="37.846" height="37.848" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="portuguese-flag-icon" transform="translate(9 -3.15)">
+    <g transform="matrix(1, 0, 0, 1, -9, 3.15)" filter="url(#Ellipse_1722)">
+      <ellipse id="Ellipse_1722-2" data-name="Ellipse 1722" cx="9.923" cy="9.924" rx="9.923" ry="9.924" transform="translate(9 6)" fill="#f0f0f0"/>
+    </g>
+    <g id="bulgaria" transform="translate(-0.298 9.152)">
+      <path id="Path_33195" data-name="Path 33195" d="M20,159.739a9.977,9.977,0,0,0-.622-3.478L10,155.826l-9.378.435a10.036,10.036,0,0,0,0,6.957l9.378.435,9.378-.435A9.978,9.978,0,0,0,20,159.739Z" transform="translate(0 -149.739)" fill="#496e2d"/>
+      <path id="Path_33196" data-name="Path 33196" d="M25.3,351.565a10,10,0,0,0,9.378-6.522H15.923A10,10,0,0,0,25.3,351.565Z" transform="translate(-15.301 -331.565)" fill="#d80027"/>
+      <path id="Path_33197" data-name="Path 33197" d="M15.923,6.522H34.679a10,10,0,0,0-18.756,0Z" transform="translate(-15.301)" fill="#f0f0f0"/>
+    </g>
+    <g id="portugal" transform="translate(-0.298 9.152)">
+      <path id="Path_33201" data-name="Path 33201" d="M0,25.3a10,10,0,0,0,6.522,9.378l.87-9.378-.87-9.378A10,10,0,0,0,0,25.3Z" transform="translate(0 -15.301)" fill="#6da544"/>
+      <path id="Path_33202" data-name="Path 33202" d="M180.433,10A10.006,10.006,0,0,0,166.955.622V19.378A10.006,10.006,0,0,0,180.433,10Z" transform="translate(-160.433)" fill="#d80027"/>
+      <circle id="Ellipse_1723" data-name="Ellipse 1723" cx="3.478" cy="3.478" r="3.478" transform="translate(3.044 6.522)" fill="#ffda44"/>
+      <path id="Path_33203" data-name="Path 33203" d="M116.87,211.478v2.174a1.957,1.957,0,1,0,3.913,0v-2.174Z" transform="translate(-112.305 -203.217)" fill="#d80027"/>
+      <path id="Path_33204" data-name="Path 33204" d="M150.913,246.392a.653.653,0,0,1-.652-.652v-.87h1.3v.87A.653.653,0,0,1,150.913,246.392Z" transform="translate(-144.391 -235.305)" fill="#f0f0f0"/>
+    </g>
+  </g>
+</svg>

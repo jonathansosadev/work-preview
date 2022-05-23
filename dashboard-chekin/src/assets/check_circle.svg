@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" viewBox="0 0 46 46">
+    <defs>
+        <style>
+            .cls-1{fill:#acdbff}.cls-2{fill:none;stroke:#fff;stroke-width:4px}
+        </style>
+    </defs>
+    <g id="check_box" transform="translate(-166 -334)">
+        <circle id="Ellipse_815" cx="23" cy="23" r="23" class="cls-1" data-name="Ellipse 815" transform="translate(166 334)"/>
+        <path id="accept-icon" d="M1827.439 503.256l9.466 11.055 17.54-22.453" class="cls-2" transform="translate(-1652.004 -146.063)"/>
+    </g>
+</svg>

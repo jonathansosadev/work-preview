@@ -1,0 +1,66 @@
+{
+  "log_in": {
+    "slogan": "Let your car work in your vacation.",
+    "form": {
+      "title": "Log In",
+      "username": "Email",
+      "password": "Pin",
+      "redirect_register": "I don't have an account",
+      "redirect_forgot_password": "Forgot my password",
+      "button_submit": "Log in"
+    }
+  },
+  "sign_up": {
+    "slogan": "Let your car work in your vacation.",
+    "form": {
+      "title": "Register",
+      "email": "Email",
+      "re_email": "Repeat email",
+      "password": "Password",
+      "re_password": "Repeat Password",
+      "password_tip": "Minimun 8 characters, 1 capital letter, 1 number and a special character",
+      "date_of_birth": "Birthdate",
+      "first_name": "Name",
+      "last_name": "Surname",
+      "phone": "Mobile",
+      "pin": "Pin number",
+      "pin_tip": "Enter a 4 digit pin number. Will be your password!",
+      "document_number": "Id Number",
+      "tos": "Terms of Service",
+      "tos_label": "Terms of Service",
+      "redirect_log_in": "Already have an account",
+      "redirect_forgot_password": "Forgot my password",
+      "button_submit": "Register"
+    }
+  },
+
+  "account_activation": {
+    "title": "Account activated!",
+    "body": "If you are not automatically redirected after 10 seconds, click the next button:",
+    "button_log_in": "Log In",
+    "progress": "Activating account"
+  },
+  "forgot_password": {
+    "slogan": "Let your car work in your vacation.",
+
+    "form": {
+      "title": "Recover Password",
+      "request_sent": "Check your email and follow the instructions to restore your password",
+      "request_form": "Enter your email to restore your password",
+      "email": "Email",
+      "button_submit": "Send"
+    }
+  },
+  "reset_password": {
+    "slogan": "Let your car work in your vacation.",
+
+    "form": {
+      "title": "Restore password",
+      "request_accepted": "Change succesful, procceed to enter the site with your new password.",
+      "request_form": "Enter a new password.",
+      "password": "Password",
+      "re_password": "Repeat password",
+      "button_submit": "Send"
+    }
+  }
+}

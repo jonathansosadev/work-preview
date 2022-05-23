@@ -1,0 +1,34 @@
+{
+  "rent_your_car_section": {
+    "button": "Calcular"
+  },
+  "how_to": {
+    "title": "¿Cómo funciona?",
+    "body": "Con ATUA vas a poder generar dinero alquilando tu auto mientras estes de vacaciones o los días que no uses tu auto. Contamos con seguros SURA para que disfrutes de tu viaje sin preocuparte de tu auto.",
+    "step1": "Llená el formulario",
+    "step2": "Elige el plane que más te convenga.",
+    "step3": "Espera la verificación de datos.",
+    "step4": "¡Comienza a ganar dinero!"
+  },
+  "big_letters": {
+    "first": "Déjanos tu auto en el aeropuerto mientras viajás.",
+    "second": "Dejalo en nuestras concesionarias.",
+    "third": "Contáctese con otras personas y alquilá tu auto mientras no lo usás."
+  },
+  "insurance": {
+    "title": "Estás cubierto",
+    "body": "Para aquellos autos en nuestras concesionarias.",
+    "first": {
+      "title": "Contra todo riesgo",
+      "body": "La franquicia esta a cargo de quién aquila el vehículo."
+    },
+    "second": {
+      "title": "Inmediato",
+      "body": "Si su auto cumple los requisitos, se encontrará asegurado."
+    },
+    "third": {
+      "title": "Atención 24/7",
+      "body": "Servicios de asistencia y remolque las 24hs del día."
+    }
+  }
+}

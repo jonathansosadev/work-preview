@@ -1,0 +1,99 @@
+{
+  "profile": {
+    "main": {
+      "greeting": "Hello {{user}}",
+      "form": {
+        "first_name": { "label": "Names", "tip": "Names" },
+        "last_name": { "label": "Surname", "tip": "Surname" },
+        "phone_area_code": { "label": "Area code", "tip": "Code" },
+        "phone_number": { "label": "Mobile Number", "tip": "Mobile" },
+        "date_of_birth": { "label": "Birthdate", "tip": "Birthdate" }
+      }
+    },
+    "email": {
+      "form": {
+        "email": { "label": "Email" }
+      }
+    },
+
+    "pin": {
+      "title": "Pin",
+      "form": {
+        "pin_old": "Current pin",
+        "pin_new": "New pin",
+        "placeholder": "****"
+      }
+    },
+    "address": {
+      "title": "Address",
+      "form": {
+        "street_name": "Street",
+        "street_number": "Street Number",
+        "zip_code": { "long": "Zip Code", "short": "Zip" },
+        "country": "Country",
+        "province": "Estate",
+        "city": "City",
+        "description": "Aditional Info"
+      }
+    },
+    "id": {
+      "title": "ID",
+      "form": {
+        "document_type": {
+          "label": "ID Type",
+          "dni": "D.N.I.",
+          "passport": "Passport",
+          "ci": "C.I.",
+          "le": "L.E.",
+          "lc": "L.C."
+        },
+        "document_number": {
+          "label": "Number"
+        },
+        "document_expiration": {
+          "label": "Expiration"
+        },
+        "images": {
+          "title": "Pictures",
+          "document_picture_front": "Front",
+          "document_picture_back": "Back"
+        }
+      }
+    },
+    "drivers_license": {
+      "title": "Driver's License",
+      "form": {
+        "license_expiration": { "label": "Expiration" },
+        "images": {
+          "title": "Pictures",
+          "driver_license_front": "Front",
+          "driver_license_back": "Back"
+        }
+      }
+    },
+    "controls": {
+      "warning": "Bear in mind, that some changes might take between 24 and 72 hours to take effect, depending on operator availability.",
+      "button": {
+        "back": "Back",
+        "delete": "Delete account"
+      }
+    },
+    "incomplete_info": {
+      "complete": "",
+      "incomplete": "Incomplete information",
+      "incomplete_tip": "Select edit to add"
+    }
+  },
+  "delete_user": {
+    "slogan": "Let your car work in your vacation.",
+    "title": "Delete Account",
+    "body": "Attentions, you are about to erase your account. This cannot be reverted and you will loose everything done in our platform. If you wish to continue, enter your password",
+    "form": {
+      "current_password": { "label": "Current Password" },
+      "button": {
+        "delete": "Delete Account",
+        "back": "Back"
+      }
+    }
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "owner": {
+    "title": "Quiero alquilar mi auto",
+    "questions": [
+      {
+        "id": 1,
+        "question": "¿Cuáles son los requisitos para registrar mi auto en ATUA?",
+        "answer": "Seguro contra terceros y robo al día con alguna compañía homologada por ATUA. Automóviles o camionetas SUV. Los requisitos para poder alquilar tu auto son: mayoría de edad, ser propietario del auto, tener los papeles al día, kilometraje menor a 100.000 kms al momento de registrar tu auto en ATUA, patentado en Argentina."
+      },
+      {
+        "id": 2,
+        "question": "¿Cómo me entero de que alguien quiere alquilar mi vehículo?",
+        "answer": "Una vez entregado el auto en nuestro stand, nosotros nos encargaremos de la búsqueda de clientes y el alquiler del mismo. Para aumentar las posibilidades de alquiler, es ideal que nos avises de tu viaje con el mayor tiempo de antelación posible."
+      },
+      {
+        "id": 3,
+        "question": " ¿Cómo puedo tramitar la cédula única?",
+        "answer": "Para tramitar la cédula única hay que seguir una serie de pasos que podrás encontrar en www.dnrpa.gov.ar. La misma puede ser tramitada online por el titular del vehículo. Despues del trámite online tendrás que ir al registro a buscar tu nueva cédula, la cual tarda aproximadamente 4 días hábiles."
+      },
+      {
+        "id": 4,
+        "question": "¿Cómo es el pago de alquileres?",
+        "answer": "El pago de alquileres se realizará en los 30 días posteriores a la finalización del período de alquiler del vehículo y se depositara en tu cuenta de mercadopago."
+      },
+      {
+        "id": 5,
+        "question": "¿Qué estado debe tener mi auto para poder registrarlo?",
+        "answer": "Los vehículos deben estar en buenas condiciones, tanto estéticas como de funcionamiento. A futuro, se incluirá un sistema de puntaje que mejorará la exposición de tu vehículo y un menor costo de comisión."
+      },
+      {
+        "id": 6,
+        "question": "¿Cómo funciona el seguro SURA? ¿Puedo alquilar mi auto y estar tranquilo?",
+        "answer": " Por supuesto! Todos los alquileres en ATUA están cubiertos contra todo riesgo por SURA, automáticamente, y sin franquicia para el dueño del auto, así como también la responsabilidad civil. Conozca la póliza completa y más detalles AQUI"
+      },
+      {
+        "id": 7,
+        "question": "¿Dónde entrego mi vehículo?",
+        "answer": "El dueño del vehículo debe acercarse al stand de ATUA en el aeropuerto y anunciarse. Se procederá a realizar la inspección visual del vehículo para determinar que se encuentra en condiciones. Pasada esta verificación nosotros nos encargaremos de llevarlo a nuestro área reservada."
+      },
+      {
+        "id": 8,
+        "question": "Nafta",
+        "answer": "Lo ideal es dejar el vehículo con el tanque lleno o próximo a hacerlo. De no estarlo, contamos con servicio de carga de combustible por un cargo extra. Se devolverá el vehículo con el tanque lleno."
+      },
+      {
+        "id": 9,
+        "question": "¿Cómo puedo gestionar un reclamo?",
+        "answer": "Cualquier duda, podrás ponerte en contacto con nosotros por cualquiera de los medios disponibles."
+      },
+      {
+        "id": 10,
+        "question": "Multas",
+        "answer": "Todas las multas labradas en el período de alquiler del vehículo recaeran en aquel que haya alquilado el vehículo. De presentarse una multa posteriormente a la finalización de la etapa de alquiler, comunicate con nosotros para realizar el pago adecuado."
+      },
+      {
+        "id": 11,
+        "question": "¿Dónde puedo ver mis ganancias?",
+        "answer": "Contarás con esa información en la sección de tu perfil de tu cuenta."
+      },
+      {
+        "id": 12,
+        "question": "¿Cuánto tiempo demoran en pagarme las ganancias de un alquiler?",
+        "answer": "Las ganancias se acreditarán en tu cuenta de mercadopago en los 30 dias posteriores luego de haber finalizado el período de alquiler."
+      },
+      {
+        "id": 13,
+        "question": "¿Cuál es la comisión que cobra ATUA por mis alquileres?",
+        "answer": "Próximamente tendrás disponible toda la información detallada de las comisiones."
+      },
+      {
+        "id": 14,
+        "question": "¿En donde establezco el tiempo que quiero alquilar mi auto?",
+        "answer": "Desde el sitio o la app, accede desde los vínculos de “publicar mi auto” para seleccionar el vehículo a publicar y los días que estará disponible."
+      }
+    ]
+  },
+  "customer": {
+    "title": "Necesito un auto",
+    "questions": [
+      {
+        "id": "1",
+        "question": "¿Cómo funciona ATUA?",
+        "answer": "Somos una plataforma que actúa como intermediaria entre personas que se van de viaje y quieran generar ingresos alquilando su vehículo personal y aquellos que buscan alquilar autos. Una vez que el dueño del vehículo haya cargado sus datos y los del vehículo, podrá dejarlo en el área designada para ATUA en el aeropuerto para ser alquilado por turistas que busquen un medio de transporte particular."
+      },
+      {
+        "id": "2",
+        "question": "¿Cómo contacto al propietario?",
+        "answer": "No tienes que comunicarte con el propietario, en ATUA simplificamos el proceso para que puedas acercarte a nuestro stand y elegir qué auto querés alquilar."
+      },
+      {
+        "id": "3",
+        "question": "¿Qué necesito para alquilar un auto?",
+        "answer": "Los requisitos para alquilar en nuestra plataforma son: ser mayor de edad, tener licencia de conducir vigente y tarjeta de crédito."
+      },
+      {
+        "id": "4",
+        "question": "¿Qué pasa si no puedo devolver el vehículo tiempo?",
+        "answer": "Se cobrará una multa acorde a el tiempo de la demora. Si por alguna razón, necesitas extender tu estadía, comunicate con nosotros y se resolverá darte un vehículo en tanto este disponible."
+      },
+      {
+        "id": "5",
+        "question": "¿Puedo devolver el vehículo en otro lado?",
+        "answer": "Actualmente todos las devoluciones deben hacerse en el aeropuerto."
+      },
+      {
+        "id": "6",
+        "question": "¿Puedo extender el alquiler una vez iniciado?",
+        "answer": "La extensión del alquiler queda sujeto a la disponibilidad del auto. En caso que el vehículo alquilado no este disponible por mas tiempo, podrás optar por alquilar un nuevo vehículo."
+      },
+      {
+        "id": "7",
+        "question": "¿Tengo regresar el auto limpio?",
+        "answer": "Si, es requisito que entregues el vehículo que alquilaste en las mismas condiciones que se te dió cuando fue alquilado. Para evitar inconvenientes siempre recomendamos a los dueños de los autos entregar el mismo lavado para evitar inconvenientes respecto al estado del auto al momento de la devolución."
+      },
+      {
+        "id": "8",
+        "question": "¿Tengo que devolver el vehículo con el tanque lleno?",
+        "answer": "Si, de no hacerlo se te cobrará un adicional por la carga del tanque."
+      },
+      {
+        "id": "9",
+        "question": "¿Pueden cancelar mi alquiler una vez iniciado el mismo?",
+        "answer": "No, si el dueño ya pactó un período de alquiler, deberá esperar a que éste finalice para recuperarlo. No tenés que preocuparte, en este caso, ATUA le otorgará un vehículo al dueño sin cargo por los días restantes de tu alquiler."
+      },
+      {
+        "id": "10",
+        "question": "¿Cuándo se paga el alquiler?",
+        "answer": "El cargo por el alquiler se gestiona en el momento en el que te acercas a nuestro stand, elegís un auto y confirmás el tiempo que vas a utilizarlo. Se abona al final del mismo (Excepto por aquellos cargos que involucran seguro y depósito)"
+      },
+      {
+        "id": "11",
+        "question": "¿Qué son los adicionales? ¿Cómo funciona?",
+        "answer": "Los pagos adicionales pueden ser por diferentes razones, algunas de ellas pueden ser: multas, peajes, naftas, daño al vehículo, etc. Los cargos por multas no son en el instante, por ende la empresa se reserva el derecho a cobrarlas en tanto sea oportuno."
+      },
+      {
+        "id": "12",
+        "question": "Seguro, límites y responsabilidades del conductor.",
+        "answer": "Todos los alquileres en ATUA están cubiertos contra todo riesgo por la compañía de seguros SURA. Quien alquila podrá optar por dos niveles distintos de franquicias que se tomarán como garantía durante el período del alquiler y se regresarán a su tarjeta de crédito al finalizar el mismo si no hubo ningún inconveniente."
+      },
+      {
+        "id": "13",
+        "question": "¿Qué hago ante un siniestro?",
+        "answer": "Ante un siniestro comunicate inmediatamente por teléfono con nosotros y te indicaremos como proceder."
+      },
+      {
+        "id": "14",
+        "question": "¿Quién paga las multas?",
+        "answer": "Las infracciones realizadas durante el período del alquiler corren a cargo del usuario que alquiló el vehiculo. ATUA puede realizar cargos por multas hasta que las mismas sean emitidas."
+      },
+      {
+        "id": "15",
+        "question": "¿Debo abonar peajes?",
+        "answer": "Si, el usuario que esté usando el auto deberá abonar los peajes. En caso de que el auto tenga TELE-PASE instalado no deberá abonar peajes si utiliza las vías rápidas indicadas. En la tarifa de alquiler estará contemplado el servicio de pago electrónico de peajes."
+      },
+      {
+        "id": "16",
+        "question": "¿Puedo pagar un alquiler con 2 tarjetas de crédito distintas?",
+        "answer": "Actualmente solo aceptamos pago con una sola tarjeta de crédito"
+      },
+      {
+        "id": "17",
+        "question": "¿Puedo viajar a Brasil, Uruguay o Chile con mi auto alquilado?",
+        "answer": "Actualmente no se permiten viajes al exterior, solo se permiten viajes dentro del territorio argentino"
+      },
+      {
+        "id": "18",
+        "question": "¿Cuál es la diferencia entre el seguro Básico y Premium?",
+        "answer": "Ambas coberturas son integrales y contra todo riesgo. En lo único que difieren es en el nivel de franquicia. $15.000 para el seguro premium y $20.000 para el seguro básico. La franquicia es el monto que se autorizará en tu tarjeta de crédito al momento de comenzar el alquiler, y en el caso de algun daño deberás solo pagar hasta este monto. Ej: Daño al auto de $70.000, solo deberás pagar $15.000 si elegiste el seguro premium, el resto está cubierto con nuestro seguro automático. Para mayor información ingresá en la sección SEGUROS."
+      }
+    ]
+  }
+}

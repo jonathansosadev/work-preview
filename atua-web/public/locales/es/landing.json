@@ -1,0 +1,76 @@
+{
+  "banner": {
+    "title": { "p1": "La nueva", "p2": "forma de", "p3": "moverte" }
+  },
+  "quicksearch": {
+    "pick_up": "Lugar de Recogida",
+    "button": "Buscar publicaciones"
+  },
+  "car_slider_section": { "title": "BUSCÁ, RESERVÁ y VIAJÁ" },
+  "features_section": {
+    "title": {
+      "p1": "\"Una excelente alternativa a los servicios",
+      "p2": "tradicionales de alquiler de automóviles\""
+    },
+    "features": {
+      "first": {
+        "title": "Estás cubierto.",
+        "body": "Contra todo riesgo, no te preocupes! Contamos con seguros SURA, que garantizan un viaje seguro."
+      },
+      "second": {
+        "title": "Soporte al cliente las 24hs.",
+        "body": "Descanse tranquilo, soporte al cliente y la asistencia en carretera se encuentran disponible las 24hs del día, los 7 días de la semana a solo un click de distancia."
+      },
+      "third": {
+        "title": "Infinitas opciones.",
+        "body": "Escoja entre miles de modelos que no encontrará en ningún otro lugar. Recójalo o recíbalo donde desee."
+      }
+    }
+  },
+  "deep_explanation_section": {
+    "posibilities": {
+      "first": {
+        "title": "Llega y subite a tu ATUA",
+        "body": "Fácil y sencillo. Reservá tu ATUA desde la app, llega al Punto ATUA y retirá tu vehículo.",
+        "small": "Concesionarias y Aeropuertos"
+      },
+      "second": {
+        "title": "De persona a persona",
+        "body": "Alquilá directamente con el dueño y sin intermediarios coordiná el día y el lugar donde retirar.",
+        "small": "PRÓXIMAMENTE"
+      }
+    },
+    "redirect": "Leer Más..."
+  },
+  "service_steps_section": {
+    "steps": {
+      "first": {
+        "title": "Encuentre el auto perfecto",
+        "body": "Ingrese una ubicación, una fecha y explore miles de autos compartidos por anfitriones locales."
+      },
+      "second": {
+        "title": "Reserve su viaje",
+        "body": "Reserve en la aplicación, elija entre nuestras concesionarias."
+      },
+      "third": {
+        "title": "Tu ATUA te estará esperando",
+        "body": "Llegue al aeropuerto de destino, busque el Punto ATUA y retire su ATUA."
+      }
+    }
+  },
+  "rent_your_car_section": {
+    "title": "Alquilá tu auto, gana dinero extra.",
+    "body": "Cobre los pagos mensuales de su automóvil o simplemente gane dinero extra compartiendo su automóvil en ATUA cuando no lo este usando.",
+    "button": "Ver más"
+  },
+  "calculator_section": {
+    "title": " Calcula cuanto podés ganar alquilando tu auto.",
+    "button": "Calcular",
+    "dropdowns": {
+      "brand": "Marca...",
+      "model": "Modelo...",
+      "year": "Año..."
+    },
+    "result": { "p1": "Podes ganar hasta", "p2": "por mes." }
+  }
+}

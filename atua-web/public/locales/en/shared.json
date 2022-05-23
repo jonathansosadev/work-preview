@@ -1,0 +1,80 @@
+{
+  "header": {
+    "auth": {
+      "log_in": "Log In",
+      "log_out": "Log Out",
+      "register": "Register"
+    },
+    "info_menu": {
+      "info": "Info",
+      "information": "Info",
+      "faq": "FAQ"
+    },
+    "user_menu": {
+      "publish_button": "Publish Car",
+      "user_profile": "Profile",
+      "user_garage": "My Garage"
+    }
+  },
+  "logicutus": {
+    "brand": "Brand",
+    "model": "Model",
+    "year": "Year",
+    "no_results": "No results",
+    "loading": "Loading...",
+    "country": "Country",
+    "province": "Province",
+    "city": "City"
+  },
+  "alert_modal": {
+    "button": "Close",
+    "alerts": {
+      "fail": {
+        "generic_error_title": "Error",
+        "access_failure_title": "Log in Error",
+        "register_failure_title": "Register Error",
+        "field_missing": "Complete all fields.",
+        "unexpected_error": "Something unexpected happened.",
+        "invalid_user_name": "User name must be at least 5 characters long.",
+        "invalid_password": "Password must have at least 8 characters, a capital letter, a number and a special character.",
+        "invalid_re_password": "Passwords doesn't match.",
+        "invalid_email": "Please enter a valid email address.",
+        "invalid_pin": "Please enter 4 digit PIN number.",
+        "tos_warning": "Please, read and accept the terms of service",
+        "email_taken": "Account with that email already exists. ",
+        "weak_password": "Weak password.",
+        "username_taken": "Username already in use. ",
+        "access_failure_body": "Invalid mail or password.",
+        "failed_user_data_fetch": "Failed to get user data.",
+        "not_a_user": "You are not a user.",
+        "pin_change_unsuccessful": "Could not update password",
+        "documentation_register_failed": "Documentation submition failed",
+        "changes_unsuccessful": "Could not make changes",
+        "pin_does_not_match": "Current password is incorrect",
+        "acount_deletion_faillure": "Your account could not be erased, try again later.",
+        "incomplete_address_fields": "Complete all address fields.",
+        "incomplete_fields": "Complete all fields.",
+        "invalid_access_token_title": "Invalid token",
+        "invalid_refresh_token_title": "Cannot refresh session",
+        "invalid_token_body": "Credentials expired, please, log in again",
+        "service_unavailable": "Service currently unavailable, try again later"
+      },
+      "success": {
+        "generic_success_title": "Success",
+        "created_account_title": "Account created",
+        "created_account_body": "Check your email address for further instruccions.",
+        "log_out_title": "Session closed",
+        "log_out_body": "See you later.",
+        "changes_successful": "Changes successful",
+        "pin_changed": "Password changed successfully",
+        "documentation_register_successful": "Documentation successfully submited",
+        "account_deleted_title": "Account deleted",
+        "account_deleted_body": "It pains us to see you leave, hope to see you again!"
+      }
+    }
+  },
+  "store_redirect": {
+    "title": "Look for our app!",
+    "body": "At this moment, you cannot publish or rent cars from our web, look our mobile app and start enjoying the new way of moving!"
+  }
+}

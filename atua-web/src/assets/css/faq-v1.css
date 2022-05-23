@@ -1,0 +1,33 @@
+._faq_header {
+  min-height: 30vh;
+  background-color: var(--primary_color);
+}
+
+._faq_card_border {
+  border-radius: 10px;
+}
+
+._faq_card_img_border {
+  border-radius: 10px 10px 0 0;
+}
+
+/* INFO PAGE (here because it's not much */
+._big_words_big_panels {
+  height: calc(10rem + 5rem);
+  padding: 0rem 3rem;
+}
+
+._big_words_big_panels > h2 {
+  font-size: 4rem;
+}
+
+@media only screen and (max-width: 425px) {
+  ._big_words_big_panels {
+    height: calc(5rem + 2rem);
+    padding: 0rem 1rem;
+  }
+
+  ._big_words_big_panels > h2 {
+    font-size: 1.5rem;
+  }
+}

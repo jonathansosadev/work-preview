@@ -1,0 +1,55 @@
+._back_button,
+._edit_button,
+._delete_button,
+._reset_button,
+._change_button {
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  border-radius: 5px;
+}
+
+._edit_button:hover,
+._reset_button:hover,
+._change_button:hover {
+  transform: scale(1.1);
+}
+
+._profile_warning {
+  line-height: 3rem;
+}
+
+._back_button {
+  background-color: var(--primary_color);
+}
+
+._delete_button {
+  background-color: crimson;
+}
+
+._compacted_car_image {
+  max-width: 100%;
+  z-index: 10;
+}
+
+@media only screen and (max-width: 425px) {
+  ._profile_warning {
+    line-height: 1em;
+  }
+}
+
+._profile_panel {
+  box-shadow: 2px 2px 10px var(--shadow-color);
+}
+
+.custom-select:disabled {
+  background: none;
+  background-color: white;
+  opacity: 1;
+  border: none;
+}

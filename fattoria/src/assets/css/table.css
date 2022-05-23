@@ -1,0 +1,23 @@
+.dataTables_wrapper .rdt_Table{
+    /* font-size: 14px; */
+    font-family: "Open Sans", sans-serif;
+}
+.dataTables_wrapper .rdt_TableCol_Sortable{
+    font-size: 14px;
+    font-weight: bold;
+}
+.dataTables_wrapper .rdt_ExpanderRow{
+    font-size: 14px;
+}
+.dataTables_wrapper .gnahTY{
+    display: flex;
+}
+
+.my-custom-scrollbar {
+    position: relative;
+    height: 200px;
+    overflow: auto;
+}
+.table-wrapper-scroll-y {
+    display: block;
+}

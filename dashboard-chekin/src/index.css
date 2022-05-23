@@ -1,0 +1,47 @@
+@font-face {
+  font-family: ProximaNova-Semibold;
+  src: url(assets/fonts/ProximaNova-Semibold.eot);
+  src: url(assets/fonts/ProximaNova-Semibold.woff2) format('woff2'),
+    url(assets/fonts/ProximaNova-Semibold.woff) format('woff'),
+    url(assets/fonts/ProximaNova-Semibold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: ProximaNova-Bold;
+  src: url(assets/fonts/ProximaNova-Bold.eot);
+  src: url(assets/fonts/ProximaNova-Bold.woff2) format('woff2'),
+    url(assets/fonts/ProximaNova-Bold.woff) format('woff'),
+    url(assets/fonts/ProximaNova-Bold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: ProximaNova-Regular;
+  src: url(assets/fonts/ProximaNova-Regular.eot);
+  src: url(assets/fonts/ProximaNova-Regular.woff2) format('woff2'),
+    url(assets/fonts/ProximaNova-Regular.woff) format('woff'),
+    url(assets/fonts/ProximaNova-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: ProximaNova-Medium;
+  src: url(assets/fonts/ProximaNova-Medium.eot);
+  src: url(assets/fonts/ProximaNova-Medium.woff2) format('woff2'),
+    url(assets/fonts/ProximaNova-Medium.woff) format('woff'),
+    url(assets/fonts/ProximaNova-Medium.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: ProximaNova-Light;
+  src: url(assets/fonts/ProximaNova-Light.eot);
+  src: url(assets/fonts/ProximaNova-Light.woff2) format('woff2'),
+    url(assets/fonts/ProximaNova-Light.woff) format('woff'),
+    url(assets/fonts/ProximaNova-Light.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: ProximaNova-Black;
+  src: url(assets/fonts/ProximaNova-Black.eot);
+  src: url(assets/fonts/ProximaNova-Black.woff2) format('woff2'),
+    url(assets/fonts/ProximaNova-Black.woff) format('woff'),
+    url(assets/fonts/ProximaNova-Black.ttf) format('truetype');
+}

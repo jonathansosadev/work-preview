@@ -1,0 +1,64 @@
+{
+  "log_in": {
+    "slogan": "Que en tus vacaciones trabaje tu auto.",
+    "form": {
+      "title": "Ingresar",
+      "username": "Email",
+      "password": "Pin",
+      "redirect_register": "No tengo cuenta",
+      "redirect_forgot_password": "Olvidé mi contraseña",
+      "button_submit": "Ingresar"
+    }
+  },
+  "sign_up": {
+    "slogan": "Que en tus vacaciones trabaje tu auto.",
+    "form": {
+      "title": "Registrarse",
+      "email": "Email",
+      "re_email": "Repita email",
+      "password": "Contraseña",
+      "re_password": "Repetir Contraseña",
+      "password_tip": "Mínimo 8 carácteres, una mayúscula, un número y un carácter especial",
+      "date_of_birth": "Nacimiento",
+      "first_name": "Nombre",
+      "last_name": "Apellido",
+      "phone": "Teléfono",
+      "pin": "Número PIN",
+      "pin_tip": "Ingrese un numero pin de 4 dígitos. Será tu contraseña!",
+      "document_number": "Número de documento",
+      "tos": "Términos de servicio",
+      "tos_label": "Términos de servicio",
+      "redirect_log_in": "Ya tengo cuenta",
+      "redirect_forgot_password": "Olvidé mi contraseña",
+      "button_submit": "Registrarse"
+    }
+  },
+
+  "account_activation": {
+    "title": "Cuenta Activada!",
+    "body": "Si no es redirigido automáticamente después de 10 segundos, utilice el siguiente botón:",
+    "button_log_in": "Ingresar",
+    "progress": "ACtivando cuenta"
+  },
+  "forgot_password": {
+    "slogan": "Que en tus vacaciones trabaje tu auto.",
+    "form": {
+      "title": "Recuperar Contraseña",
+      "request_sent": "Revise su casilla de correo y siga las instrucciones para reestablecer su contraseña",
+      "request_form": "Ingrese su dirección de correo para reestablecer su contraseña",
+      "email": "Email",
+      "button_submit": "Enviar"
+    }
+  },
+  "reset_password": {
+    "slogan": "Que en tus vacaciones trabaje tu auto.",
+    "form": {
+      "title": "Reestablecer Contraseña",
+      "request_accepted": "El cambio se ha realizado con éxito, proceda a acceder al sitio con su nueva contraseña.",
+      "request_form": "Ingrese una nueva contraseña.",
+      "password": "Contraseña",
+      "re_password": "Repetir Contraseña",
+      "button_submit": "Enviar"
+    }
+  }
+}

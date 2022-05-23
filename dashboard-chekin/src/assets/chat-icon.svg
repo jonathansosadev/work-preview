@@ -1,0 +1,22 @@
+<svg id="chat" xmlns="http://www.w3.org/2000/svg" width="52.213" height="50.413" viewBox="0 0 52.213 50.413">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #385cf8;
+      }
+
+      .cls-2 {
+        fill: #0379f0;
+      }
+
+      .cls-3 {
+        fill: #e3faff;
+      }
+    </style>
+  </defs>
+  <path id="Path_24833" data-name="Path 24833" class="cls-1" d="M43.211,19.437V38.469a4.438,4.438,0,0,1-4.437,4.438H19.8l-9,9.9v-9.9H4.437A4.437,4.437,0,0,1,0,38.47V19.438A4.438,4.438,0,0,1,4.437,15H38.773A4.438,4.438,0,0,1,43.211,19.437Z" transform="translate(0 -2.397)"/>
+  <path id="Path_24834" data-name="Path 24834" class="cls-2" d="M48.774,1H14.437A4.438,4.438,0,0,0,10,5.438V13.6H39.771a4.438,4.438,0,0,1,4.437,4.438V28.907h4.565a4.438,4.438,0,0,0,4.437-4.438V5.438A4.438,4.438,0,0,0,48.774,1Z" transform="translate(-0.998 -1)"/>
+  <path id="Path_24835" data-name="Path 24835" class="cls-3" d="M23.5,25.815H10.9a.9.9,0,1,1,0-1.8H23.5a.9.9,0,0,1,0,1.8Z" transform="translate(-0.998 -3.296)"/>
+  <path id="Path_24836" data-name="Path 24836" class="cls-3" d="M35.206,31.815H10.9a.9.9,0,1,1,0-1.8H35.206a.9.9,0,0,1,0,1.8Z" transform="translate(-0.998 -3.895)"/>
+  <path id="Path_24837" data-name="Path 24837" class="cls-3" d="M35.206,37.815H10.9a.9.9,0,1,1,0-1.8H35.206a.9.9,0,0,1,0,1.8Z" transform="translate(-0.998 -4.494)"/>
+</svg>

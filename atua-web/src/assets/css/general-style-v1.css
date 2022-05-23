@@ -1,0 +1,163 @@
+:root {
+  --primary_color: #5a3cfa;
+  --primary_color_shade1: #642de6;
+  --secondary_color: #1d201a;
+  --tertiary_color: #fafafa;
+  --shadow_color: #1c1f1933;
+  --gray_but_not_gray: #bbc4d2;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+main {
+  min-height: 75vh;
+}
+
+h1 {
+  font-family: "Raleway Black", sans-serif;
+  text-align: center;
+}
+
+h2 {
+  font-family: "Raleway", sans-serif;
+  font-weight: 300;
+}
+
+h3 {
+  font-family: "Raleway", sans-serif;
+  /* font-size: 2em; */
+  font-weight: 100;
+}
+
+h5 {
+  font-family: "Raleway", sans-serif;
+  /* font-size: 1em; */
+  font-weight: 100;
+}
+
+p {
+  font-size: 1rem;
+}
+
+._no_scroll {
+  overflow: hidden;
+}
+
+/* Colors, backgrounds and borders */
+
+._text_primary {
+  color: var(--primary_color);
+}
+._text_primary_shade1 {
+  color: var(--primary_color_shade1);
+}
+
+._text_secondary {
+  color: var(--secondary_color);
+}
+
+._text_tertiary {
+  color: var(--tertiary_color);
+}
+
+._bg_primary {
+  background-color: var(--primary_color);
+}
+
+._bg_primary_shade1 {
+  background-color: var(--primary_color_shade1);
+}
+._bg_secondary {
+  background-color: var(--secondary_color);
+}
+
+._bg_tertiary {
+  background-color: var(--tertiary_color);
+  color: black;
+}
+
+._bg_black {
+  background-color: black;
+  color: white;
+}
+
+._bg_white {
+  background-color: white;
+}
+
+._bg_topographic {
+  background-image: url("../images/v1/background_topographic_169.png");
+  background-position: center;
+  background-size: cover;
+  min-height: 75vh;
+}
+
+._border_top_left {
+  border-radius: 0.25rem 0 0 0;
+}
+
+._border_top_right {
+  border-radius: 0 0.25rem 0 0;
+}
+
+._border_bottom_right {
+  border-radius: 0 0 0.25rem 0;
+}
+
+._border_bottom_left {
+  border-radius: 0 0 0 0.25rem;
+}
+
+._border_bottom {
+  border-radius: 0 0 0.25rem 0.25rem;
+}
+
+._hover_cursor {
+  cursor: pointer;
+}
+
+._element_shadow {
+  box-shadow: 2px 2px 5px var(--shadow_color);
+}
+
+._form_element_shadow {
+  box-shadow: 5px 5px 5px var(--shadow_color);
+}
+
+._hover_shadow:hover {
+  box-shadow: 2px 2px 5px var(--shadow_color);
+}
+
+/* Modal container */
+
+._modal_container {
+  z-index: 1000;
+  position: fixed;
+  overflow-y: scroll;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.lang-dropdown {
+  min-width: 100%;
+}

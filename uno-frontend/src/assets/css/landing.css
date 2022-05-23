@@ -1,0 +1,692 @@
+
+* {
+    margin: 0;
+}
+html, body {
+    height: 100% !important;
+}
+.page-wrap {
+    min-height: 100% !important;
+    margin-bottom: -137px; 
+    background-color: #E0E0E0;
+}
+html, body, #root, .App {
+    height: 100%;
+}
+.page-wrap:after {
+    content: "";
+    display: block;
+    background-color: #E0E0E0;
+}
+.site-footer, .page-wrap:after {
+    height: 137px; 
+}
+
+.nav-bar-uno {
+    height: 80px;
+}
+
+.navigation-uno {
+    height: 90px;
+}
+
+.menu-uno {
+    top: 89px;
+    padding-left: 15px;
+}
+
+.home-uno {
+    background-color: #E0E0E0;
+    margin-top: 15px;
+}
+
+.home-uno .section{
+    background-color: #E0E0E0;
+}
+
+.home-uno .container {
+    max-width: 100% !important;
+    margin-bottom: 30px;
+}
+
+.back-uno {
+    background-color: #E0E0E0;
+    margin-top: 20px;
+}
+
+.back-uno .section{
+    background-color: #E0E0E0;
+}
+
+.back-uno .card-deck .card{
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.back-uno .container {
+    max-width: 100% !important;
+    margin-bottom: 80px;
+}
+
+.custom-card-deck{
+    border-radius: 20px;
+    min-height: 600px;
+    margin-left: 2px;
+    top:67px;
+    margin-bottom: 20px !important;
+}
+.locations {
+    min-height: 500px !important;
+}
+
+.card-deck-culture{
+    border-radius: 20px;
+    min-height: 600px;
+    margin-left: 2px;
+    top:67px;
+    margin-bottom: 20px !important;
+}
+
+.magazine-mobile{
+    padding-top: 260px;
+    height: 100vh;
+    margin-left: 2px;
+
+}
+
+.proyecto-mobile{
+    padding-top:  200px !important;
+    padding-bottom: 200px;
+    /* padding-top:  67px !important; */
+    margin-left: 2px;
+
+}
+
+.body{
+    background-color: #E0E0E0 ;
+}
+    
+.maestry{
+    max-width: 350px;
+    border-radius: 20px;
+    top:67px;
+    margin-bottom: 20px !important;
+}
+
+.img-studies{
+    border-radius: 20px;
+}
+
+.maestry-custom{
+    max-width: 330px;
+}
+
+.custom-card-column{
+    vertical-align: inherit;
+    border-radius: 20px;
+    max-width: 326px;
+    top:67px;
+    margin-bottom: 20px !important;
+}
+
+.rectangle-stns{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 200px;
+    padding: 50px;
+    border-radius: 20px;
+    border: 2px solid black;
+
+}
+
+.rectangle-middle{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 200px;
+    padding: 50px;
+    border-radius: 20px;
+    border: 2px solid black;
+}
+
+.rectangle-100{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 200px;
+    border-radius: 20px;
+    border: 2px solid black;
+
+}
+
+.rectangle-text-one{
+    color: #233154;
+    font-size: 55px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 38px;
+    margin-bottom: 18px;
+    font-family: 'Rubik', sans-serif;
+}
+
+.rectangle-text-two{
+    color: #233154;
+    font-size: 55px;
+    text-align: center;
+    font-weight: bold;
+    line-height:1.15px;
+    padding-top: 2px;
+    
+}
+
+
+.card-body-contact-page{
+    min-width: 150px;
+    max-height: 150px;
+    padding-left: 20px;
+    padding-right: 10px;
+    padding-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+.initial{
+    border-top-left-radius: 0% !important;
+    border-top-right-radius: 0% !important;
+    pointer-events: none;
+    padding-top: 23px;
+    padding-bottom: 23px;
+}
+
+/*Footer*/
+.middle-footer{
+    background-color: #3E3E3E !important;
+    font-size: 10px;
+    color:white; 
+}
+
+.footer-about{
+    padding: 10px;
+    margin-right: 70px;
+}
+
+.footer-title{
+    font-weight: bold;
+    white-space: nowrap;
+    
+}
+.footer-uno{
+    background-color: white !important;
+    padding: 0 !important;
+    position: sticky;
+}
+
+.footer-uno-contact{
+    background-color: white !important;
+    padding: 0 !important;
+    
+}
+
+.d-footer{
+    min-height: 137px;
+}
+.m-footer{
+    min-height: 137px;
+}
+
+.home-carrusel{
+    margin-top: 70px;
+    max-width: 90%;
+    background-color: #E0E0E0;
+    align-items: center;
+    justify-content: center;
+}
+
+.rrss-buttons{
+    background-color: transparent;
+}
+.rss-buttons:hover{
+    background-color: transparent !important;
+}
+
+.rrss-mobile{
+    padding-bottom: 10px;
+}
+
+.img-rss{
+    width: 20px;
+    height: 20px;
+}
+
+.img-enso-footer{
+    width: 69px;
+    height: 30px;
+    margin-left: 99px;
+}
+
+
+.footer-enso{
+    background-color: white !important;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.rrss{
+    background-color: #5A0C0D;
+    color:white;
+    padding: 30px;
+}
+
+.enso-logo{
+    width: 50px;
+}
+
+.rrss.red-wine {
+    background-color:#5A0C0D;
+}
+
+.rrss.brown {
+    background-color:#916B2C;
+}
+
+.rrss.green {
+    background-color:#014946;
+}
+
+.rrss.blue {
+    background-color:#233154;
+}
+
+.rrss.dark-brown {
+    background-color:#46382D;
+}
+.m-footer{
+    background-color: #3E3E3E;
+    color:white;
+}
+
+.f-menu{
+    padding: 2rem;
+    margin-right: 15px;
+    margin-left: 15px;
+    width: 100%;
+}
+.menu-tile{
+    width: 100%;
+}
+
+.m-item{
+   color: white !important;
+   text-decoration: none;
+   line-height: 21px;
+}
+
+.title-item{
+    border-style: solid;
+    border-top-width: 0px !important;
+    border-left-width: 0px !important;
+    border-right-width: 0px !important;
+    border-bottom-color: white !important;
+    border-bottom-width: 1px !important;
+}
+
+.m-child{
+    font-size: 12px;
+}
+
+.m-item:visited {
+    text-decoration: none;
+    color: white;
+}
+
+.m-item:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.m-item:active {
+    text-decoration: none;
+    color: white;
+}
+
+/*End Footer*/
+
+/*Pagina estudios*/
+.licenciatura-derecho {
+    border-radius: 20px;
+    color: white;
+    background-color: #570A06;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-height: 30px;
+    text-align: center;
+    padding: 5px;
+}
+
+.licenciatura-criminologia {
+    border-radius: 20px;
+    color: white;
+    background-color:#000000;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-height: 30px;
+    text-align: center;
+    padding: 5px;
+}
+
+.licenciatura-enfermeria {
+    border-radius: 20px;
+    color: white;
+    background-color: #FA0F0C;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-height: 30px;
+    text-align: center;
+    padding: 5px;
+}
+
+
+.licenciatura-psicologia {
+    border-radius: 20px;
+    color: white;
+    background-color: #F8244D;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-height: 30px;
+    text-align: center;
+    padding: 5px;
+}
+
+.licenciatura-pedagogia {
+    border-radius: 20px;
+    color: white;
+    background-color: #521485;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-height: 30px;
+    text-align: center;
+    padding: 5px;
+}
+
+.licenciatura-contaduria {
+    border-radius: 20px;
+    color: white;
+    background-color: #194E41;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-height: 30px;
+    text-align: center;
+    padding: 5px;
+}
+
+.licenciatura-administracion {
+    border-radius: 20px;
+    color: white;
+    background-color: #3FB6D1;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-height: 30px;
+    text-align: center;
+    padding: 5px;
+}
+
+.inscripciones {
+    border-radius: 20px;
+    color: white;
+    background-color: #916B2C;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-height: 30px;
+    text-align: center;
+    padding: 5px;
+}
+
+.inscripciones-ul {
+    text-align: left;
+}
+
+.convenios-img {
+    background-color: white !important;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.convenios-img-educacion {
+    width: "300px";
+    height: "100px"
+}
+
+.convenios-img-salud {
+    max-width: 172px;
+    /* height: 100px; */
+}
+
+.convenios-text {
+    margin-top: 10px;
+}
+
+.ubicacion-planteles {
+    border-radius: 20px;
+    min-height: 350px;
+    margin-left: 2px;
+    margin-top: 25px;
+}
+
+.contact-container {
+    margin-bottom: 0px !important;
+}
+
+
+/* End Pagina estudios*/
+
+
+/*Pagina contactos*/
+
+.direcciones {
+    max-width: 300px;
+    top: 67px;
+    border-radius: 20px;
+    margin-top: 2px;
+    margin-right: 10px;
+}
+
+.direcciones-body {
+    padding: 8px;
+}
+.contact{
+    background-color:#5A0C0D;
+    border-radius: 20px;
+    min-height: 94px;
+    opacity: 3;
+    max-width: 300px;
+}
+
+.contact:hover{
+    background-color:#5a0c0dbe;
+}
+
+.contact-img{
+    border-radius: 20px;
+    opacity: 0.3;
+    min-height: 94px;
+}
+
+.card-img-overlay{
+    position: absolute;
+    text-align: center;
+    top: 15%;
+    color:white;
+    font-weight: 500;
+    
+}
+/*End contactos*/
+
+.card-text{
+   text-align: justify;
+   padding-left: 30px;
+   padding-right: 35px;
+}
+.fs-text{
+    font-size: 1.1rem;
+}
+.fs-text-title{
+    font-size: 1.4rem;
+    margin-top: 0px !important;
+}
+.card-text-two {
+    text-align: justify;
+    padding-top: 20px;
+ }
+.card-title {
+    text-align: center;
+ }
+
+ .card-title-ubicacion {
+    text-align: left;
+    padding-top: 10px;
+ }
+
+ .card-title-ubicacion-two {
+    text-align: left;
+    padding-top: 50px;
+ }
+
+.div-black {
+    border-radius: 20px;
+    color: white;
+    background-color:#000000;
+    margin-top: 9px;
+    min-height: 30px;
+    text-align: center;
+    padding: 5px;
+    font-size: 10px;
+}
+
+.div-black-studies {
+    border-radius: 20px;
+    color: white;
+    background-color:#000000;
+    margin-top: 9px;
+    min-height: 30px;
+    text-align: center;
+    padding: 5px;
+    padding-top: 8px !important ;
+    font-size: 10px;
+}
+
+.div-title-maestry {
+    border-radius: 20px;
+    color: white;
+    background-color: #1e2759;
+    margin-top: 9px;
+    min-height: 30px;
+    text-align: center;
+    padding: 6px;
+    padding-top: 8px !important ;
+    font-size: 10px;
+}
+
+.div-title-phd {
+    border-radius: 20px;
+    color: white;
+    background-color:#572942;
+    margin-top: 9px;
+    min-height: 30px;
+    text-align: center;
+    padding: 5px;
+    padding-top: 8px !important ;
+    font-size: 10px;
+}
+
+
+.footer-buttons{
+    background-color: transparent;
+    color: white !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    width: 100% !important;
+    padding: 0 !important;
+    text-align: left !important;
+    font-size: 10px;
+}
+
+.footer-buttons:hover{
+    background-color: transparent !important;
+}
+@media (max-width: 1000px) {
+    .f-contact {
+        display: none;
+    }
+}
+
+@media (max-width: 992px) {
+    .d-footer {
+        display: none;
+    }
+    .m-footer {
+        display: flex;
+    }
+}
+
+@media (min-width: 991px) {
+    .d-footer {
+        display: flex;
+    }
+    .m-footer {
+        display: none;
+    }
+}
+
+@media (min-width: 1000px) {
+    .magazine-mobile {
+        display: none;
+    }
+
+    .proyecto-mobile {
+        display: none;
+    }
+
+}
+
+@media (max-width: 991px) {
+    .card-deck-culture {
+        display: none;
+    }
+
+}
+
+@media (max-width: 634px) {
+    .col-lg-9.back-uno{
+        padding-right: 12px !important;
+        padding-left: 2px !important;
+    }
+
+    .direcciones{
+        max-width: 100% !important;
+    }
+
+    .contact{
+        max-width: 100% !important;
+    }
+
+}
+
+@media (max-width: 992px) {
+    .menu-uno {
+        display: none;
+    }
+}
+
+@media (max-width: 992px) {
+    .home-uno {
+        background-color: #E0E0E0;
+        margin-top: 56px;
+    }
+
+}

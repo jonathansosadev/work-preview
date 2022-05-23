@@ -1,0 +1,371 @@
+/* eslint-disable */
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { documentActions } from '../../actions';
+import moment from 'moment';
+import AdminNavbar from "../../components/Navbars/AdminNavbar";
+import SideBar from "../../components/SideBar/SideBar"
+import DataTable from 'react-data-table-component';
+import { Button, Spinner, Row, Col, Form, FormGroup, Modal } from 'reactstrap';
+import '../../assets/css/table.css';
+import { useForm  } from "react-hook-form";
+import Datetime from 'react-datetime';
+import { Icon } from '@iconify/react';
+import deleteBin2Line from '@iconify-icons/ri/delete-bin-2-line';
+import searchEyeLine from '@iconify-icons/ri/search-eye-line';
+import { history } from '../../helpers';
+
+function DocListAminPage() {
+
+  	useEffect(() => {
+		document.body.classList.add("landing-page");
+		document.body.classList.add("sidebar-collapse");
+		document.documentElement.classList.remove("nav-open");
+		return function cleanup() {
+			document.body.classList.remove("landing-page");
+			document.body.classList.remove("sidebar-collapse");
+		};
+  	});
+
+    const dispatch = useDispatch();
+
+	const dataFiles = useSelector(state => state.documents.data);
+    const loadingPage = useSelector(state => state.documents.loading);
+
+	//Verificar data de redux
+	useEffect(() => {
+		if(dataFiles && dataFiles.results){
+			setData(dataFiles.results);
+        }
+        if(dataFiles && dataFiles.metadata && dataFiles.metadata[0]){
+			setRowCount(dataFiles.metadata[0].total);
+		}
+    },[dataFiles]);
+
+	// Inicializar tabla sin data
+	const [data, setData] = useState([])
+	const [rowCount, setRowCount] = useState(0)
+	const user = useSelector(state => state.authentication.user);
+	//Columnas Data table
+	const columns = [
+		{
+			name: 'Email',
+			selector: 'user.email',
+			sortable: true,
+			wrap:true,
+		},
+		{
+			name: 'Nombres',
+			selector: 'user.firstName',
+			sortable: true,
+			wrap:true,
+		},
+		{
+			name: 'Apellidos',
+			selector: 'user.lastName',
+			sortable: true,
+			wrap:true,
+		},
+		{
+			name: 'Tipo',
+			selector: 'typeDescription',
+			sortable: true,
+			wrap:true,
+		},
+		{
+			name: 'Fecha de registro',
+			selector: 'createdDate',
+			sortable: true,
+			cell : (row)=>{
+				return moment(row.createdDate).local().format("YYYY-MM-DD")
+			},
+		},
+		{
+			name: '',
+            button: true,
+            width: '110px',
+			cell: row => 
+            <div className="d-flex">
+				{/* Solo permitir al admin eliminar archivos */}
+				<Button className="btn-link" color="primary" size="sm" onClick={e => 
+                    {
+                        e.preventDefault(); 
+                        history.push('/detail-document',{doc:row});
+                    }
+			    }><Icon icon={searchEyeLine} className="icon" width={20} height={20}/></Button>
+				{(user && user.role) == 1 && <>
+					<Button className="btn-link" color="primary" size="sm"  onClick={e => 
+                    {
+                        e.preventDefault(); 
+						setDataRow(row);
+						setModalVisible(true);
+                    }
+			    	}><Icon icon={deleteBin2Line} width="20" height="20"/></Button>
+				</>
+				}
+            </div>,
+		},
+	];
+
+
+	const [perPage] = useState(10);
+	const [perPageSelect, setPerPageSelect] = useState(0);
+	const [direction, setDirection] = useState({});
+
+    const [filters, setFilters] = useState('');
+
+	//data inicial
+	const getDataTable = (page) => {
+		dispatch(documentActions.dataTableDocuments(page, perPageSelect == 0 ? perPage : perPageSelect, direction, {}));
+	}
+	
+	//Paginar
+	const handlePageChange = async (page) => {
+		dispatch(documentActions.dataTableDocuments(page, perPageSelect == 0 ? perPage : perPageSelect, direction, filters ? filters: {}));
+	};
+	
+	//Ordenar
+	const handleSort = (column, sortDirection) => {
+		let sort = {"id": column.selector, "desc": (sortDirection == "asc" ? false : true) }
+		setDirection(sort);
+		dispatch(documentActions.dataTableDocuments(1, perPageSelect == 0 ? perPage : perPageSelect, sort, filters ? filters: {}));
+	};
+
+	//Cambiar cantidad de filas
+	const handlePerRowsChange = async (newPerPage, page) => {
+		setPerPageSelect(newPerPage);
+		dispatch(documentActions.dataTableDocuments(page, newPerPage, direction, filters ? filters: {}));
+	};
+
+	//Consultar al entrar
+	useEffect(() => {
+		getDataTable(1);
+	}, []);
+
+	//Opciones de paginacion
+	const paginationOptions = { rowsPerPageText: 'Filas por página', rangeSeparatorText: 'de', selectAllRowsItem: true, selectAllRowsItemText: 'Todos' };
+
+	//Loader de la tabla
+	const CustomLoader = () => (<><Spinner  color="primary" style={{ width: '1.5rem', height: '1.5rem' }} /></>);
+
+	const handleChangeRegisterDate = (date) => {
+		setRegisterDate(date);
+	}
+
+	const [registerDate, setRegisterDate] = useState('');
+
+	const clearFilters = () =>{
+		setRegisterDate(''); 
+        reset();
+        reset({document:'', fistName:'', lastName:'',  email:'', registerDate:''})
+	}
+
+    //Form Data Filter
+	const { handleSubmit, register, reset } = useForm();
+    
+    //Abrir/Cerrar filtros
+	const [isOpen, setIsOpen] = useState(false);
+	const toggle = () => setIsOpen(!isOpen);
+
+	//Modal genérico y mensaje
+	const [modalWarning, setModalWarning] = useState(false);
+	const [modalMsg, setModalMsg] = useState('');
+
+    //Consultar por filtros
+	const onFilterData = (data, e) => {
+		var validDate =  moment(data.registerDate).isValid();
+
+		if(data.registerDate != "" && !validDate){
+			setModalWarning(true);
+			setModalMsg('Ingrese una fecha válida');
+			return;
+		}
+		setFilters(data);
+        dispatch(documentActions.dataTableDocuments(1, perPageSelect == 0 ? perPage : perPageSelect, direction, data));
+	}
+	
+	const [modalVisible, setModalVisible] = useState(false);
+    const [dataRow, setDataRow] = useState(null);
+    //Eliminar archivo de servidor y bd
+    const removeFile = () =>{
+        dispatch(documentActions.deleteDocument( dataRow._id ));
+	}
+	
+	const deleting = useSelector(state => state.documents.deleting);
+	const deleteSuccess = useSelector(state => state.documents.deleted);
+	
+	useEffect(() => {
+		//si se elimino correctamente cerrar modal y consultar informacion nuevamente
+        if(deleteSuccess){
+			setModalVisible(false);
+			handleSubmit(onFilterData)();
+        }
+    },[deleteSuccess]);
+    
+    return (
+        <>
+            <div className="d-flex" id="wrapper">
+				<SideBar/>
+				<div id="page-content-wrapper">
+					<AdminNavbar/>
+					<div className="flex-column flex-md-row p-3">
+						<div className="d-flex justify-content-between" style={{padding:"4px 16px 4px 24px"}}>
+							<div className="align-self-center">
+								<h3 style={{ marginBottom: '0' }}>Expedientes</h3>
+							</div>
+						</div>
+                        {/* Filtros */}
+						<div className="filter">
+							<div className="d-flex justify-content-between">
+								<a href="#" onClick={e => {e.preventDefault(); toggle() }}>
+									<i className="fa fa-search" aria-hidden="true"></i> Búsqueda avanzada
+								</a>
+								{isOpen && <a href="#" onClick={e => { e.preventDefault();  clearFilters(); }}>
+									<i className="fa fa-times" aria-hidden="true"></i> Borrar filtros
+								</a>
+								}	
+							</div>
+							{isOpen && <>
+								<Form onSubmit={handleSubmit(onFilterData)} className="form-inline" style={{marginTop:15}}>
+									<FormGroup className="mr-3">
+										<input
+											className="form-control"
+											name="email"
+											placeholder="Email"
+											type="text"
+											ref={register}
+										></input>
+									</FormGroup>
+                                    <FormGroup className="mr-3">
+										<input
+											className="form-control"
+											name="firstName"
+											placeholder="Nombres"
+											type="text"
+											ref={register}
+										></input>
+									</FormGroup>
+                                    <FormGroup className="mr-3">
+										<input
+											className="form-control"
+											name="lastName"
+											placeholder="Apellidos"
+											type="text"
+											ref={register}
+										></input>
+									</FormGroup>
+									<FormGroup className="mr-3">
+										<select className='form-control' name="type"
+											ref={register}>
+												<option key="" name="" value="">Seleccione tipo</option>
+												<option key="1" name="1" value="1">Acta de nacimiento</option>
+												<option key="2" name="2" value="2">CURP</option>
+												<option key="3" name="3" value="3">Certificado de preparatoria</option>
+												<option key="4" name="4" value="4">Comprobante de domicilio</option>
+												<option key="5" name="5" value="5">Frontal identificación oficial</option>
+												<option key="6" name="6" value="6">Reverso identificación oficial</option>
+										</select>
+									</FormGroup>
+									<FormGroup className="mr-3">
+										<Datetime timeFormat={false} dateFormat={'YYYY-MM-DD'} closeOnSelect onChange={handleChangeRegisterDate} value={registerDate}
+											renderInput={(props) => {
+												return <input {...props} className="form-control dateFilter" readOnly name="registerDate" 
+												placeholder="Fecha de registro"  ref={register} value={(registerDate) ? props.value : ''} />
+											}} 
+										/>
+									</FormGroup>
+									<Button color="primary" className="btn-round" type="submit" disabled={loadingPage}>
+										{loadingPage && <span className="spinner-border spinner-border-sm mr-1"></span>} Buscar
+									</Button>
+								</Form>
+							</>
+							}
+						</div>
+						{/* Filtros */}
+						<Row>
+							<Col>
+							<DataTable
+								className="dataTables_wrapper"
+								responsive
+								highlightOnHover
+								striped
+								sortIcon={ <i className="fa fa-arrow-down ml-2" aria-hidden="true"></i> }
+								title="Estudiantes"
+								columns={columns}
+								data={data}
+								progressPending={loadingPage}
+								pagination
+								paginationServer
+								paginationTotalRows={rowCount}
+								onSort={handleSort}
+								sortServer
+								onChangeRowsPerPage={handlePerRowsChange}
+								onChangePage={handlePageChange}
+								paginationComponentOptions={paginationOptions}
+								persistTableHead
+								progressComponent={<CustomLoader />}
+								noDataComponent="No hay registros para mostrar"
+								noHeader={true}
+							/>
+							</Col>
+						</Row>
+						<Modal toggle={() => {setModalVisible(false); setDataRow(null)}} isOpen={modalVisible}>
+                            <div className="modal-header">
+                            <button
+                                aria-label="Close"
+                                className="close"
+                                type="button"
+                                onClick={() =>  {setModalVisible(false); setDataRow(null)}}
+                            >
+                                <span aria-hidden={true}>×</span>
+                            </button>
+                            </div>
+                            <div className="modal-body">
+                                ¿Confirmar eliminación de documento?
+                            </div>
+                            <div className="modal-footer">
+                                <Button color="primary" className="btn-round" disabled={deleting} onClick={()=>removeFile()}>
+                                    {deleting && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                                    Confirmar
+                                </Button>
+                                <Button color="secondary" className="btn-round" outline type="button" onClick={() => {setModalVisible(false);setDataRow(null);}} disabled={deleting}>
+                                    Cerrar
+                                </Button>
+                            </div>
+                        </Modal>
+						<Modal toggle={() => {setModalWarning(false); setModalMsg('')}} isOpen={modalWarning}>
+                            <div className="modal-header">
+                            <h5 className="modal-title" id="examplemodalMsgLabel">
+                                Archivos
+                            </h5>
+                            <button
+                                aria-label="Close"
+                                className="close"
+                                type="button"
+                                onClick={() =>  {setModalWarning(false); setModalMsg('')}}
+                            >
+                                <span aria-hidden={true}>×</span>
+                            </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>{modalMsg}</p>
+                            </div>
+                            <div className="modal-footer">
+                            <Button
+								color="secondary"
+								className="btn-round" outline
+                                type="button"
+                                onClick={() =>  {setModalWarning(false); setModalMsg('')}}
+                            >
+                                Cerrar
+                            </Button>
+                            </div>
+                        </Modal>
+					</div>
+				</div>
+            </div>
+        </>
+    );
+}
+
+export default DocListAminPage;

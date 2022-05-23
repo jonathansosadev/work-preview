@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
+  <g id="logo-new-chekin-square" transform="translate(-2847 15589)">
+    <rect id="Rectangle_3204" data-name="Rectangle 3204" width="500" height="500" transform="translate(2847 -15589)" fill="#fff" opacity="0"/>
+    <g id="logo" transform="translate(2897.446 -15492.102)">
+      <g id="Group_12974" data-name="Group 12974" transform="translate(0 0)">
+        <g id="Group_13142" data-name="Group 13142">
+          <g id="tick">
+            <g id="Group_12966" data-name="Group 12966">
+              <path id="Path_26207" data-name="Path 26207" d="M292.338,330.9c13.272,13.272,13.272,36.023,0,49.3l-27.492,27.492c-13.272,13.273-36.024,13.273-49.3,0L95.154,286.341c-13.273-13.272-13.273-36.024,0-49.3l27.492-27.492c13.272-13.272,36.024-13.272,49.3,0Z" transform="translate(-85.2 -111.436)" fill="#385bf8"/>
+              <path id="Path_26208" data-name="Path 26208" d="M382.916,135.154c13.271-13.272,36.023-13.272,49.3,0L459.7,162.646c13.272,13.272,13.272,36.024,0,49.3L251.143,419.552c-13.272,13.274-36.024,13.274-49.3,0l-27.492-27.491c-13.273-13.272-13.273-36.024,0-49.3Z" transform="translate(-70.548 -125.2)" fill="#385bf8"/>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

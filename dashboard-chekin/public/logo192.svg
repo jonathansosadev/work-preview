@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="192" height="192" viewBox="0 0 192 192">
+  <defs>
+    <clipPath id="clip-chekin-isotype_500x500_2">
+      <rect width="192" height="192"/>
+    </clipPath>
+  </defs>
+  <g id="chekin-isotype_500x500_2" data-name="chekin-isotype – 500x500 – 2" clip-path="url(#clip-chekin-isotype_500x500_2)">
+    <rect width="192" height="192" fill="#fff"/>
+    <g id="logo-new-chekin-square" transform="translate(-2847 15589)">
+      <g id="Group_13144" data-name="Group 13144">
+        <rect id="Rectangle_3204" data-name="Rectangle 3204" width="192" height="192" transform="translate(2847 -15589)" fill="#fff" opacity="0"/>
+        <g id="logo" transform="translate(2866.406 -15551.725)">
+          <g id="Group_12974" data-name="Group 12974" transform="translate(0 0)">
+            <g id="Group_13142" data-name="Group 13142">
+              <g id="tick" transform="translate(0.8)">
+                <g id="Group_12966" data-name="Group 12966">
+                  <path id="Path_26207" data-name="Path 26207" d="M164.468,249.845a13.582,13.582,0,0,1,0,18.864L153.947,279.23a13.582,13.582,0,0,1-18.864,0L89.009,232.794a13.582,13.582,0,0,1,0-18.865L99.53,203.409a13.583,13.583,0,0,1,18.865,0Z" transform="translate(-85.2 -165.861)" fill="#385bf8"/>
+                  <path id="Path_26208" data-name="Path 26208" d="M248.022,129.009a13.583,13.583,0,0,1,18.864,0l10.52,10.521a13.583,13.583,0,0,1,0,18.865l-79.812,79.448a13.582,13.582,0,0,1-18.865,0l-10.521-10.52a13.582,13.582,0,0,1,0-18.865Z" transform="translate(-128.485 -125.2)" fill="#385bf8"/>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

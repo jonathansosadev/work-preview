@@ -1,0 +1,117 @@
+._car_register_card {
+  opacity: 0.75;
+}
+
+._car_card_status_line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0;
+  margin: 0;
+  height: 5px;
+  border-radius: 0.25rem 0.25rem 0 0;
+  background-color: crimson;
+}
+
+._car_detail_status_line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0;
+  margin: 0;
+  height: 5px;
+}
+
+._car_pending {
+  background-color: #7cbbc5;
+}
+
+._car_pending_text {
+  color: #7cbbc5;
+}
+
+._car_accepted {
+  background-color: #fdbf08;
+}
+._car_accepted_text {
+  color: #fdbf08;
+}
+
+._car_rejected {
+  background-color: #ff1e47;
+}
+
+._car_rejected_text {
+  color: #ff1e47;
+}
+
+._car_not_published {
+  background-color: #5a7373;
+}
+
+._car_not_published_text {
+  color: #5a7373;
+}
+
+._publish_button {
+  background-color: var(--primary_color_shade1);
+  border: none;
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  border-radius: 5px;
+}
+
+._user_cars_min_height {
+  min-height: 70vh;
+}
+
+._tab_selector {
+  background-color: var(--gray_but_not_gray);
+  box-shadow: none;
+}
+
+._tab_selected {
+  background-color: var(--tertiary_color);
+  box-shadow: 0px -2px 3px var(--shadow_color);
+}
+
+._tab_body {
+  background-color: var(--tertiary_color);
+  box-shadow: 0px 2px 3px var(--shadow_color);
+}
+
+/* publication switch color */
+.custom-control-input:checked ~ .custom-control-label::before {
+  color: #fff;
+  border-color: green;
+  background-color: green;
+}
+
+._car_control_container {
+  min-height: 4 rem;
+}
+
+._car_control_button {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: var(--tertiary_color);
+  box-shadow: 2px 2px 5px var(--shadow_color);
+  font-size: 1.5rem;
+}
+
+._car_control_delete_button {
+  background-color: var(--primary_color_shade1);
+  opacity: 0.8;
+}
+
+._car_control_delete_img {
+  margin: 0;
+  height: 3rem;
+}

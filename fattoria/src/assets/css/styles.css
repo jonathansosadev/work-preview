@@ -1,0 +1,47 @@
+.form-group label{
+    font-weight: bold;
+}
+
+.rbt-input-multi.focus{
+    border-color: #BE1F1F !important;
+    box-shadow: 0 0 0 0.0rem #BE1F1F  !important;
+    color: #495057;
+    outline: 0;
+}
+
+.loading-table {
+    top: 50%;
+    left: 50%;
+    width: 32px;
+    height: 32px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-repeat: no-repeat;
+    background: url("../img/loading-fattoria.png") no-repeat center center;
+    -webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 4s linear infinite;
+}
+.loading-custom {
+    top: 50%;
+    left: 50%;
+    height: 32px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-repeat: no-repeat;
+    background: url("../img/loading-fattoria.png") no-repeat center center;
+    -webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 4s linear infinite;
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+@media (max-width: 768px) {
+
+    .name-user {
+        font-size: 28px;
+    }
+
+}

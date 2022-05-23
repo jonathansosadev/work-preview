@@ -1,0 +1,56 @@
+.dataTables_wrapper .rdt_Table{
+    font-size: 14px;
+    font-family: "Hind", sans-serif;
+}
+.dataTables_wrapper .rdt_TableCol_Sortable{
+    font-size: 14px;
+    font-weight: 600;
+}
+.dataTables_wrapper .rdt_ExpanderRow{
+    font-size: 14px;
+}
+.dataTables_wrapper .gnahTY{
+    display: flex;
+}
+
+.dataTables_options .rdt_Pagination{
+    margin-top: 150px;
+}
+
+#scores {
+    font-family: Hind, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+#scores td, #scores th {
+    /* border: 1px solid #ddd; */
+    padding: 8px;
+}
+
+#scores thead {
+    border-top: hidden;
+    border-bottom: 1px solid black;
+}
+  
+/* #scores tr:nth-child(even){background-color: #f2f2f2;} */
+
+#scores tr{
+    border-bottom: hidden;
+}
+
+#scores tr:hover {background-color: #f2f2f2;}
+  
+#scores th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: white;
+    color: black;
+}
+/* Dropdown options */
+
+.dropdown-options .dropdown-item{
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}

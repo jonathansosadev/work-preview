@@ -1,0 +1,34 @@
+{
+  "rent_your_car_section": {
+    "button": "Calculate"
+  },
+  "how_to": {
+    "title": "How does it work?",
+    "body": "With ATUA, you can earn money renting your car while you are on vacation or when you are not using your car. We provide SURA insurance to guarantee a safe trip.",
+    "step1": "Fill the form",
+    "step2": "Choose a plan.",
+    "step3": "Wait for confirmation.",
+    "step4": "Start earning money!"
+  },
+  "big_letters": {
+    "first": "Leave your car to us in the airport while you travel.",
+    "second": "Leave it in our concessionaires.",
+    "third": "Contact other people and rent your car while you don't use it."
+  },
+  "insurance": {
+    "title": "You are covered",
+    "body": "For thos cars in our concessionaires.",
+    "first": {
+      "title": "All risk coverage",
+      "body": "The franchise is up to who rents."
+    },
+    "second": {
+      "title": "Inmediate",
+      "body": "If your car passes verification, it will be insured."
+    },
+    "third": {
+      "title": "Support 24/7",
+      "body": "Roadside assistance and customer support 24/7."
+    }
+  }
+}

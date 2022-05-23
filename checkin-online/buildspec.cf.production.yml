@@ -1,0 +1,27 @@
+version: 0.2
+env:
+  variables:
+    BUCKET_NAME: "checkin.chekin.com"
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12.x
+  pre_build:
+    commands:
+      - echo List active directory...
+      - ls
+      - echo Install dependencies...
+      - yarn
+#       - echo Run tests ...
+#       - yarn test --watchAll=false 
+  build:
+    commands:
+      - echo Build started on `date`
+      - yarn run build:cloudfront:production
+  post_build:
+    commands:
+      # copy the contents of /build to S3
+      - aws s3 cp --recursive --acl public-read ./build s3://${BUCKET_NAME}
+artifacts:
+  files:
+    - '**/*'

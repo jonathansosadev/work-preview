@@ -1,0 +1,76 @@
+{
+  "banner": {
+    "title": { "p1": "The new", "p2": "way", "p3": "of moving" }
+  },
+  "quicksearch": {
+    "pick_up": "Pick up place",
+    "button": "Search publications"
+  },
+  "car_slider_section": { "title": "SEARCH, BOOK AND TRAVEL" },
+  "features_section": {
+    "title": {
+      "p1": "\"An excelent alternative to traditional",
+      "p2": "car renting services\""
+    },
+    "features": {
+      "first": {
+        "title": "You are covered.",
+        "body": "All risk insurance, don't worry! We provide SURA insurance to guarantee a safe trip."
+      },
+      "second": {
+        "title": "Customer support 24/7.",
+        "body": "Relax, customer support and roadside assistance available at all hours every day, just a click away."
+      },
+      "third": {
+        "title": "Infinite options.",
+        "body": "Choose from thousands models you won't find nowehere else. Pick it up wherever you wish."
+      }
+    }
+  },
+  "deep_explanation_section": {
+    "posibilities": {
+      "first": {
+        "title": "Arrive and climb on your ATUA",
+        "body": "Easy and simple. Reserve your ATUA from the app, reach the ATUA point and pick up your vehicle.",
+        "small": "Concessionaires and Airports"
+      },
+      "second": {
+        "title": "Between users",
+        "body": "Rent straight from owners. Pact when and where to pick up.",
+        "small": "SOON"
+      }
+    },
+    "redirect": "Reed More..."
+  },
+  "service_steps_section": {
+    "steps": {
+      "first": {
+        "title": "Find your perfect car",
+        "body": "Type a location and a date and explore vehicles from local hosts."
+      },
+      "second": {
+        "title": "Book your trip",
+        "body": "Book from the app, choose from our concessionaires."
+      },
+      "third": {
+        "title": "Your ATUA will be waiting",
+        "body": "Arrive at your destination, find the ATUA point and pick it up."
+      }
+    }
+  },
+  "rent_your_car_section": {
+    "title": "Rent your car, earn extra money.",
+    "body": "Cover monthly payments of your car or just earn extra money by sharing your car in ATUA when not in use.",
+    "button": "See more"
+  },
+  "calculator_section": {
+    "title": "Calculate how much can you earn with your car.",
+    "button": "Calculate",
+    "dropdowns": {
+      "brand": "Brand...",
+      "model": "Model...",
+      "year": "Year..."
+    },
+    "result": { "p1": "You can earn", "p2": "montly." }
+  }
+}

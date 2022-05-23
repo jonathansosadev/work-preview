@@ -1,0 +1,1844 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`remaps correctly 1`] = `
+Object {
+  "Country: AE, docType: ID": "I",
+  "Country: AE, docType: IX": "X",
+  "Country: AE, docType: P": "P",
+  "Country: AT, docType: ID": "I",
+  "Country: AT, docType: IX": "X",
+  "Country: AT, docType: P": "P",
+  "Country: BE, docType: ID": "I",
+  "Country: BE, docType: IX": "X",
+  "Country: BE, docType: P": "P",
+  "Country: CO, docType: ID": "I",
+  "Country: CO, docType: IX": "X",
+  "Country: CO, docType: P": "P",
+  "Country: CZ, docType: ID": "I",
+  "Country: CZ, docType: IX": "X",
+  "Country: CZ, docType: P": "P",
+  "Country: DE, docType: ID": "I",
+  "Country: DE, docType: IX": "X",
+  "Country: DE, docType: P": "P",
+  "Country: ES, docType: ID": "ES_D",
+  "Country: ES, docType: IX": "ES_N",
+  "Country: ES, docType: P": "ES_P",
+  "Country: FR, docType: ID": "I",
+  "Country: FR, docType: IX": "X",
+  "Country: FR, docType: P": "P",
+  "Country: GB, docType: ID": "I",
+  "Country: GB, docType: IX": "X",
+  "Country: GB, docType: P": "P",
+  "Country: GR, docType: ID": "I",
+  "Country: GR, docType: IX": "X",
+  "Country: GR, docType: P": "P",
+  "Country: HR, docType: ID": "I",
+  "Country: HR, docType: IX": "X",
+  "Country: HR, docType: P": "P",
+  "Country: HU, docType: ID": "I",
+  "Country: HU, docType: IX": "X",
+  "Country: HU, docType: P": "P",
+  "Country: IT, docType: ID": "IT_IDELE",
+  "Country: IT, docType: IX": "IT_IDELE",
+  "Country: IT, docType: P": "IT_PASOR",
+  "Country: NL, docType: ID": "I",
+  "Country: NL, docType: IX": "X",
+  "Country: NL, docType: P": "P",
+  "Country: PT, docType: ID": "PT_B",
+  "Country: PT, docType: IX": "PT_O",
+  "Country: PT, docType: P": "PT_P",
+  "Country: RO, docType: ID": "I",
+  "Country: RO, docType: IX": "X",
+  "Country: RO, docType: P": "P",
+  "Country: TH, docType: ID": "I",
+  "Country: TH, docType: IX": "X",
+  "Country: TH, docType: P": "P",
+}
+`;
+
+exports[`returns correct doc types 1`] = `
+Object {
+  "Country: AE, citizenship: CZ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "label": "documents.residence_permit",
+      "value": "AE_RP",
+    },
+  ],
+  "Country: AE, nationality: AE, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: AE, nationality: ES, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "label": "documents.residence_permit",
+      "value": "AE_RP",
+    },
+  ],
+  "Country: AE, nationality: IT, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "label": "documents.residence_permit",
+      "value": "AE_RP",
+    },
+  ],
+  "Country: AE, nationality: TH, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "label": "documents.residence_permit",
+      "value": "AE_RP",
+    },
+  ],
+  "Country: AT, citizenship: CZ": Array [
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "AT_ID",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "AT_P",
+    },
+    Object {
+      "aliceDocument": "driverlicense",
+      "label": "documents.driving_license",
+      "value": "AT_DL",
+    },
+    Object {
+      "label": "documents.other",
+      "value": "AT_O",
+    },
+  ],
+  "Country: AT, nationality: AE, ": Array [
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "AT_ID",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "AT_P",
+    },
+    Object {
+      "aliceDocument": "driverlicense",
+      "label": "documents.driving_license",
+      "value": "AT_DL",
+    },
+    Object {
+      "label": "documents.other",
+      "value": "AT_O",
+    },
+  ],
+  "Country: AT, nationality: ES, ": Array [
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "AT_ID",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "AT_P",
+    },
+    Object {
+      "aliceDocument": "driverlicense",
+      "label": "documents.driving_license",
+      "value": "AT_DL",
+    },
+    Object {
+      "label": "documents.other",
+      "value": "AT_O",
+    },
+  ],
+  "Country: AT, nationality: IT, ": Array [
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "AT_ID",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "AT_P",
+    },
+    Object {
+      "aliceDocument": "driverlicense",
+      "label": "documents.driving_license",
+      "value": "AT_DL",
+    },
+    Object {
+      "label": "documents.other",
+      "value": "AT_O",
+    },
+  ],
+  "Country: AT, nationality: TH, ": Array [
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "AT_ID",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "AT_P",
+    },
+    Object {
+      "aliceDocument": "driverlicense",
+      "label": "documents.driving_license",
+      "value": "AT_DL",
+    },
+    Object {
+      "label": "documents.other",
+      "value": "AT_O",
+    },
+  ],
+  "Country: BE, citizenship: CZ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: BE, nationality: AE, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: BE, nationality: ES, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: BE, nationality: IT, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: BE, nationality: TH, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: CO, citizenship: CZ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "CO_P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.foreign_document",
+      "value": "CO_FD",
+    },
+    Object {
+      "label": "documents.residence_permit",
+      "value": "CO_FID",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.diplomatic_id",
+      "value": "CO_DIP",
+    },
+  ],
+  "Country: CO, nationality: AE, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "CO_P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.foreign_document",
+      "value": "CO_FD",
+    },
+    Object {
+      "label": "documents.residence_permit",
+      "value": "CO_FID",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.diplomatic_id",
+      "value": "CO_DIP",
+    },
+  ],
+  "Country: CO, nationality: ES, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "CO_P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.foreign_document",
+      "value": "CO_FD",
+    },
+    Object {
+      "label": "documents.residence_permit",
+      "value": "CO_FID",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.diplomatic_id",
+      "value": "CO_DIP",
+    },
+  ],
+  "Country: CO, nationality: IT, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "CO_P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.foreign_document",
+      "value": "CO_FD",
+    },
+    Object {
+      "label": "documents.residence_permit",
+      "value": "CO_FID",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.diplomatic_id",
+      "value": "CO_DIP",
+    },
+  ],
+  "Country: CO, nationality: TH, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "CO_P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.foreign_document",
+      "value": "CO_FD",
+    },
+    Object {
+      "label": "documents.residence_permit",
+      "value": "CO_FID",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.diplomatic_id",
+      "value": "CO_DIP",
+    },
+  ],
+  "Country: CZ, citizenship: CZ": Array [
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "CZ_ID",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "CZ_P",
+    },
+    Object {
+      "aliceDocument": "driverlicense",
+      "label": "documents.driving_licence_cz",
+      "value": "CZ_DL",
+    },
+  ],
+  "Country: CZ, nationality: AE, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+  ],
+  "Country: CZ, nationality: ES, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+  ],
+  "Country: CZ, nationality: IT, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+  ],
+  "Country: CZ, nationality: TH, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+  ],
+  "Country: DE, citizenship: CZ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: DE, nationality: AE, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: DE, nationality: ES, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: DE, nationality: IT, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: DE, nationality: TH, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: ES, citizenship: CZ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "ES_P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "ES_I",
+    },
+    Object {
+      "aliceDocument": "residencepermit",
+      "label": "documents.spanish_residence_permit",
+      "value": "ES_N",
+    },
+    Object {
+      "aliceDocument": "residencepermit",
+      "label": "documents.eu_residence_permit",
+      "value": "ES_X",
+    },
+  ],
+  "Country: ES, nationality: AE, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "ES_P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "ES_I",
+    },
+    Object {
+      "aliceDocument": "residencepermit",
+      "label": "documents.spanish_residence_permit",
+      "value": "ES_N",
+    },
+    Object {
+      "aliceDocument": "residencepermit",
+      "label": "documents.eu_residence_permit",
+      "value": "ES_X",
+    },
+  ],
+  "Country: ES, nationality: ES, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "ES_P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.dni",
+      "value": "ES_D",
+    },
+    Object {
+      "aliceDocument": "driverlicense",
+      "label": "documents.driving_licence_es",
+      "value": "ES_C",
+    },
+  ],
+  "Country: ES, nationality: IT, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "ES_P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "ES_I",
+    },
+    Object {
+      "aliceDocument": "residencepermit",
+      "label": "documents.spanish_residence_permit",
+      "value": "ES_N",
+    },
+    Object {
+      "aliceDocument": "residencepermit",
+      "label": "documents.eu_residence_permit",
+      "value": "ES_X",
+    },
+  ],
+  "Country: ES, nationality: TH, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "ES_P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "ES_I",
+    },
+    Object {
+      "aliceDocument": "residencepermit",
+      "label": "documents.spanish_residence_permit",
+      "value": "ES_N",
+    },
+    Object {
+      "aliceDocument": "residencepermit",
+      "label": "documents.eu_residence_permit",
+      "value": "ES_X",
+    },
+  ],
+  "Country: FR, citizenship: CZ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: FR, nationality: AE, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: FR, nationality: ES, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: FR, nationality: IT, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: FR, nationality: TH, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: GB, citizenship: CZ": Array [
+    Object {
+      "label": "documents.passport",
+      "value": "P",
+    },
+  ],
+  "Country: GB, nationality: AE, ": Array [
+    Object {
+      "label": "documents.passport",
+      "value": "P",
+    },
+  ],
+  "Country: GB, nationality: ES, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: GB, nationality: IT, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: GB, nationality: TH, ": Array [
+    Object {
+      "label": "documents.passport",
+      "value": "P",
+    },
+  ],
+  "Country: GR, citizenship: CZ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+  ],
+  "Country: GR, nationality: AE, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+  ],
+  "Country: GR, nationality: ES, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+  ],
+  "Country: GR, nationality: IT, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+  ],
+  "Country: GR, nationality: TH, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+  ],
+  "Country: HR, citizenship: CZ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: HR, nationality: AE, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: HR, nationality: ES, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: HR, nationality: IT, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: HR, nationality: TH, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: HU, citizenship: CZ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: HU, nationality: AE, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: HU, nationality: ES, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: HU, nationality: IT, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: HU, nationality: TH, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: IT, citizenship: CZ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "IT_PASOR",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "IT_IDELE",
+    },
+    Object {
+      "aliceDocument": "driverlicense",
+      "label": "documents.driving_licence_eu",
+      "value": "IT_PATEN",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.diplomatic_passport",
+      "value": "IT_PASDI",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.service_passport",
+      "value": "IT_PASSE",
+    },
+  ],
+  "Country: IT, nationality: AE, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "IT_PASOR",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "IT_IDELE",
+    },
+    Object {
+      "aliceDocument": "driverlicense",
+      "label": "documents.driving_licence_eu",
+      "value": "IT_PATEN",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.diplomatic_passport",
+      "value": "IT_PASDI",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.service_passport",
+      "value": "IT_PASSE",
+    },
+  ],
+  "Country: IT, nationality: ES, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "IT_PASOR",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "IT_IDELE",
+    },
+    Object {
+      "aliceDocument": "driverlicense",
+      "label": "documents.driving_licence_eu",
+      "value": "IT_PATEN",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.diplomatic_passport",
+      "value": "IT_PASDI",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.service_passport",
+      "value": "IT_PASSE",
+    },
+  ],
+  "Country: IT, nationality: IT, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "IT_PASOR",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "IT_IDELE",
+    },
+    Object {
+      "aliceDocument": "driverlicense",
+      "label": "documents.driving_licence_eu",
+      "value": "IT_PATEN",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.diplomatic_passport",
+      "value": "IT_PASDI",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.service_passport",
+      "value": "IT_PASSE",
+    },
+    Object {
+      "label": "documents.identity_card_paper",
+      "value": "IT_IDENT",
+    },
+    Object {
+      "label": "documents.identity_certificate",
+      "value": "IT_CERID",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_diplomatic",
+      "value": "IT_CIDIP",
+    },
+    Object {
+      "label": "documents.tess__app_to_ag_custodia",
+      "value": "IT_ACMIL",
+    },
+    Object {
+      "label": "documents.tess__sott_li_ag_custodia",
+      "value": "IT_ACSOT",
+    },
+    Object {
+      "label": "documents.tess__uff_li_ag_custodia",
+      "value": "IT_ACUFF",
+    },
+    Object {
+      "label": "documents.tess__militare_truppa_a_m",
+      "value": "IT_AMMIL",
+    },
+    Object {
+      "label": "documents.tess__sottufficiali_a_m_",
+      "value": "IT_AMSOT",
+    },
+    Object {
+      "label": "documents.tess__ufficiali_a_m_",
+      "value": "IT_AMUFF",
+    },
+    Object {
+      "label": "documents.tess__app_to_carabinieri",
+      "value": "IT_CCMIL",
+    },
+    Object {
+      "label": "documents.tess__sottufficiali_cc",
+      "value": "IT_CCSOT",
+    },
+    Object {
+      "label": "documents.tess__ufficiale",
+      "value": "IT_CCUFF",
+    },
+    Object {
+      "label": "documents.tess__ag__e_ag_sc__c_f_s_",
+      "value": "IT_CFMIL",
+    },
+    Object {
+      "label": "documents.tess__sottuficiali_c_f_s_",
+      "value": "IT_CFSOT",
+    },
+    Object {
+      "label": "documents.tess__ufficiali_c_f_s_",
+      "value": "IT_CFUFF",
+    },
+    Object {
+      "label": "documents.tess__s_i_s_d_e_",
+      "value": "IT_DESIS",
+    },
+    Object {
+      "label": "documents.tess__militare_e_i_",
+      "value": "IT_EIMIL",
+    },
+    Object {
+      "label": "documents.tess__sottufficiali_e_i_",
+      "value": "IT_EISOT",
+    },
+    Object {
+      "label": "documents.tess__ufficiali_e_i_",
+      "value": "IT_EIUFF",
+    },
+    Object {
+      "label": "documents.tess__app_to_finanziere",
+      "value": "IT_GFMIL",
+    },
+    Object {
+      "label": "documents.tess__sott_li_g_d_f_",
+      "value": "IT_GFSOT",
+    },
+    Object {
+      "label": "documents.tess__pol__trib__g_d_f_",
+      "value": "IT_GFTRI",
+    },
+    Object {
+      "label": "documents.tess__ufficiali_g_d_f_",
+      "value": "IT_GFUFF",
+    },
+    Object {
+      "label": "documents.tess__pers__magistrati",
+      "value": "IT_MAGIS",
+    },
+    Object {
+      "label": "documents.tess__milit__m_m_",
+      "value": "IT_MMMIL",
+    },
+    Object {
+      "label": "documents.tess__sottuficiali_m_m_",
+      "value": "IT_MMSOT",
+    },
+    Object {
+      "label": "documents.tess__ufficiali_m_m_",
+      "value": "IT_MMUFF",
+    },
+    Object {
+      "label": "documents.tess__parlamentari",
+      "value": "IT_PARLA",
+    },
+    Object {
+      "label": "documents.patente_nautica",
+      "value": "IT_PATNA",
+    },
+    Object {
+      "label": "documents.porto_fucile_uso_caccia",
+      "value": "IT_PORM1",
+    },
+    Object {
+      "label": "documents.porto_fucile_dif__person_",
+      "value": "IT_PORM2",
+    },
+    Object {
+      "label": "documents.porto_darmi_uso_sportivo",
+      "value": "IT_PORM3",
+    },
+    Object {
+      "label": "documents.porto_pistola_dif__person",
+      "value": "IT_PORM4",
+    },
+    Object {
+      "label": "documents.porto_darmi_guardie_giur",
+      "value": "IT_PORM5",
+    },
+    Object {
+      "label": "documents.tess__agenti/ass_ti_p_p_",
+      "value": "IT_PPAGE",
+    },
+    Object {
+      "label": "documents.tess__ispettori_p_p_",
+      "value": "IT_PPISP",
+    },
+    Object {
+      "label": "documents.tess__sovrintendenti_p_p_",
+      "value": "IT_PPSOV",
+    },
+    Object {
+      "label": "documents.tess__ufficiali_p_p_",
+      "value": "IT_PPUFF",
+    },
+    Object {
+      "label": "documents.tess__agenti/ass_ti_p_s_",
+      "value": "IT_PSAPP",
+    },
+    Object {
+      "label": "documents.tess__polizia_femminile",
+      "value": "IT_PSFEM",
+    },
+    Object {
+      "label": "documents.tess__funzionari_p_s_",
+      "value": "IT_PSFUN",
+    },
+    Object {
+      "label": "documents.tess__ispettori_p_s_",
+      "value": "IT_PSISP",
+    },
+    Object {
+      "label": "documents.tess__sovrintendenti_p_s_",
+      "value": "IT_PSSOT",
+    },
+    Object {
+      "label": "documents.tess__ufficiali_p_s_",
+      "value": "IT_PSUFF",
+    },
+    Object {
+      "label": "documents.titolo_viaggio_rif_polit_",
+      "value": "IT_RIFUG",
+    },
+    Object {
+      "label": "documents.tess__milit__truppa_sismi",
+      "value": "IT_SDMIL",
+    },
+    Object {
+      "label": "documents.tess__sottufficiali_sismi",
+      "value": "IT_SDSOT",
+    },
+    Object {
+      "label": "documents.tess__ufficiali_sismi",
+      "value": "IT_SDUFF",
+    },
+    Object {
+      "label": "documents.tess__iscr__albo_med/chi_",
+      "value": "IT_TEAMC",
+    },
+    Object {
+      "label": "documents.tess__iscriz__albo_odont_",
+      "value": "IT_TEAOD",
+    },
+    Object {
+      "label": "documents.tes__unico_per_la_camera",
+      "value": "IT_TECAM",
+    },
+    Object {
+      "label": "documents.tess__corte_dei_conti",
+      "value": "IT_TECOC",
+    },
+    Object {
+      "label": "documents.tes__doganale_ril_min_fin_",
+      "value": "IT_TEDOG",
+    },
+    Object {
+      "label": "documents.tess__ferrov__senato",
+      "value": "IT_TEFSE",
+    },
+    Object {
+      "label": "documents.tess__min_pubb_istruzione",
+      "value": "IT_TEMPI",
+    },
+    Object {
+      "label": "documents.tess__militare_nato",
+      "value": "IT_TENAT",
+    },
+    Object {
+      "label": "documents.tes__ente_naz__assis_volo",
+      "value": "IT_TENAV",
+    },
+    Object {
+      "label": "documents.tess__min_polit_agric_for_",
+      "value": "IT_TEPOL",
+    },
+    Object {
+      "label": "documents.tess__min__affari_esteri",
+      "value": "IT_TESAE",
+    },
+    Object {
+      "label": "documents.tess__iscr_albo_architetti",
+      "value": "IT_TESAR",
+    },
+    Object {
+      "label": "documents.tessera_iscr__albo_avvoc_",
+      "value": "IT_TESAV",
+    },
+    Object {
+      "label": "documents.tess__corte_dappello",
+      "value": "IT_TESCA",
+    },
+    Object {
+      "label": "documents.tess__consiglio_di_stato",
+      "value": "IT_TESCS",
+    },
+    Object {
+      "label": "documents.tessera_riconosc__d_i_a_",
+      "value": "IT_TESDI",
+    },
+    Object {
+      "label": "documents.tess__membro_equip__aereo",
+      "value": "IT_TESEA",
+    },
+    Object {
+      "label": "documents.tess__iscr__albo_ingegneri",
+      "value": "IT_TESIN",
+    },
+    Object {
+      "label": "documents.tess__ministero_lavori_pu",
+      "value": "IT_TESLP",
+    },
+    Object {
+      "label": "documents.tess__min_ben_e_att_cult_",
+      "value": "IT_TESMB",
+    },
+    Object {
+      "label": "documents.tess__ministero_difesa",
+      "value": "IT_TESMD",
+    },
+    Object {
+      "label": "documents.tess__ministero_finanze",
+      "value": "IT_TESMF",
+    },
+    Object {
+      "label": "documents.tess__ministero_giustizia",
+      "value": "IT_TESMG",
+    },
+    Object {
+      "label": "documents.tess__ministero_interno",
+      "value": "IT_TESMI",
+    },
+    Object {
+      "label": "documents.tess__minist__trasp/navig",
+      "value": "IT_TESMN",
+    },
+    Object {
+      "label": "documents.tess__ministero_sanita",
+      "value": "IT_TESMS",
+    },
+    Object {
+      "label": "documents.tess__ministero_tesoro",
+      "value": "IT_TESMT",
+    },
+    Object {
+      "label": "documents.tessera_dellordine_notai",
+      "value": "IT_TESNO",
+    },
+    Object {
+      "label": "documents.tess__ordine_giornalisti",
+      "value": "IT_TESOG",
+    },
+    Object {
+      "label": "documents.tess__pres_za_cons__min_",
+      "value": "IT_TESPC",
+    },
+    Object {
+      "label": "documents.tess__pubblica_istruzione",
+      "value": "IT_TESPI",
+    },
+    Object {
+      "label": "documents.tes__poste_e_telecomunic_",
+      "value": "IT_TESPT",
+    },
+    Object {
+      "label": "documents.tessera_u_n_u_c_i_",
+      "value": "IT_TESUN",
+    },
+    Object {
+      "label": "documents.tess__identif_telecom_it_",
+      "value": "IT_TETEL",
+    },
+    Object {
+      "label": "documents.tes__ferroviaria_deputati",
+      "value": "IT_TFERD",
+    },
+    Object {
+      "label": "documents.tes__ferrov__ex_deputati",
+      "value": "IT_TFEXD",
+    },
+    Object {
+      "label": "documents.tess__app_to/vig__urbano",
+      "value": "IT_VIMIL",
+    },
+    Object {
+      "label": "documents.tess__sott_li_vig__urbani",
+      "value": "IT_VISOT",
+    },
+    Object {
+      "label": "documents.tess__uff_li_vig_urbani",
+      "value": "IT_VIUFF",
+    },
+    Object {
+      "label": "documents.tess__app_to/vig__vv_ff_",
+      "value": "IT_VVMIL",
+    },
+    Object {
+      "label": "documents.tess__sottuff_li_vv_ff_",
+      "value": "IT_VVSOT",
+    },
+    Object {
+      "label": "documents.tess__ufficiali_vv_ff_",
+      "value": "IT_VVUFF",
+    },
+  ],
+  "Country: IT, nationality: TH, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "IT_PASOR",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "IT_IDELE",
+    },
+    Object {
+      "aliceDocument": "driverlicense",
+      "label": "documents.driving_licence_eu",
+      "value": "IT_PATEN",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.diplomatic_passport",
+      "value": "IT_PASDI",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.service_passport",
+      "value": "IT_PASSE",
+    },
+  ],
+  "Country: NL, citizenship: CZ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: NL, nationality: AE, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: NL, nationality: ES, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: NL, nationality: IT, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: NL, nationality: TH, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: PT, citizenship: CZ": Array [
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "PT_B",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "PT_P",
+    },
+    Object {
+      "label": "documents.other_document",
+      "value": "PT_O",
+    },
+  ],
+  "Country: PT, nationality: AE, ": Array [
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "PT_B",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "PT_P",
+    },
+    Object {
+      "label": "documents.other_document",
+      "value": "PT_O",
+    },
+  ],
+  "Country: PT, nationality: ES, ": Array [
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "PT_B",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "PT_P",
+    },
+    Object {
+      "label": "documents.other_document",
+      "value": "PT_O",
+    },
+  ],
+  "Country: PT, nationality: IT, ": Array [
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "PT_B",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "PT_P",
+    },
+    Object {
+      "label": "documents.other_document",
+      "value": "PT_O",
+    },
+  ],
+  "Country: PT, nationality: TH, ": Array [
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "PT_B",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "PT_P",
+    },
+    Object {
+      "label": "documents.other_document",
+      "value": "PT_O",
+    },
+  ],
+  "Country: RO, citizenship: CZ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: RO, nationality: AE, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: RO, nationality: ES, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: RO, nationality: IT, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: RO, nationality: TH, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: TH, citizenship: CZ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+  ],
+  "Country: TH, nationality: AE, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+  ],
+  "Country: TH, nationality: ES, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+  ],
+  "Country: TH, nationality: IT, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+  ],
+  "Country: TH, nationality: TH, ": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+}
+`;
+
+exports[`returns correct residence country types 1`] = `
+Object {
+  "Country: AE, residenceCountry: GR": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "label": "documents.residence_permit",
+      "value": "AE_RP",
+    },
+  ],
+  "Country: AT, residenceCountry: GR": Array [
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "AT_ID",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "AT_P",
+    },
+    Object {
+      "aliceDocument": "driverlicense",
+      "label": "documents.driving_license",
+      "value": "AT_DL",
+    },
+    Object {
+      "label": "documents.other",
+      "value": "AT_O",
+    },
+  ],
+  "Country: BE, residenceCountry: GR": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: CO, residenceCountry: GR": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "CO_P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.foreign_document",
+      "value": "CO_FD",
+    },
+    Object {
+      "label": "documents.residence_permit",
+      "value": "CO_FID",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.diplomatic_id",
+      "value": "CO_DIP",
+    },
+  ],
+  "Country: CZ, residenceCountry: GR": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+  ],
+  "Country: DE, residenceCountry: GR": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: ES, residenceCountry: GR": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "ES_P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "ES_I",
+    },
+    Object {
+      "aliceDocument": "residencepermit",
+      "label": "documents.spanish_residence_permit",
+      "value": "ES_N",
+    },
+    Object {
+      "aliceDocument": "residencepermit",
+      "label": "documents.eu_residence_permit",
+      "value": "ES_X",
+    },
+  ],
+  "Country: FR, residenceCountry: GR": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: GB, residenceCountry: GR": Array [
+    Object {
+      "label": "documents.passport",
+      "value": "P",
+    },
+  ],
+  "Country: GR, residenceCountry: GR": Array [
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "GR_ID",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "GR_P",
+    },
+    Object {
+      "aliceDocument": "driverlicense",
+      "label": "documents.driving_licence_gr",
+      "value": "GR_DL",
+    },
+    Object {
+      "label": "documents.army_id_gr",
+      "value": "GR_ARMY_ID",
+    },
+    Object {
+      "aliceDocument": "residencepermit",
+      "label": "documents.work_permit_gr",
+      "value": "GR_WORK_PERMIT",
+    },
+  ],
+  "Country: HR, residenceCountry: GR": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: HU, residenceCountry: GR": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: IT, residenceCountry: GR": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "IT_PASOR",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "IT_IDELE",
+    },
+    Object {
+      "aliceDocument": "driverlicense",
+      "label": "documents.driving_licence_eu",
+      "value": "IT_PATEN",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.diplomatic_passport",
+      "value": "IT_PASDI",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.service_passport",
+      "value": "IT_PASSE",
+    },
+  ],
+  "Country: NL, residenceCountry: GR": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: PT, residenceCountry: GR": Array [
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "PT_B",
+    },
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "PT_P",
+    },
+    Object {
+      "label": "documents.other_document",
+      "value": "PT_O",
+    },
+  ],
+  "Country: RO, residenceCountry: GR": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+    Object {
+      "aliceDocument": "idcard",
+      "label": "documents.identity_card",
+      "value": "I",
+    },
+  ],
+  "Country: TH, residenceCountry: GR": Array [
+    Object {
+      "aliceDocument": "passport",
+      "label": "documents.passport",
+      "value": "P",
+    },
+  ],
+}
+`;

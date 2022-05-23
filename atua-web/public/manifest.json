@@ -1,0 +1,27 @@
+{
+  "short_name": "A.T.U.A.",
+  "name": "Alquila tu Auto",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "65x65",
+      "type": "image/png"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/?utm_source=a2hs",
+  "scope": "../",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

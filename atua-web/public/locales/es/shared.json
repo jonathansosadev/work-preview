@@ -1,0 +1,80 @@
+{
+  "header": {
+    "auth": {
+      "log_in": "Ingresar",
+      "log_out": "Cerrar Sesión",
+      "register": "Registrarse"
+    },
+    "info_menu": {
+      "info": "Info",
+      "information": "Info",
+      "faq": "FAQ"
+    },
+    "user_menu": {
+      "publish_button": "Publicar Vehículo",
+      "user_profile": "Perfil",
+      "user_garage": "Mi Garage"
+    }
+  },
+  "logicutus": {
+    "brand": "Marca",
+    "model": "Modelo",
+    "year": "Año",
+    "no_results": "No hay resultados",
+    "loading": "Cargando...",
+    "country": "País",
+    "province": "Provincia",
+    "city": "Ciudad"
+  },
+  "alert_modal": {
+    "button": "Cerrar",
+    "alerts": {
+      "fail": {
+        "generic_error_title": "Error",
+        "access_failure_title": "Error de ingreso",
+        "register_failure_title": "Error de registro",
+        "field_missing": "Complete todos los campos",
+        "unexpected_error": "Algo inesperado ocurrió",
+        "invalid_user_name": "El nombre de usuario debe tener al menos 5 caracteres",
+        "invalid_password": "Debe tener al menos 8 carácteres, una mayúscula, un numero y un caracter especial",
+        "invalid_re_password": "La contraseñas no coinciden.",
+        "invalid_email": "Ingrese una dirección de correo válido",
+        "invalid_pin": "Ingrese un PIN de 4 dígitos.",
+        "tos_warning": "Por favor, lea y acepte los términos y condiciones de servicio",
+        "email_taken": "Cuenta existente con este correo. ",
+        "weak_password": "Contraseña vulnerable",
+        "username_taken": "Nombre de usuario en uso ",
+        "access_failure_body": "Mail o contraseña incorrectos",
+        "failed_user_data_fetch": "Error en la carga de datos de usuario",
+        "not_a_user": "Usted no es usuario",
+        "pin_change_unsuccessful": "No se pudo actualizar contraseña",
+        "documentation_register_failed": "Falla en envío de documentación",
+        "changes_unsuccessful": "No se pudieron realizar los cambios",
+        "pin_does_not_match": "Contraseña actual incorrecta",
+        "acount_deletion_faillure": "Tu cuenta no ha podido ser borrada, vuelve a intentar mas tarde",
+        "incomplete_address_fields": "Complete todos los campos de su dirección",
+        "incomplete_fields": "Complete todos los campos.",
+        "invalid_access_token_title": "Token inválido",
+        "invalid_refresh_token_title": "No se puede iniciar sesión",
+        "invalid_token_body": "Credenciales expiradas, inicie sesión nuevamente",
+        "service_unavailable": "El servicio no se encuentra disponible, pruebe nuevamente más tarde"
+      },
+      "success": {
+        "generic_success_title": "Éxito",
+        "created_account_title": "Cuenta Creada",
+        "created_account_body": "Revise su casilla para confirmar su direccion de correo",
+        "log_out_title": "Sesión cerrada",
+        "log_out_body": "Nos vemos la próxima",
+        "changes_successful": "Cambios realizados con éxito",
+        "pin_changed": "Contraseña cambiada correctamente",
+        "documentation_register_successful": "Documentos recibidos correctamente",
+        "account_deleted_title": "Cuenta Borrada",
+        "account_deleted_body": "Lamentamos verte ir, esperamos que vuelvas!"
+      }
+    }
+  },
+  "store_redirect": {
+    "title": "Buscá nuestra app!",
+    "body": "Actualmente no puedes publicar o alquilar vehículos desde nuestra plataforma web, busca nuestra app mobile y empezá a disfrutar de la nueva manera de moverte!"
+  }
+}

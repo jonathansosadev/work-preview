@@ -1,0 +1,1 @@
+export {CreatableMultiSelect as default} from './CreatableMultiSelect'; 

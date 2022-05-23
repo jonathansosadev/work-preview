@@ -1,0 +1,41 @@
+._log_in_button {
+  border: none;
+  background-color: var(--primary_color);
+  color: white;
+}
+
+._access_image {
+  position: absolute;
+  top: -25%;
+  z-index: 10;
+  width: 100%;
+}
+
+@media only screen and (min-width: 1920px) {
+  ._access_image {
+    top: -10%;
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 1440px) {
+  ._access_image {
+    top: -10%;
+    width: 125%;
+  }
+}
+
+@media only screen and (max-width: 1280px) {
+  ._access_image {
+    top: 0%;
+    width: 150%;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  ._access_image {
+    position: absolute;
+    top: 0;
+    width: 150%;
+  }
+}

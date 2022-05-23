@@ -1,0 +1,10 @@
+@media (max-width: 576px) {
+    .filter {
+        padding: 1.5rem;
+    }
+}
+.filter {
+    padding: 1rem;
+    border: 1px solid rgb(222, 226, 230);
+    border-radius: 5px;
+}

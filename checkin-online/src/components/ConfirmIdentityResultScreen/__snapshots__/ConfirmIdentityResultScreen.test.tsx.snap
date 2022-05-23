@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`displays success or error based on match 1`] = `
+Array [
+  "/form/add",
+  Object {
+    "biomatch": Object {
+      "biomatch_doc": "doc",
+      "biomatch_passed": true,
+      "biomatch_selfie": "selfie",
+    },
+    "document": Object {},
+    "documentCheckId": undefined,
+    "documentPhoto": undefined,
+    "isVerifying": true,
+    "facesComparingResult": Object {
+      "is_match": true,
+    },
+    "selfiePhoto": undefined,
+  },
+]
+`;
